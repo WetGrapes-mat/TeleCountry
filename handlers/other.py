@@ -13,6 +13,7 @@ async def command_start(message: types.Message):
 async def echo(message: types.Message) -> None:
     try:
         await bot.send_message(message.from_user.id, text=message.text)
+        # print(message.from_user.id , message.from_user.first_name , message.text)
     except:
         pass
 
