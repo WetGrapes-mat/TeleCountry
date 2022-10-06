@@ -31,19 +31,21 @@ async def cities_are_good():
     cities_are_good = list()
     if eval(answer_user['capital']) is True:
         city = rq.findCapitalName()
-        if city not in cities_are_good:
-            cities_are_good.append(city)
+        info = rq.findFullInformationAboutCity(city)
+        final_message += f'Название города: {info[0]["city.name"]}\n' \
+                         f'Есть выход к морю: {info[0]["city.accessToSeaOrOcean"]}\n' \
+                         f'Столица: True\n ' \
+                         f'===================\n'
     for c in rq.findCitiesWithAccessToWater(eval(answer_user['accessToSeaOrOcean'])):
-        if c not in cities_are_good:
+        if c not in cities_are_good and c != rq.findCapitalName():
             cities_are_good.append(c)
 
     for city in cities_are_good:
         info = rq.findFullInformationAboutCity(city)
+
         final_message += f'Название города: {info[0]["city.name"]}\n' \
                          f'Есть выход к морю: {info[0]["city.accessToSeaOrOcean"]}\n' \
-                         f'Столица: {info[0]["city.isBig"]}\n ' \
                          f'===================\n'
-
     return final_message
 
 
