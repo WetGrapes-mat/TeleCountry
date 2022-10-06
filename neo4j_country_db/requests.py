@@ -3,8 +3,8 @@ from neo4j import GraphDatabase
 
 class Request:
 
-    def __init__(self, uri, user, password):
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+    def __init__(self):
+        self.driver = GraphDatabase.driver("bolt://localhost:7999", auth=("neo4j", "admin"))
 
     def close(self):
         self.driver.close()
@@ -12,18 +12,17 @@ class Request:
     def findCitiesWithAccessToWater(self, haveAccessToWater):
         with self.driver.session() as session:
             city = session.execute_write(self._accessToSeaOrOceanCities, haveAccessToWater)
-            print(city)
+            return city
 
     def findCapitalName(self):
         with self.driver.session() as session:
             capitalName = session.execute_write(self._findCapital)
-            print(capitalName)
             return capitalName
 
     def findFullInformationAboutCity(self, city_name):
         with self.driver.session() as session:
             city = session.execute_write(self._fullInformationAboutCity, city_name)
-            print(city)
+            return city
 
     @staticmethod
     def _accessToSeaOrOceanCities(tx, haveAccessToWater):
@@ -48,9 +47,11 @@ class Request:
                  "city.isBig": info["city.isBig"]} for info in result]
 
 
+rq = Request()
+
 if __name__ == "__main__":
-    rq = Request("bolt://localhost:7999", "neo4j", "admin")
-    rq.findCitiesWithAccessToWater(False)
+    rq = Request()
+    print(rq.findCitiesWithAccessToWater(False))
     capital = rq.findCapitalName()
     rq.findFullInformationAboutCity(capital)
     rq.close()
