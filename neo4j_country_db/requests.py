@@ -9,9 +9,9 @@ class Request:
     def close(self):
         self.driver.close()
 
-    def findCitiesWithAccessToWater(self):
+    def findCitiesWithAccessToWater(self, haveAccessToWater):
         with self.driver.session() as session:
-            city = session.execute_write(self._accessToSeaOrOceanCities)
+            city = session.execute_write(self._accessToSeaOrOceanCities, haveAccessToWater)
             print(city)
 
     def findCapitalName(self):
@@ -26,10 +26,11 @@ class Request:
             print(city)
 
     @staticmethod
-    def _accessToSeaOrOceanCities(tx):
-        result = tx.run("MATCH (city:City {accessToSeaOrOcean:true}) "  # Проверяем доступ к морю у найденного города
-                        "RETURN city.name")  # Возвращаем название города
-        return result.single()[0]
+    def _accessToSeaOrOceanCities(tx, haveAccessToWater):
+        result = tx.run("MATCH (city:City {accessToSeaOrOcean:$haveAccessToWater}) "  # Проверяем доступ к морю у найденного города
+                        "RETURN city.name",
+                        haveAccessToWater=haveAccessToWater)  # Возвращаем название города
+        return [cityName["city.name"] for cityName in result]
 
     @staticmethod
     def _findCapital(tx):
@@ -49,7 +50,7 @@ class Request:
 
 if __name__ == "__main__":
     rq = Request("bolt://localhost:7999", "neo4j", "admin")
-    rq.findCitiesWithAccessToWater()
+    rq.findCitiesWithAccessToWater(False)
     capital = rq.findCapitalName()
     rq.findFullInformationAboutCity(capital)
     rq.close()
