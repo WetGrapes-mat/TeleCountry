@@ -1,5 +1,6 @@
 from aiogram import types, Dispatcher
 from create_bot import bot
+from neo4j_country_db import standard_of_living_db
 
 
 async def command(message: types.Message) -> None:

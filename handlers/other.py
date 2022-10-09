@@ -29,31 +29,40 @@ async def water_cb(callback: types.CallbackQuery, callback_data: dict) -> None:
 async def cities_are_good():
     final_message = str()
     cities_are_good = list()
-    if eval(answer_user['capital']) is True:
-        city = rq.findCapitalName()
-        info = rq.findFullInformationAboutCity(city)
-        final_message += f'Название города: {info[0]["city.name"]}\n' \
-                         f'Есть выход к морю: {info[0]["city.accessToSeaOrOcean"]}\n' \
-                         f'Столица: True\n ' \
-                         f'===================\n'
+
     for c in rq.findCitiesWithAccessToWater(eval(answer_user['accessToSeaOrOcean'])):
-        if c not in cities_are_good and c != rq.findCapitalName():
-            cities_are_good.append(c)
+        cities_are_good.append(c)
 
-    for city in cities_are_good:
-        info = rq.findFullInformationAboutCity(city)
-
-        final_message += f'Название города: {info[0]["city.name"]}\n' \
-                         f'Есть выход к морю: {info[0]["city.accessToSeaOrOcean"]}\n' \
-                         f'===================\n'
+    if eval(answer_user['capital']) is True:
+        cities = rq.findCapitalName(cities_are_good)
+        for city in cities:
+            info = rq.findFullInformationAboutCity(city)
+            final_message += f'Название города: {info[0]["city.name"]}\n' \
+                             f'Есть выход к морю: {info[0]["city.accessToSeaOrOcean"]}\n' \
+                             f'Столица: True\n ' \
+                             f'===================\n'
+    elif eval(answer_user['capital']) is False:
+        try:
+            cities = rq.findCapitalName(cities_are_good)
+            for _ in cities:
+                cities_are_good.remove(_)
+        except:
+            pass
+        for city in cities_are_good:
+            info = rq.findFullInformationAboutCity(city)
+            final_message += f'Название города: {info[0]["city.name"]}\n' \
+                             f'Есть выход к морю: {info[0]["city.accessToSeaOrOcean"]}\n' \
+                             f'===================\n'
     return final_message
 
 
 async def capital_cb(callback: types.CallbackQuery, callback_data: dict) -> None:
     answer_user['capital'] = callback_data['action']
     final_message = await cities_are_good()
-
-    await callback.message.edit_text(text=final_message)
+    if final_message:
+        await callback.message.edit_text(text=final_message)
+    else:
+        await callback.message.edit_text(text="Нет городов которые вам походят")
 
 
 

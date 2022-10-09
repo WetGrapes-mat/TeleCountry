@@ -9,14 +9,15 @@ class Request:
     def close(self):
         self.driver.close()
 
+#================Это пример (потом удалиться)==============
     def findCitiesWithAccessToWater(self, haveAccessToWater):
         with self.driver.session() as session:
             city = session.execute_write(self._accessToSeaOrOceanCities, haveAccessToWater)
             return city
 
-    def findCapitalName(self):
+    def findCapitalName(self, list_city):
         with self.driver.session() as session:
-            capitalName = session.execute_write(self._findCapital)
+            capitalName = session.execute_write(self._findCapital, list_city)
             return capitalName
 
     def findFullInformationAboutCity(self, city_name):
@@ -32,11 +33,15 @@ class Request:
         return [cityName["city.name"] for cityName in result]
 
     @staticmethod
-    def _findCapital(tx):
-        result = tx.run("MATCH (country:Country) "
-                        "MATCH (country)-[capital:capital]->(city:City)"  # Ищем город по связи capital
-                        "RETURN city.name")
-        return result.single()[0]
+    def _findCapital(tx, list_city):
+        result = tx.run("MATCH(country: Country) -[capital: capital]->  (city:City) "
+                        "WHERE(city.name) IN $list_city "
+                        "RETURN city.name", list_city=list_city)
+
+        # print(result.single())
+        return [cityName["city.name"] for cityName in result]
+        # return result.single()[0]
+
 
     @staticmethod
     def _fullInformationAboutCity(tx, city_name):
@@ -46,12 +51,13 @@ class Request:
         return [{"city.name": info["city.name"], "city.accessToSeaOrOcean":info["city.accessToSeaOrOcean"],
                  "city.isBig": info["city.isBig"]} for info in result]
 
-
+#=========================================================
 rq = Request()
 
 if __name__ == "__main__":
     rq = Request()
     print(rq.findCitiesWithAccessToWater(False))
-    capital = rq.findCapitalName()
+    capital = rq.findCapitalName(['Оттава', 'Квебек', 'Монреаль', 'Торонто'])
+    print(capital)
     rq.findFullInformationAboutCity(capital)
     rq.close()
