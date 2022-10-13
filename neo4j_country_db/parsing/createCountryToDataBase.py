@@ -4,7 +4,7 @@ from neo4j import GraphDatabase
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "admin"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
 
     def close(self):
         self.driver.close()
@@ -63,6 +63,20 @@ class CountryCreator:
                                          )
             return city
 
+    def createBase(self, countryName, citiesDict):
+        with self.driver.session() as session:
+            base = session.execute_write(self._createBase, countryName, citiesDict)
+            return base
+
+    @staticmethod
+    def _createBase(tx, countryName, citiesDict):
+        resultstr = "CREATE (country:Country {name:'$countryName'})"
+        for city in citiesDict:
+            resultstr += "\nCREATE (city:City {name:'{ct}', isBig:'{isBig}'})".format(ct=city, isBig=citiesDict[city])
+            result = tx.run(resultstr
+                            )
+        return result.single()[0]
+
     @staticmethod
     def _createCountry(tx, countryName, languageName,
                        # Cities
@@ -93,13 +107,13 @@ class CountryCreator:
 
                         "CREATE (language:Language {name:'$languageName'})"
                         "CREATE (country)-[:official_language]->(language) "
-                        
+
                         "CREATE (city1:City {name:'$cityName1', isBig:$isBig1})"
                         "CREATE (city2:City {name:'$cityName2', isBig:$isBig2})"
                         "CREATE (city3:City {name:'$cityName3', isBig:$isBig3})"
                         "CREATE (city4:City {name:'$cityName4', isBig:$isBig4})"
                         "CREATE (city5:City {name:'$cityName5', isBig:$isBig5})"
-                        
+
                         "CREATE (country)-[:capital]->(city1)"
                         "CREATE (country)-[:has_city]->(city1)"
                         "CREATE (country)-[:has_city]->(city2)"
@@ -109,7 +123,7 @@ class CountryCreator:
 
                         "CREATE (currency:Currency {name:'$currencyName', oneDollarEquals:$oneDollarEquals})"
                         "CREATE (country)-[:currency]->(currency)"
-                        
+
                         "CREATE (militaryPoliticalBlock:MilitaryPoliticalBlock {name:'$milPolBlock'})"
                         "CREATE (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock)"
 
@@ -142,14 +156,14 @@ class CountryCreator:
                         "                               menAverageLifeExpectancy:$menAverageLifeExpectancy,"
                         "                               womenAverageLifeExpectancy:$womenAverageLifeExpectancy})"
                         "CREATE (country)-[:helthcare]->(helthcare)"
-# good
+                        # good
 
                         "CREATE (education:Education {rankingOfNationalEducationSystem:$rankingOfNationalEducationSystem})"
                         "CREATE (country)-[:education]->(education)"
-                        
+
                         "CREATE (university:University {name:'$universityName', costOfEducation:$costOfEducation, "
                         "                               photo:'$universityPhoto', hostelAvailability:$hostelAvailability}) "
-                        
+
                         "CREATE (uniProgram1:Program {name:'$universityProgramName1'})"
                         "CREATE (uniProgram2:Program {name:'$universityProgramName2'})"
                         "CREATE (uniProgram3:Program {name:'$universityProgramName3'})"
@@ -175,7 +189,6 @@ class CountryCreator:
                         "                       placesCount:$placesCount41, subjectsForAdmission:'$subjectsForAdmission41'})"
                         "CREATE (us42:uniSpeciality {name:'$specialityName42', passingScore:$passingScore42,"
                         "                       placesCount:$placesCount42, subjectsForAdmission:'$subjectsForAdmission42'})"
-
 
                         ,
                         countryName=countryName,
@@ -220,13 +233,13 @@ class CountryCreator:
 
                         universityProgramName=universityProgramName,
 
-                        averageGraduatesSalary=averageGraduatesSalary, graduatesWhoFoundJobsInShortTime=graduatesWhoFoundJobsInShortTime,
+                        averageGraduatesSalary=averageGraduatesSalary,
+                        graduatesWhoFoundJobsInShortTime=graduatesWhoFoundJobsInShortTime,
 
                         facultyName=facultyName,
 
                         specialityName=specialityName, passingScore=passingScore, placesCount=placesCount,
                         subjectsForAdmission=subjectsForAdmission
-
 
                         )
         return result.single()[0]
@@ -234,10 +247,14 @@ class CountryCreator:
 
 if __name__ == "__main__":
     cc = CountryCreator()
+    cities = {'Минск': True, 'Брест': True, 'Витебск': True, 'Гродно': True, 'Орша': False}
+    '''
     cc.createCountry("Беларусь", "Русский",
                      "Минск", "Брест", "Витебск", "Гродно", "Орша",
                      True, True, True, True, False,
                      "BYN", 2.56,
                      "ОДКБ", 47950
                      )
+    '''
+    cc.createBase("Беларусь", cities)
     cc.close()
