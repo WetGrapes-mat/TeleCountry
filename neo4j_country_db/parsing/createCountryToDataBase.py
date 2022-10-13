@@ -4,7 +4,7 @@ from neo4j import GraphDatabase
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
 
     def close(self):
         self.driver.close()
@@ -70,12 +70,13 @@ class CountryCreator:
 
     @staticmethod
     def _createBase(tx, countryName, citiesDict):
-        resultstr = "CREATE (country:Country {name:'$countryName'})"
+        resultStr = 'create (country:Country {name:"' + str(countryName) + '"})'
+        index = 1
         for city in citiesDict:
-            resultstr += "\nCREATE (city:City {name:'{ct}', isBig:'{isBig}'})".format(ct=city, isBig=citiesDict[city])
-            result = tx.run(resultstr
-                            )
-        return result.single()[0]
+            resultStr += 'create (city' + str(index) + ':City {name:"' + str(city) + '", isBig:"' + str(citiesDict[city]) + '"})'
+            resultStr += 'create (country)-[:has_city]->(city' + str(index) + ')'
+            index += 1
+        result = tx.run(resultStr)
 
     @staticmethod
     def _createCountry(tx, countryName, languageName,
