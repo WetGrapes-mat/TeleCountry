@@ -30,7 +30,7 @@ class CountryCreator:
                       costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
                       # Education
                       rankingOfNationalEducationSystem, universityName, costOfEducation,
-                      universityPhotos, hostelAvailability, universityProgramName,
+                      universityPhoto, hostelAvailability, universityProgramName,
                       averageGraduatesSalary, graduatesWhoFoundJobsInShortTime,
                       facultyName, specialityName, passingScore, placesCount, subjectsForAdmission
                       ):
@@ -57,7 +57,7 @@ class CountryCreator:
                                          costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
                                          # Education
                                          rankingOfNationalEducationSystem, universityName, costOfEducation,
-                                         universityPhotos, hostelAvailability, universityProgramName,
+                                         universityPhoto, hostelAvailability, universityProgramName,
                                          averageGraduatesSalary, graduatesWhoFoundJobsInShortTime,
                                          facultyName, specialityName, passingScore, placesCount, subjectsForAdmission
                                          )
@@ -85,35 +85,36 @@ class CountryCreator:
                        costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
                        # Education
                        rankingOfNationalEducationSystem, universityName, costOfEducation,
-                       universityPhotos, hostelAvailability, universityProgramName,
+                       universityPhoto, hostelAvailability, universityProgramName,
                        averageGraduatesSalary, graduatesWhoFoundJobsInShortTime,
                        facultyName, specialityName, passingScore, placesCount, subjectsForAdmission
                        ):
-        result = tx.run("CREATE (country:Country {name:$countryName}) "
+        result = tx.run("CREATE (country:Country {name:'$countryName'})"
 
-                        "CREATE (language:Language {name:$languageName}) "
-                        "SET country-[Official_language]->language "
+                        "CREATE (language:Language {name:'$languageName'})"
+                        "CREATE (country)-[:official_language]->(language) "
+                        
+                        "CREATE (city1:City {name:'$cityName1', isBig:$isBig1})"
+                        "CREATE (city2:City {name:'$cityName2', isBig:$isBig2})"
+                        "CREATE (city3:City {name:'$cityName3', isBig:$isBig3})"
+                        "CREATE (city4:City {name:'$cityName4', isBig:$isBig4})"
+                        "CREATE (city5:City {name:'$cityName5', isBig:$isBig5})"
+                        
+                        "CREATE (country)-[:capital]->(city1)"
+                        "CREATE (country)-[:has_city]->(city1)"
+                        "CREATE (country)-[:has_city]->(city2)"
+                        "CREATE (country)-[:has_city]->(city3)"
+                        "CREATE (country)-[:has_city]->(city4)"
+                        "CREATE (country)-[:has_city]->(city5)"
 
-                        "CREATE (city1.City {name:$cityName1, isBig:$isBig1}) "
-                        "CREATE (city2.City {name:$cityName2, isBig:$isBig2}) "
-                        "CREATE (city3.City {name:$cityName3, isBig:$isBig3}) "
-                        "CREATE (city4.City {name:$cityName4, isBig:$isBig4}) "
-                        "CREATE (city5.City {name:$cityName5, isBig:$isBig5}) "
-                        "SET country-[Capital]->city1 "
-                        "SET country-[Has_city]->city1 "
-                        "SET country-[Has_city]->city2 "
-                        "SET country-[Has_city]->city3 "
-                        "SET country-[Has_city]->city4 "
-                        "SET country-[Has_city]->city5 "
+                        "CREATE (currency:Currency {name:'$currencyName', oneDollarEquals:$oneDollarEquals})"
+                        "CREATE (country)-[:currency]->(currency)"
+                        
+                        "CREATE (militaryPoliticalBlock:MilitaryPoliticalBlock {name:'$milPolBlock'})"
+                        "CREATE (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock)"
 
-                        "CREATE (currency.Currency {name:$currencyName, oneDollarEquals:$oneDollarEquals}) "
-                        "SET country-[Currency]->city "
-
-                        "CREATE (militaryPoliticalBlock:MilitaryPoliticalBlock {name:$milPolBlock}) "
-                        "SET country-[belongs_to_military_political_block]->militaryPoliticalBlock "
-
-                        "CREATE (militaryPower:MilitaryPower {amountOfPeople:$amountOfPeopleInArmy}) "
-                        "SET country-[Military_power]->militaryPower "
+                        "CREATE (militaryPower:MilitaryPower {amountOfPeople:$amountOfPeopleInArmy})"
+                        "CREATE (country)-[:military_power]->(militaryPower)"
 
                         "CREATE (crimeThing:CrimeThing {levelOfCrime:$levelOfCrime,"
                         "                               crimeIncreasingInThePast3Years:$crimeIncreasingInThePast3Years,"
@@ -129,7 +130,7 @@ class CountryCreator:
                         "                               worriesAttacked:$worriesAttacked,"
                         "                               problemViolentCrimes:$problemViolentCrimes,"
                         "                               problemCorruptionAndBribery:$problemCorruptionAndBribery}) "
-                        "SET country-[Crime_indexes]->crimeThing "
+                        "CREATE (country)-[:crime_indexes]->(crimeThing)"
 
                         "CREATE (healthcare:Healthcare {numberOfDoctorsPer100kPopulation:$numberOfDoctorsPer100kPopulation,"
                         "                               levelOfModernityOfMedicalEquipment:$levelOfModernityOfMedicalEquipment,"
@@ -140,30 +141,41 @@ class CountryCreator:
                         "                               costOfMedicine:$costOfMedicine,"
                         "                               menAverageLifeExpectancy:$menAverageLifeExpectancy,"
                         "                               womenAverageLifeExpectancy:$womenAverageLifeExpectancy})"
-                        "SET country-[Helthcare]->helthcare "
+                        "CREATE (country)-[:helthcare]->(helthcare)"
+# good
 
+                        "CREATE (education:Education {rankingOfNationalEducationSystem:$rankingOfNationalEducationSystem})"
+                        "CREATE (country)-[:education]->(education)"
+                        
+                        "CREATE (university:University {name:'$universityName', costOfEducation:$costOfEducation, "
+                        "                               photo:'$universityPhoto', hostelAvailability:$hostelAvailability}) "
+                        
+                        "CREATE (uniProgram1:Program {name:'$universityProgramName1'})"
+                        "CREATE (uniProgram2:Program {name:'$universityProgramName2'})"
+                        "CREATE (uniProgram3:Program {name:'$universityProgramName3'})"
+                        "CREATE (uniPerspectives:Perspectives {averageGraduatesSalary:$averageGraduatesSalary,"
+                        "                                      graduatesWhoFoundJobsInShortTime:$graduatesWhoFoundJobsInShortTime}"
+                        "CREATE (uf1:uniFaculty {name:'$facultyName1'})"
+                        "CREATE (uf2:uniFaculty {name:'$facultyName2'})"
+                        "CREATE (uf3:uniFaculty {name:'$facultyName3'})"
+                        "CREATE (uf4:uniFaculty {name:'$facultyName4'})"
+                        "CREATE (us11:uniSpeciality {name:'$specialityName11', passingScore:$passingScore11,"
+                        "                       placesCount:$placesCount11, subjectsForAdmission:'$subjectsForAdmission11'})"
+                        "CREATE (us12:uniSpeciality {name:'$specialityName12', passingScore:$passingScore12,"
+                        "                       placesCount:$placesCount12, subjectsForAdmission:'$subjectsForAdmission12'})"
+                        "CREATE (us21:uniSpeciality {name:'$specialityName21', passingScore:$passingScore21,"
+                        "                       placesCount:$placesCount21, subjectsForAdmission:'$subjectsForAdmission21'})"
+                        "CREATE (us22:uniSpeciality {name:'$specialityName22', passingScore:$passingScore22,"
+                        "                       placesCount:$placesCount22, subjectsForAdmission:'$subjectsForAdmission22'})"
+                        "CREATE (us31:uniSpeciality {name:'$specialityName31', passingScore:$passingScore31,"
+                        "                       placesCount:$placesCount31, subjectsForAdmission:'$subjectsForAdmission31'})"
+                        "CREATE (us32:uniSpeciality {name:'$specialityName32', passingScore:$passingScore32,"
+                        "                       placesCount:$placesCount32, subjectsForAdmission:'$subjectsForAdmission32'})"
+                        "CREATE (us41:uniSpeciality {name:'$specialityName41', passingScore:$passingScore41,"
+                        "                       placesCount:$placesCount41, subjectsForAdmission:'$subjectsForAdmission41'})"
+                        "CREATE (us42:uniSpeciality {name:'$specialityName42', passingScore:$passingScore42,"
+                        "                       placesCount:$placesCount42, subjectsForAdmission:'$subjectsForAdmission42'})"
 
-                        "CREATE (education.Education {rankingOfNationalEducationSystem:$rankingOfNationalEducationSystem}) "
-                        "SET country-[Education]->education "
-                        
-                        "CREATE (university.University {name:$universityName, costOfEducation:$costOfEducation, "
-                        "                               photos:$universityPhotos, hostelAvailability:$hostelAvailability}) "
-                        
-                        "CREATE (uniProgram.Program {name:$universityProgramName})"
-                        "CREATE (uniPerspectives.Perspectives {averageGraduatesSalary:$averageGraduatesSalary,"
-                        "                                      graduatesWhoFoundJobsInShortTime:$graduatesWhoFoundJobsInShortTime }"
-                        "CREATE (uniFaculty {name:$facultyName})"
-                        "CREATE (uniSpeciality {name:$specialityName, passingScore:$passingScore,"
-                        "                       placesCount:$placesCount, subjectsForAdmission:$subjectsForAdmission })"
-                        
-                        "SET education-[University]->university "
-                        "SET university-[Program]->uniProgram "
-                        "SET university-[Perspectives]->uniPerspectives "
-                        "SET university-[Faculty]->uniFaculty "
-                        
-                        '''
-                        "SET city-[Education]->university " # ? >.< ?
-                        '''
 
                         ,
                         countryName=countryName,
@@ -204,7 +216,7 @@ class CountryCreator:
                         rankingOfNationalEducationSystem=rankingOfNationalEducationSystem,
 
                         universityName=universityName, costOfEducation=costOfEducation,
-                        universityPhotos=universityPhotos, hostelAvailability=hostelAvailability,
+                        universityPhoto=universityPhoto, hostelAvailability=hostelAvailability,
 
                         universityProgramName=universityProgramName,
 
@@ -224,8 +236,8 @@ if __name__ == "__main__":
     cc = CountryCreator()
     cc.createCountry("Беларусь", "Русский",
                      "Минск", "Брест", "Витебск", "Гродно", "Орша",
-                     "True", "True", "True", "True", "False",
-                     "BYN", "2,56",
-                     "ОДКБ", "47 950"
+                     True, True, True, True, False,
+                     "BYN", 2.56,
+                     "ОДКБ", 47950
                      )
     cc.close()
