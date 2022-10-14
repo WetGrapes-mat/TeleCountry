@@ -4,7 +4,7 @@ from neo4j import GraphDatabase
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
 
     def close(self):
         self.driver.close()
@@ -28,7 +28,16 @@ class CountryCreator:
                    numberOfDoctorsPer100kPopulation, levelOfModernityOfMedicalEquipment,
                    levelOfEducationOfMedicalStaff, responsivenessLevel,
                    levelOfCompetenceOfMedicalStaff, levelOfLocationOfMedicalInstitutions,
-                   costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy
+                   costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                   # climat
+                   airQualityLevel, drinkingWaterQualityLevel, garbageCollectionLevel,
+                   streetCleanlinessLevel, levelOfLightAndNoisePollution, waterPollution,
+                   satisfactionWithGarbageDisposal, comfortableTimeInTheCity, qualityOfParksAndGreenSpaces,
+                   juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                   averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                   averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                   name, typeOfMMD, aomuntOfDeadPeople,
+                   aomuntOfInjuredPeople, territoryOfPollution
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName,
@@ -50,7 +59,18 @@ class CountryCreator:
                                          numberOfDoctorsPer100kPopulation, levelOfModernityOfMedicalEquipment,
                                          levelOfEducationOfMedicalStaff, responsivenessLevel,
                                          levelOfCompetenceOfMedicalStaff, levelOfLocationOfMedicalInstitutions,
-                                         costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy
+                                         costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                                         # climat
+                                         airQualityLevel, drinkingWaterQualityLevel, garbageCollectionLevel,
+                                         streetCleanlinessLevel, levelOfLightAndNoisePollution, waterPollution,
+                                         satisfactionWithGarbageDisposal, comfortableTimeInTheCity,
+                                         qualityOfParksAndGreenSpaces,
+                                         juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                                         averageDurationOfWinter, averageRainfallPerMonth,
+                                         averageNumberOfFoggyDaysPerYear,
+                                         averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                                         name, typeOfMMD, aomuntOfDeadPeople,
+                                         aomuntOfInjuredPeople, territoryOfPollution
                                          )
             return base
 
@@ -73,7 +93,16 @@ class CountryCreator:
                     numberOfDoctorsPer100kPopulation, levelOfModernityOfMedicalEquipment,
                     levelOfEducationOfMedicalStaff, responsivenessLevel,
                     levelOfCompetenceOfMedicalStaff, levelOfLocationOfMedicalInstitutions,
-                    costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy
+                    costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                    # climat
+                    airQualityLevel, drinkingWaterQualityLevel, garbageCollectionLevel,
+                    streetCleanlinessLevel, levelOfLightAndNoisePollution, waterPollution,
+                    satisfactionWithGarbageDisposal, comfortableTimeInTheCity, qualityOfParksAndGreenSpaces,
+                    juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                    averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                    averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                    name, typeOfMMD, aomuntOfDeadPeople,
+                    aomuntOfInjuredPeople, territoryOfPollution
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -132,6 +161,36 @@ class CountryCreator:
                                                                                 levelOfCompetenceOfMedicalStaff, levelOfLocationOfMedicalInstitutions,
                                                                                 costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy)
         resultStr += 'create (country)-[:healthcare]->(healthcare)'
+        # climat
+        resultStr += 'create (climat:Climat {airQualityLevel:"%d",' \
+                     '                    drinkingWaterQualityLevel:"%d",' \
+                     '                    garbageCollectionLevel:"%d",' \
+                     '                    streetCleanlinessLevel:"%d",' \
+                     '                    levelOfLightAndNoisePollution:"%d",' \
+                     '                    waterPollution:"%d",' \
+                     '                    satisfactionWithGarbageDisposal:"%d",' \
+                     '                    comfortableTimeInTheCity:"%d",' \
+                     '                    qualityOfParksAndGreenSpaces:"%d",' \
+                     '                    juneAverageTemperature:"%f °C" ,' \
+                     '                    decemberAverageTemperature:"%f °C" ,' \
+                     '                    averageHumidity:"%f" ,' \
+                     '                    averageDurationOfWinter:"%f month" ,' \
+                     '                    averageRainfallPerMonth:"%d",' \
+                     '                    averageNumberOfFoggyDaysPerYear:"%d",' \
+                     '                    averageNumberOfRainyDaysPerYear:"%d",' \
+                     '                    averageNumberOfClearDays:"%d"})' % (airQualityLevel, drinkingWaterQualityLevel, garbageCollectionLevel,
+                                                                              streetCleanlinessLevel, levelOfLightAndNoisePollution, waterPollution,
+                                                                              satisfactionWithGarbageDisposal, comfortableTimeInTheCity, qualityOfParksAndGreenSpaces,
+                                                                              juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                                                                              averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                                                                              averageNumberOfRainyDaysPerYear, averageNumberOfClearDays)
+        resultStr += 'create (country)-[:climat]->(climat)'
+
+        resultStr += 'create (manMadeDisaster:ManMadeDisaster {name:"%s", typeOfMMD:"%s", aomuntOfDeadPeople:"%d",' \
+                     '                                         aomuntOfInjuredPeople:"%d", territoryOfPollution:"%d km^2"})' % (name, typeOfMMD, aomuntOfDeadPeople,
+                                                                                                                                aomuntOfInjuredPeople, territoryOfPollution)
+
+        resultStr += 'create (climat)-[:man_made_disaster]->(manMadeDisaster)'
 
         result = tx.run(resultStr)
 
@@ -143,7 +202,7 @@ class CountryCreator:
 
     @staticmethod
     def _createEducation(tx, countryName, cities, rankingOfNationalEducationSystem):
-        index = 1;
+        index = 1
         request = '''match (country:Country {name:"%s"})
          create (education:Education {rankingOfNationalEducationSystem:%d})
          create (country)-[:education]->(education)''' % (countryName, rankingOfNationalEducationSystem)
@@ -297,6 +356,32 @@ if __name__ == "__main__":
     costOfMedicine = 0
     menAverageLifeExpectancy = 61
     womenAverageLifeExpectancy = 69
+    # climat
+    airQualityLevel = 0
+    drinkingWaterQualityLevel = 1
+    garbageCollectionLevel = 1
+    streetCleanlinessLevel = 1
+    levelOfLightAndNoisePollution = 1
+    waterPollution = 0
+    satisfactionWithGarbageDisposal = 1
+    comfortableTimeInTheCity = 1
+    qualityOfParksAndGreenSpaces = 1
+    juneAverageTemperature = 19.9
+    decemberAverageTemperature = -3.5
+    averageHumidity = 67.5
+    averageDurationOfWinter = 3.9
+    averageRainfallPerMonth = 650
+    averageNumberOfFoggyDaysPerYear = 180
+    averageNumberOfRainyDaysPerYear = 48
+    averageNumberOfClearDays = 96
+
+    manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500, 'aomuntOfInjuredPeople': 5000000,
+                       'territoryOfPollution': 145000}
+    name = 'Авария на ЧАЭС'
+    typeOfMMD = 'Авария на АЭС'
+    aomuntOfDeadPeople = 37500
+    aomuntOfInjuredPeople = 5000000
+    territoryOfPollution = 145000
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -316,7 +401,16 @@ if __name__ == "__main__":
                   numberOfDoctorsPer100kPopulation, levelOfModernityOfMedicalEquipment,
                   levelOfEducationOfMedicalStaff, responsivenessLevel,
                   levelOfCompetenceOfMedicalStaff, levelOfLocationOfMedicalInstitutions,
-                  costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy
+                  costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  airQualityLevel, drinkingWaterQualityLevel, garbageCollectionLevel,
+                  streetCleanlinessLevel, levelOfLightAndNoisePollution, waterPollution,
+                  satisfactionWithGarbageDisposal, comfortableTimeInTheCity, qualityOfParksAndGreenSpaces,
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  name, typeOfMMD, aomuntOfDeadPeople,
+                  aomuntOfInjuredPeople, territoryOfPollution
                   )
-    cc.createEducation("Беларусь", cities, 5)
+    # cc.createEducation("Беларусь", cities, 5)
     cc.close()
