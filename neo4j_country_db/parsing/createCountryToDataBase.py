@@ -36,8 +36,45 @@ class CountryCreator:
                    juneAverageTemperature, decemberAverageTemperature, averageHumidity,
                    averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
                    averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                   name, typeOfMMD, aomuntOfDeadPeople,
-                   aomuntOfInjuredPeople, territoryOfPollution
+                   # security
+                   situationInTheCountry, freedomOfSpeech,
+                   assessmentOfFamilyLife, attitudeTowardsLGBT,
+                   # population
+                   populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                   speedOfLife, workPlaces, nightLifeEntertainment,
+                   # citizenship
+                   visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
+                   # communication
+                   communicationOnEnglish,
+                   # transport
+                   averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                   # internet
+                   speedOfInternetMbps, freeWifi,
+                   # economic situation
+                   averageSalaryAfterTaxes,
+                   # Price of life per month
+                   familyPriceOfLife, personPriceOfLife,
+                   # Cafe and restaurant prices
+                   priceOfFoodInAnInexpensiveRestaurant,
+                   priceOfFoodInAMidRangeRestaurant,
+                   priceOfFastFood, priceOfCoffee,
+                   # Supermarket prices
+                   priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
+                   priceOfEggs12pcs, priceOfCheese1kg, priceOfChicken1kg,
+                   priceOfBeef1kg, priceOfApples1kg, priceOfBanana1kg,
+                   priceOfOrange1kg, priceOfTomato1kg, priceOfPotatoes1kg,
+                   priceOfOnion1kg, priceOfLettuceHead, priceOfWaterOneAndAHalfLitre,
+                   # transport prices
+                   monthlyTravelByPublicTransport, taxiPricePer1km, gas1Litre,
+                   # Utility prices
+                   basicUtilitiesPrice, theInternetPrice,
+                   # Prices for entertainment and recreation
+                   fitnessClubPrice, movieTicketPrice,
+                   # child care costs
+                   privateKindergartenPrice, schoolPrice,
+                   # Prices for clothes/shoes
+                   aPairOfJeansPrice, dressPrice,
+                   sneakersPrice, shoesPrice
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName,
@@ -69,18 +106,58 @@ class CountryCreator:
                                          averageDurationOfWinter, averageRainfallPerMonth,
                                          averageNumberOfFoggyDaysPerYear,
                                          averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                                         name, typeOfMMD, aomuntOfDeadPeople,
-                                         aomuntOfInjuredPeople, territoryOfPollution
+                                         # security
+                                         situationInTheCountry, freedomOfSpeech,
+                                         assessmentOfFamilyLife, attitudeTowardsLGBT,
+                                         # population
+                                         populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                                         speedOfLife, workPlaces, nightLifeEntertainment,
+                                         # citizenship
+                                         visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
+                                         # communication
+                                         communicationOnEnglish,
+                                         # transport
+                                         averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                                         # internet
+                                         speedOfInternetMbps, freeWifi,
+                                         # economic situation
+                                         averageSalaryAfterTaxes,
+                                         # Price of life per month
+                                         familyPriceOfLife, personPriceOfLife,
+                                         # Cafe and restaurant prices
+                                         priceOfFoodInAnInexpensiveRestaurant,
+                                         priceOfFoodInAMidRangeRestaurant,
+                                         priceOfFastFood, priceOfCoffee,
+                                         # Supermarket prices
+                                         priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
+                                         priceOfEggs12pcs, priceOfCheese1kg, priceOfChicken1kg,
+                                         priceOfBeef1kg, priceOfApples1kg, priceOfBanana1kg,
+                                         priceOfOrange1kg, priceOfTomato1kg, priceOfPotatoes1kg,
+                                         priceOfOnion1kg, priceOfLettuceHead, priceOfWaterOneAndAHalfLitre,
+                                         # transport prices
+                                         monthlyTravelByPublicTransport, taxiPricePer1km, gas1Litre,
+                                         # Utility prices
+                                         basicUtilitiesPrice, theInternetPrice,
+                                         # Prices for entertainment and recreation
+                                         fitnessClubPrice, movieTicketPrice,
+                                         # child care costs
+                                         privateKindergartenPrice, schoolPrice,
+                                         # Prices for clothes/shoes
+                                         aPairOfJeansPrice, dressPrice,
+                                         sneakersPrice, shoesPrice
                                          )
             return base
 
     @staticmethod
     def _createBase(tx, countryName,
                     citiesDict, languageName,
+
                     # currency
                     currencyName, currencyEqualsToDollar,
+
                     # military
                     milPolBlock, amountOfPeopleInArmy,
+
                     # crime thing
                     levelOfCrime, crimeIncreasingInThePast3Years, worriesHomeBrokenAndThingsStolen, worriesBeingMuggedOrRobbed,
                     worriesCarStolen, worriesThingsFromCarStolen,
@@ -89,11 +166,13 @@ class CountryCreator:
                     problemPropertyCrimes, problemViolentCrimes,
                     problemCorruptionAndBribery,
                     safetyWalkingAloneDuringNight, safetyWalkingAloneDuringDay,
+
                     # healthcare
                     numberOfDoctorsPer100kPopulation, levelOfModernityOfMedicalEquipment,
                     levelOfEducationOfMedicalStaff, responsivenessLevel,
                     levelOfCompetenceOfMedicalStaff, levelOfLocationOfMedicalInstitutions,
                     costOfMedicine, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+
                     # climat
                     airQualityLevel, drinkingWaterQualityLevel, garbageCollectionLevel,
                     streetCleanlinessLevel, levelOfLightAndNoisePollution, waterPollution,
@@ -101,8 +180,52 @@ class CountryCreator:
                     juneAverageTemperature, decemberAverageTemperature, averageHumidity,
                     averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
                     averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                    name, typeOfMMD, aomuntOfDeadPeople,
-                    aomuntOfInjuredPeople, territoryOfPollution
+
+                    # security
+                    situationInTheCountry, freedomOfSpeech,
+                    assessmentOfFamilyLife, attitudeTowardsLGBT,
+
+                    #population
+                    populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                    speedOfLife, workPlaces, nightLifeEntertainment,
+
+                    # citizenship
+                    visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
+
+                    # communication
+                    communicationOnEnglish,
+
+                    # transport
+                    averageTravelTimeToWork, developmentLevelOfPublicTransport,
+
+                    # internet
+                    speedOfInternetMbps, freeWifi,
+
+                    # economic situation
+                    averageSalaryAfterTaxes,
+                    # Price of life per month
+                    familyPriceOfLife, personPriceOfLife,
+                    # Cafe and restaurant prices
+                    priceOfFoodInAnInexpensiveRestaurant,
+                    priceOfFoodInAMidRangeRestaurant,
+                    priceOfFastFood, priceOfCoffee,
+                    # Supermarket prices
+                    priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
+                    priceOfEggs12pcs, priceOfCheese1kg, priceOfChicken1kg,
+                    priceOfBeef1kg, priceOfApples1kg, priceOfBanana1kg,
+                    priceOfOrange1kg, priceOfTomato1kg, priceOfPotatoes1kg,
+                    priceOfOnion1kg, priceOfLettuceHead, priceOfWaterOneAndAHalfLitre,
+                    # transport prices
+                    monthlyTravelByPublicTransport, taxiPricePer1km, gas1Litre,
+                    # Utility prices
+                    basicUtilitiesPrice, theInternetPrice,
+                    # Prices for entertainment and recreation
+                    fitnessClubPrice, movieTicketPrice,
+                    # child care costs
+                    privateKindergartenPrice, schoolPrice,
+                    # Prices for clothes/shoes
+                    aPairOfJeansPrice, dressPrice,
+                    sneakersPrice, shoesPrice
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -186,13 +309,138 @@ class CountryCreator:
                                                                               averageNumberOfRainyDaysPerYear, averageNumberOfClearDays)
         resultStr += 'create (country)-[:climat]->(climat)'
 
+        # MMD is individual func
+
+        # security
+        resultStr += 'create (security:Security {situationInTheCountry:"%d",' \
+                     '                    freedomOfSpeech:"%d",' \
+                     '                    assessmentOfFamilyLife:"%d",' \
+                     '                    attitudeTowardsLGBT:"%d"})' % (situationInTheCountry, freedomOfSpeech,
+                                                                         assessmentOfFamilyLife, attitudeTowardsLGBT)
+        resultStr += 'create (country)-[:security]->(security)'
+
+        # population
+        resultStr += 'create (population:Population {count:"%d",' \
+                     '                               procentOfMalesAndFemales:"%d",' \
+                     '                               populationDensityPerSquareKilometer:"%d",' \
+                     '                               speedOfLife:"%d",' \
+                     '                               workPlaces:"%d",' \
+                     '                               nightLifeEntertainment:"%d"})' % (populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                                                                                       speedOfLife, workPlaces, nightLifeEntertainment)
+        resultStr += 'create (country)-[:climat]->(climat)'
+
+        # citizenship
+        resultStr += 'create (citizenship:Citizenship {globalRank:"%d",' \
+                     '                                 friendlyToForeigners:"%d"})' % (citizenshipGlobalRank, friendlyToForeigners)
+
+        resultStr += 'create (country)-[:citizenship]->(citizenship)'
+        if visa_free_entry:
+            resultStr += 'create (citizenship)-[:visa_free_entry]->(country)'
+        else:
+            resultStr += 'create (citizenship)-[:visa_entry]->(country)'
+
+        # communication
+        resultStr += 'create (communication:Communication {communicationOnEnglish:"%d"})' % (communicationOnEnglish)
+
+        resultStr += 'create (country)-[:communication]->(communication)'
+
+        # transport
+        resultStr += 'create (transport:Transport {averageTravelTimeToWork:"%d",' \
+                     '                             developmentLevelOfPublicTransport:"%d"})' % (averageTravelTimeToWork, developmentLevelOfPublicTransport)
+
+        resultStr += 'create (country)-[:transport]->(transport)'
+
+        # internet
+        resultStr += 'create (internet:Internet {speedOfInternetMbps:"%d",' \
+                     '                           freeWifi:"%d"})' % (speedOfInternetMbps, freeWifi)
+
+        resultStr += 'create (country)-[:internet]->(internet)'
+
+        # economic situation
+        resultStr += 'create (economicSituation:EconomicSituation {averageSalaryAfterTaxes:"%d"})' % (averageSalaryAfterTaxes)
+        resultStr += 'create (country)-[:economicSituation]->(economicSituation)'
+        # Price of life per month
+        resultStr += 'create (priceOfLifePerMonth:PriceOfLifePerMonth {family:"%d", person:"%d"})' % (familyPriceOfLife, personPriceOfLife)
+        resultStr += 'create (economicSituation)-[:price_of_life_per_month]->(priceOfLifePerMonth)'
+        # Cafe and restaurant prices
+        resultStr += 'create (cafeAndRestaurantPrices:CafeAndRestaurantPrices {priceOfFoodInAnInexpensiveRestaurant:"%d",' \
+                     '                                                         priceOfFoodInAMidRangeRestaurant:"%d",' \
+                     '                                                         priceOfFastFood:"%d",' \
+                     '                                                         priceOfCoffee:"%d"})' % (priceOfFoodInAnInexpensiveRestaurant,
+                                                                                                        priceOfFoodInAMidRangeRestaurant,
+                                                                                                        priceOfFastFood, priceOfCoffee)
+        resultStr += 'create (economicSituation)-[:cafe_and_restaurant_prices]->(cafeAndRestaurantPrices)'
+        # Supermarket prices
+        resultStr += 'create (supermarketPrices:SupermarketPrices {priceOfMilk1Litre:"%d",' \
+                     '                                             priceOfBreadHalfOf1kg:"%d",' \
+                     '                                             priceOfRice1kg:"%d",' \
+                     '                                             priceOfEggs12pcs:"%d",' \
+                     '                                             priceOfCheese1kg:"%d",' \
+                     '                                             priceOfChicken1kg:"%d",' \
+                     '                                             priceOfBeef1kg:"%d",' \
+                     '                                             priceOfApples1kg:"%d",' \
+                     '                                             priceOfBanana1kg:"%d",' \
+                     '                                             priceOfOrange1kg:"%d",' \
+                     '                                             priceOfTomato1kg:"%d",' \
+                     '                                             priceOfPotatoes1kg:"%d",' \
+                     '                                             priceOfOnion1kg:"%d",' \
+                     '                                             priceOfLettuceHead:"%d",' \
+                     '                                             priceOfWaterOneAndAHalfLitre:"%d",})' % (priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
+                                                                                                            priceOfEggs12pcs, priceOfCheese1kg, priceOfChicken1kg,
+                                                                                                            priceOfBeef1kg, priceOfApples1kg, priceOfBanana1kg,
+                                                                                                            priceOfOrange1kg, priceOfTomato1kg, priceOfPotatoes1kg,
+                                                                                                            priceOfOnion1kg, priceOfLettuceHead, priceOfWaterOneAndAHalfLitre)
+        resultStr += 'create (economicSituation)-[:supermarket_prices]->(supermarketPrices)'
+        # transport prices
+        resultStr += 'create (transportPrices:TransportPrices {monthlyTravelByPublicTransport:"%d",' \
+                     '                                         taxiPricePer1km:"%d",' \
+                     '                                         gas1Litre:"%d"})' % (monthlyTravelByPublicTransport, taxiPricePer1km, gas1Litre)
+        resultStr += 'create (economicSituation)-[:transport_prices]->(transportPrices)'
+        # Utility prices
+        resultStr += 'create (utilityPrices:UtilityPrices {basicUtilities:"%d",' \
+                     '                                     theInternet:"%d"})' % (basicUtilitiesPrice, theInternetPrice)
+        resultStr += 'create (economicSituation)-[:utility_prices]->(utilityPrices)'
+        # Prices for entertainment and recreation
+        resultStr += 'create (pricesForEntertainmentAndRecreation:PricesForEntertainmentAndRecreation {fitnessClub:"%d",' \
+                     '                                                                                 movieTicket:"%d"})' % (fitnessClubPrice,
+                                                                                                                              movieTicketPrice)
+        resultStr += 'create (economicSituation)-[:prices_for_entertainment_and_recreation]->(pricesForEntertainmentAndRecreation)'
+        # child care costs
+        resultStr += 'create (childCareCosts:ChildCareCosts {privateKindergarten:"%d",' \
+                     '                                       school:"%d"})' % (privateKindergartenPrice, schoolPrice)
+        resultStr += 'create (economicSituation)-[:child_care_costs]->(childCareCosts)'
+        # Prices for clothes/shoes
+        resultStr += 'create (pricesForClothesAndShoes:PricesForClothesAndShoes {aPairOfJeans:"%d",' \
+                     '                                                           dress:"%d",' \
+                     '                                                           sneakers:"%d",' \
+                     '                                                           shoes:"%d"})' % (aPairOfJeansPrice, dressPrice,
+                                                                                                  sneakersPrice, shoesPrice)
+        resultStr += 'create (economicSituation)-[:prices_for_clothes_and_shoes]->(pricesForClothesAndShoes)'
+
+        result = tx.run(resultStr)
+
+    def createManMadeDisaster(self, countryName, nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
+                  aomuntOfInjuredPeople, territoryOfPollution):
+        with self.driver.session() as session:
+            manMadeDisaster = session.execute_write(self._createManMadeDisaster, countryName, nameOfDisaster, typeOfMMD,
+                                                    aomuntOfDeadPeople, aomuntOfInjuredPeople, territoryOfPollution)
+            return manMadeDisaster
+
+    @staticmethod
+    def _createManMadeDisaster(tx, countryName, nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
+                  aomuntOfInjuredPeople, territoryOfPollution):
+        resultStr = 'match (country:Country {name:"%s"}' % countryName
+        resultStr += 'match (country)->[:climat]->(climat)'
         resultStr += 'create (manMadeDisaster:ManMadeDisaster {name:"%s", typeOfMMD:"%s", aomuntOfDeadPeople:"%d",' \
-                     '                                         aomuntOfInjuredPeople:"%d", territoryOfPollution:"%d km^2"})' % (name, typeOfMMD, aomuntOfDeadPeople,
+                     '                                         aomuntOfInjuredPeople:"%d", territoryOfPollution:"%d km^2"})' % (nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
                                                                                                                                 aomuntOfInjuredPeople, territoryOfPollution)
 
         resultStr += 'create (climat)-[:man_made_disaster]->(manMadeDisaster)'
 
         result = tx.run(resultStr)
+
+
+
 
     def createEducation(self, countryName, citiesDict, rankingOfNationalEducationSystem):
         with self.driver.session() as session:
@@ -217,11 +465,15 @@ class CountryCreator:
 
 if __name__ == "__main__":
     cc = CountryCreator()
+
     # Country
     countryName = "Беларусь"
     officialLanguage = "Русский"
+
     # cities    name   isBig
     cities = {'Минск': True, 'Брест': True, 'Витебск': True, 'Гродно': True, 'Гомель': True}
+
+    # education
     universities = {'Минск': ['Белорусский государственный университет информатики и радиоэлектроники',
                               'Белорусский государственный университет'],
                     'Брест': ['Брестский государственный технический университет',
@@ -324,48 +576,53 @@ if __name__ == "__main__":
                                          'Разработка и эксплуатация нефтяных и газовых месторождений',
                                          'Автоматизация технологических процессов и производств']}
     gomstuPrograms = ['Докторантура', 'Аспирантура']
+
     # currency
     currencyName = 'BYN'
     currencyEqualsToDollar = 2.56
+
     # military
     milPolBlock = "ОДКБ"
     amountOfPeopleInArmy = 47950
+
     # crime thing
-    levelOfCrime = 1
-    crimeIncreasingInThePast3Years = 2
-    worriesHomeBrokenAndThingsStolen = 0
-    worriesBeingMuggedOrRobbed = 0
-    worriesCarStolen = -1
-    worriesThingsFromCarStolen = 0
-    worriesAttacked = 1
-    worriesBeingInsulted = 1
-    worriesAttackBecauseOfYourSkinColorEtc = 0
-    problemPeopleUsingOrDealingDrugs = -1
-    problemPropertyCrimes = 0
-    problemViolentCrimes = 0
-    problemCorruptionAndBribery = 2
-    safetyWalkingAloneDuringNight = 0
-    safetyWalkingAloneDuringDay = -1
+    levelOfCrime = 1  # [-2, 2]
+    crimeIncreasingInThePast3Years = 2  # [-2, 2]
+    worriesHomeBrokenAndThingsStolen = 0  # [-2, 2]
+    worriesBeingMuggedOrRobbed = 0  # [-2, 2]
+    worriesCarStolen = -1  # [-2, 2]
+    worriesThingsFromCarStolen = 0  # [-2, 2]
+    worriesAttacked = 1  # [-2, 2]
+    worriesBeingInsulted = 1  # [-2, 2]
+    worriesAttackBecauseOfYourSkinColorEtc = 0  # [-2, 2]
+    problemPeopleUsingOrDealingDrugs = -1  # [-2, 2]
+    problemPropertyCrimes = 0  # [-2, 2]
+    problemViolentCrimes = 0  # [-2, 2]
+    problemCorruptionAndBribery = 2  # [-2, 2]
+    safetyWalkingAloneDuringNight = 0  # [-2, 2]
+    safetyWalkingAloneDuringDay = -1  # [-2, 2]
+
     # healthcare
     numberOfDoctorsPer100kPopulation = 407
-    levelOfModernityOfMedicalEquipment = 0
-    levelOfEducationOfMedicalStaff = 0
-    responsivenessLevel = -1
-    levelOfCompetenceOfMedicalStaff = 0
-    levelOfLocationOfMedicalInstitutions = 0
-    costOfMedicine = 0
+    levelOfModernityOfMedicalEquipment = 0  # [-2, 2]
+    levelOfEducationOfMedicalStaff = 0  # [-2, 2]
+    responsivenessLevel = -1  # [-2, 2]
+    levelOfCompetenceOfMedicalStaff = 0  # [-2, 2]
+    levelOfLocationOfMedicalInstitutions = 0  # [-2, 2]
+    costOfMedicine = 0  # [-2, 2]
     menAverageLifeExpectancy = 61
     womenAverageLifeExpectancy = 69
+
     # climat
-    airQualityLevel = 0
-    drinkingWaterQualityLevel = 1
-    garbageCollectionLevel = 1
-    streetCleanlinessLevel = 1
-    levelOfLightAndNoisePollution = 1
-    waterPollution = 0
-    satisfactionWithGarbageDisposal = 1
-    comfortableTimeInTheCity = 1
-    qualityOfParksAndGreenSpaces = 1
+    airQualityLevel = 0  # [-2, 2]
+    drinkingWaterQualityLevel = 1  # [-2, 2]
+    garbageCollectionLevel = 1  # [-2, 2]
+    streetCleanlinessLevel = 1  # [-2, 2]
+    levelOfLightAndNoisePollution = 1  # [-2, 2]
+    waterPollution = 0  # [-2, 2]
+    satisfactionWithGarbageDisposal = 1  # [-2, 2]
+    comfortableTimeInTheCity = 1  # [-2, 2]
+    qualityOfParksAndGreenSpaces = 1  # [-2, 2]
     juneAverageTemperature = 19.9
     decemberAverageTemperature = -3.5
     averageHumidity = 67.5
@@ -375,13 +632,90 @@ if __name__ == "__main__":
     averageNumberOfRainyDaysPerYear = 48
     averageNumberOfClearDays = 96
 
-    manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500, 'aomuntOfInjuredPeople': 5000000,
-                       'territoryOfPollution': 145000}
-    name = 'Авария на ЧАЭС'
+    # Man-made disasters
+    nameMMD = 'Авария на ЧАЭС'
     typeOfMMD = 'Авария на АЭС'
     aomuntOfDeadPeople = 37500
     aomuntOfInjuredPeople = 5000000
     territoryOfPollution = 145000
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+
+    # security
+    situationInTheCountry = 0  # нет источника от Матвея [1, 5]
+    freedomOfSpeech = 0  # нет источника от Матвея [1, 5]
+    assessmentOfFamilyLife = 0  # нет источника от Матвея [1, 5]
+    attitudeTowardsLGBT = 0  # нет источника от Матвея [1, 5]
+
+    # population
+    populationCount = 9399000
+    procentOfMalesAndFemales = (53.8, 46.2)  # пара процентов, первое число - процент мужчин, второе - женщин
+    populationDensityPerSquareKilometer = 45.5
+    speedOfLife = 0  # нет источника от Матвея [1, 5]
+    workPlaces = 0  # нет источника от Матвея [1, 5]
+    nightLifeEntertainment = 0  # нет источника от Матвея [1, 5]
+
+    # citizenship
+    visa_free_entry = True
+    citizenshipGlobalRank = 0  # источники!!! [1, 5]
+    friendlyToForeigners = 0  # source!!! [1, 5]
+
+    # communication
+    communicationOnEnglish = 0  # источник [1, 5]
+
+    # transport
+    averageTravelTimeToWork = 50  # в чём измерять?
+    developmentLevelOfPublicTransport = 0  # [1, 5]
+
+    # internet
+    speedOfInternetMbps = 55  # Мегабиты в секунду
+    freeWifi = 0  # источник [1, 5]
+
+    # economic situation
+    averageSalaryAfterTaxes = 0  # $
+    # Price of life per month
+    familyPriceOfLife = 0  # $
+    personPriceOfLife = 0  # $
+    # Cafe and restaurant prices
+    priceOfFoodInAnInexpensiveRestaurant = 0  # $
+    priceOfFoodInAMidRangeRestaurant = 0  # $
+    priceOfFastFood = 0  # $
+    priceOfCoffee = 0  # $
+    # Supermarket prices
+    priceOfMilk1Litre = 0  # $
+    priceOfBreadHalfOf1kg = 0  # $
+    priceOfRice1kg = 0  # $
+    priceOfEggs12pcs = 0  # $
+    priceOfCheese1kg = 0  # $
+    priceOfChicken1kg = 0  # $
+    priceOfBeef1kg = 0  # $
+    priceOfApples1kg = 0  # $
+    priceOfBanana1kg = 0  # $
+    priceOfOrange1kg = 0  # $
+    priceOfTomato1kg = 0  # $
+    priceOfPotatoes1kg = 0  # $
+    priceOfOnion1kg = 0  # $
+    priceOfLettuceHead = 0  # $
+    priceOfWaterOneAndAHalfLitre = 0  # $
+    # transport prices
+    monthlyTravelByPublicTransport = 0  # $
+    taxiPricePer1km = 0  # $
+    gas1Litre = 0  # $
+    # Utility prices
+    basicUtilitiesPrice = 0  # $
+    theInternetPrice = 0  # $
+    # Prices for entertainment and recreation
+    fitnessClubPrice = 0  # $
+    movieTicketPrice = 0  # $
+    # child care costs
+    privateKindergartenPrice = 0  # $
+    schoolPrice = 0  # $
+    # Prices for clothes/shoes
+    aPairOfJeansPrice = 0  # $
+    dressPrice = 0  # $
+    sneakersPrice = 0  # $
+    shoesPrice = 0  # $
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -409,8 +743,48 @@ if __name__ == "__main__":
                   juneAverageTemperature, decemberAverageTemperature, averageHumidity,
                   averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
                   averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                  name, typeOfMMD, aomuntOfDeadPeople,
-                  aomuntOfInjuredPeople, territoryOfPollution
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+
+                  # economic situation
+                  averageSalaryAfterTaxes,
+                  # Price of life per month
+                  familyPriceOfLife, personPriceOfLife,
+                  # Cafe and restaurant prices
+                  priceOfFoodInAnInexpensiveRestaurant,
+                  priceOfFoodInAMidRangeRestaurant,
+                  priceOfFastFood, priceOfCoffee,
+                  # Supermarket prices
+                  priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
+                  priceOfEggs12pcs, priceOfCheese1kg, priceOfChicken1kg,
+                  priceOfBeef1kg, priceOfApples1kg, priceOfBanana1kg,
+                  priceOfOrange1kg, priceOfTomato1kg, priceOfPotatoes1kg,
+                  priceOfOnion1kg, priceOfLettuceHead, priceOfWaterOneAndAHalfLitre,
+                  # transport prices
+                  monthlyTravelByPublicTransport, taxiPricePer1km, gas1Litre,
+                  # Utility prices
+                  basicUtilitiesPrice, theInternetPrice,
+                  # Prices for entertainment and recreation
+                  fitnessClubPrice, movieTicketPrice,
+                  # child care costs
+                  privateKindergartenPrice, schoolPrice,
+                  # Prices for clothes/shoes
+                  aPairOfJeansPrice, dressPrice,
+                  sneakersPrice, shoesPrice
                   )
+    cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+                             aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createEducation("Беларусь", cities, 5)
     cc.close()
