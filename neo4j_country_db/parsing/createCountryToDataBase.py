@@ -40,7 +40,7 @@ class CountryCreator:
                    situationInTheCountry, freedomOfSpeech,
                    assessmentOfFamilyLife, attitudeTowardsLGBT,
                    # population
-                   populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                   populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
                    speedOfLife, workPlaces, nightLifeEntertainment,
                    # citizenship
                    visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
@@ -110,7 +110,7 @@ class CountryCreator:
                                          situationInTheCountry, freedomOfSpeech,
                                          assessmentOfFamilyLife, attitudeTowardsLGBT,
                                          # population
-                                         populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                                         populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
                                          speedOfLife, workPlaces, nightLifeEntertainment,
                                          # citizenship
                                          visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
@@ -186,7 +186,7 @@ class CountryCreator:
                     assessmentOfFamilyLife, attitudeTowardsLGBT,
 
                     #population
-                    populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                    populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
                     speedOfLife, workPlaces, nightLifeEntertainment,
 
                     # citizenship
@@ -321,13 +321,14 @@ class CountryCreator:
 
         # population
         resultStr += 'create (population:Population {count:"%d",' \
-                     '                               procentOfMalesAndFemales:"%d",' \
+                     '                               procentOfMales:"%d",' \
+                     '                               procentOfFemales:"%d",' \
                      '                               populationDensityPerSquareKilometer:"%d",' \
                      '                               speedOfLife:"%d",' \
                      '                               workPlaces:"%d",' \
-                     '                               nightLifeEntertainment:"%d"})' % (populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                     '                               nightLifeEntertainment:"%d"})' % (populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
                                                                                        speedOfLife, workPlaces, nightLifeEntertainment)
-        resultStr += 'create (country)-[:climat]->(climat)'
+        resultStr += 'create (country)-[:population]->(population)'
 
         # citizenship
         resultStr += 'create (citizenship:Citizenship {globalRank:"%d",' \
@@ -385,7 +386,7 @@ class CountryCreator:
                      '                                             priceOfPotatoes1kg:"%d",' \
                      '                                             priceOfOnion1kg:"%d",' \
                      '                                             priceOfLettuceHead:"%d",' \
-                     '                                             priceOfWaterOneAndAHalfLitre:"%d",})' % (priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
+                     '                                             priceOfWaterOneAndAHalfLitre:"%d"})' % (priceOfMilk1Litre, priceOfBreadHalfOf1kg, priceOfRice1kg,
                                                                                                             priceOfEggs12pcs, priceOfCheese1kg, priceOfChicken1kg,
                                                                                                             priceOfBeef1kg, priceOfApples1kg, priceOfBanana1kg,
                                                                                                             priceOfOrange1kg, priceOfTomato1kg, priceOfPotatoes1kg,
@@ -429,8 +430,8 @@ class CountryCreator:
     @staticmethod
     def _createManMadeDisaster(tx, countryName, nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
                   aomuntOfInjuredPeople, territoryOfPollution):
-        resultStr = 'match (country:Country {name:"%s"}' % countryName
-        resultStr += 'match (country)->[:climat]->(climat)'
+        resultStr = 'match (country:Country {name:"%s"})' % countryName
+        resultStr += 'match (country)-[:climat]->(climat)'
         resultStr += 'create (manMadeDisaster:ManMadeDisaster {name:"%s", typeOfMMD:"%s", aomuntOfDeadPeople:"%d",' \
                      '                                         aomuntOfInjuredPeople:"%d", territoryOfPollution:"%d km^2"})' % (nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
                                                                                                                                 aomuntOfInjuredPeople, territoryOfPollution)
@@ -650,7 +651,8 @@ if __name__ == "__main__":
 
     # population
     populationCount = 9399000
-    procentOfMalesAndFemales = (53.8, 46.2)  # пара процентов, первое число - процент мужчин, второе - женщин
+    procentOfMales = 53.8  # процент мужчин
+    procentOfFemales = 46.2  # процент женщин
     populationDensityPerSquareKilometer = 45.5
     speedOfLife = 0  # нет источника от Матвея [1, 5]
     workPlaces = 0  # нет источника от Матвея [1, 5]
@@ -747,7 +749,7 @@ if __name__ == "__main__":
                   situationInTheCountry, freedomOfSpeech,
                   assessmentOfFamilyLife, attitudeTowardsLGBT,
                   # population
-                  populationCount, procentOfMalesAndFemales, populationDensityPerSquareKilometer,
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
                   speedOfLife, workPlaces, nightLifeEntertainment,
                   # citizenship
                   visa_free_entry, citizenshipGlobalRank, friendlyToForeigners,
