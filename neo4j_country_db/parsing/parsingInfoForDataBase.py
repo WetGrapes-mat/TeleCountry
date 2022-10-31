@@ -11,9 +11,7 @@ def convertToNumber(string):
     return float(string[:ind] + string[ind + 1:])
 
 
-def costOfLivingForCity(cityName):
-    if cityName == 'Quebec':
-        cityName = 'Quebec-City'
+def costOfLivingForCountry(countryName):
     dictionary = {'mealInexpensiveRestaurant': 0,
                   'mealFor2PeopleMidRestaurant': 0, 'mcMealAtMcDonalds': 0, 'domesticBeerRestaurant': 0,
                   'importedBeerRestaurant': 0, 'cappuccino': 0, 'pepsi': 0, 'water': 0,
@@ -33,7 +31,7 @@ def costOfLivingForCity(cityName):
                   'pricePerSquareMeterToBuyApartmentOutsideOfCentre': 0,
                   'averageMonthlyNetSalary': 0}
     params = {'displayCurrency': 'USD'}
-    url = 'https://www.numbeo.com/cost-of-living/in/{}'.format(cityName)
+    url = 'https://www.numbeo.com/cost-of-living/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url, params=params)
     tree = html.fromstring(r.text)
     table = '//table[@class = "data_wide_table new_bar_table"]'
@@ -74,11 +72,9 @@ def costOfLivingForCity(cityName):
     return lst
 
 
-def crimeThingForCity(cityName):
-    if cityName == 'Quebec':
-        cityName = 'Quebec-City'
+def crimeThingForCountry(countryName):
     dictionary = {}
-    url = 'https://www.numbeo.com/crime/in/{}'.format(cityName)
+    url = 'https://www.numbeo.com/crime/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
     tree = html.fromstring(r.text)
     keys = tree.xpath('//tr/td[@class = "columnWithName"]/text()')
@@ -95,11 +91,9 @@ def crimeThingForCity(cityName):
     return dictionary
 
 
-def climatForCity(cityName):
-    if cityName == 'Quebec':
-        cityName = 'Quebec-City'
+def climatForCountry(countryName):
     dictionary = {}
-    url = 'https://www.numbeo.com/pollution/in/{}'.format(cityName)
+    url = 'https://www.numbeo.com/pollution/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
     tree = html.fromstring(r.text)
     keys = tree.xpath('//tr/td[@class = "columnWithName"]/text()')
@@ -116,11 +110,9 @@ def climatForCity(cityName):
     return dictionary
 
 
-def healthForCity(cityName):
-    if cityName == 'Quebec':
-        cityName = 'Quebec-City'
+def healthForCountry(countryName):
     dictionary = {}
-    url = 'https://www.numbeo.com/health-care/in/{}'.format(cityName)
+    url = 'https://www.numbeo.com/health-care/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
     tree = html.fromstring(r.text)
     keys = tree.xpath('//tr/td[@class = "columnWithName"]/text()')

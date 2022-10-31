@@ -1,5 +1,6 @@
 from neo4j import GraphDatabase
-from parsingInfoForDataBase import crimeThingForCity, climatForCity, costOfLivingForCity, healthForCity
+from parsingInfoForDataBase import crimeThingForCountry, climatForCountry, costOfLivingForCountry, healthForCountry
+
 
 def formParams(dict):
     params = '{'
@@ -113,81 +114,77 @@ class CountryCreator:
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
+        # Crime
+        crime = crimeThingForCountry(countryName)
+        crimeParams = formParams(crime)
+        resultStr += '\ncreate (crime:CrimeThing %s)\n' % (crimeParams)
+        resultStr += 'create (country)-[:crime_indices]->(crime)\n'
+        # Climat
+        climat = climatForCountry(countryName)
+        climatParams = '{'
+        for key, value in climat.items():
+            climatParams += '%s: %s, ' % (key, str(value))
+        climatParams += 'juneAverageTemperature: %s, ' % juneAverageTemperature
+        climatParams += 'decemberAverageTemperature: %s, ' % decemberAverageTemperature
+        climatParams += 'averageHumidity: %s, ' % averageHumidity
+        climatParams += 'averageDurationOfWinter: %s, ' % averageDurationOfWinter
+        climatParams += 'averageRainfallPerMonth: %s, ' % averageRainfallPerMonth
+        climatParams += 'averageNumberOfFoggyDaysPerYear: %s, ' % averageNumberOfFoggyDaysPerYear
+        climatParams += 'averageNumberOfRainyDaysPerYear: %s, ' % averageNumberOfRainyDaysPerYear
+        climatParams += 'averageNumberOfClearDays: %s, ' % averageNumberOfClearDays
+        climatParams = climatParams[:-2] + '}'
+        resultStr += 'create (climat:Climat %s)\n' % (climatParams)
+        resultStr += 'create (country)-[:climat]->(climat)\n'
+        # economic situation
+        resultStr += 'create (economicSituation:EconomicSituation)'
+        economicList = costOfLivingForCountry(countryName)
+        restaurantsParams = formParams(economicList[0])
+        marketsParams = formParams(economicList[1])
+        transportationParams = formParams(economicList[2])
+        utilitiesParams = formParams(economicList[3])
+        sportsParams = formParams(economicList[4])
+        childcareParams = formParams(economicList[5])
+        clothingParams = formParams(economicList[6])
+        rentParams = formParams(economicList[7])
+        buyParams = formParams(economicList[8])
+        salariesParams = formParams(economicList[9])
+        resultStr += '\ncreate (restaurantsPrices:RestaurantsPrices %s)' % restaurantsParams
+        resultStr += '\ncreate (economicSituation)-[:prices_in_restaurants]->(restaurantsPrices)'
+        resultStr += '\ncreate (marketsPrices:MarketsPrices %s)' % marketsParams
+        resultStr += '\ncreate (economicSituation)-[:prices_in_markets]->(marketsPrices)'
+        resultStr += '\ncreate (transportationPrices:TransportationPrices %s)' % transportationParams
+        resultStr += '\ncreate (economicSituation)-[:transportation_prices]->(transportationPrices)'
+        resultStr += '\ncreate (utilitiesPrices:UtilitiesPrices %s)' % utilitiesParams
+        resultStr += '\ncreate (economicSituation)-[:utilities_prices]->(utilitiesPrices)'
+        resultStr += '\ncreate (sportsPrices:SportsPrices %s)' % sportsParams
+        resultStr += '\ncreate (economicSituation)-[:sports_prices]->(sportsPrices)'
+        resultStr += '\ncreate (childcarePrices:ChildcarePrices %s)' % childcareParams
+        resultStr += '\ncreate (economicSituation)-[:childcare_prices]->(childcarePrices)'
+        resultStr += '\ncreate (clothingPrices:ClothingPrices %s)' % clothingParams
+        resultStr += '\ncreate (economicSituation)-[:clothing_prices]->(clothingPrices)'
+        resultStr += '\ncreate (rentPrices:RentPrices %s)' % rentParams
+        resultStr += '\ncreate (economicSituation)-[:rent_prices]->(rentPrices)'
+        resultStr += '\ncreate (buyPrices:BuyPrices %s)' % buyParams
+        resultStr += '\ncreate (economicSituation)-[:buy_prices]->(buyPrices)'
+        resultStr += '\ncreate (salaries:Salaries %s)' % salariesParams
+        resultStr += '\ncreate (economicSituation)-[:salaries]->(salaries)'
+        resultStr += '\ncreate (country)-[:economic_situation]->(economicSituation)'
+        # healthcare
+        healthDict = healthForCountry(countryName)
+        healthParams = '{'
+        for key, value in healthDict.items():
+            healthParams += '%s: %s, ' % (key, str(value))
+        healthParams += 'numberOfDoctorsPer100kPopulation: %s, ' % numberOfDoctorsPer100kPopulation
+        healthParams += 'menAverageLifeExpectancy: %s, ' % menAverageLifeExpectancy
+        healthParams += 'womenAverageLifeExpectancy: %s, ' % womenAverageLifeExpectancy
+        healthParams = healthParams[:-2] + '}'
+        resultStr += 'create (health:HealthCare %s)\n' % healthParams
+        resultStr += 'create (country)-[:healthcare]->(health)\n'
         # cities
         index = 1
         for city in citiesDict:
             resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s"})' % (index, city, str(citiesDict[city]))
             resultStr += '\ncreate (country)-[:has_city]->(city%d)' % index
-
-            # Crime
-            crimeDict = crimeThingForCity(city)
-            crimeParams = formParams(crimeDict)
-            resultStr += '\ncreate (crime%d:CrimeThing %s)\n' % (index, crimeParams)
-            resultStr += 'create (city%d)-[:crime_indices]->(crime%d)\n' % (index, index)
-
-            # Climat
-            climatDict = climatForCity(city)
-            climatParams = '{'
-            for key, value in climatDict.items():
-                climatParams += '%s: %s, ' % (key, str(value))
-            climatParams += 'juneAverageTemperature: %s, ' % juneAverageTemperature
-            climatParams += 'decemberAverageTemperature: %s, ' % decemberAverageTemperature
-            climatParams += 'averageHumidity: %s, ' % averageHumidity
-            climatParams += 'averageDurationOfWinter: %s, ' % averageDurationOfWinter
-            climatParams += 'averageRainfallPerMonth: %s, ' % averageRainfallPerMonth
-            climatParams += 'averageNumberOfFoggyDaysPerYear: %s, ' % averageNumberOfFoggyDaysPerYear
-            climatParams += 'averageNumberOfRainyDaysPerYear: %s, ' % averageNumberOfRainyDaysPerYear
-            climatParams += 'averageNumberOfClearDays: %s, ' % averageNumberOfClearDays
-            climatParams = climatParams[:-2] + '}'
-            resultStr += 'create (climat%d:Climat %s)\n' % (index, climatParams)
-            resultStr += 'create (city%d)-[:climat]->(climat%d)\n' % (index, index)
-
-            # economic situation
-            resultStr += '\ncreate (economicSituation%d:EconomicSituation)' % index
-            economicList = costOfLivingForCity(city)
-            restaurantsParams = formParams(economicList[0])
-            marketsParams = formParams(economicList[1])
-            transportationParams = formParams(economicList[2])
-            utilitiesParams = formParams(economicList[3])
-            sportsParams = formParams(economicList[4])
-            childcareParams = formParams(economicList[5])
-            clothingParams = formParams(economicList[6])
-            rentParams = formParams(economicList[7])
-            buyParams = formParams(economicList[8])
-            salariesParams = formParams(economicList[9])
-            resultStr += '\ncreate (restaurantsPrices%d:RestaurantsPrices %s)' % (index, restaurantsParams)
-            resultStr += '\ncreate (economicSituation%d)-[:prices_in_restaurants]->(restaurantsPrices%d)' % (index, index)
-            resultStr += '\ncreate (marketsPrices%d:MarketsPrices %s)' % (index, marketsParams)
-            resultStr += '\ncreate (economicSituation%d)-[:prices_in_markets]->(marketsPrices%d)' % (index, index)
-            resultStr += '\ncreate (transportationPrices%d:TransportationPrices %s)' % (index, transportationParams)
-            resultStr += '\ncreate (economicSituation%d)-[:transportation_prices]->(transportationPrices%d)' % (index, index)
-            resultStr += '\ncreate (utilitiesPrices%d:UtilitiesPrices %s)' % (index, utilitiesParams)
-            resultStr += '\ncreate (economicSituation%d)-[:utilities_prices]->(utilitiesPrices%d)' % (index, index)
-            resultStr += '\ncreate (sportsPrices%d:SportsPrices %s)' % (index, sportsParams)
-            resultStr += '\ncreate (economicSituation%d)-[:sports_prices]->(sportsPrices%d)' % (index, index)
-            resultStr += '\ncreate (childcarePrices%d:ChildcarePrices %s)' % (index, childcareParams)
-            resultStr += '\ncreate (economicSituation%d)-[:childcare_prices]->(childcarePrices%d)' % (index, index)
-            resultStr += '\ncreate (clothingPrices%d:ClothingPrices %s)' % (index, clothingParams)
-            resultStr += '\ncreate (economicSituation%d)-[:clothing_prices]->(clothingPrices%d)' % (index, index)
-            resultStr += '\ncreate (rentPrices%d:RentPrices %s)' % (index, rentParams)
-            resultStr += '\ncreate (economicSituation%d)-[:rent_prices]->(rentPrices%d)' % (index, index)
-            resultStr += '\ncreate (buyPrices%d:BuyPrices %s)' % (index, buyParams)
-            resultStr += '\ncreate (economicSituation%d)-[:buy_prices]->(buyPrices%d)' % (index, index)
-            resultStr += '\ncreate (salaries%d:Salaries %s)' % (index, salariesParams)
-            resultStr += '\ncreate (economicSituation%d)-[:salaries]->(salaries%d)' % (index, index)
-            resultStr += '\ncreate (city%d)-[:economic_situation]->(economicSituation%d)' % (index, index)
-
-            # healthcare
-            healthDict = healthForCity(city)
-            healthParams = '{'
-            for key, value in healthDict.items():
-                healthParams += '%s: %s, ' % (key, str(value))
-            healthParams += 'numberOfDoctorsPer100kPopulation: %s, ' % numberOfDoctorsPer100kPopulation
-            healthParams += 'menAverageLifeExpectancy: %s, ' % menAverageLifeExpectancy
-            healthParams += 'womenAverageLifeExpectancy: %s, ' % womenAverageLifeExpectancy
-            healthParams = healthParams[:-2] + '}'
-            resultStr += 'create (health%d:HealthCare %s)\n' % (index, healthParams)
-            resultStr += 'create (city%d)-[:healthcare]->(health%d)\n' % (index, index)
             index += 1
         # language
         resultStr += '\ncreate (language:Language {name:"%s"})' % (str(languageName))
@@ -232,8 +229,6 @@ class CountryCreator:
         # education
         resultStr += '\ncreate (education:Education {rankingOfNationalEducationSystem:%d})' % rankingOfNationalEducationSystem
         resultStr += '\ncreate (country)-[:education]->(education)'
-
-        # print(resultStr)
         result = tx.run(resultStr)
 
     def createManMadeDisaster(self, countryName, nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
