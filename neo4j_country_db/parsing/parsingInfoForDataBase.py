@@ -12,6 +12,8 @@ def convertToNumber(string):
 
 
 def costOfLivingForCountry(countryName):
+    if countryName == 'Czech':
+        countryName = 'Czech+Republic'
     dictionary = {'mealInexpensiveRestaurant': 0,
                   'mealFor2PeopleMidRestaurant': 0, 'mcMealAtMcDonalds': 0, 'domesticBeerRestaurant': 0,
                   'importedBeerRestaurant': 0, 'cappuccino': 0, 'pepsi': 0, 'water': 0,
@@ -73,6 +75,8 @@ def costOfLivingForCountry(countryName):
 
 
 def crimeThingForCountry(countryName):
+    if countryName == 'Czech':
+        countryName = 'Czech+Republic'
     dictionary = {}
     url = 'https://www.numbeo.com/crime/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
@@ -92,6 +96,8 @@ def crimeThingForCountry(countryName):
 
 
 def climatForCountry(countryName):
+    if countryName == 'Czech':
+        countryName = 'Czech+Republic'
     dictionary = {}
     url = 'https://www.numbeo.com/pollution/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
@@ -111,6 +117,8 @@ def climatForCountry(countryName):
 
 
 def healthForCountry(countryName):
+    if countryName == 'Czech':
+        countryName = 'Czech+Republic'
     dictionary = {}
     url = 'https://www.numbeo.com/health-care/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
