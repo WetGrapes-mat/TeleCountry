@@ -180,12 +180,17 @@ class CountryCreator:
         healthParams = healthParams[:-2] + '}'
         resultStr += 'create (health:HealthCare %s)\n' % healthParams
         resultStr += 'create (country)-[:healthcare]->(health)\n'
+
         # cities
         index = 1
         for city in citiesDict:
-            resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s"})' % (index, city, str(citiesDict[city]))
+            resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s"})' % (index, city, str(citiesDict[city][0]))
             resultStr += '\ncreate (country)-[:has_city]->(city%d)' % index
+            if citiesDict[city][1] is not None:
+                resultStr += '\ncreate(ocean%d:Ocean {name:"%s"})' % (index, str(citiesDict[city][1]))
+                resultStr += '\ncreate (ocean%d)-[:washes]->(city%d)' % (index, index)
             index += 1
+
         # language
         resultStr += '\ncreate (language:Language {name:"%s"})' % (str(languageName))
         resultStr += '\ncreate (country)-[:official_language]->(language)'
@@ -277,8 +282,9 @@ if __name__ == "__main__":
     countryName = "Canada"
     officialLanguage = "English"
 
-    # cities    name   isBig
-    cities = {'Ottawa': True, 'Toronto': True, 'Montreal': True, 'Quebec': True, 'Vancouver': True}
+    # cities    name   isBig  washesBy
+    cities = {'Ottawa': [True, None], 'Toronto': [True, None], 'Montreal': [True, None],
+              'Quebec': [True, 'Atlantic ocean'], 'Vancouver': [True, 'Pacific ocean']}
 
     # education
     universities = {'Ottawa': ['Carleton University', 'University of Ottawa'],
@@ -384,7 +390,7 @@ if __name__ == "__main__":
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
-    cc.createOceans()
+    # cc.createOceans()
     #############################   CANADA   #############################
 
 
@@ -395,7 +401,8 @@ if __name__ == "__main__":
     officialLanguage = "Polish"
 
     # cities    name   isBig
-    cities = {'Warsaw': True, 'Krakow': True, 'Lodz': True, 'Wroclaw': True, 'Bialystok': True}
+    cities = {'Warsaw': [True, None], 'Krakow': [True, None], 'Lodz': [True, None],
+              'Wroclaw': [True, None], 'Bialystok': [True, None]}
 
     # education
     universities = {'Warsaw': ['University of Economics and Humanities in Warsaw', 'University of Engineering and Health'],  # https://univerpl.com.ua/ru/universiteti-varshavi/
@@ -512,7 +519,8 @@ if __name__ == "__main__":
     officialLanguage = "Czech"
 
     # cities    name   isBig
-    cities = {'Prague': True, 'Brno': True, 'Pilsen': True, 'Ostrava': True, 'Olomouc': True}
+    cities = {'Prague': [True, None], 'Brno': [True, None], 'Pilsen': [True, None],
+              'Ostrava': [True, None], 'Olomouc': [True, None]}
 
     # education
     universities = {'Prague': ['Czech Technical University in Prague', 'Charles University'],
@@ -618,7 +626,7 @@ if __name__ == "__main__":
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
-    cc.createOceans()
+    # cc.createOceans()
 
     #############################   CZECH   #############################
 
