@@ -13,7 +13,7 @@ def formParams(dict):
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7999", auth=("neo4j", "admin"))
 
     def close(self):
         self.driver.close()
@@ -186,6 +186,8 @@ class CountryCreator:
         for city in citiesDict:
             resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s"})' % (index, city, str(citiesDict[city][0]))
             resultStr += '\ncreate (country)-[:has_city]->(city%d)' % index
+            if index == 1:
+                resultStr += '\ncreate (country)-[:capital]->(city%d)' % index
             if citiesDict[city][1] is not None:
                 resultStr += '\ncreate(ocean%d:Ocean {name:"%s"})' % (index, str(citiesDict[city][1]))
                 resultStr += '\ncreate (ocean%d)-[:washes]->(city%d)' % (index, index)
@@ -787,15 +789,15 @@ if __name__ == "__main__":
     officialLanguage = "Slovak"
 
     # cities    name   isBig
-    cities = {'Kosice': [True, None], 'Bratislava': [True, None], 'Nitra': [True, None],
+    cities = {'Bratislava': [True, None], 'Kosice': [True, None], 'Nitra': [True, None],
               'Presov': [True, None], 'Banska Bystrica': [True, None]}
 
     # education
-    universities = {'Berlin': ['Czech Technical University in Prague', 'Charles University'],
-                    'Hamburg': ['Brno University of Technology', 'Masaryk University'],
-                    'Bremen': ['University of West Bohemia', 'Charles University'],
-                    'Dresden': ['University of Ostrava', 'Ostrava University of Technology'],
-                    'Nuremberg': ['Olomouc University', 'Palacký University Olomouc']}
+    universities = {'Bratislava': ['Czech Technical University in Prague', 'Charles University'],
+                    'Kosice': ['Brno University of Technology', 'Masaryk University'],
+                    'Nitra': ['University of West Bohemia', 'Charles University'],
+                    'Presov': ['University of Ostrava', 'Ostrava University of Technology'],
+                    'Banska Bystrica': ['Olomouc University', 'Palacký University Olomouc']}
     faculties = {
         'Czech Technical University in Prague': ['Architecture and construction', 'Software Engineering and Technology',
                                                  'Applied Informatics', 'Design']}
