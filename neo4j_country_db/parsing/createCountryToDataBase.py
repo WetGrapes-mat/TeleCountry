@@ -272,6 +272,38 @@ class CountryCreator:
         create (ocean1)-[:washes]->(city2)\n'''
         result = tx.run(request)
 
+    def createBorders(self):
+        with self.driver.session() as session:
+            borders = session.execute_write(self._createBorders)
+            return borders
+
+    @staticmethod
+    def _createBorders(tx):
+        request = '''
+        match (canada:Country {name:"Canada"})
+        match (poland:Country {name:"Poland"})
+        match (germany:Country {name:"Germany"})
+        match (czech:Country {name:"Czech"})
+        match (slovakia:Country {name:"Slovakia"})
+        
+        create (poland)-[:borders_with]->(czech)
+        create (czech)-[:borders_with]->(poland)
+        
+        create (poland)-[:borders_with]->(germany)
+        create (germany)-[:borders_with]->(poland)
+        
+        create (czech)-[:borders_with]->(germany)
+        create (germany)-[:borders_with]->(czech)
+        
+        create (slovakia)-[:borders_with]->(poland)
+        create (poland)-[:borders_with]->(slovakia)
+        
+        create (slovakia)-[:borders_with]->(czech)
+        create (czech)-[:borders_with]->(slovakia)  
+        
+        \n'''
+        result = tx.run(request)
+
 
 if __name__ == "__main__":
     cc = CountryCreator()
@@ -568,7 +600,7 @@ if __name__ == "__main__":
     situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
     freedomOfSpeech = 3  # [1, 3]
     assessmentOfFamilyLife = 3  # [1, 3]
-    attitudeTowardsLGBT = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
 
     # population
     populationCount = 10700000
@@ -630,4 +662,242 @@ if __name__ == "__main__":
 
     #############################   CZECH   #############################
 
+    #############################   GERMANY   #############################
+
+    # Country
+    countryName = "Germany"
+    officialLanguage = "Deutsch"
+
+    # cities    name   isBig
+    cities = {'Berlin': [True, None], 'Hamburg': [True, None], 'Bremen': [True, None],
+              'Dresden': [True, None], 'Nuremberg': [True, None]}
+
+    # education
+    universities = {'Berlin': ['Czech Technical University in Prague', 'Charles University'],
+                    'Hamburg': ['Brno University of Technology', 'Masaryk University'],
+                    'Bremen': ['University of West Bohemia', 'Charles University'],
+                    'Dresden': ['University of Ostrava', 'Ostrava University of Technology'],
+                    'Nuremberg': ['Olomouc University', 'Palacký University Olomouc']}
+    faculties = {'Czech Technical University in Prague': ['Architecture and construction', 'Software Engineering and Technology',
+                                                          'Applied Informatics', 'Design']}
+
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 182832
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 413
+    menAverageLifeExpectancy = 77.2  # years
+    womenAverageLifeExpectancy = 82.4  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 79  # %
+    averageDurationOfWinter = 3  # month
+    averageRainfallPerMonth = 625  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 89  # days
+    averageNumberOfRainyDaysPerYear = 140  # days
+    averageNumberOfClearDays = 136  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 83130000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 240
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 42.1
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 49  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 70.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   GERMANY   #############################
+
+    #############################   SLOVAKIA   #############################
+
+    # Country
+    countryName = "Slovakia"
+    officialLanguage = "Slovak"
+
+    # cities    name   isBig
+    cities = {'Kosice': [True, None], 'Bratislava': [True, None], 'Nitra': [True, None],
+              'Presov': [True, None], 'Banska Bystrica': [True, None]}
+
+    # education
+    universities = {'Berlin': ['Czech Technical University in Prague', 'Charles University'],
+                    'Hamburg': ['Brno University of Technology', 'Masaryk University'],
+                    'Bremen': ['University of West Bohemia', 'Charles University'],
+                    'Dresden': ['University of Ostrava', 'Ostrava University of Technology'],
+                    'Nuremberg': ['Olomouc University', 'Palacký University Olomouc']}
+    faculties = {
+        'Czech Technical University in Prague': ['Architecture and construction', 'Software Engineering and Technology',
+                                                 'Applied Informatics', 'Design']}
+
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 26200
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 300
+    menAverageLifeExpectancy = 75.8  # years
+    womenAverageLifeExpectancy = 75.8  # years
+
+    # climat
+    juneAverageTemperature = 19.6  # °C
+    decemberAverageTemperature = 1.7  # °C
+    averageHumidity = 75  # %
+    averageDurationOfWinter = 3.5  # month
+    averageRainfallPerMonth = 580  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 70  # days
+    averageNumberOfRainyDaysPerYear = 142  # days
+    averageNumberOfClearDays = 153  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 5447000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 114
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 9
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 44.3
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 45.47  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 70.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   SLOVAKIA   #############################
+
+    cc.createBorders()
     cc.close()
