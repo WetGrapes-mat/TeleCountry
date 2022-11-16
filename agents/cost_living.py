@@ -50,10 +50,10 @@ class CostLiving:
         super().__init__()
         self.prices = []
         self.coefficients = coefficients
-        self.rent = ["1-комнатная квартира в центре города (аренда)",
-                     "3-комнатная квартира в центре города (аренда)",
-                     "1-комнатная квартира на окраине города (аренда)",
-                     "3-комнатная квартира на окраине города (аренда)",
+        self.rent = ["1-к в центре",
+                     "3-к в центре",
+                     "1-к на окраине",
+                     "3-к на окраине",
                      "своё жильё"]
         self.transportation = ["такси",
                                "своя машина",
@@ -61,13 +61,17 @@ class CostLiving:
 
     def get_information(self):
         self.prices = cost_living_db.findAllPrices()
-        for price in self.prices:
-            print(price)
+        # for price in self.prices:
+        #     print(price)
         cost_living_db.close()
+
+    def to_fixed(self, numObj: float):
+        digits = 2
+        return f"{numObj:.{digits}f}"
 
     def count_cost_living(self, children_preschool: int, children_school: int, family_member_amount: int,
                           smoking_packs: float, transportation: str, rent: str):
-        result_cost_living = []
+        result_cost_living = ""
         for i in range(len(self.prices)):
             #  Учёт стоимости проживания не включая аренду и проезд
             sum = (family_member_amount * (self.prices[i]["dress"] * self.coefficients["dress"]
@@ -108,7 +112,7 @@ class CostLiving:
                    + self.prices[i]["preschool"] * children_preschool
                    + self.prices[i]["internationalPrimarySchool"] * self.coefficients["internationalPrimarySchool"]
                    * children_school
-                   + self.prices[i]["cigarettesPack"] * smoking_packs)
+                   + self.prices[i]["cigarettesPack"] * smoking_packs * 30)
             # Учёт стоимости проживания с арендой квартиры
             if rent == self.rent[0]:  # 1-комнатная квартира в центре города (аренда)
                 sum += self.prices[i]["apartment1RoomInCityCentre"]
@@ -134,11 +138,7 @@ class CostLiving:
             elif transportation == self.transportation[2]:  # общественный транспорт
                 sum += family_member_amount * self.prices[i]["monthlyPass"] * self.coefficients["monthlyPass"]
 
-            print(sum)
+            result_sum = self.to_fixed(sum)
+            result_cost_living += f'{self.prices[i]["Country"]} -- {result_sum} $\n'
 
-
-if __name__ == "__main__":
-    cl = CostLiving()
-    cl.get_information()
-    cl.count_cost_living(0, 0, 1, 0, "такси", "1-комнатная квартира в центре города (аренда)")
-
+        return result_cost_living
