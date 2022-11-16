@@ -1,40 +1,19 @@
-from neo4j import GraphDatabase
+from neo4j_country_db.cost_living import cost_living_db
 
 
-class Requester:
-
+class CostLiving:
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7999", auth=("neo4j", "admin"))
+        super().__init__()
+        self.prices = []
 
-    def close(self):
-        self.driver.close()
-
-    def request_city_names(self, country_name):  # входная функция, просто передаёт элементы в приватный метод
-        with self.driver.session() as session:
-            request = session.execute_write(self._request_city_names, country_name)
-            return request
-
-    # по факту в кавычках пишется запрос на языке cypher
-    @staticmethod
-    def _request_city_names(tx, country_name):  # приватный метод который дерает запрос в neo4j
-        result_str = 'match (country:Country {name:"%s"}) \n' % country_name  # ищем страну с заданным названием
-        result_str += 'match (country)-[:has_city]->(city:City) \n'  # ищем узлы со связями has_city
-        result_str += 'return city.name \n'  # возвращаем названия найденных городов
-        result = tx.run(result_str)  # запускаем написанный запрос
-        return [cityName["city.name"] for cityName in result]  # возвращаем массив названий городов
-
-    # запросы можно строить и в одном result_str
-    # result_str = """
-    # запрос
-    # запрос
-    # запрос
-    # """
+    def get_information(self):
+        self.prices = cost_living_db.findAllPrices()
+        for price in self.prices:
+            print(price)
+        cost_living_db.close()
 
 
 if __name__ == "__main__":
-    rqst = Requester()  # создаём запросник
+    cl = CostLiving()
+    cl.get_information()
 
-    city_names = rqst.request_city_names("Poland")  # делаем запрос на названия городов в заданной стране
-    print(city_names)
-
-    rqst.close()  # закрываем запросник
