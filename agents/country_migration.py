@@ -7,4 +7,5 @@ class CountryMigrationAgent:
 
 
 if __name__ == "__main__":
+    c = C
     pass
