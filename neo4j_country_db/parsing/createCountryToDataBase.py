@@ -281,6 +281,35 @@ class CountryCreator:
         create (ocean1)-[:washes]->(city2)\n'''
         result = tx.run(request)
 
+    def createUniversities(self, countryName, universities, cost_of_education, faculties, program, average_graduates_salary,
+                           percentage_find_job_in_short_time):
+        with self.driver.session() as session:
+            universitiess = session.execute_write(self._createUniversities, countryName, universities, cost_of_education, faculties,
+                                                  program, average_graduates_salary,
+                                                  percentage_find_job_in_short_time)
+            return universitiess
+
+    def _createUniversities(self, tx, countryName, universities, cost_of_education, faculties,
+                                                  program, average_graduates_salary,
+                                                  percentage_find_job_in_short_time):
+        resultStr = 'match (country:Country {name:"%s"})\n' % countryName
+        uni_index = 1
+        city_index = 1
+        for uni in universities:
+            resultStr += 'match (city%d:City {name:"%s"})\n' % (city_index, uni)
+            city_index += 1
+        city_index = 1
+        for uni in universities:
+            for uni_name in universities[uni]:
+                print(uni_name)
+                resultStr += 'create (uni%d:University {name:"%s"})\n' % (uni_index, uni_name)  # , cost_of_education: %d, hostel_aviability: %s}' % ()
+                resultStr += 'create (city%d)-[:has_university]->(uni%d)\n' % (city_index, uni_index)
+                uni_index += 1
+            city_index += 1
+        print(resultStr)
+
+        result = tx.run(resultStr)
+
     def createBorders(self):
         with self.driver.session() as session:
             borders = session.execute_write(self._createBorders)
@@ -447,6 +476,9 @@ if __name__ == "__main__":
                   # education
                   rankingOfNationalEducationSystem
                   )
+
+    cc.createUniversities(countryName, universities, "cost_of_education", faculties, "program",
+                          "average_graduates_salary", "percentage_find_job_in_short_time")
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
