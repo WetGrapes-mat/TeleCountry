@@ -206,7 +206,7 @@ class CountryCreator:
         resultStr += '\ncreate (militaryPoliticalBlock:MilitaryPoliticalBlock {name:"%s"})' % (str(milPolBlock))
         resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock)'
         # military Power
-        resultStr += '\ncreate (militaryPower:MilitaryPower {amountOfPeople:"%d"})' % amountOfPeopleInArmy
+        resultStr += '\ncreate (militaryPower:MilitaryPower {amountOfPeople:%d})' % amountOfPeopleInArmy
         resultStr += '\ncreate (country)-[:military_power]->(militaryPower)'
         # security
         resultStr += '\ncreate (security:Security {situationInTheCountry:%d, freedomOfSpeech:%d,' \
@@ -257,8 +257,8 @@ class CountryCreator:
                                aomuntOfInjuredPeople, territoryOfPollution):
         resultStr = 'match (country:Country {name:"%s"}' % countryName
         resultStr += '\nmatch (country)->[:climat]->(climat)'
-        resultStr += 'create (manMadeDisaster:ManMadeDisaster {name:"%s", typeOfMMD:"%s", aomuntOfDeadPeople:"%d",' \
-                     '                                         aomuntOfInjuredPeople:"%d", territoryOfPollution:"%d km^2"})' % (
+        resultStr += 'create (manMadeDisaster:ManMadeDisaster {name:"%s", typeOfMMD:"%s", aomuntOfDeadPeople:%d,' \
+                     '                                         aomuntOfInjuredPeople:%d, territoryOfPollution:"%d km^2"})' % (
                      nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
                      aomuntOfInjuredPeople, territoryOfPollution)
         resultStr += 'create (climat)-[:man_made_disaster]->(manMadeDisaster)'
