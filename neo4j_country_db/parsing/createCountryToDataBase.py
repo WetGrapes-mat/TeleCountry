@@ -13,7 +13,7 @@ def formParams(dict):
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
 
     def close(self):
         self.driver.close()
@@ -194,6 +194,23 @@ class CountryCreator:
                 resultStr += '\ncreate(ocean%d:Ocean {name:"%s"})' % (index, str(citiesDict[city][1]))
                 resultStr += '\ncreate (ocean%d)-[:washes]->(city%d)' % (index, index)
             index += 1
+        # education
+        resultStr += '\ncreate (education:Education {rankingOfNationalEducationSystem:%d})' % rankingOfNationalEducationSystem
+        resultStr += '\ncreate (country)-[:education]->(education)\n'
+
+        index = 1
+        fac = 1
+        ind = 1
+        for city in citiesDict:
+            for univ in universities[city]:
+                resultStr += '\ncreate (univ%d:University {name:"%s"})' % (ind, univ)
+                for faculty in faculties[univ]:
+                    resultStr += '\ncreate (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
+                    resultStr += '\ncreate (univ%d)-[:faculty]->(faculty%d)' % (ind, fac)
+                    fac += 1
+                resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, ind)
+                ind += 1
+            index += 1
 
         # language
         resultStr += '\ncreate (language:Language {name:"%s"})' % (str(languageName))
@@ -238,10 +255,6 @@ class CountryCreator:
         resultStr += '\ncreate (internet:Internet {speedOfInternetMbps:%d, freeWifi:%d})' % (
         speedOfInternetMbps, freeWifi)
         resultStr += '\ncreate (country)-[:internet]->(internet)'
-
-        # education
-        resultStr += '\ncreate (education:Education {rankingOfNationalEducationSystem:%d})' % rankingOfNationalEducationSystem
-        resultStr += '\ncreate (country)-[:education]->(education)\n'
         print(resultStr)
         result = tx.run(resultStr)
 
@@ -280,35 +293,6 @@ class CountryCreator:
         create (ocean2)-[:washes]->(city1)
         create (ocean1)-[:washes]->(city2)\n'''
         result = tx.run(request)
-
-    def createUniversities(self, countryName, universities, cost_of_education, faculties, program, average_graduates_salary,
-                           percentage_find_job_in_short_time):
-        with self.driver.session() as session:
-            universitiess = session.execute_write(self._createUniversities, countryName, universities, cost_of_education, faculties,
-                                                  program, average_graduates_salary,
-                                                  percentage_find_job_in_short_time)
-            return universitiess
-
-    def _createUniversities(self, tx, countryName, universities, cost_of_education, faculties,
-                                                  program, average_graduates_salary,
-                                                  percentage_find_job_in_short_time):
-        resultStr = 'match (country:Country {name:"%s"})\n' % countryName
-        uni_index = 1
-        city_index = 1
-        for uni in universities:
-            resultStr += 'match (city%d:City {name:"%s"})\n' % (city_index, uni)
-            city_index += 1
-        city_index = 1
-        for uni in universities:
-            for uni_name in universities[uni]:
-                print(uni_name)
-                resultStr += 'create (uni%d:University {name:"%s"})\n' % (uni_index, uni_name)  # , cost_of_education: %d, hostel_aviability: %s}' % ()
-                resultStr += 'create (city%d)-[:has_university]->(uni%d)\n' % (city_index, uni_index)
-                uni_index += 1
-            city_index += 1
-        print(resultStr)
-
-        result = tx.run(resultStr)
 
     def createBorders(self):
         with self.driver.session() as session:
@@ -381,8 +365,21 @@ if __name__ == "__main__":
                     'Montreal': ['Montreal university', 'Polytechnique Montreal'],
                     'Quebec': ['Laval University', 'TELUQ University'],
                     'Vancouver': ['University of British Columbia', 'University Canada West']}
-    faculties = {'Carleton University': ['Faculty of Arts and Social Sciences', 'Faculty of Engineering and Design',
-                                         'Faculty of Public Affairs', 'Faculty of Science'], }
+    faculties = {'Carleton University': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
+                                         'Faculty of Public Affairs', 'Faculty of Science', 'Faculty of Social Sciences'],
+                 'University of Ottawa': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Education',
+                                          'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Social Sciences'],
+                 'York University': ['Faculty of Education', 'Faculty of Arts', 'Faculty of Medicine, Faculty of Science'],
+                 'University of Toronto': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Medicine', 'Faculty of Design'],
+                 'Montreal university': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Law', 'Faculty of Medicine',
+                                         'Faculty of Education', 'Faculty of Design', 'Faculty of Kinesiology'],
+                 'Polytechnique Montreal': ['Faculty of Computer Engineering and Software', 'Faculty of Science', 'Faculty of Biomedicine'],
+                 'Laval University': ['Faculty of Arts', 'Faculty of Law', 'Faculty of Education', 'Faculty of Forestry', 'Faculty of Medicine'],
+                 'TELUQ University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Medicine', 'Faculty of Design'],
+                 'University of British Columbia': ['Faculty of Business', 'Faculty of Forestry', 'Faculty of Education',
+                                                    'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Kinesiology'],
+                 'University Canada West': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
+                                         'Faculty of Public Affairs', 'Faculty of Science', 'Faculty of Social Sciences']}
 
     # currency
     currencyName = 'CAD'
@@ -477,8 +474,6 @@ if __name__ == "__main__":
                   rankingOfNationalEducationSystem
                   )
 
-    cc.createUniversities(countryName, universities, "cost_of_education", faculties, "program",
-                          "average_graduates_salary", "percentage_find_job_in_short_time")
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
