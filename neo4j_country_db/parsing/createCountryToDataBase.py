@@ -13,7 +13,7 @@ def formParams(dict):
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
 
     def close(self):
         self.driver.close()
@@ -45,7 +45,7 @@ class CountryCreator:
                    # internet
                    speedOfInternetMbps, freeWifi,
                    # education
-                   rankingOfNationalEducationSystem
+                   rankingOfNationalEducationSystem, universities, faculties
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName,
@@ -78,7 +78,7 @@ class CountryCreator:
                                          # internet
                                          speedOfInternetMbps, freeWifi,
                                          # education
-                                         rankingOfNationalEducationSystem
+                                         rankingOfNationalEducationSystem, universities, faculties
                                          )
             return base
 
@@ -112,7 +112,7 @@ class CountryCreator:
                     # internet
                     speedOfInternetMbps, freeWifi,
                     # education
-                    rankingOfNationalEducationSystem
+                    rankingOfNationalEducationSystem, universities, faculties
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -379,7 +379,7 @@ if __name__ == "__main__":
                  'University of British Columbia': ['Faculty of Business', 'Faculty of Forestry', 'Faculty of Education',
                                                     'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Kinesiology'],
                  'University Canada West': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
-                                         'Faculty of Public Affairs', 'Faculty of Science', 'Faculty of Social Sciences']}
+                                            'Faculty of Public Affairs', 'Faculty of Science', 'Faculty of Social Sciences']}
 
     # currency
     currencyName = 'CAD'
@@ -471,7 +471,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
 
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
@@ -491,15 +491,41 @@ if __name__ == "__main__":
 
     # education
     universities = {
-        'Warsaw': ['University of Economics and Humanities in Warsaw', 'University of Engineering and Health'],
+        'Warsaw': ['University of Economics and Human Sciences', 'University of Engineering and Health'],
         # https://univerpl.com.ua/ru/universiteti-varshavi/
         'Krakow': ['Jagiellonian University', 'Krakow Academy named after A.F. Modzhevsky'],
         # https://univerpl.com.ua/ru/universiteti-krakova/
         'Lodz': ['Łódź University of Technology', 'University of Lodz'],
         'Wroclaw': ['Wrocław University of Science and Technology', 'University of Wrocław'],
-        'Bialystok': ['Bialystok Technical University', 'Medical University of Białystok']}
-    faculties = {'University of Engineering and Health': ['Internet programs', 'IT in administration',
-                                                          'internal security', 'public finance'], }
+        'Bialystok': ['Bialystok Technical University', 'University of Bialystok']}
+
+    faculties = {'University of Economics and Human Sciences': ['Faculty of Management', 'Faculty of Finance',
+                                                                'Faculty of Psychology', 'Faculty of Computer Engineering and Software',
+                                                                'Faculty of Political Science', 'Faculty of Dietetics'],
+                 'University of Engineering and Health': ['Faculty of Administration and Social Sciences', 'Faculty of Architecture',
+                                                          'Faculty of Engineering', 'Faculty of Chemistry',
+                                                          'Faculty of Civil Engineering', 'Faculty of Electrical Engineering'],
+                 'Jagiellonian University': ['Faculty of Law and Administration', 'Faculty of Medicine',
+                                             'Faculty of Pharmacy', 'Faculty of Health Science', 'Faculty of Philosophy',
+                                             'Faculty of History', 'Faculty of Philology'],
+                 'Krakow Academy named after A.F. Modzhevsky': ['Faculty of Design of Aircraft', 'Faculty of Space Infrastructure',
+                                                                'Faculty of Information Security', 'Faculty of Computer Science'],
+                 'Łódź University of Technology': ['Faculty of Mechanical Engineering', 'Faculty of Electrical Engineering',
+                                                   'Faculty of Chemistry', 'Faculty of Biotechnology',
+                                                   'Faculty of Architecture', 'Faculty of Physics', 'Faculty of Management'],
+                 'University of Lodz': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Economics',
+                                        'Faculty of Sociology', 'Faculty of Philology', 'Faculty of Psychology',
+                                        'Faculty of Computer Science', 'Faculty of Management'],
+                 'Wrocław University of Science and Technology': ['Faculty of Architecture', 'Faculty of Chemistry',
+                                                                  'Faculty of Electrical Engineering', 'Faculty of Management',
+                                                                  'Faculty of Mechanical Engineering'],
+                 'University of Wrocław': ['Faculty of Biotechnology', 'Faculty of Chemistry', 'Faculty of Physics',
+                                           'Faculty of Computer Science', 'Faculty of Social Sciences', 'Faculty of Biology'],
+                 'Bialystok Technical University': ['Faculty of Architecture', 'Faculty of Computer Science', 'Faculty of Electrical Engineering',
+                                                    'Faculty of Engineering Management', 'Faculty of Mechanical Engineering'],
+                 'University of Bialystok': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Economics and Finance',
+                                             'Faculty of Philology', 'Faculty of Physics', 'Faculty of History',
+                                             'Faculty of Computer Science', 'Faculty of Management']}
 
     # currency
     currencyName = 'PLN'
@@ -592,7 +618,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -611,14 +637,38 @@ if __name__ == "__main__":
               'Ostrava': [True, None], 'Olomouc': [True, None]}
 
     # education
-    universities = {'Prague': ['Czech Technical University in Prague', 'Charles University'],
+    universities = {'Prague': ['Czech Technical University in Prague', 'Prague City University'],
                     'Brno': ['Brno University of Technology', 'Masaryk University'],
                     'Pilsen': ['University of West Bohemia', 'Charles University'],
                     'Ostrava': ['University of Ostrava', 'Ostrava University of Technology'],
-                    'Olomouc': ['Olomouc University', 'Palacký University Olomouc']}
-    faculties = {
-        'Czech Technical University in Prague': ['Architecture and construction', 'Software Engineering and Technology',
-                                                 'Applied Informatics', 'Design'], }
+                    'Olomouc': ['Palacký University Olomouc', 'Moravian University Olomouc']}
+
+    faculties = {'Czech Technical University in Prague': ['Faculty of Architecture', 'Faculty of Biomedical Engineering',
+                                                          'Faculty of Electrical Engineering', 'Faculty of Information Technology',
+                                                          'Faculty of Mechanical Engineering', 'Faculty of Transportation Sciences'],
+                 'Prague City University': ['Faculty of Design', 'Faculty of Art', 'Faculty of Management',
+                                            'Faculty of Computig'],
+                 'Brno University of Technology': ['Faculty of Architecture', 'Faculty of Management', 'Faculty of Business',
+                                                   'Faculty of Civil Engineering', 'Faculty of Electrical Engineering', 'Faculty of Chemistry',
+                                                   'Faculty of Information Technology', 'Faculty of Mechanical Engineering', 'Faculty of Arts'],
+                 'Masaryk University': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Science', 'Faculty of Arts',
+                                        'Faculty of Economics', 'Faculty of Informatics'],
+                 'University of West Bohemia': ['Faculty of Science', 'Faculty of Arts', 'Faculty of Economics',
+                                                'Faculty of Electrical Engineering', 'Faculty of Law', 'Faculty of Mechanical Engineering'],
+                 'Charles University': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Arts', 'Faculty of Science',
+                                        'Faculty of Mathematics and Physics', 'Faculty of Social Sciences'],
+                 'University of Ostrava': ['Faculty of Science', 'Faculty of Arts', 'Faculty of Music',
+                                           'Faculty of Music', 'Faculty of Social Studies', 'Faculty of Medicine'],
+                 'Ostrava University of Technology': ['Faculty of Mechanical Engineering', 'Faculty of Economics',
+                                                      'Faculty of Electrical Engineering', 'Faculty of Computer Science',
+                                                      'Faculty of Civil Engineering', 'Faculty of Safety Engineering'],
+                 'Palacký University Olomouc': ['Faculty of Medicine', 'Faculty of Arts', 'Faculty of Science',
+                                                'Faculty of Education', 'Faculty of Law', 'Faculty of Health Sciences'],
+                 'Moravian University Olomouc': ['Faculty of Economics', 'Faculty of Social Studies',
+                                                 'Faculty of Electrical Engineering',
+                                                 'Faculty of Mechanical Engineering']}
+
+
 
     # currency
     currencyName = 'CZK'
@@ -711,7 +761,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -730,14 +780,34 @@ if __name__ == "__main__":
               'Dresden': [True, None], 'Nuremberg': [True, None]}
 
     # education
-    universities = {'Berlin': ['Czech Technical University in Prague', 'Charles University'],
-                    'Hamburg': ['Brno University of Technology', 'Masaryk University'],
-                    'Bremen': ['University of West Bohemia', 'Charles University'],
-                    'Dresden': ['University of Ostrava', 'Ostrava University of Technology'],
-                    'Nuremberg': ['Olomouc University', 'Palacký University Olomouc']}
-    faculties = {
-        'Czech Technical University in Prague': ['Architecture and construction', 'Software Engineering and Technology',
-                                                 'Applied Informatics', 'Design']}
+    universities = {'Berlin': ['Humboldt University of Berlin', 'Technical University of Berlin'],
+                    'Hamburg': ['University of Hamburg', 'HafenCity University Hamburg'],
+                    'Bremen': ['University of Bremen', 'Jacobs University Bremen'],
+                    'Dresden': ['Dresden University of Technology', 'Dresden University of Applied Sciences'],
+                    'Nuremberg': ['Nuremberg Institute of Technology', 'Academy of Fine Arts']}
+    faculties = {'Humboldt University of Berlin': ['Faculty of Law', 'Faculty of Mathematics', 'Faculty of Arts',
+                                                   'Faculty of Economics', 'Faculty of Language'],
+                 'Technical University of Berlin': ['Faculty of Education', 'Faculty of Mathematics', 'Faculty of Science',
+                                                    'Faculty of Electrical Engineering', 'Faculty of Computer Science',
+                                                    'Faculty of Mechanical Engineering', 'Faculty of Economics'],
+                 'University of Hamburg': ['Faculty of Law', 'Faculty of Business', 'Faculty of Economics',
+                                           'Faculty of Social Sciences', 'Faculty of Medicine', 'Faculty of Education',
+                                           'Faculty of Mathematics', 'Faculty of Business'],
+                 'HafenCity University Hamburg': ['Faculty of Architecture', 'Faculty of Engineering', 'Faculty of Mathematics',
+                                                  'Faculty of Mechanical Engineering'],
+                 'University of Bremen': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Mathematics',
+                                          'Faculty of Computer Science', 'Faculty of Law', 'Faculty of Social Sciences'],
+                 'Jacobs University Bremen': ['Faculty of Computer Science', 'Faculty of Physics', 'Faculty of Mathematics',
+                                              'Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Psychology'],
+                 'Dresden University of Technology': ['Faculty of Biology', 'Faculty of Mathematics', 'Faculty of Psychology',
+                                                      'Faculty of Physics', 'Faculty of Chemistry', 'Faculty of Education',
+                                                      'Faculty of Arts', 'Faculty of Computer Science', 'Faculty of Electrical Engineering'],
+                 'Dresden University of Applied Sciences': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Mathematics',
+                                                            'Faculty of Physics', 'Faculty of Psychology'],
+                 'Nuremberg Institute of Technology': ['Faculty of Chemistry', 'Faculty of Mathematics', 'Faculty of Architecture',
+                                                       'Faculty of Design', 'Faculty of Computer Science', 'Faculty of Electrical Engineering'],
+                 'Academy of Fine Arts': ['Faculty of Design', 'Faculty of Arts', 'Faculty of Psychology',
+                                          'Faculty of Architecture', 'Faculty of Law']}
 
     # currency
     currencyName = 'EUR'
@@ -830,7 +900,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -849,14 +919,33 @@ if __name__ == "__main__":
               'Presov': [True, None], 'Banska Bystrica': [True, None]}
 
     # education
-    universities = {'Bratislava': ['Czech Technical University in Prague', 'Charles University'],
-                    'Kosice': ['Brno University of Technology', 'Masaryk University'],
-                    'Nitra': ['University of West Bohemia', 'Charles University'],
-                    'Presov': ['University of Ostrava', 'Ostrava University of Technology'],
-                    'Banska Bystrica': ['Olomouc University', 'Palacký University Olomouc']}
-    faculties = {
-        'Czech Technical University in Prague': ['Architecture and construction', 'Software Engineering and Technology',
-                                                 'Applied Informatics', 'Design']}
+    universities = {'Bratislava': ['Slovak University of Technology in Bratislava', 'Comenius University Bratislava'],
+                    'Kosice': ['University of Veterinary Medicine in Kosice', 'Pavol Josef Safarik University'],
+                    'Nitra': ['Slovak University of Agriculture in Nitra', 'Constantine the Philosopher University'],
+                    'Presov': ['University of Presov', 'International Business College ISM Slovakia in Presov'],
+                    'Banska Bystrica': ['Matej Bel University in Banská Bystrica', 'Academy of Arts in Banská Bystrica']}
+    faculties = {'Slovak University of Technology in Bratislava': ['Faculty of Civil Engineering', 'Faculty of Electrical Engineering',
+                                                                   'Faculty of Mechanical Engineering', 'Faculty of Chemistry',
+                                                                   'Faculty of Architecture', 'Faculty of Science'],
+                 'Comenius University Bratislava': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Arts',
+                                                    'Faculty of Natural Sciences', 'Faculty of Education', 'Faculty of Medicine'],
+                 'University of Veterinary Medicine in Kosice': ['Faculty of Medicine', 'Faculty of Veterinary Medicine',
+                                                                 'Faculty of Veterinary Surgery'],
+                 'Pavol Josef Safarik University': ['Faculty of Medicine', 'Faculty of Biology', 'Faculty of Surgery'],
+                 'Slovak University of Agriculture in Nitra': ['Faculty of Agrobiology', 'Faculty of Biotechnology',
+                                                               'Faculty of Economics', 'Faculty of Engineering',
+                                                               'Faculty of Management'],
+                 'Constantine the Philosopher University': ['Faculty of Arts', 'Faculty of Natural Sciences',
+                                                            'Faculty of Informatics'],
+                 'University of Presov': ['Faculty of Arts', 'Faculty of Management', 'Faculty of Business',
+                                          'Faculty of Education', 'Faculty of Sports', 'Faculty of Health Care'],
+                 'International Business College ISM Slovakia in Presov': ['Faculty of Management', 'Faculty of Business',
+                                                                           'Faculty of Law', 'Faculty of Economics'],
+                 'Matej Bel University in Banská Bystrica': ['Faculty of Economics', 'Faculty of Natural Science',
+                                                             'Faculty of Arts', 'Faculty of Education',
+                                                             'Faculty of Law'],
+                 'Academy of Arts in Banská Bystrica': ['Faculty of Dramatic Arts', 'Faculty of Performing Arts',
+                                                        'Faculty of Fine Arts']}
 
     # currency
     currencyName = 'EUR'
@@ -949,7 +1038,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -964,18 +1053,32 @@ if __name__ == "__main__":
     officialLanguage = "Hungarian"
 
     # cities     name      isBig WashesBy
-    cities = {'Butapest': [True, None], 'Debrecen': [True, None], 'Szeged': [True, None],
+    cities = {'Budapest': [True, None], 'Debrecen': [True, None], 'Szeged': [True, None],
               'Miskolc': [True, None], 'Pecs': [True, None]}
 
     # education
-    universities = {'Butapest': ['', ''],
-                    'Debrecen': ['', ''],
-                    'Szeged': ['', ''],
-                    'Miskolc': ['', ''],
-                    'Pecs': ['', '']}
-    faculties = {
-        '': ['', '',
-             '', '']}
+    universities = {'Budapest': ['Eötvös Loránd University', 'Semmelweis University'],
+                    'Debrecen': ['University of Debrecen', 'Debrecen University of Reformed Theology'],
+                    'Szeged': ['University of Szeged'],
+                    'Miskolc': ['University of Miskolc'],
+                    'Pecs': ['University of Pecs']}
+    faculties = {'Eötvös Loránd University': ['Faculty of Economic', 'Faculty of Education', 'Faculty of Humanities',
+                                              'Faculty of Informatics', 'Faculty of Law', 'Faculty of Science',
+                                              'Faculty of Social Science'],
+                 'Semmelweis University': ['Faculty of Medicine', 'Faculty of Health', 'Faculty of Dentistry'],
+                 'University of Debrecen': ['Faculty of Dentistry', 'Faculty of Economics', 'Faculty of Business',
+                                            'Faculty of Engineering', 'Faculty of Law', 'Faculty of Informatics',
+                                            'Faculty of Medicine', 'Faculty of Music'],
+                 'Debrecen University of Reformed Theology': ['Faculty of Reformed Theology', 'Faculty of Medicine',
+                                                              'Faculty of Health', 'Faculty of Dentistry'],
+                 'University of Szeged': ['Faculty of Agriculture', 'Faculty of Social Sciences', 'Faculty of Dentistry',
+                                          'Faculty of Economics', 'Faculty of Business', 'Faculty of Engineering'],
+                 'University of Miskolc': ['Faculty of Engineering', 'Faculty of Informatics',
+                                           'Faculty of Mechanical Engineering', 'Faculty of Economics',
+                                           'Faculty of Arts', 'Faculty of Law'],
+                 'University of Pecs': ['Faculty of Economics', 'Faculty of Business',
+                                        'Faculty of Education', 'Faculty of Engineering',
+                                        'Faculty of Information Technology', 'Faculty of Law']}
 
     # currency
     currencyName = 'HUF'
@@ -1068,7 +1171,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1087,14 +1190,31 @@ if __name__ == "__main__":
               'Manchester': [True, None], 'Belfast': [True, "Irish sea"]}
 
     # education
-    universities = {'London': ['', ''],
-                    'Edinburgh': ['', ''],
-                    'Birmingham': ['', ''],
-                    'Manchester': ['', ''],
-                    'Belfast': ['', '']}
-    faculties = {
-        '': ['', '',
-             '', '']}
+    universities = {'London': ['University College London', 'Imperial College London'],
+                    'Edinburgh': ['University of Edinburgh', 'Heriot-Watt University'],
+                    'Birmingham': ['University of Birmingham', 'Aston University'],
+                    'Manchester': ['University of Manchester', 'University of Salford'],
+                    'Belfast': ["Queen's University Belfast"]}
+    faculties = {'University College London': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Law',
+                                               'Faculty of Medicine', 'Faculty of Architecture', 'Faculty of Mathematics',
+                                               'Faculty of Physics'],
+                 'Imperial College London': ['Faculty of Engineering', 'Faculty of Medicine', 'Faculty of Mathematics',
+                                             'Faculty of Chemistry', 'Faculty of Physics'],
+                 'University of Edinburgh': ['Faculty of Law', 'Faculty of Arts', 'Faculty of Medicine',
+                                             'Faculty of Veterinary Medicine', 'Faculty of Education', 'Faculty of Science'],
+                 'Heriot-Watt University': ['Faculty of Engineering', 'Faculty of Social Sciences', 'Faculty of Design',
+                                            'Faculty of Business', 'Faculty of Computer Sciences'],
+                 'University of Birmingham': ['Faculty of Arts', 'Faculty of Design', 'Faculty of Media',
+                                              'Faculty of Business', 'Faculty of Law', 'Faculty of Social Sciences',
+                                              'Faculty of Education', 'Faculty of Computing', 'Faculty of Engineering'],
+                 'Aston University': ['Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Engineering',
+                                      'Faculty of Physics', 'Faculty of Life Science'],
+                 'University of Manchester': ['Faculty of Biology', 'Faculty of Medicine', 'Faculty of Health',
+                                              'Faculty of Science', 'Faculty of Engineering', 'Faculty of Humanities'],
+                 'University of Salford': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Arts',
+                                           'Faculty of Health', 'Faculty of Business'],
+                 "Queen's University Belfast": ['Faculty of Arts', 'Faculty of Humanities', 'Faculty of Social Science',
+                                                'Faculty of Engineering', 'Faculty of Physics', 'Faculty of Medicine']}
 
     # currency
     currencyName = 'GBP'
@@ -1187,7 +1307,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1206,14 +1326,31 @@ if __name__ == "__main__":
               'Oulu': [True, "Baltic Gulf"], 'Rovaniemi': [True, None]}
 
     # education
-    universities = {'Helsinki': ['', ''],
-                    'Turku': ['', ''],
-                    'Tampere': ['', ''],
-                    'Oulu': ['', ''],
-                    'Rovaniemi': ['', '']}
-    faculties = {
-        '': ['', '',
-             '', '']}
+    universities = {'Helsinki': ['University of Helsinki', 'Hanken School of Economics'],
+                    'Turku': ['University of Turku', 'Abo Akademi University'],
+                    'Tampere': ['University of Tampere'],
+                    'Oulu': ['University of Oulu', 'Oulu University of Applied Sciences'],
+                    'Rovaniemi': ['University of Lapland', 'Lapland University of Applied Sciences']}
+    faculties = {'University of Helsinki': ['Faculty of Agriculture', 'Faculty of Arts', 'Faculty of Biology',
+                                            'Faculty of Education', 'Faculty of Law', 'Faculty of Medicine',
+                                            'Faculty of Science', 'Faculty of Theology', 'Faculty of Veterinary Medicine'],
+                 'Hanken School of Economics': ['Faculty of Economics', 'Faculty of Management', 'Faculty of Business'],
+                 'University of Turku': ['Faculty of Education', 'Faculty of Humanities', 'Faculty of Law',
+                                         'Faculty of Medicine', 'Faculty of Science', 'Faculty of Technology'],
+                 'Abo Akademi University': ['Faculty of Arts', 'Faculty of Psychology', 'Faculty of Theology',
+                                            'Faculty of Education', 'Faculty of Science', 'Faculty of Engineering',
+                                            'Faculty of Social Sciences', 'Faculty of Business', 'Faculty of Economics'],
+                 'University of Tampere': ['Faculty of Architecture', 'Faculty of Education', 'Faculty of Engineering',
+                                           'Faculty of Science', 'Faculty of Information Technology', 'Faculty of Management',
+                                           'Faculty of Business', 'Faculty of Medicine'],
+                 'University of Oulu': ['Faculty of Biochemistry', ' Faculty of Medicine', ' Faculty of Science',
+                                        'Faculty of Humanities', 'Faculty of Electrical Engineering'],
+                 'Oulu University of Applied Sciences': ['Faculty of Biochemistry', 'Faculty of Education', 'Faculty of Medicine',
+                                                         'Faculty of Science', 'Faculty of Technology', 'Faculty of Business'],
+                 'University of Lapland': ['Faculty of Art', 'Faculty of Design', 'Faculty of Education',
+                                           'Faculty of Law', 'Faculty of Social Sciences'],
+                 'Lapland University of Applied Sciences': ['Faculty of Social Sciences', 'Faculty of Technology', 'Faculty of Electrical Engineering',
+                                                            'Faculty of Information Technology', 'Faculty of Mechanical Engineering']}
 
     # currency
     currencyName = 'FIM'
@@ -1306,7 +1443,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1325,14 +1462,29 @@ if __name__ == "__main__":
               'Trondheim': [True, "Trondheimsfjorden"], 'Stavanger': [True, "Northern ocean"]}
 
     # education
-    universities = {'Oslo': ['', ''],
-                    'Drammen': ['', ''],
-                    'Bergen': ['', ''],
-                    'Trondheim': ['', ''],
-                    'Stavanger': ['', '']}
-    faculties = {
-        '': ['', '',
-             '', '']}
+    universities = {'Oslo': ['University of Oslo', 'Oslo Metropolitan University'],
+                    'Drammen': ['The International Theatre Academy Norway'],
+                    'Bergen': ['University of Bergen', 'Norwegian School of Economics'],
+                    'Trondheim': ['Norwegian University of Science and Technology', 'Queen Maud University College for Early Childhood Education'],
+                    'Stavanger': ['University of Stavanger']}
+    faculties = {'University of Oslo': ['Faculty of Health', 'Faculty of Education', 'Faculty of Social Sciences',
+                                        'Faculty of Technology', 'Faculty of Arts', 'Faculty of Design'],
+                 'Oslo Metropolitan University': ['Faculty of Health', 'Faculty of Education', 'Faculty of Social Sciences',
+                                                  'Faculty of Technology', 'Faculty of Arts', 'Faculty of Design'],
+                 'The International Theatre Academy Norway': ['Faculty of Arts', 'Faculty of Music', 'Faculty of Design',
+                                                              'Faculty of Social Sciences'],
+                 'University of Bergen': ['Faculty of Fine Art', 'Faculty of Music', 'Faculty of Design',
+                                          'Faculty of Humanities', 'Faculty of Law', 'Faculty of Natural Sciences',
+                                          'Faculty of Medicine', 'Faculty of Social Sciences'],
+                 'Norwegian School of Economics': ['Faculty of Economics', 'Faculty of Management', 'Faculty of Business',
+                                                   'Faculty of Social Science'],
+                 'Norwegian University of Science and Technology': ['Faculty of Architecture', 'Faculty of Design',
+                                                                    'Faculty of Humanities', 'Faculty of Information Technology',
+                                                                    'Faculty of Electrical Engineering', 'Faculty of Medicine'],
+                 'Queen Maud University College for Early Childhood Education': ['Faculty of Childhood Education', 'Faculty of Care',
+                                                                                 'Faculty of Health', 'Faculty of Arts'],
+                 'University of Stavanger': ['Faculty of Arts', 'Faculty of Education', 'Faculty of Science',
+                                             'Faculty of Technology', 'Faculty of Health']}
 
     # currency
     currencyName = 'NOK'
@@ -1425,7 +1577,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1440,18 +1592,31 @@ if __name__ == "__main__":
     officialLanguage = "Swedish"
 
     # cities     name      isBig WashesBy
-    cities = {'Stockholm': [True, "Baltic Sea"], 'Örebro': [True, None], 'Linköping': [True, None],
-              'Jönköping': [True, "Vättern"], 'Göteborg': [True, "Kattegat"]}
+    cities = {'Stockholm': [True, "Baltic Sea"], 'Orebro': [True, None], 'Linkoping': [True, None],
+              'Jonkoping': [True, "Vättern"], 'Goteborg': [True, "Kattegat"]}
 
     # education
-    universities = {'Stockholm': ['', ''],
-                    'Örebro': ['', ''],
-                    'Linköping': ['', ''],
-                    'Jönköping': ['', ''],
-                    'Göteborg': ['', '']}
-    faculties = {
-        '': ['', '',
-             '', '']}
+    universities = {'Stockholm': ['Karolinska Institute', 'Stockholm University'],
+                    'Orebro': ['Orebro University'],
+                    'Linkoping': ['Linkoping University'],
+                    'Jonkoping': ['Jonkoping University'],
+                    'Goteborg': ['University of Gothenburg', 'Chalmers University of Technology']}
+    faculties = {'Karolinska Institute': ['Faculty of Dentistry', 'Faculty of Medicine', 'Faculty of Anatomy',
+                                          'Faculty of Biology', 'Faculty of Psychology'],
+                 'Stockholm University': ['Faculty of Humanities', 'Faculty of Law', 'Faculty of Social Sciences',
+                                          'Faculty of ', 'Faculty of Science'],
+                 'Orebro University': ['Faculty of Business', 'Faculty of Science', 'Faculty of Engineering',
+                                       'Faculty of Humanities', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                       'Faculty of Health'],
+                 'Linkoping University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Education',
+                                          'Faculty of Medicine', 'Faculty of Health', 'Faculty of Science',
+                                          'Faculty of Engineering'],
+                 'Jonkoping University': ['Faculty of Computing', 'Faculty of Engineering', 'Faculty of Mathematics',
+                                          'Faculty of Physics', 'Faculty of Chemistry'],
+                 'University of Gothenburg': ['Faculty of Information Technology', 'Faculty of Humanities', 'Faculty of Education',
+                                              'Faculty of Arts', 'Faculty of Science', 'Faculty of Social Sciences'],
+                 'Chalmers University of Technology': ['Faculty of Architecture', 'Faculty of Information Technology', 'Faculty of Physics',
+                                                       'Faculty of Mathematics', 'Faculty of Chemistry', 'Faculty of Engineering']}
 
     # currency
     currencyName = 'CHF'
@@ -1544,7 +1709,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem
+                  rankingOfNationalEducationSystem, universities, faculties
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
