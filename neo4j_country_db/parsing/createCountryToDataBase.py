@@ -229,8 +229,8 @@ class CountryCreator:
                 resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
                 resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
                 c += 1
-                resultStr += '\ncreate (univ%d)-[:is_in]->(city%d)' % (index, ind)
-                resultStr += 'create (country)-[:has_university]->(univ%d)' % ind
+                resultStr += 'create (city%d)-[:university]->(univ%d)' % (index, ind)
+                resultStr += 'create (country)-[:university]->(univ%d)' % ind
                 ind += 1
             index += 1
 
