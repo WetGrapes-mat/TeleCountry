@@ -1,5 +1,6 @@
 from neo4j import GraphDatabase
 from parsingInfoForDataBase import crimeThingForCountry, climatForCountry, costOfLivingForCountry, healthForCountry
+from config import LOCALHOST, LOGIN, PASSWORD
 
 
 def formParams(dict):
@@ -13,7 +14,7 @@ def formParams(dict):
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
+        self.driver = GraphDatabase.driver(LOCALHOST, auth=(LOGIN, PASSWORD))
 
     def close(self):
         self.driver.close()
