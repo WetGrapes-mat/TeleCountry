@@ -213,8 +213,8 @@ class CountryCreator:
                     link = "a"
                 resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s"})' % (ind, univ, link)
                 for faculty in faculties[univ]:
-                    resultStr += '\ncreate (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
-                    resultStr += '\ncreate (univ%d)-[:faculty]->(faculty%d)' % (ind, fac)
+                    resultStr += '\nmerge (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
+                    resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (ind, fac)
                     fac += 1
                 try:
                     for program in programs[univ]:
