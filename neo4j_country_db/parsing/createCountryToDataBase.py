@@ -2,6 +2,7 @@ from neo4j import GraphDatabase
 from parsingInfoForDataBase import crimeThingForCountry, climatForCountry, costOfLivingForCountry, healthForCountry
 from config import LOCALHOST, LOGIN, PASSWORD
 
+
 def formParams(dict):
     params = '{'
     for key, value in dict.items():
@@ -229,8 +230,8 @@ class CountryCreator:
                 resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
                 resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
                 c += 1
-                resultStr += 'create (city%d)-[:university]->(univ%d)' % (index, ind)
-                resultStr += 'create (country)-[:university]->(univ%d)' % ind
+                resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, ind)
+                resultStr += '\ncreate (country)-[:university]->(univ%d)' % ind
                 ind += 1
             index += 1
 
@@ -1779,5 +1780,6 @@ if __name__ == "__main__":
     # cc.createOceans()
 
     #############################   SWEDEN   #############################
+
     cc.createBorders()
     cc.close()
