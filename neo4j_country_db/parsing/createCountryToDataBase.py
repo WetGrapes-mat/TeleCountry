@@ -1,6 +1,6 @@
 from neo4j import GraphDatabase
 from parsingInfoForDataBase import crimeThingForCountry, climatForCountry, costOfLivingForCountry, healthForCountry
-
+from config import LOCALHOST, LOGIN, PASSWORD
 
 def formParams(dict):
     params = '{'
@@ -13,7 +13,7 @@ def formParams(dict):
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
+        self.driver = GraphDatabase.driver(LOCALHOST, auth=(LOGIN, PASSWORD))
 
     def close(self):
         self.driver.close()
@@ -45,7 +45,7 @@ class CountryCreator:
                    # internet
                    speedOfInternetMbps, freeWifi,
                    # education
-                   rankingOfNationalEducationSystem, universities, faculties
+                   rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName,
@@ -78,7 +78,7 @@ class CountryCreator:
                                          # internet
                                          speedOfInternetMbps, freeWifi,
                                          # education
-                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs
+                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                                          )
             return base
 
@@ -112,7 +112,7 @@ class CountryCreator:
                     # internet
                     speedOfInternetMbps, freeWifi,
                     # education
-                    rankingOfNationalEducationSystem, universities, faculties, programs, costs
+                    rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -206,21 +206,31 @@ class CountryCreator:
         cost = 0
         for city in citiesDict:
             for univ in universities[city]:
-                link = links[univ]
+                try:
+                    link = links[univ]
+                except:
+                    link = "a"
                 resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s"})' % (ind, univ, link)
                 for faculty in faculties[univ]:
                     resultStr += '\ncreate (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
                     resultStr += '\ncreate (univ%d)-[:faculty]->(faculty%d)' % (ind, fac)
                     fac += 1
-                for program in programs[univ]:
-                    resultStr += '\ncreate (program%d:Program {name:"%s"})' % (prog, program)
-                    resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (ind, prog)
-                    prog += 1
-                cost = costs[univ]
+                try:
+                    for program in programs[univ]:
+                        resultStr += '\ncreate (program%d:Program {name:"%s"})' % (prog, program)
+                        resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (ind, prog)
+                        prog += 1
+                except:
+                    pass
+                try:
+                    cost = costs[univ]
+                except:
+                    cost = 1000
                 resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
                 resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
                 c += 1
-                resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, ind)
+                resultStr += '\ncreate (univ%d)-[:is_in]->(city%d)' % (index, ind)
+                resultStr += 'create (country)-[:has_university]->(univ%d)' % ind
                 ind += 1
             index += 1
 
@@ -524,7 +534,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
 
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
@@ -671,7 +681,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -814,7 +824,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -953,7 +963,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1091,7 +1101,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1224,7 +1234,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1360,7 +1370,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1496,7 +1506,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1630,7 +1640,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
@@ -1762,7 +1772,7 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
