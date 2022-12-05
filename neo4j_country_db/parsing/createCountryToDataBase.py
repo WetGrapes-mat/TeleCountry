@@ -13,7 +13,7 @@ def formParams(dict):
 class CountryCreator:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "3777"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "9758"))
 
     def close(self):
         self.driver.close()
@@ -78,7 +78,7 @@ class CountryCreator:
                                          # internet
                                          speedOfInternetMbps, freeWifi,
                                          # education
-                                         rankingOfNationalEducationSystem, universities, faculties
+                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs
                                          )
             return base
 
@@ -112,7 +112,7 @@ class CountryCreator:
                     # internet
                     speedOfInternetMbps, freeWifi,
                     # education
-                    rankingOfNationalEducationSystem, universities, faculties
+                    rankingOfNationalEducationSystem, universities, faculties, programs, costs
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -201,13 +201,25 @@ class CountryCreator:
         index = 1
         fac = 1
         ind = 1
+        prog = 1
+        c = 1
+        cost = 0
         for city in citiesDict:
             for univ in universities[city]:
-                resultStr += '\ncreate (univ%d:University {name:"%s"})' % (ind, univ)
+                link = links[univ]
+                resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s"})' % (ind, univ, link)
                 for faculty in faculties[univ]:
                     resultStr += '\ncreate (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
                     resultStr += '\ncreate (univ%d)-[:faculty]->(faculty%d)' % (ind, fac)
                     fac += 1
+                for program in programs[univ]:
+                    resultStr += '\ncreate (program%d:Program {name:"%s"})' % (prog, program)
+                    resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (ind, prog)
+                    prog += 1
+                cost = costs[univ]
+                resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
+                resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
+                c += 1
                 resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, ind)
                 ind += 1
             index += 1
@@ -392,7 +404,36 @@ if __name__ == "__main__":
                                                     'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Kinesiology'],
                  'University Canada West': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
                                             'Faculty of Public Affairs', 'Faculty of Science', 'Faculty of Social Sciences']}
-
+    programs = {'Carleton University': ['Magistracy', 'Undergraduate'],
+                'University of Ottawa': ['Magistracy', 'Undergraduate'],
+                'York University': ['Magistracy', 'Undergraduate'],
+                'University of Toronto': ['Foundation', 'Undergraduate', 'MBA'],
+                'Montreal university': ['Magistracy', 'Undergraduate'],
+                'Polytechnique Montreal': ['Magistracy', 'Undergraduate'],
+                'Laval University': ['Magistracy', 'Undergraduate'],
+                'TELUQ University': ['Magistracy', 'Undergraduate'],
+                'University of British Columbia': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University Canada West': ['Magistracy', 'Undergraduate']}
+    links = {'Carleton University': 'https://carleton.ca',
+             'University of Ottawa': 'https://www.uottawa.ca/en',
+             'York University': 'https://www.yorku.ca',
+             'University of Toronto': 'https://www.utoronto.ca',
+             'Montreal university': 'https://www.umontreal.ca/en',
+             'Polytechnique Montreal': 'https://www.polymtl.ca',
+             'Laval University': 'https://www.ulaval.ca/en',
+             'TELUQ University': 'https://www.teluq.ca',
+             'University of British Columbia': 'https://www.ubc.ca',
+             'University Canada West': 'https://www.ucanwest.ca'}
+    costs = {'Carleton University': 18911,
+             'University of Ottawa': 19041,
+             'York University': 20102,
+             'University of Toronto': 34045,
+             'Montreal university': 18400,
+             'Polytechnique Montreal': 23000,
+             'Laval University': 18151,
+             'TELUQ University': 17256,
+             'University of British Columbia': 38946,
+             'University Canada West': 19624}
     # currency
     currencyName = 'CAD'
     currencyEqualsToDollar = 1.33
@@ -1728,6 +1769,5 @@ if __name__ == "__main__":
     # cc.createOceans()
 
     #############################   SWEDEN   #############################
-
     cc.createBorders()
     cc.close()
