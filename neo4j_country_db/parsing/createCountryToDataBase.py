@@ -345,9 +345,21 @@ class CountryCreator:
         \n'''
         result = tx.run(request)
 
+    def clear_db(self):
+        with self.driver.session() as session:
+            clr = session.execute_write(self._clear_db)
+            return clr
+
+    @staticmethod
+    def _clear_db(tx):
+        request = "match (n) detach delete n"
+        tx.run(request)
+
 
 if __name__ == "__main__":
     cc = CountryCreator()
+
+    cc.clear_db()
 
     #############################   CANADA   #############################
 
