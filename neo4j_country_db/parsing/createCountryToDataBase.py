@@ -201,38 +201,36 @@ class CountryCreator:
 
         index = 1
         fac = 1
-        ind = 1
+        univ_ind = 1
         prog = 1
-        c = 1
-        cost = 0
+
         for city in citiesDict:
             for univ in universities[city]:
                 try:
                     link = links[univ]
+                    cost = costs[univ]
                 except:
                     link = "a"
-                resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s"})' % (ind, univ, link)
+                    cost = 1000
+                resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s", cost:%d})' % (univ_ind, univ, link, cost)
                 for faculty in faculties[univ]:
                     resultStr += '\nmerge (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
-                    resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (ind, fac)
+                    resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (univ_ind, fac)
                     fac += 1
                 try:
                     for program in programs[univ]:
                         resultStr += '\ncreate (program%d:Program {name:"%s"})' % (prog, program)
-                        resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (ind, prog)
+                        resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (univ_ind, prog)
                         prog += 1
                 except:
                     pass
-                try:
-                    cost = costs[univ]
-                except:
-                    cost = 1000
-                resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
-                resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
-                c += 1
-                resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, ind)
-                resultStr += '\ncreate (country)-[:university]->(univ%d)' % ind
-                ind += 1
+
+                # resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
+                # resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
+
+                resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, univ_ind)
+                resultStr += '\ncreate (country)-[:university]->(univ%d)' % univ_ind
+                univ_ind += 1
             index += 1
 
         # language
