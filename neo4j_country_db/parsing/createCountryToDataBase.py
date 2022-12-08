@@ -46,7 +46,7 @@ class CountryCreator:
                    # internet
                    speedOfInternetMbps, freeWifi,
                    # education
-                   rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                   rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName,
@@ -79,7 +79,7 @@ class CountryCreator:
                                          # internet
                                          speedOfInternetMbps, freeWifi,
                                          # education
-                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                                          )
             return base
 
@@ -113,7 +113,7 @@ class CountryCreator:
                     # internet
                     speedOfInternetMbps, freeWifi,
                     # education
-                    rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                    rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -209,14 +209,10 @@ class CountryCreator:
                 try:
                     link = links[univ]
                     cost = costs[univ]
-                    image = images[univ]
-                    req = requirements[univ]
                 except:
                     link = "a"
                     cost = 1000
-                    image = 'clear'
-                    req = 'No requirements'
-                resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s", cost:%d, image:"%s", requirements:"%s"})' % (univ_ind, univ, link, cost, image, req)
+                resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s", cost:%d})' % (univ_ind, univ, link, cost)
                 for faculty in faculties[univ]:
                     resultStr += '\nmerge (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
                     resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (univ_ind, fac)
@@ -437,45 +433,6 @@ if __name__ == "__main__":
              'TELUQ University': 'https://www.teluq.ca',
              'University of British Columbia': 'https://www.ubc.ca',
              'University Canada West': 'https://www.ucanwest.ca'}
-    images = {'Carleton University': 'carleton_university',
-              'University of Ottawa': 'university_of_ottawa',
-              'York University': 'york_university',
-              'University of Toronto': 'university_of_toronto',
-              'Montreal university': 'montreal_university',
-              'Polytechnique Montreal': 'politechnique_montreal',
-              'Laval University': 'laval_university',
-              'TELUQ University': 'teluq_university',
-              'University of British Columbia': 'university_of_british_columbia',
-              'University Canada West': 'university_canada_west'}
-    requirements = {'Carleton University': 'Four years of English. '
-                                           'Three or more years of mathematics. '
-                                           'Two or more years of science. '
-                                           'Three or more years of social science.',
-                    'University of Ottawa': 'An admissions application (you can apply online). '
-                                            'A $75 application fee. '
-                                            'All official undergraduate transcripts (3.0 GPA - minimum requirement)'
-                                            'A Graduate School Admission Essay/Personal Statement - This is a two-page essay focused on professional career development.',
-                    'York University': 'For Ontario high school students, the minimum admission requirement is the completion of the Ontario Secondary School Diploma (OSSD) or equivalent and six 4U/M courses, including ENG4U. '
-                                       'Students may also be required to fulfill Faculty or program-specific prerequisites.'
-                                       'Francophone applicants may present FRA4U.You must successfully complete the OSSD, including six 4U/M courses and all of the prerequisites for your programs, and maintain the average used for conditional admission.',
-                    'University of Toronto': 'Entry requirements for international students are based on current high school grades. '
-                                             'The average score sufficient for admission should be at least 75-80% of the maximum possible. '
-                                             'The age limit is at least 17 years old. '
-                                             'English at IELTS level minimum 6.5 or TOEFL iBT 100+',
-                    'Montreal university': 'To secure admission at UdeM, international students are required to have a minimum GPA of 3.0 i.e 85% for UG programs, and a GPA of 3.3 i.e 88% for PG programs.y',
-                    'Polytechnique Montreal': 'A certified or official French or English translation is required for any documentation not written in French or English. A copy of original documents as well as their official translations must be provided.'
-                                              ' All documentation provided becomes property of Polytechnique Montréal and will not be returned to the applicant.',
-                    'Laval University': 'You must hold the minimum diploma required for the level of studies you are pursuing and demonstrate an adequate level of French proficiency.',
-                    'TELUQ University': 'When applying for admission to Tele-Universite TELUQ in Canada you should prepare all required documents. '
-                                        'Request a list of necessary documents directly from a university, as it may vary for different countries. '
-                                        'Using our live chat, you can also ask for sample documents.',
-                    'University of British Columbia': 'Graduation from high school. '
-                                                      'Minimum of 70% in Grade 11 or Grade 12 English (or their equivalents)'
-                                                      'At least six academic/non-academic Grade 12 courses (recommended, but not required)',
-                    'University Canada West': "Usually, the university accepts a bachelor's degree in BBA/BCom or its equivalent and a minimum of three years of documented professional or management experience with evidence of career progression. "
-                                              "The English language requirement includes an overall IELTS score of 6.5 with at least 6.0 in Writing."}
-
-
     costs = {'Carleton University': 18911,
              'University of Ottawa': 19041,
              'York University': 20102,
@@ -548,7 +505,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 17
+    rankingOfNationalEducationSystem = 83.2
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -576,13 +533,1251 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
                   )
 
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
     #############################   CANADA   #############################
+
+    #############################   POLAND   #############################
+
+    # Country
+    countryName = "Poland"
+    officialLanguage = "Polish"
+
+    # cities    name    isBig WashesBy
+    cities = {'Warsaw': [True, None], 'Krakow': [True, None], 'Lodz': [True, None],
+              'Wroclaw': [True, None], 'Bialystok': [True, None]}
+
+    # education
+    universities = {
+        'Warsaw': ['University of Economics and Human Sciences', 'University of Engineering and Health'],
+        # https://univerpl.com.ua/ru/universiteti-varshavi/
+        'Krakow': ['Jagiellonian University', 'Krakow Academy named after A.F. Modzhevsky'],
+        # https://univerpl.com.ua/ru/universiteti-krakova/
+        'Lodz': ['Łódź University of Technology', 'University of Lodz'],
+        'Wroclaw': ['Wrocław University of Science and Technology', 'University of Wrocław'],
+        'Bialystok': ['Bialystok Technical University', 'University of Bialystok']}
+
+    faculties = {'University of Economics and Human Sciences': ['Faculty of Management', 'Faculty of Finance',
+                                                                'Faculty of Psychology', 'Faculty of Computer Engineering and Software',
+                                                                'Faculty of Political Science', 'Faculty of Dietetics'],
+                 'University of Engineering and Health': ['Faculty of Administration and Social Sciences', 'Faculty of Architecture',
+                                                          'Faculty of Engineering', 'Faculty of Chemistry',
+                                                          'Faculty of Civil Engineering', 'Faculty of Electrical Engineering'],
+                 'Jagiellonian University': ['Faculty of Law and Administration', 'Faculty of Medicine',
+                                             'Faculty of Pharmacy', 'Faculty of Health Science', 'Faculty of Philosophy',
+                                             'Faculty of History', 'Faculty of Philology'],
+                 'Krakow Academy named after A.F. Modzhevsky': ['Faculty of Design of Aircraft', 'Faculty of Space Infrastructure',
+                                                                'Faculty of Information Security', 'Faculty of Computer Science'],
+                 'Łódź University of Technology': ['Faculty of Mechanical Engineering', 'Faculty of Electrical Engineering',
+                                                   'Faculty of Chemistry', 'Faculty of Biotechnology',
+                                                   'Faculty of Architecture', 'Faculty of Physics', 'Faculty of Management'],
+                 'University of Lodz': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Economics',
+                                        'Faculty of Sociology', 'Faculty of Philology', 'Faculty of Psychology',
+                                        'Faculty of Computer Science', 'Faculty of Management'],
+                 'Wrocław University of Science and Technology': ['Faculty of Architecture', 'Faculty of Chemistry',
+                                                                  'Faculty of Electrical Engineering', 'Faculty of Management',
+                                                                  'Faculty of Mechanical Engineering'],
+                 'University of Wrocław': ['Faculty of Biotechnology', 'Faculty of Chemistry', 'Faculty of Physics',
+                                           'Faculty of Computer Science', 'Faculty of Social Sciences', 'Faculty of Biology'],
+                 'Bialystok Technical University': ['Faculty of Architecture', 'Faculty of Computer Science', 'Faculty of Electrical Engineering',
+                                                    'Faculty of Engineering Management', 'Faculty of Mechanical Engineering'],
+                 'University of Bialystok': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Economics and Finance',
+                                             'Faculty of Philology', 'Faculty of Physics', 'Faculty of History',
+                                             'Faculty of Computer Science', 'Faculty of Management']}
+
+    # currency
+    currencyName = 'PLN'
+    currencyEqualsToDollar = 4.52
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 125500
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 227
+    menAverageLifeExpectancy = 74  # years
+    womenAverageLifeExpectancy = 82  # years
+
+    # climat
+    juneAverageTemperature = 21.9  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 71.25  # %
+    averageDurationOfWinter = 3  # month
+    averageRainfallPerMonth = 50  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 156  # days
+    averageNumberOfRainyDaysPerYear = 136  # days
+    averageNumberOfClearDays = 73  # days
+
+    # Man-made disasters
+    nameMMD = 'Warsaw gas explosion'
+    typeOfMMD = 'gas explosion'
+    yearOfMMD = 1979
+    aomuntOfDeadPeople = 49
+    aomuntOfInjuredPeople = 135
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 1  # [1, 3]
+
+    # population
+    populationCount = 37780000
+    procentOfMales = 48.2
+    procentOfFemales = 51.8
+    populationDensityPerSquareKilometer = 121.2
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 45
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 85  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 52.6
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   POLAND   #############################
+
+    #############################   CZECH   ##############################
+
+    # Country
+    countryName = "Czech"
+    officialLanguage = "Czech"
+
+    # cities     name   isBig WashesBy
+    cities = {'Prague': [True, None], 'Brno': [True, None], 'Pilsen': [True, None],
+              'Ostrava': [True, None], 'Olomouc': [True, None]}
+
+    # education
+    universities = {'Prague': ['Czech Technical University in Prague', 'Prague City University'],
+                    'Brno': ['Brno University of Technology', 'Masaryk University'],
+                    'Pilsen': ['University of West Bohemia', 'Charles University'],
+                    'Ostrava': ['University of Ostrava', 'Ostrava University of Technology'],
+                    'Olomouc': ['Palacký University Olomouc', 'Moravian University Olomouc']}
+
+    faculties = {'Czech Technical University in Prague': ['Faculty of Architecture', 'Faculty of Biomedical Engineering',
+                                                          'Faculty of Electrical Engineering', 'Faculty of Information Technology',
+                                                          'Faculty of Mechanical Engineering', 'Faculty of Transportation Sciences'],
+                 'Prague City University': ['Faculty of Design', 'Faculty of Art', 'Faculty of Management',
+                                            'Faculty of Computig'],
+                 'Brno University of Technology': ['Faculty of Architecture', 'Faculty of Management', 'Faculty of Business',
+                                                   'Faculty of Civil Engineering', 'Faculty of Electrical Engineering', 'Faculty of Chemistry',
+                                                   'Faculty of Information Technology', 'Faculty of Mechanical Engineering', 'Faculty of Arts'],
+                 'Masaryk University': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Science', 'Faculty of Arts',
+                                        'Faculty of Economics', 'Faculty of Informatics'],
+                 'University of West Bohemia': ['Faculty of Science', 'Faculty of Arts', 'Faculty of Economics',
+                                                'Faculty of Electrical Engineering', 'Faculty of Law', 'Faculty of Mechanical Engineering'],
+                 'Charles University': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Arts', 'Faculty of Science',
+                                        'Faculty of Mathematics and Physics', 'Faculty of Social Sciences'],
+                 'University of Ostrava': ['Faculty of Science', 'Faculty of Arts', 'Faculty of Music',
+                                           'Faculty of Music', 'Faculty of Social Studies', 'Faculty of Medicine'],
+                 'Ostrava University of Technology': ['Faculty of Mechanical Engineering', 'Faculty of Economics',
+                                                      'Faculty of Electrical Engineering', 'Faculty of Computer Science',
+                                                      'Faculty of Civil Engineering', 'Faculty of Safety Engineering'],
+                 'Palacký University Olomouc': ['Faculty of Medicine', 'Faculty of Arts', 'Faculty of Science',
+                                                'Faculty of Education', 'Faculty of Law', 'Faculty of Health Sciences'],
+                 'Moravian University Olomouc': ['Faculty of Economics', 'Faculty of Social Studies',
+                                                 'Faculty of Electrical Engineering',
+                                                 'Faculty of Mechanical Engineering']}
+
+
+
+    # currency
+    currencyName = 'CZK'
+    currencyEqualsToDollar = 23.39
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 24900
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 369
+    menAverageLifeExpectancy = 73.9  # years
+    womenAverageLifeExpectancy = 80.7  # years
+
+    # climat
+    juneAverageTemperature = 18  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 77  # %
+    averageDurationOfWinter = 4  # month
+    averageRainfallPerMonth = 43.75  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 157  # days
+    averageNumberOfRainyDaysPerYear = 135  # days
+    averageNumberOfClearDays = 73  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 10700000
+    procentOfMales = 49.1
+    procentOfFemales = 50.9
+    populationDensityPerSquareKilometer = 135.8
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 4
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 20
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 65  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 54.8
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   CZECH   #############################
+
+    #############################   GERMANY   #############################
+
+    # Country
+    countryName = "Germany"
+    officialLanguage = "Deutsch"
+
+    # cities     name   isBig WashesBy
+    cities = {'Berlin': [True, None], 'Hamburg': [True, None], 'Bremen': [True, None],
+              'Dresden': [True, None], 'Nuremberg': [True, None]}
+
+    # education
+    universities = {'Berlin': ['Humboldt University of Berlin', 'Technical University of Berlin'],
+                    'Hamburg': ['University of Hamburg', 'HafenCity University Hamburg'],
+                    'Bremen': ['University of Bremen', 'Jacobs University Bremen'],
+                    'Dresden': ['Dresden University of Technology', 'Dresden University of Applied Sciences'],
+                    'Nuremberg': ['Nuremberg Institute of Technology', 'Academy of Fine Arts']}
+    faculties = {'Humboldt University of Berlin': ['Faculty of Law', 'Faculty of Mathematics', 'Faculty of Arts',
+                                                   'Faculty of Economics', 'Faculty of Language'],
+                 'Technical University of Berlin': ['Faculty of Education', 'Faculty of Mathematics', 'Faculty of Science',
+                                                    'Faculty of Electrical Engineering', 'Faculty of Computer Science',
+                                                    'Faculty of Mechanical Engineering', 'Faculty of Economics'],
+                 'University of Hamburg': ['Faculty of Law', 'Faculty of Business', 'Faculty of Economics',
+                                           'Faculty of Social Sciences', 'Faculty of Medicine', 'Faculty of Education',
+                                           'Faculty of Mathematics', 'Faculty of Business'],
+                 'HafenCity University Hamburg': ['Faculty of Architecture', 'Faculty of Engineering', 'Faculty of Mathematics',
+                                                  'Faculty of Mechanical Engineering'],
+                 'University of Bremen': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Mathematics',
+                                          'Faculty of Computer Science', 'Faculty of Law', 'Faculty of Social Sciences'],
+                 'Jacobs University Bremen': ['Faculty of Computer Science', 'Faculty of Physics', 'Faculty of Mathematics',
+                                              'Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Psychology'],
+                 'Dresden University of Technology': ['Faculty of Biology', 'Faculty of Mathematics', 'Faculty of Psychology',
+                                                      'Faculty of Physics', 'Faculty of Chemistry', 'Faculty of Education',
+                                                      'Faculty of Arts', 'Faculty of Computer Science', 'Faculty of Electrical Engineering'],
+                 'Dresden University of Applied Sciences': ['Faculty of Biology', 'Faculty of Chemistry', 'Faculty of Mathematics',
+                                                            'Faculty of Physics', 'Faculty of Psychology'],
+                 'Nuremberg Institute of Technology': ['Faculty of Chemistry', 'Faculty of Mathematics', 'Faculty of Architecture',
+                                                       'Faculty of Design', 'Faculty of Computer Science', 'Faculty of Electrical Engineering'],
+                 'Academy of Fine Arts': ['Faculty of Design', 'Faculty of Arts', 'Faculty of Psychology',
+                                          'Faculty of Architecture', 'Faculty of Law']}
+
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 182832
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 413
+    menAverageLifeExpectancy = 77.2  # years
+    womenAverageLifeExpectancy = 82.4  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 79  # %
+    averageDurationOfWinter = 3  # month
+    averageRainfallPerMonth = 52.08  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 89  # days
+    averageNumberOfRainyDaysPerYear = 140  # days
+    averageNumberOfClearDays = 136  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 83130000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 240
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 42.1
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 49  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 70.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   GERMANY   #############################
+
+    #############################   SLOVAKIA   #############################
+
+    # Country
+    countryName = "Slovakia"
+    officialLanguage = "Slovak"
+
+    # cities     name      isBig WashesBy
+    cities = {'Bratislava': [True, None], 'Kosice': [True, None], 'Nitra': [True, None],
+              'Presov': [True, None], 'Banska Bystrica': [True, None]}
+
+    # education
+    universities = {'Bratislava': ['Slovak University of Technology in Bratislava', 'Comenius University Bratislava'],
+                    'Kosice': ['University of Veterinary Medicine in Kosice', 'Pavol Josef Safarik University'],
+                    'Nitra': ['Slovak University of Agriculture in Nitra', 'Constantine the Philosopher University'],
+                    'Presov': ['University of Presov', 'International Business College ISM Slovakia in Presov'],
+                    'Banska Bystrica': ['Matej Bel University in Banská Bystrica', 'Academy of Arts in Banská Bystrica']}
+    faculties = {'Slovak University of Technology in Bratislava': ['Faculty of Civil Engineering', 'Faculty of Electrical Engineering',
+                                                                   'Faculty of Mechanical Engineering', 'Faculty of Chemistry',
+                                                                   'Faculty of Architecture', 'Faculty of Science'],
+                 'Comenius University Bratislava': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Arts',
+                                                    'Faculty of Natural Sciences', 'Faculty of Education', 'Faculty of Medicine'],
+                 'University of Veterinary Medicine in Kosice': ['Faculty of Medicine', 'Faculty of Veterinary Medicine',
+                                                                 'Faculty of Veterinary Surgery'],
+                 'Pavol Josef Safarik University': ['Faculty of Medicine', 'Faculty of Biology', 'Faculty of Surgery'],
+                 'Slovak University of Agriculture in Nitra': ['Faculty of Agrobiology', 'Faculty of Biotechnology',
+                                                               'Faculty of Economics', 'Faculty of Engineering',
+                                                               'Faculty of Management'],
+                 'Constantine the Philosopher University': ['Faculty of Arts', 'Faculty of Natural Sciences',
+                                                            'Faculty of Informatics'],
+                 'University of Presov': ['Faculty of Arts', 'Faculty of Management', 'Faculty of Business',
+                                          'Faculty of Education', 'Faculty of Sports', 'Faculty of Health Care'],
+                 'International Business College ISM Slovakia in Presov': ['Faculty of Management', 'Faculty of Business',
+                                                                           'Faculty of Law', 'Faculty of Economics'],
+                 'Matej Bel University in Banská Bystrica': ['Faculty of Economics', 'Faculty of Natural Science',
+                                                             'Faculty of Arts', 'Faculty of Education',
+                                                             'Faculty of Law'],
+                 'Academy of Arts in Banská Bystrica': ['Faculty of Dramatic Arts', 'Faculty of Performing Arts',
+                                                        'Faculty of Fine Arts']}
+
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 26200
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 300
+    menAverageLifeExpectancy = 75.8  # years
+    womenAverageLifeExpectancy = 75.8  # years
+
+    # climat
+    juneAverageTemperature = 19.6  # °C
+    decemberAverageTemperature = 1.7  # °C
+    averageHumidity = 75  # %
+    averageDurationOfWinter = 3.5  # month
+    averageRainfallPerMonth = 48.3  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 70  # days
+    averageNumberOfRainyDaysPerYear = 142  # days
+    averageNumberOfClearDays = 153  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 5447000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 114
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 9
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 44.3
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 45.47  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 70.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   SLOVAKIA   #############################
+
+    #############################   HUNGARY   #############################
+
+    # Country
+    countryName = "Hungary"
+    officialLanguage = "Hungarian"
+
+    # cities     name      isBig WashesBy
+    cities = {'Budapest': [True, None], 'Debrecen': [True, None], 'Szeged': [True, None],
+              'Miskolc': [True, None], 'Pecs': [True, None]}
+
+    # education
+    universities = {'Budapest': ['Eötvös Loránd University', 'Semmelweis University'],
+                    'Debrecen': ['University of Debrecen', 'Debrecen University of Reformed Theology'],
+                    'Szeged': ['University of Szeged'],
+                    'Miskolc': ['University of Miskolc'],
+                    'Pecs': ['University of Pecs']}
+    faculties = {'Eötvös Loránd University': ['Faculty of Economic', 'Faculty of Education', 'Faculty of Humanities',
+                                              'Faculty of Informatics', 'Faculty of Law', 'Faculty of Science',
+                                              'Faculty of Social Science'],
+                 'Semmelweis University': ['Faculty of Medicine', 'Faculty of Health', 'Faculty of Dentistry'],
+                 'University of Debrecen': ['Faculty of Dentistry', 'Faculty of Economics', 'Faculty of Business',
+                                            'Faculty of Engineering', 'Faculty of Law', 'Faculty of Informatics',
+                                            'Faculty of Medicine', 'Faculty of Music'],
+                 'Debrecen University of Reformed Theology': ['Faculty of Reformed Theology', 'Faculty of Medicine',
+                                                              'Faculty of Health', 'Faculty of Dentistry'],
+                 'University of Szeged': ['Faculty of Agriculture', 'Faculty of Social Sciences', 'Faculty of Dentistry',
+                                          'Faculty of Economics', 'Faculty of Business', 'Faculty of Engineering'],
+                 'University of Miskolc': ['Faculty of Engineering', 'Faculty of Informatics',
+                                           'Faculty of Mechanical Engineering', 'Faculty of Economics',
+                                           'Faculty of Arts', 'Faculty of Law'],
+                 'University of Pecs': ['Faculty of Economics', 'Faculty of Business',
+                                        'Faculty of Education', 'Faculty of Engineering',
+                                        'Faculty of Information Technology', 'Faculty of Law']}
+
+    # currency
+    currencyName = 'HUF'
+    currencyEqualsToDollar = 390.46
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 31080
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 332
+    menAverageLifeExpectancy = 71  # years
+    womenAverageLifeExpectancy = 78.8  # years
+
+    # climat
+    juneAverageTemperature = 24  # °C
+    decemberAverageTemperature = 1  # °C
+    averageHumidity = 68.1  # %
+    averageDurationOfWinter = 3.5  # month
+    averageRainfallPerMonth = 46.9  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 76  # days
+    averageNumberOfRainyDaysPerYear = 135  # days
+    averageNumberOfClearDays = 154  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 9_710_000
+    procentOfMales = 47.62
+    procentOfFemales = 52.38
+    populationDensityPerSquareKilometer = 107
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 4
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 29
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 42.11  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 51.3
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   HUNGARY   #############################
+
+    #############################   UNITED KINGDOM   #############################
+
+    # Country
+    countryName = "United Kingdom"
+    officialLanguage = "English"
+
+    # cities     name      isBig WashesBy
+    cities = {'London': [True, None], 'Edinburgh': [True, "Northern ocean"], 'Birmingham': [True, None],
+              'Manchester': [True, None], 'Belfast': [True, "Irish sea"]}
+
+    # education
+    universities = {'London': ['University College London', 'Imperial College London'],
+                    'Edinburgh': ['University of Edinburgh', 'Heriot-Watt University'],
+                    'Birmingham': ['University of Birmingham', 'Aston University'],
+                    'Manchester': ['University of Manchester', 'University of Salford'],
+                    'Belfast': ["Queen's University Belfast"]}
+    faculties = {'University College London': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Law',
+                                               'Faculty of Medicine', 'Faculty of Architecture', 'Faculty of Mathematics',
+                                               'Faculty of Physics'],
+                 'Imperial College London': ['Faculty of Engineering', 'Faculty of Medicine', 'Faculty of Mathematics',
+                                             'Faculty of Chemistry', 'Faculty of Physics'],
+                 'University of Edinburgh': ['Faculty of Law', 'Faculty of Arts', 'Faculty of Medicine',
+                                             'Faculty of Veterinary Medicine', 'Faculty of Education', 'Faculty of Science'],
+                 'Heriot-Watt University': ['Faculty of Engineering', 'Faculty of Social Sciences', 'Faculty of Design',
+                                            'Faculty of Business', 'Faculty of Computer Sciences'],
+                 'University of Birmingham': ['Faculty of Arts', 'Faculty of Design', 'Faculty of Media',
+                                              'Faculty of Business', 'Faculty of Law', 'Faculty of Social Sciences',
+                                              'Faculty of Education', 'Faculty of Computing', 'Faculty of Engineering'],
+                 'Aston University': ['Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Engineering',
+                                      'Faculty of Physics', 'Faculty of Life Science'],
+                 'University of Manchester': ['Faculty of Biology', 'Faculty of Medicine', 'Faculty of Health',
+                                              'Faculty of Science', 'Faculty of Engineering', 'Faculty of Humanities'],
+                 'University of Salford': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Arts',
+                                           'Faculty of Health', 'Faculty of Business'],
+                 "Queen's University Belfast": ['Faculty of Arts', 'Faculty of Humanities', 'Faculty of Social Science',
+                                                'Faculty of Engineering', 'Faculty of Physics', 'Faculty of Medicine']}
+
+    # currency
+    currencyName = 'GBP'
+    currencyEqualsToDollar = 0.84
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 188000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 264
+    menAverageLifeExpectancy = 79.0  # years
+    womenAverageLifeExpectancy = 82.9  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = 8  # °C
+    averageHumidity = 79  # %
+    averageDurationOfWinter = 4  # month
+    averageRainfallPerMonth = 59.3  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 56 # days
+    averageNumberOfRainyDaysPerYear = 149  # days
+    averageNumberOfClearDays = 160  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 67_330_000
+    procentOfMales = 48
+    procentOfFemales = 52
+    populationDensityPerSquareKilometer = 277.12
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 4
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 58.8
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 50.4  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 83.6
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   UNITED KINGDOM   #############################
+
+    #############################   FINLAND   #############################
+
+    # Country
+    countryName = "Finland"
+    officialLanguage = "Finnish"
+
+    # cities     name      isBig WashesBy
+    cities = {'Helsinki': [True, "The Gulf of Finland"], 'Turku': [True, "Baltic Sea"], 'Tampere': [True, None],
+              'Oulu': [True, "Baltic Gulf"], 'Rovaniemi': [True, None]}
+
+    # education
+    universities = {'Helsinki': ['University of Helsinki', 'Hanken School of Economics'],
+                    'Turku': ['University of Turku', 'Abo Akademi University'],
+                    'Tampere': ['University of Tampere'],
+                    'Oulu': ['University of Oulu', 'Oulu University of Applied Sciences'],
+                    'Rovaniemi': ['University of Lapland', 'Lapland University of Applied Sciences']}
+    faculties = {'University of Helsinki': ['Faculty of Agriculture', 'Faculty of Arts', 'Faculty of Biology',
+                                            'Faculty of Education', 'Faculty of Law', 'Faculty of Medicine',
+                                            'Faculty of Science', 'Faculty of Theology', 'Faculty of Veterinary Medicine'],
+                 'Hanken School of Economics': ['Faculty of Economics', 'Faculty of Management', 'Faculty of Business'],
+                 'University of Turku': ['Faculty of Education', 'Faculty of Humanities', 'Faculty of Law',
+                                         'Faculty of Medicine', 'Faculty of Science', 'Faculty of Technology'],
+                 'Abo Akademi University': ['Faculty of Arts', 'Faculty of Psychology', 'Faculty of Theology',
+                                            'Faculty of Education', 'Faculty of Science', 'Faculty of Engineering',
+                                            'Faculty of Social Sciences', 'Faculty of Business', 'Faculty of Economics'],
+                 'University of Tampere': ['Faculty of Architecture', 'Faculty of Education', 'Faculty of Engineering',
+                                           'Faculty of Science', 'Faculty of Information Technology', 'Faculty of Management',
+                                           'Faculty of Business', 'Faculty of Medicine'],
+                 'University of Oulu': ['Faculty of Biochemistry', ' Faculty of Medicine', ' Faculty of Science',
+                                        'Faculty of Humanities', 'Faculty of Electrical Engineering'],
+                 'Oulu University of Applied Sciences': ['Faculty of Biochemistry', 'Faculty of Education', 'Faculty of Medicine',
+                                                         'Faculty of Science', 'Faculty of Technology', 'Faculty of Business'],
+                 'University of Lapland': ['Faculty of Art', 'Faculty of Design', 'Faculty of Education',
+                                           'Faculty of Law', 'Faculty of Social Sciences'],
+                 'Lapland University of Applied Sciences': ['Faculty of Social Sciences', 'Faculty of Technology', 'Faculty of Electrical Engineering',
+                                                            'Faculty of Information Technology', 'Faculty of Mechanical Engineering']}
+
+    # currency
+    currencyName = 'FIM'
+    currencyEqualsToDollar = 5.73
+
+    # military
+    milPolBlock = "Finnish Defense Forces"
+    amountOfPeopleInArmy = 23800
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 302
+    menAverageLifeExpectancy = 79.2  # years
+    womenAverageLifeExpectancy = 84.0  # years
+
+    # climat
+    juneAverageTemperature = 22  # °C
+    decemberAverageTemperature = -6  # °C
+    averageHumidity = 77  # %
+    averageDurationOfWinter = 5  # month
+    averageRainfallPerMonth = 80  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 82  # days
+    averageNumberOfRainyDaysPerYear = 139  # days
+    averageNumberOfClearDays = 144  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 5_542_000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 18
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 2
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 45
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 79.40  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 82.8
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   FINLAND   #############################
+
+    #############################   NORWAY   #############################
+
+    # Country
+    countryName = "Norway"
+    officialLanguage = "Norwegian"
+
+    # cities     name      isBig WashesBy
+    cities = {'Oslo': [True, None], 'Drammen': [True, None], 'Bergen': [True, "Northern ocean"],
+              'Trondheim': [True, "Trondheimsfjorden"], 'Stavanger': [True, "Northern ocean"]}
+
+    # education
+    universities = {'Oslo': ['University of Oslo', 'Oslo Metropolitan University'],
+                    'Drammen': ['The International Theatre Academy Norway'],
+                    'Bergen': ['University of Bergen', 'Norwegian School of Economics'],
+                    'Trondheim': ['Norwegian University of Science and Technology', 'Queen Maud University College for Early Childhood Education'],
+                    'Stavanger': ['University of Stavanger']}
+    faculties = {'University of Oslo': ['Faculty of Health', 'Faculty of Education', 'Faculty of Social Sciences',
+                                        'Faculty of Technology', 'Faculty of Arts', 'Faculty of Design'],
+                 'Oslo Metropolitan University': ['Faculty of Health', 'Faculty of Education', 'Faculty of Social Sciences',
+                                                  'Faculty of Technology', 'Faculty of Arts', 'Faculty of Design'],
+                 'The International Theatre Academy Norway': ['Faculty of Arts', 'Faculty of Music', 'Faculty of Design',
+                                                              'Faculty of Social Sciences'],
+                 'University of Bergen': ['Faculty of Fine Art', 'Faculty of Music', 'Faculty of Design',
+                                          'Faculty of Humanities', 'Faculty of Law', 'Faculty of Natural Sciences',
+                                          'Faculty of Medicine', 'Faculty of Social Sciences'],
+                 'Norwegian School of Economics': ['Faculty of Economics', 'Faculty of Management', 'Faculty of Business',
+                                                   'Faculty of Social Science'],
+                 'Norwegian University of Science and Technology': ['Faculty of Architecture', 'Faculty of Design',
+                                                                    'Faculty of Humanities', 'Faculty of Information Technology',
+                                                                    'Faculty of Electrical Engineering', 'Faculty of Medicine'],
+                 'Queen Maud University College for Early Childhood Education': ['Faculty of Childhood Education', 'Faculty of Care',
+                                                                                 'Faculty of Health', 'Faculty of Arts'],
+                 'University of Stavanger': ['Faculty of Arts', 'Faculty of Education', 'Faculty of Science',
+                                             'Faculty of Technology', 'Faculty of Health']}
+
+    # currency
+    currencyName = 'NOK'
+    currencyEqualsToDollar = 10.14
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 29000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 442
+    menAverageLifeExpectancy = 81.1  # years
+    womenAverageLifeExpectancy = 84.1  # years
+
+    # climat
+    juneAverageTemperature = 20  # °C
+    decemberAverageTemperature = -3  # °C
+    averageHumidity = 77  # %
+    averageDurationOfWinter = 3.3  # month
+    averageRainfallPerMonth = 73  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 65  # days
+    averageNumberOfRainyDaysPerYear = 133  # days
+    averageNumberOfClearDays = 167  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 5_408_000
+    procentOfMales = 50.57
+    procentOfFemales = 49.43
+    populationDensityPerSquareKilometer = 15
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 70
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 23.5  # Мегабиты в секунду
+    freeWifi = 1  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 80.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   NORWAY   #############################
+
+    #############################   SWEDEN   #############################
+
+    # Country
+    countryName = "Sweden"
+    officialLanguage = "Swedish"
+
+    # cities     name      isBig WashesBy
+    cities = {'Stockholm': [True, "Baltic Sea"], 'Orebro': [True, None], 'Linkoping': [True, None],
+              'Jonkoping': [True, "Vättern"], 'Goteborg': [True, "Kattegat"]}
+
+    # education
+    universities = {'Stockholm': ['Karolinska Institute', 'Stockholm University'],
+                    'Orebro': ['Orebro University'],
+                    'Linkoping': ['Linkoping University'],
+                    'Jonkoping': ['Jonkoping University'],
+                    'Goteborg': ['University of Gothenburg', 'Chalmers University of Technology']}
+    faculties = {'Karolinska Institute': ['Faculty of Dentistry', 'Faculty of Medicine', 'Faculty of Anatomy',
+                                          'Faculty of Biology', 'Faculty of Psychology'],
+                 'Stockholm University': ['Faculty of Humanities', 'Faculty of Law', 'Faculty of Social Sciences',
+                                          'Faculty of ', 'Faculty of Science'],
+                 'Orebro University': ['Faculty of Business', 'Faculty of Science', 'Faculty of Engineering',
+                                       'Faculty of Humanities', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                       'Faculty of Health'],
+                 'Linkoping University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Education',
+                                          'Faculty of Medicine', 'Faculty of Health', 'Faculty of Science',
+                                          'Faculty of Engineering'],
+                 'Jonkoping University': ['Faculty of Computing', 'Faculty of Engineering', 'Faculty of Mathematics',
+                                          'Faculty of Physics', 'Faculty of Chemistry'],
+                 'University of Gothenburg': ['Faculty of Information Technology', 'Faculty of Humanities', 'Faculty of Education',
+                                              'Faculty of Arts', 'Faculty of Science', 'Faculty of Social Sciences'],
+                 'Chalmers University of Technology': ['Faculty of Architecture', 'Faculty of Information Technology', 'Faculty of Physics',
+                                                       'Faculty of Mathematics', 'Faculty of Chemistry', 'Faculty of Engineering']}
+
+    # currency
+    currencyName = 'CHF'
+    currencyEqualsToDollar = 0.95
+
+    # military
+    milPolBlock = "None"
+    amountOfPeopleInArmy = 140304
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 411
+    menAverageLifeExpectancy = 80.8  # years
+    womenAverageLifeExpectancy = 84.0  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = -2  # °C
+    averageHumidity = 75  # %
+    averageDurationOfWinter = 4.0  # month
+    averageRainfallPerMonth = 51  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 70  # days
+    averageNumberOfRainyDaysPerYear = 136  # days
+    averageNumberOfClearDays = 159  # days
+
+    # Man-made disasters
+    nameMMD = ''
+    typeOfMMD = ''
+    yearOfMMD = 0
+    aomuntOfDeadPeople = 0
+    aomuntOfInjuredPeople = 0
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 10_420_000
+    procentOfMales = 50
+    procentOfFemales = 50
+    populationDensityPerSquareKilometer = 25
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 2
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 41
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 55.18  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 84.3
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   SWEDEN   #############################
 
     cc.createBorders()
     cc.close()
