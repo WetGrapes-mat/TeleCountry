@@ -9,6 +9,12 @@ class Request:
     def close(self):
         self.driver.close()
 
+    def findAllPrices(self):
+        with self.driver.session() as session:
+            info = session.execute_write(self._findAllPrices)
+            return info
+
+
 #================Это пример (потом удалиться)==============
     def findCitiesWithAccessToWater(self, haveAccessToWater):
         with self.driver.session() as session:
