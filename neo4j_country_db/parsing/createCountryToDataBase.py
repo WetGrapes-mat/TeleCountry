@@ -46,7 +46,8 @@ class CountryCreator:
                    # internet
                    speedOfInternetMbps, freeWifi,
                    # education
-                   rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                   rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements,
+                   hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName,
@@ -79,7 +80,8 @@ class CountryCreator:
                                          # internet
                                          speedOfInternetMbps, freeWifi,
                                          # education
-                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements,
+                                         hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers
                                          )
             return base
 
@@ -113,7 +115,8 @@ class CountryCreator:
                     # internet
                     speedOfInternetMbps, freeWifi,
                     # education
-                    rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                    rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements,
+                    hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -187,17 +190,60 @@ class CountryCreator:
         # cities
         index = 1
         for city in citiesDict:
-            resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s"})' % (index, city, str(citiesDict[city][0]))
+            resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s", isResort:"%s"})' % (index, city, str(citiesDict[city][0]), str(citiesDict[city][1]))
             resultStr += '\ncreate (country)-[:has_city]->(city%d)' % index
             if index == 1:
                 resultStr += '\ncreate (country)-[:capital]->(city%d)' % index
-            if citiesDict[city][1] is not None:
-                resultStr += '\ncreate(ocean%d:Ocean {name:"%s"})' % (index, str(citiesDict[city][1]))
-                resultStr += '\ncreate (ocean%d)-[:washes]->(city%d)' % (index, index)
+            if citiesDict[city][2] is not None:
+                resultStr += '\ncreate(water%d:Water {name:"%s"})' % (index, str(citiesDict[city][2]))
+                resultStr += '\ncreate (water%d)-[:washes]->(city%d)' % (index, index)
             index += 1
         # education
         resultStr += '\ncreate (education:Education {rankingOfNationalEducationSystem:%d})' % rankingOfNationalEducationSystem
         resultStr += '\ncreate (country)-[:education]->(education)\n'
+
+        index = 1
+        for sight in sights.keys():
+            resultStr += '\ncreate (sight%d:Sight {name:"%s", description:"%s", image:"%s"})' % (
+                index, sight, sights[sight][0], sights[sight][1])
+            resultStr += '\ncreate (country)-[:sight]->(sight%d)' % (index)
+            index += 1
+
+        index = 1
+        for beach in beaches.keys():
+            resultStr += '\ncreate (beach%d:Beach {name:"%s", description:"%s", image:"%s"})' % (
+            index, beach, beaches[beach][0], beaches[beach][1])
+            resultStr += '\ncreate (country)-[:beach]->(beach%d)' % (index)
+            index += 1
+
+        index = 1
+        for mountain in mountains.keys():
+            resultStr += '\ncreate (mountain%d:Mountain {name:"%s", description:"%s", image:"%s"})' % (
+                index, mountain, mountains[mountain][0], mountains[mountain][1])
+            resultStr += '\ncreate (country)-[:mountain]->(mountain%d)' % (index)
+            index += 1
+
+        index = 1
+        for lake in lakes.keys():
+            resultStr += '\ncreate (lake%d:Lake {name:"%s", description:"%s", image:"%s"})' % (
+                index, lake, lakes[lake][0], lakes[lake][1])
+            resultStr += '\ncreate (country)-[:lake]->(lake%d)' % (index)
+            index += 1
+
+        index = 1
+        for river in rivers.keys():
+            resultStr += '\ncreate (river%d:River {name:"%s", description:"%s", image:"%s"})' % (
+                index, river, rivers[river][0], rivers[river][1])
+            resultStr += '\ncreate (country)-[:river]->(river%d)' % (index)
+            index += 1
+
+        index = 1
+        for skiResort in skiResorts.keys():
+            resultStr += '\ncreate (skiResort%d:SkiResort {name:"%s", description:"%s", image:"%s"})' % (
+                index, skiResort, skiResorts[skiResort][0], skiResorts[skiResort][1])
+            resultStr += '\ncreate (country)-[:skiResort]->(skiResort%d)' % (index)
+            index += 1
+
 
         index = 1
         fac = 1
@@ -205,44 +251,49 @@ class CountryCreator:
         prog = 1
 
         for city in citiesDict:
-            for univ in universities[city]:
-                try:
-                    link = links[univ]
-                    cost = costs[univ]
-                    image = images[univ]
-                    req = requirements[univ]
-                except:
-                    link = "a"
-                    cost = 1000
-                    image = 'clear'
-                    req = 'No requirements'
-                resultStr += '\ncreate (univ%d:University {name:"%s", link:"%s", cost:%d, image:"%s", requirements:"%s"})' % (univ_ind, univ, link, cost, image, req)
-                for faculty in faculties[univ]:
-                    resultStr += '\nmerge (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
-                    resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (univ_ind, fac)
-                    fac += 1
-                try:
-                    for program in programs[univ]:
-                        resultStr += '\ncreate (program%d:Program {name:"%s"})' % (prog, program)
-                        resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (univ_ind, prog)
-                        prog += 1
-                except:
-                    pass
+            if city in universities.keys():
+                for univ in universities[city]:
+                    try:
+                        link = links[univ]
+                        cost = costs[univ]
+                        image = images[univ]
+                        req = requirements[univ]
+                        host = hostel[univ]
+                        scolar = scolarship[univ]
+                    except:
+                        link = "a"
+                        cost = 1000
+                        image = 'clear'
+                        req = 'No requirements'
+                        host = 'No'
+                        scolar = 'No'
+                    resultStr += '\ncreate (univ%d:University {name:"%s",link:"%s",cost:%d,hostel:"%s",scolarship:"%s",image:"%s",requirements:"%s"})' % (
+                    univ_ind, univ, link, cost, host, scolar, image, req)
+                    for faculty in faculties[univ]:
+                        resultStr += '\nmerge (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
+                        resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (univ_ind, fac)
+                        fac += 1
+                    try:
+                        for program in programs[univ]:
+                            resultStr += '\ncreate (program%d:Program {name:"%s"})' % (prog, program)
+                            resultStr += '\ncreate (univ%d)-[:program]->(program%d)' % (univ_ind, prog)
+                            prog += 1
+                    except:
+                        pass
 
-                # resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
-                # resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
+                    # resultStr += '\ncreate (cost%d:Cost {value:%d})' % (c, cost)
+                    # resultStr += '\ncreate (univ%d)-[:cost]->(cost%d)' % (ind, c)
 
-                resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, univ_ind)
-                resultStr += '\ncreate (country)-[:university]->(univ%d)' % univ_ind
-                univ_ind += 1
-            index += 1
+                    resultStr += '\ncreate (city%d)-[:university]->(univ%d)' % (index, univ_ind)
+                    resultStr += '\ncreate (country)-[:university]->(univ%d)' % univ_ind
+                    univ_ind += 1
+                index += 1
 
         # language
         resultStr += '\ncreate (language:Language {name:"%s"})' % (str(languageName))
         resultStr += '\ncreate (country)-[:official_language]->(language)'
         # currency
-        resultStr += '\ncreate (currency:Currency {name:"%s", oneDollarEquals:%s})' % (
-        str(currencyName), currencyEqualsToDollar)
+        resultStr += '\ncreate (currency:Currency {name:"%s", oneDollarEquals:%s})' % (str(currencyName), currencyEqualsToDollar)
         resultStr += '\ncreate (country)-[:currency]->(currency)'
         # military political block
         resultStr += '\ncreate (militaryPoliticalBlock:MilitaryPoliticalBlock {name:"%s"})' % (str(milPolBlock))
@@ -392,14 +443,101 @@ if __name__ == "__main__":
     countryName = "Canada"
     officialLanguage = "English"
 
-    # cities    name   isBig  washesBy
-    cities = {'Ottawa': [True, None], 'Toronto': [True, None], 'Montreal': [True, None],
-              'Quebec': [True, 'Atlantic ocean'], 'Vancouver': [True, 'Pacific ocean']}
-
-    # education
+    # cities    name   isBig isResort washesBy
+    cities = {'Ottawa': [True, True, None], 'Toronto': [True, False, None], 'Montreal': [True, True, None],
+              'Quebec': [True, True, 'Atlantic ocean'], 'Vancouver': [True, True, 'Pacific ocean'], 'Victoria': [False, True, 'Salish sea']}
+    sights = {'Parliament building of Canada': ["The architectural complex, which hosts working meetings of the Canadian government, looks like a medieval castle from the outside. "
+                                                "It is located in a convenient location for travelers - in the heart of Ottawa. "
+                                                "The gray stone from which the building is built seems gloomy at first glance. "
+                                                "However, the overall composition of the building is so precise and accurate that the complex inspires involuntary respect. "
+                                                "It seems that the architects who built the complex in 1860 were fanatically devoted to the idea of symmetry in architecture."
+                                                "The pointed towers are located strictly symmetrically with respect to the central column, on which the clock runs, visible from everywhere. "
+                                                "The strength of the building is evidenced by the fact that the gray stone is also covered with copper plates. "
+                                                "However, in 1916 the building did not survive the devastating fire. "
+                                                "Reconstruction work was carried out in an organized manner, but they dragged on until 1922.", 'parliament_building_of_Canada_sight'],
+              'Oratory of St. Joseph': ["Among those sights that you must visit in Canada is the Oratory of St. Joseph. Construction work began in 1904. "
+                                        "The initiative of the project belongs to André Bessette. "
+                                        "The original version of the oratorio was a small chapel that nestled comfortably on the slopes of Mont Royal next to Notre Dame College. "
+                                        "The church quickly became popular, the number of parishioners increased every year. "
+                                        "Therefore, already in 1917, a church for 1000 people was built here."
+                                        "The church keeps the memory of many miracles performed by Brother Andre Bessette. "
+                                        "It is significant that Pope John Paul II recognized the miracles that are attributed to brother Andrew. "
+                                        "The recognition took place in 1982, and already in 2010 the canonization of brother Andrei took place. "
+                                        "He was canonized by Pope Benedict XVII.", 'oratory_sight'],
+              'Niagara Falls': ["Niagara Falls is included in the list of natural attractions in Canada. "
+                                "In addition, it is considered one of the wonders of the world. "
+                                "The waterfall is located on the border of Canada and America. "
+                                "With a terrifying roar, tons of water flows powerfully rush every second. "
+                                "The waterfall is located in a dense cloud of spray, since the water pressure here is quite strong. "
+                                'This is fully true, since a giant water stream falls from a 50-meter height. '
+                                'Millions of travelers come here to see this unique natural phenomenon with their own eyes.', 'niagara_falls_sight']}
+    beaches = {'Wasaga Beach': ["The longest freshwater beach in the world, attracting tourists with its 12 km of sandy coastline. "
+                                "The warm, shallow waters of the beach are ideal for swimming, while the soft white sand is ideal for picnicking, "
+                                "relaxing and watching the beautiful sunset. This urban beach, which is somewhat reminiscent of the famous beaches in Florida: "
+                                "Daytona Beach and Fort Lauderdale.", 'wasaga_beach'],
+               "Brady’s Beach": ["Bradis Beach is located in a very secluded area on the Pacific Ocean. The only way to get here is by ferry, plane or timber barge. "
+                                 "Yes, the path is not easy, but the rest here is worth such a voyage. Try to be there during the Music by The Sea festival. "
+                                 "By August, the water here warms up to temperatures suitable for a refreshing swim. "
+                                 "The advantages of this beach are that it is surrounded by the Pacific Rim National Park, the ocean, and the territory of the Indians. "
+                                 "Excellent diving. Proximity to Barkley Sound islands inhabited by sea lions and bald eagles.", "brady_beach"],
+               'Ingonish Beach': ["Ingonish Beach is the only beach in the Cape Breton Highlands National Park, with a unique opportunity to swim in both fresh and sea water. "
+                                  "This sandy beach is washed away in winter and washed back by waves every spring, and a natural barrier separates the lake from the waters of the Atlantic Ocean. "
+                                  "In addition to swimming, here you will be offered to go on a boat trip to go fishing and, of course, watch the whales in their habitat.", 'ingonish_beach']}
+    mountains = {'Robson': ['The highest point of the Rocky Mountains; it is also the highest point of the Canadian Rockies. '
+                           'The mountain is located within the Robson Provincial Park in British Columbia.', 'robson_mountain'],
+                 'Temple': ['Mountain in Banff National Park in the Canadian Rockies, the 7th highest peak in Alberta. '
+                            'The Temple is located in the Bow River Valley between Paradise Creek and Moraine Creek and is the highest point in the Lake Louise region.',
+                            'temple_mountain'],
+                 'Snow House': ['A mountain on the continental divide of the Columbia Icefield on the border of Banff and Jasper National Parks. '
+                                'Located in the Canadian Rockies on the border of British Columbia and Alberta. The height of the peak is 3456 m.',
+                                'snow_house_mountain'],
+                 'Assiniboine': ['Pyramidal mountain located on the American Continental Divide on the border of the Canadian provinces of Alberta and British Columbia. '
+                                 'The height is 3618 m above sea level.', 'assiniboine_mountain']}
+    skiResorts = {'Whistler Blackcomb': ['At the heart of Whistler and Blackcomb is the charming village of Whistler. '
+                                         "You don't even have to ski to enjoy your trip to Whistler, but if you do, you'll find "
+                                         'seemingly limitless terrain that can accommodate any level of skier, from first timers to extreme skiers. '
+                                         "You'll find beautiful wide-open bowls at Mount Whistler and incredible groomed runs on both mountains. "
+                                         "On Blackcomb, the Horstmann Glacier offers year-round skiing.", 'whistler_blackcomb_resort'],
+                  'Lake Louise': ["Lake Louise, in the heart of the Rocky Mountains and less than an hour from the city of Banff, is one of Canada's most famous resorts. "
+                                  "From the slopes, majestic scenery stretches over the Luke Valley and the surrounding mountains and beyond to the palatial Fairmont Chateau Lake Louise. "
+                                  "This is a mountain for all skiers, from extreme skiers to families coming here to learn about the sport. "
+                                  "In a resort with 4,200 acres of rocky terrain, the resort offers a combination of wide-open bowls, steepness, flumes and plenty of groomed trails."
+                                  "The Lake Louise Ski Resort doesn't have an onsite location, but it does have fantastic daytime facilities at the base, as well as restaurants serving delicious food, "
+                                  "as well as other restaurants in the mountains. Skiers can take a dip in the nearby village of Lake Louise or the town of Banff.", 'lake_louise_resort'],
+                  'Revelstoke': ["Located in the interior of British Columbia, about 2.5 hours from the city of Kelowna, Revelstoke is a bit harder to get to some resorts, but well worth it. "
+                                 "The mountain sees a large number of powder days; few crowds; and offers great terrain, from open bowls to tree trails and starter areas. "
+                                 "Add to that the affordable accommodation options in Revelstoke; ski slopes, ski slopes on the mountain; and fabulous mountain scenery and it's hard to beat this resort. "
+                                 "This is not the place for a glamorous five-star experience or shopping experience. It is a mountain of skiers and a great place for families.", 'revelstoke_resort']}
+    lakes = {'Louise': ["A natural wonder of Banff National Park. Lies surrounded by the Rocky Mountains and the bright greenery of the forest, at an altitude of 1646 meters. "
+                        "The unusual emerald color of the water is due to the presence of rock particles brought into the lake by glaciers. The area of the lake is 0.8 km2. "
+                        "On the shore there is a 5-star hotel, a number of campsites and tourist centers, nearby is the famous ski resort. "
+                        "Hiking and cycling routes are organized around the reservoir. Canoe excursions are available.", 'louise_lake'],
+             'Moraine': ["One of the most beautiful and photographed lakes in the world. Business card of Canada. "
+                         "Its stunning landscapes can be found in many magazines and catalogs, on Canadian currency, Windows screensaver, etc. "
+                         "It lies in the Valley of the Ten Peaks of the famous Banff Park, at an altitude of 1885 meters. "
+                         "Origin - glacial. The area is 0.5 km2. Routes have been laid out for tourists, it is better to move along them with an experienced guide. "
+                         "A hotel was built on the shore, there is a boat rental.", 'moraine_kale'],
+             'Superior': ['The largest in terms of area in the composition of the Great Five and among the fresh lakes of the world. '
+                          'Located in Canada and the USA. It occupies an area of 82.7 thousand km2. The shores are indented, there are large bays, islands. '
+                          'There are many parks on the lake, a marine reserve has been created. The water is cold, even in summer it does not exceed 4 ° C, in winter it does not freeze due to frequent storms. '
+                          'The lake is rich in fish. Navigable. The major port is Thunder Bay. The southern part of the reservoir is known as the graveyard of ships.', 'superior_lake']}
+    rivers = {'Yukon': ["One of the largest rivers of the North American continent originates in Lake Marsh. "
+                        "Most of the Yukon is located in the United States, but the source is located in the Canadian province of the same name. "
+                        'A tributary of the Yukon, the Klondike, is famous for the gold rush of the 20th century. '
+                        'Almost the entire river is located in the subarctic climate zone, but in the Canadian part of the Yukon it is much warmer than in the north.'
+                        'The total length of the river is 3190 km.', 'yukon_river'],
+              'Colombia': ["The source of the river is Lake Columbia in the Rocky Mountains. "
+                           "Due to its fast current and large elevation difference, Colombia is actively used to generate electricity. "
+                           "In total, there are 14 hydroelectric power stations on it. The river is a spawning ground for many species of salmon. "
+                           "Dams and hydroelectric power stations prevent the advancement of both adults and fry, but all power plants have fish passages, "
+                           "and fry are in some cases transported to the ocean by the US Army. "
+                           "The total length of the river is 2000 km.", 'colombia_river'],
+              'Churchill': ["Thanks to an artificial canal built in the 20th century, most of the water from the Churchill River goes to Saskatchewan to increase hydroelectric power generation. "
+                            "The river originates in the central part of the province of Saskatchewan and carries its waters east to Hudson Bay. "
+                            "The rich flora and fauna of the river basin was the reason for its nomination for inclusion in the List of Protected Rivers of Canada.", 'churchill_river']}
     universities = {'Ottawa': ['Carleton University', 'University of Ottawa'],
                     'Toronto': ['York University', 'University of Toronto'],
-                    'Montreal': ['Montreal university', 'Polytechnique Montreal'],
+                    'Montreal': ['Montreal University', 'Polytechnique Montreal'],
                     'Quebec': ['Laval University', 'TELUQ University'],
                     'Vancouver': ['University of British Columbia', 'University Canada West']}
     faculties = {'Carleton University': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
@@ -408,7 +546,7 @@ if __name__ == "__main__":
                                           'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Social Sciences'],
                  'York University': ['Faculty of Education', 'Faculty of Arts', 'Faculty of Medicine, Faculty of Science'],
                  'University of Toronto': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Medicine', 'Faculty of Design'],
-                 'Montreal university': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Law', 'Faculty of Medicine',
+                 'Montreal University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Law', 'Faculty of Medicine',
                                          'Faculty of Education', 'Faculty of Design', 'Faculty of Kinesiology'],
                  'Polytechnique Montreal': ['Faculty of Computer Engineering and Software', 'Faculty of Science', 'Faculty of Biomedicine'],
                  'Laval University': ['Faculty of Arts', 'Faculty of Law', 'Faculty of Education', 'Faculty of Forestry', 'Faculty of Medicine'],
@@ -421,7 +559,7 @@ if __name__ == "__main__":
                 'University of Ottawa': ['Magistracy', 'Undergraduate'],
                 'York University': ['Magistracy', 'Undergraduate'],
                 'University of Toronto': ['Foundation', 'Undergraduate', 'MBA'],
-                'Montreal university': ['Magistracy', 'Undergraduate'],
+                'Montreal University': ['Magistracy', 'Undergraduate'],
                 'Polytechnique Montreal': ['Magistracy', 'Undergraduate'],
                 'Laval University': ['Magistracy', 'Undergraduate'],
                 'TELUQ University': ['Magistracy', 'Undergraduate'],
@@ -431,7 +569,7 @@ if __name__ == "__main__":
              'University of Ottawa': 'https://www.uottawa.ca/en',
              'York University': 'https://www.yorku.ca',
              'University of Toronto': 'https://www.utoronto.ca',
-             'Montreal university': 'https://www.umontreal.ca/en',
+             'Montreal University': 'https://www.umontreal.ca/en',
              'Polytechnique Montreal': 'https://www.polymtl.ca',
              'Laval University': 'https://www.ulaval.ca/en',
              'TELUQ University': 'https://www.teluq.ca',
@@ -441,12 +579,26 @@ if __name__ == "__main__":
               'University of Ottawa': 'university_of_ottawa',
               'York University': 'york_university',
               'University of Toronto': 'university_of_toronto',
-              'Montreal university': 'montreal_university',
+              'Montreal University': 'montreal_university',
               'Polytechnique Montreal': 'politechnique_montreal',
               'Laval University': 'laval_university',
               'TELUQ University': 'teluq_university',
               'University of British Columbia': 'university_of_british_columbia',
               'University Canada West': 'university_canada_west'}
+    hostel = {'Carleton University': 'Yes',
+              'University of Ottawa': 'Yes',
+              'York University': 'Yes',
+              'University of Toronto': 'Yes',
+              'Montreal University': 'Yes',
+              'Polytechnique Montreal': 'No',
+              'Laval University': 'No',
+              'TELUQ University': 'No',
+              'University of British Columbia': 'Yes',
+              'University Canada West': 'university_canada_west'}
+    scolarship = {'Abu Dhabi University': 'Yes',
+                  'Khalifa University': 'Yes',
+                  'Murdoch University Dubai': 'Yes',
+                  'American University of Sharjah': 'Yes'}
     requirements = {'Carleton University': 'Four years of English. '
                                            'Three or more years of mathematics. '
                                            'Two or more years of science. '
@@ -474,7 +626,6 @@ if __name__ == "__main__":
                                                       'At least six academic/non-academic Grade 12 courses (recommended, but not required)',
                     'University Canada West': "Usually, the university accepts a bachelor's degree in BBA/BCom or its equivalent and a minimum of three years of documented professional or management experience with evidence of career progression. "
                                               "The English language requirement includes an overall IELTS score of 6.5 with at least 6.0 in Writing."}
-
 
     costs = {'Carleton University': 18911,
              'University of Ottawa': 19041,
@@ -576,13 +727,16 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers
                   )
 
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
     #############################   CANADA   #############################
+
+
 
     cc.createBorders()
     cc.close()
