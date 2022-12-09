@@ -45,6 +45,11 @@ class CountryMigration(Request):
             city = session.execute_write(self._life_type)
             return city
 
+    def findcity(self, country):
+        with self.driver.session() as session:
+            city = session.execute_write(self._country, country)
+            return city
+
     @staticmethod
     def _climat(tx):
         result = tx.run("MATCH (n:Country) -[:climat]->(c:Climat) return n as Country ,"
@@ -78,6 +83,12 @@ class CountryMigration(Request):
                         "n.name as nameCity", isb=isb)
         return [{'nameCountry': info["nameCountry"], 'nameCity': info['nameCity']} for info in result]
 
+    @staticmethod
+    def _country(tx, name):
+        result = tx.run("match (h:Country {name: $name})-[:has_city]->(n:City) return "
+                        "h.name as nameCountry,"
+                        "n.name as nameCity", name=name)
+        return [{'nameCountry': info["nameCountry"], 'nameCity': info['nameCity']} for info in result]
 
     @staticmethod
     def _english(tx):
@@ -102,6 +113,8 @@ class CountryMigration(Request):
                         "n.developmentLevelOfPublicTransport as developmentLevelOfPublicTransport")
         return [{'nameCountry': info["nameCountry"], 'developmentLevelOfPublicTransport': info['developmentLevelOfPublicTransport']} for info
                 in result]
+
+
 
     @staticmethod
     def _lgbt(tx):
@@ -141,7 +154,7 @@ if __name__ == "__main__":
     #     y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature'])/2) + i['juneAverageTemperature'])/2
     #     print(i['name'], z, "грязь\n", x,"комфорт\n", y , "температура" )
     print('+++++++++++++')
-    c = country_migration_db.findlifetype()
+    c = country_migration_db.findcity("Canada")
     print(c)
 
 
