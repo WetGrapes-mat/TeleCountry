@@ -35,10 +35,13 @@ class CountryMigrationAgent:
 
     def water_city(self):
         water_city = []
+        water_country = []
         c = country_migration_db.findOcean()
         for i in c:
             water_city.append(i['nameCity'])
-        return water_city
+            water_country.append(i['nameCountry'])
+
+        return water_city, set(water_country)
 
     def city_in_country(self, country):
         c = country_migration_db.findcity(country)
@@ -89,16 +92,19 @@ class CountryMigrationAgent:
 
     def calculate(self, params):
         city = []
+        country = None
         rezult = {}
-        if params['water'] == True:
-            temp1 = list(set(agent.water_city()).intersection(set(agent.size_city(str(params['isBig'])))))
+        if params['water'] == "True":
+            city, country = self.water_city()
+            city_s = self.size_city(str(params['isBig']))
+            temp1 = list(set(city).intersection(set(city_s)))
             if temp1:
                 city = temp1
             else:
-                city = agent.water_city()
+                city, country = self.water_city()
                 print('был тут')
         else:
-            city = agent.size_city(str(params['isBig']))
+            city = self.size_city(str(params['isBig']))
         climat = self.climat_city()[params['climat']]
         temp2 = list()
         for i in climat.keys():
@@ -107,11 +113,10 @@ class CountryMigrationAgent:
         self.count_patams(params)
         print(self.country_choose)
         for co, am in self.country_choose.items():
-            temp5 = list(set(city).intersection(set(self.city_in_country(co))))
-            if temp5:
-                rezult[co] = temp5
-
-
+            if co in country:
+                temp5 = list(set(city).intersection(set(self.city_in_country(co))))
+                if temp5:
+                    rezult[co] = temp5
         temp6 = list(rezult.items())
         if len(temp6) >= 3:
             return f"Для переезда наиболее подходящим будет {temp6[0][0]} можете расмотреть следущие города {', '.join(temp6[0][1])}, " \
@@ -130,8 +135,9 @@ class CountryMigrationAgent:
 
 
 
-
-
+#
+# {'water': 'True', 'isBig': 'True', 'climat': '1', 'transport': '5', 'english': '5', 'workplace': '4', 'nightlife': '4', 'lgbt': '1'}
+# {'Germany': 3, 'United Kingdom': 3, 'Finland': 3, 'Norway': 3, 'Sweden': 3, 'Canada': 3, 'Czech': 2, 'Slovakia': 2, 'Hungary': 2, 'Poland': 1}
 
 
 
@@ -141,4 +147,4 @@ class CountryMigrationAgent:
 agent = CountryMigrationAgent()
 if __name__ == "__main__":
 
-    print(agent.calculate({'water': False, 'isBig':"False", 'climat':1, 'english':3, 'transport':3, 'workplace':3, 'nightlife':2, 'lgbt':3}))
+    print(agent.calculate({'water': 'True', 'isBig': 'True', 'climat': '1', 'transport': '5', 'english': '5', 'workplace': '4', 'nightlife': '4', 'lgbt': '1'}))
