@@ -11,7 +11,10 @@ class CountryMigrationAgent:
             z = (i['airPollution'] + i['waterPollution'] + i['dirtyAndUntidy'])//3
             x = i['comfortableToSpendTimeInTheCity']
             if i['decemberAverageTemperature'] == 0: i['decemberAverageTemperature'] = -1
-            y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature'])/2) + i['juneAverageTemperature'])/2
+            y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature']) / 2) + i[
+                'juneAverageTemperature']) / 2
+            if i['averageDurationOfWinter'] == 0: y = (i['decemberAverageTemperature'] + i[
+                'juneAverageTemperature']) / 2
 
             if float(y) <= 10:
                 climat_country["1"][i['name']] = y
@@ -27,21 +30,17 @@ class CountryMigrationAgent:
         return climat_country
 
     def size_city(self, choise):
-        size_city = []
         c = country_migration_db.findisb(choise)
-        for i in c:
-            size_city.append(i['nameCity'])
-        return size_city
+        return c
 
     def water_city(self):
-        water_city = []
-        water_country = []
         c = country_migration_db.findOcean()
-        for i in c:
-            water_city.append(i['nameCity'])
-            water_country.append(i['nameCountry'])
+        return c
 
-        return water_city, set(water_country)
+    def all_country(self):
+        c = country_migration_db.findallcountry()
+        return c
+
 
     def city_in_country(self, country):
         c = country_migration_db.findcity(country)
@@ -91,42 +90,38 @@ class CountryMigrationAgent:
 
 
     def calculate(self, params):
-        city = []
-        country = None
-        rezult = {}
+        # country_water = None
+        # country_IsBig = None
+        # country_tempricha = None
+        rezult = []
         if params['water'] == "True":
-            city, country = self.water_city()
-            city_s = self.size_city(str(params['isBig']))
-            temp1 = list(set(city).intersection(set(city_s)))
-            if temp1:
-                city = temp1
-            else:
-                city, country = self.water_city()
-                print('был тут')
+            country_water = self.water_city()
         else:
-            city = self.size_city(str(params['isBig']))
-        climat = self.climat_city()[params['climat']]
+            country_water = self.all_country()
+        country_IsBig = self.size_city(str(params['isBig']))
+        country_tempricha = self.climat_city()[params['climat']]
         temp2 = list()
-        for i in climat.keys():
-            temp2 += self.city_in_country(i)
-        city = list(set(city).intersection(set(temp2)))
+        for i in country_tempricha.keys():
+            temp2.append(i)
+        country_tempricha = set(temp2)
+        temp3 = set()
+        if country_water and country_IsBig and country_tempricha:
+            temp3 = country_water.intersection(country_IsBig.intersection(country_tempricha))
         self.count_patams(params)
-        print(self.country_choose)
+
         for co, am in self.country_choose.items():
-            if co in country:
-                temp5 = list(set(city).intersection(set(self.city_in_country(co))))
-                if temp5:
-                    rezult[co] = temp5
-        temp6 = list(rezult.items())
-        if len(temp6) >= 3:
-            return f"Для переезда наиболее подходящим будет {temp6[0][0]} можете расмотреть следущие города {', '.join(temp6[0][1])}, " \
-                   f"так же неплохим варинтом будет {temp6[1][0]} тут стоит обратьить внимание на {', '.join(temp6[1][1])}. " \
-                   f"И последний вариант который мы смогли вам подобраьт {temp6[2][0]}"
-        elif len(temp6) == 2:
-            return f"Для переезда наиболее подходящим будет {temp6[0][0]} можете расмотреть следущие города {', '.join(temp6[0][1])}, " \
-                   f"так же неплохим варинтом будет {temp6[1][0]} тут стоит обратьить внимание на {', '.join(temp6[1][1])}."
-        elif len(temp6) == 1:
-            return f"Для переезда наиболее подходящим будет {temp6[0][0]} можете расмотреть следущие города {', '.join(temp6[0][1])}. "
+            if co in temp3:
+                rezult.append(co)
+        if len(rezult) >= 3:
+            return f"Для переезда наиболее подходящим будет {rezult[0]}  " \
+                   f"так же неплохим варинтом будет {rezult[1]}. " \
+                   f"И последний вариант который мы смогли вам подобраьт {rezult[2]}"
+        elif len(rezult) == 2:
+            return f"Для переезда наиболее подходящим будет {rezult[0]}  " \
+                   f"так же неплохим варинтом будет {rezult[1]}  "
+        elif len(rezult) == 1:
+            return f"Для переезда наиболее подходящим будет {rezult[0]}  " \
+                   f"так же неплохим варинтом будет {rezult[1]}. "
         else:
             return f"К сожелению страны с задаными вами параметрами не нашлось."
 
@@ -146,5 +141,7 @@ class CountryMigrationAgent:
 
 agent = CountryMigrationAgent()
 if __name__ == "__main__":
+    print(agent.water_city())
+    print(agent.climat_city())
 
-    print(agent.calculate({'water': 'True', 'isBig': 'True', 'climat': '1', 'transport': '5', 'english': '5', 'workplace': '4', 'nightlife': '4', 'lgbt': '1'}))
+    print(agent.calculate({'water': 'True', 'isBig': 'False', 'climat': '2', 'transport': '1', 'english': '1', 'workplace': '1', 'nightlife': '1', 'lgbt': '1'}))

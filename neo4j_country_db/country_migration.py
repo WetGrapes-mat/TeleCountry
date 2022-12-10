@@ -50,6 +50,11 @@ class CountryMigration(Request):
             city = session.execute_write(self._country, country)
             return city
 
+    def findallcountry(self):
+        with self.driver.session() as session:
+            city = session.execute_write(self._allcountry)
+            return city
+
     @staticmethod
     def _climat(tx):
         result = tx.run("MATCH (n:Country) -[:climat]->(c:Climat) return n as Country ,"
@@ -72,16 +77,20 @@ class CountryMigration(Request):
     @staticmethod
     def _ocean(tx):
         result = tx.run("match (h:Country)-[]->(n:City)<-[:washes]-() return  "
-                        "h.name as nameCountry,"
-                        "n.name as nameCity")
-        return [{'nameCountry': info["nameCountry"], 'nameCity': info['nameCity']} for info in result]
+                        "h.name as nameCountry")
+        return set([info["nameCountry"] for info in result])
+
+    @staticmethod
+    def _allcountry(tx):
+        result = tx.run("match (h:Country) return "
+                        "h.name as nameCountry")
+        return set([info["nameCountry"] for info in result])
 
     @staticmethod
     def _isbig(tx, isb):
         result = tx.run("match (h:Country)-[:has_city]->(n:City {isBig: $isb}) return "
-                        "h.name as nameCountry,"
-                        "n.name as nameCity", isb=isb)
-        return [{'nameCountry': info["nameCountry"], 'nameCity': info['nameCity']} for info in result]
+                        "h.name as nameCountry", isb=isb)
+        return set([info["nameCountry"] for info in result])
 
     @staticmethod
     def _country(tx, name):
@@ -146,15 +155,24 @@ class CountryMigration(Request):
 country_migration_db = CountryMigration()
 
 if __name__ == "__main__":
-    # c = country_migration_db.findClimat()
-    # for i in c:
-    #     z = (i['airPollution'] + i['waterPollution'] + i['dirtyAndUntidy'])//3
-    #     x = i['comfortableToSpendTimeInTheCity']
-    #     if i['decemberAverageTemperature'] == 0: i['decemberAverageTemperature'] = -1
-    #     y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature'])/2) + i['juneAverageTemperature'])/2
-    #     print(i['name'], z, "грязь\n", x,"комфорт\n", y , "температура" )
+    c = country_migration_db.findClimat()
+    for i in c:
+        z = (i['airPollution'] + i['waterPollution'] + i['dirtyAndUntidy'])//3
+        x = i['comfortableToSpendTimeInTheCity']
+        if i['decemberAverageTemperature'] == 0: i['decemberAverageTemperature'] = -1
+        y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature'])/2) + i['juneAverageTemperature'])/2
+        if i['averageDurationOfWinter'] == 0: y = (i['decemberAverageTemperature'] +i ['juneAverageTemperature'])/2
+
+        print(i['name'], z, "грязь\n", x,"комфорт\n", y , "температура" )
     print('+++++++++++++')
-    c = country_migration_db.findcity("Canada")
+    # c = country_migration_db.findcity("Canada")
+    c = country_migration_db.findisb('True')
+    w = country_migration_db.findOcean()
+
+
+
     print(c)
+    print(country_migration_db.findallcountry())
+
 
 
