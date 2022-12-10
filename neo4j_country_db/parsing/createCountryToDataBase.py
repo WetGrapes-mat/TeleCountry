@@ -304,13 +304,8 @@ class CountryCreator:
         str(currencyName), currencyEqualsToDollar)
         resultStr += '\ncreate (country)-[:currency]->(currency)'
         # military political block
-        index = 1
-        if milPolBlock:
-            for block in milPolBlock:
-                resultStr += '\nmerge (militaryPoliticalBlock%d:MilitaryPoliticalBlock {name:"%s"})' % (
-                index, str(block))
-                resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock%d)' % index
-                index += 1
+        resultStr += '\nmerge (militaryPoliticalBlock:MilitaryPoliticalBlock {name:"%s"})' % (str(milPolBlock))
+        resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock)'
         # military Power
         resultStr += '\ncreate (militaryPower:MilitaryPower {amountOfPeople:%d})' % amountOfPeopleInArmy
         resultStr += '\ncreate (country)-[:military_power]->(militaryPower)'
@@ -723,7 +718,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1.33
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 92000
 
     # healthcare
@@ -965,7 +960,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 3.67
 
     # military
-    milPolBlock = []
+    milPolBlock = 'None'
     amountOfPeopleInArmy = 63000
 
     # healthcare
@@ -1295,7 +1290,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1
 
     # military
-    milPolBlock = ['NATO', 'TIAR']
+    milPolBlock = 'NATO'
     amountOfPeopleInArmy = 1395350
 
     # healthcare
@@ -1566,7 +1561,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1835.88
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 161550
 
     # healthcare
@@ -1851,7 +1846,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 0.95
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 122850
 
     # healthcare
@@ -2115,7 +2110,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 0.95
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 27250
 
     # healthcare
@@ -2404,7 +2399,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 169.93
 
     # military
-    milPolBlock = ['TIAR']
+    milPolBlock = 'TIAR'
     amountOfPeopleInArmy = 214000
 
     # healthcare
@@ -2706,16 +2701,6 @@ if __name__ == "__main__":
     averageNumberOfFoggyDaysPerYear = 156  # days
     averageNumberOfRainyDaysPerYear = 136  # days
     averageNumberOfClearDays = 73  # days
-
-    # Man-made disasters
-    nameMMD = 'Warsaw gas explosion'
-    typeOfMMD = 'gas explosion'
-    yearOfMMD = 1979
-    aomuntOfDeadPeople = 49
-    aomuntOfInjuredPeople = 135
-    territoryOfPollution = 0
-    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
-    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
 
     # security
     situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
@@ -5291,7 +5276,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 5.24
 
     # military
-    milPolBlock = ['TIAR']
+    milPolBlock = 'TIAR'
     amountOfPeopleInArmy = 366500
 
     # healthcare
@@ -5376,7 +5361,389 @@ if __name__ == "__main__":
     # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
-    #############################   Brazil   #############################
+    #############################   Brazil   ##############################
+
+    #############################   Panama   #############################
+
+    # Country
+    countryName = "Panama"
+    officialLanguage = "Spanish"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Panama': [True, True, 'Pacific ocean'],
+        'David': [True, True, 'Pacific ocean'],
+        'Colon': [True, True, 'Caribbean sea'],
+        'Changinola': [True, True, 'Caribbean sea'],
+        'Achutupo': [True, True, 'Caribbean sea']}
+
+    # education
+    universities = {}
+    faculties = {}
+    programs = {}
+    links = {}
+    images = {}
+    # общага
+    hostel = {}
+    # стипендия
+    scolarship = {}
+    # требования к поступлению
+    requirements = {}
+    costs = {}
+
+    sights = {'Panama Canal': ["One of the most popular places in Panama is its canal. "
+                               "The amazing creation of human hands was officially opened in 1920, although the first ideas for such construction arose as early as the 16th century. "
+                               "There are many tourist excursions on the Panama Canal, the best place to watch the ships is at the walls of the Miraflores locks.",
+                               'https://top10.travel/wp-content/uploads/2016/05/panamskiy-kanal.jpg'],
+              'Coiba National Park': [
+                  "One of the largest islands in Panama gave its name to the unique national park of this country. "
+                  "About 760 species of fish live in the waters of the park, and from April to September, many turtles come to Coiba to lay their eggs. "
+                  "For its excellent diving conditions, Coiba is called the new Galapagos.",
+                  'https://top10.travel/wp-content/uploads/2016/05/park-koiba.jpg'],
+              'Islands of the San Blas Archipelago': [
+                  "The extraordinarily beautiful San Blas Archipelago is only half an hour by boat from Panama City. "
+                  "Kuna Indians live here, who managed to maintain an economy and culture independent of Panama. "
+                  "People come to San Blas to go diving, go fishing, see the daily life of the Indians, or just relax on the cleanest local beaches.",
+                  'https://top10.travel/wp-content/uploads/2016/05/ostrova-san-blas.jpg']}
+    beaches = {
+        'Isla Pelicano': ["Isla Pelicano is a tiny Robinson Crusoe-style island in the San Blas Archipelago, Panama. "
+                          "There are no hotels here, but there is a kiosk selling food and drinks. "
+                          "Sometimes there is a lot of garbage here, but this is the problem of many uninhabited islands - "
+                          "today the sea will bring all the dirt to the beach, and tomorrow it will wash it back.",
+                          'http://www.beach-on-map.com/img/11/panama-san-blas-cayos-limones-isla-pelicano-orig.jpg'],
+        "Kuanidup Island": ["Kuanidup is a small island near the port of Carti in the San Blas group, Panama. "
+                            "This is a creepy atmospheric place with a great beach. "
+                            "There are not many palm trees, but they look very picturesque, and the sand is perfectly white. "
+                            "Where there is no sand - excellent snorkeling.",
+                            'http://www.beach-on-map.com/img/11/panama-san-blas-kuanidup-island-beach-orig.jpg'],
+        'Red Frog': ["Red Frog is the best beach on the island of Bastimentos in the Bocas del Toro archipelago. "
+                     "There are always strong waves here, so this place is not suitable for children.",
+                     'http://www.beach-on-map.com/img/7/panama-bocas-del-toro-bastimentos-island-red-frog-beach-view-from-the-top-orig.jpg']}
+    mountains = {'Baru': [
+        "Baru, formerly Chiriqui, is a volcano in Panama, the highest point in the country, the highest volcano in southern Central America.",
+        'https://peakfinder.ru/image/original/40_baru.jpg'],
+                 'El Valle': [
+                     "El Valle is a dormant stratovolcano in Panama, in the province of Cocle, 80 km from the country's capital city of Panama. Height - 1185 m. "
+                     "The last eruption occurred about 13,000 years ago. In the center of the volcano is a caldera with a diameter of 6 kilometers. "
+                     "It was formed 56,000 years ago as a result of the collapse of the cone of Mount Paquita.",
+                     'https://upload.wikimedia.org/wikipedia/commons/c/cf/El_valle.jpg']}
+    skiResorts = {}
+    lakes = {'Gatun': ["From the shore, Lake Gatun looks endless. "
+                       "On its surface, here and there, one can see small islands, densely overgrown with trees. "
+                       "Traveling by boat, you can admire the steep red cliffs that have been washed away by waves and trees over the years, hanging right above the water. "
+                       "Snow-white herons and sluggish pelicans are found here. You can often see flocks of kites in the sky. "
+                       "Lake Gatun will please fans of fishing - here tuna jumps out of the water by itself. "
+                       "You can try to catch a sergeant fish, nicknamed so in memory of the American military. "
+                       "The lake attracts not only lovers of measured rest and ecotourists, but also divers. "
+                       "There are several possible dive sites in Panama at Lake Gatun and Alajuela. "
+                       "At the bottom of them you can see the remains of the railway that ran all the way to the Isthmus of Panama, "
+                       "and a lot of construction equipment that was used to lay tracks and build the Panama Canal.",
+                       'http://openarium.ru/foto/ozhyl6cNFRXHsE.jpg']}
+    rivers = {}
+    # currency
+    currencyName = 'USD'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "TIAR"
+    amountOfPeopleInArmy = 30000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 284
+    menAverageLifeExpectancy = 76.7
+    womenAverageLifeExpectancy = 82.1
+
+    # climat
+    juneAverageTemperature = 30
+    decemberAverageTemperature = 30
+    averageHumidity = 85
+    averageDurationOfWinter = 2.9
+    averageRainfallPerMonth = 68
+    averageNumberOfFoggyDaysPerYear = 13
+    averageNumberOfRainyDaysPerYear = 129
+    averageNumberOfClearDays = 217
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 2  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 4382000
+    procentOfMales = 50.4
+    procentOfFemales = 49.6
+    populationDensityPerSquareKilometer = 81
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 30
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 35.14
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 14  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 60
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    #############################   Panama   #############################
+
+    #############################   Egypt   #############################
+
+    # Country
+    countryName = "Egypt"
+    officialLanguage = "Arabic"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Cairo': [True, False, None],
+        'Alexandria': [True, True, 'Mediterranean sea'],
+        'Giza': [True, False, None],
+        'Shubra al-Kheima': [True, False, None],
+        'Port Said': [True, False, 'Mediterranean sea'],
+        'Hurghada': [False, True, 'Red sea'],
+        'Sahl Hasheesh': [False, True, 'Red sea'],
+        'Makadi Bay': [False, True, 'Red sea']}
+
+    # education
+    universities = {'Cairo': ['Ain Shams University', 'Al Azhar University', 'Sinai University'],
+                    'Alexandria': ['Alexandria University']}
+    faculties = {
+        'Ain Shams University': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Medicine',
+                                 'Faculty of Education'],
+        'Al Azhar University': ['Faculty of Medicine'],
+        'Sinai University': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software', 'Faculty of Business'],
+        'Alexandria University': ['Faculty of Business', 'Faculty of Education']}
+    programs = {
+        'Ain Shams University': ['Magistracy', 'Undergraduate'],
+        'Al Azhar University': ['Magistracy', 'Undergraduate'],
+        'Sinai University': ['Undergraduate'],
+        'Alexandria University': ['Magistracy', 'Undergraduate']}
+    links = {'Ain Shams University': 'https://www.asu.edu.eg',
+             'Al Azhar University': 'http://www.azhar.edu.eg/',
+             'Sinai University': 'https://www.su.edu.eg/',
+             'Alexandria University': 'https://alexu.edu.eg'}
+    images = {
+        'Ain Shams University': 'https://www.asu.edu.eg/storage//uploads/2022/slider/nUIegg3j.jpg',
+        'Al Azhar University': 'https://studioarabiya.com/images/easyblog_articles/blog_images/Al-Azhar__1757629c.jpg',
+        'Sinai University': 'https://www.dbse.co/uploads/5b62fa713a161.png',
+        'Alexandria University': 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Alexandria_University%2C_The_Main_Building.JPG'}
+    # общага
+    hostel = {'Ain Shams University': 'Yes',
+              'Al Azhar University': 'Yes',
+              'Sinai University': 'No',
+              'Alexandria University': 'Yes'}
+    # стипендия
+    scolarship = {'Ain Shams University': 'No',
+                  'Al Azhar University': 'Yes',
+                  'Sinai University': 'No',
+                  'Alexandria University': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'Ain Shams University': 'The entire admission process and details of admission to a particular faculty should be clarified on the ASU university website. '
+                                'The educational process is formed here from two semesters of one academic year.',
+        'Al Azhar University': 'When planning to enter Al-Azhar University, you must first visit the official website of the university. '
+                               'There you can find the rules of admission and selection criteria. '
+                               'The educational process in the institution consists of two semesters of one academic year.',
+        'Sinai University': 'In order to become a student of Sinai University, an applicant must fill out an application on the website and provide: '
+                            'Certificate of general secondary education with a certified translation; Motivation letter; '
+                            'Certificate of payment of the registration fee; A certificate confirming the language proficiency of the chosen program. '
+                            'Enrollment in some specialties requires passing entrance exams.',
+        'Alexandria University': "The admissions committee begins accepting documents with an assessment of the success of the applicant's studies at the previous place of study. "
+                                 "After that, there are entrance exams in the chosen direction. "
+                                 "In principle, Alexandria University is not distinguished by the rigor of selection, therefore 90% of all applicants become full students of this educational institution. "
+                                 "The educational process includes two semesters of one academic year."}
+    costs = {'Ain Shams University': 1000,
+             'Al Azhar University': 2500,
+             'Sinai University': 6000,
+             'Alexandria University': 1000}
+
+    sights = {'Pyramids of Giza': ["In the Libyan desert, on the Giza plateau, is the most important place of power on the continent and, perhaps, one of the most beautiful places on our planet. "
+                                   "These are the Great Pyramids of Giza, which are a whole city-cemetery with temples, tombs, roads. "
+                                   "The ancient necropolis includes the Pyramid of Khufu (also known as the Pyramid of Cheops, one of the 7 wonders of the world), "
+                                   "the slightly smaller Pyramid of Khafre and the much more modest Pyramid of Menkaure, as well as several smaller satellite pyramids. "
+                                   "In fact, this complex is a cemetery for real aristocrats, where the pharaohs were buried, "
+                                   "as well as all their close associates - wives, servants, close relatives and everyone who had a noble origin and wanted to go to the next world after their master. "
+                                   "In general, the entire complex, in addition to the pyramids, consists of: temples located at the beginning of the memorial road that leads to the pyramids; "
+                                   "cemeteries where close relatives and courtiers of the pharaohs were buried; "
+                                   "the most ancient monument in the world - the sculpture of the Sphinx.",
+                                   'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-1-Giza-Pyramid-e1491277079103.jpg'],
+              'Valley of the pharaohs': ["In the 16th century BC. in order to bury the rulers of Egypt, the Valley of the Kings was created - a place in a rocky gorge, where a number of tombs were organized. "
+                                         "At one time, this place was secret and was strictly guarded by caretakers who protected it from raids and robbery. "
+                                         "The tradition of the burial of the pharaohs was laid by one of them - Thutmose I, who, fearing for the looting of his own tomb, "
+                                         "ordered to organize it in an inaccessible, impassable place. And so the valley of Thebes appeared - the most important sight of Egypt, "
+                                         "which has preserved its appearance to this day. "
+                                         "The place for the Great Magic Necropolis was not chosen by chance: the material for the construction of tombs - limestone - in this rocky area is quite hard, "
+                                         "which makes it possible to protect the tombs from cracks and destruction; the path to the Valley allows the funeral procession to move quickly and unhindered; "
+                                         "at the same time, there is only one single entrance to the Valley, passing along a narrow path and protected by steep cliffs; the location of the Valley is at a great distance"
+                                         " from the mortuary temple, the tombs of which have been plundered more than once. To date, more than 60 pharaohs, as well as the wives and children of the rulers, rest in the Valley. "
+                                         "Inside the Valley, a whole system of complex tunnels and wells has been formed, and the walls are covered with frescoes that tell about the life of the buried persons.",
+                                         'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-2-The-Valley-of-the-Kings-e1491277275454.jpg'],
+              'Temple of Luxor': ["If during your travels you, by the will of fate, ended up in the ancient city of history and magic - Luxor, then the question of what to visit in Egypt can be considered resolved. "
+                                  "Of course, this is the majestic Luxor Temple - a monumental religious building built in the 14th century BC. "
+                                  "The temple strikes with the perfection and harmony of forms, especially when you realize the degree of antiquity of this historical monument. "
+                                  "One of the largest temples in Egypt has a total length of about 260 meters, and massive trapezoidal towers - pylons that adorn the entrance, "
+                                  "reach 20 meters in height and 70 meters in length. The temple was erected by order of the pharaoh Amenhotep III, "
+                                  "who ruled at that time, who dedicated it to the sun god Amon-Ra, his wife Mut and their son Khons. "
+                                  "In ancient times, 6 huge statues of Pharaoh Ramses II towered at the entrance to the temple, but only two of them have survived to this day. "
+                                  "Here you can also admire a huge 25-meter obelisk painted with frescoes. Initially there were two of them, "
+                                  "but one of them was presented to France by order of the ruler Mohamed Ali in 1819.",
+                                  'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-3-Luxor-Temple-e1491278052766.jpg']}
+    beaches = {'Agiba': ["Miracle - this is how the name of the small beach Agiba is translated from Arabic. The 40-meter sandy strip is hidden in the golden-yellow rocks: bays, caves, "
+                         "islets and walls hanging over the sea beckon to climb higher and take the most unusual photo. "
+                         "When you swim in plenty in the azure waters of the Mediterranean Sea and explore the unusual relief, you can relax in a cafe overlooking the sea.",
+                         'https://content.skyscnr.com/f1128d59413ede49d75d1adfd893a469/agiba.jpg'],
+               "Haram": ["Haram, or the Coast of Love, is the largest beach in the vicinity of Mersa Matruh, the main resort town of the Mediterranean coast of Egypt. On its white sand, there is enough space for everyone even in the hottest summer months. "
+                         "A smooth entry into the water will appeal to families with children and is suitable for those who feel insecure on the water.",
+                         'https://infomedicspb.ru/wp-content/uploads/4/2/9/429c045dd065c83ff6c70df6ec9b5d86.jpeg']}
+    mountains = {'Sinai': ["In Egypt, there is one interesting place that keeps a history of thousands of years. "
+                           "The significance of this place has recently faded somewhat against the backdrop of popular attractions in Egypt - such as the pyramids of Giza or the resort of Sharm el-Sheikh. "
+                           "Mount Sinai, located on the Sinai Peninsula, is perhaps the first thing to visit in Egypt for those who are interested in local shrines. "
+                           "Mount Sinai, also known as Mount Moses, is a place with which one biblical story is connected. "
+                           "It is believed that it was here that the prophet Moses received the ten commandments from the Lord and passed them on to his people. "
+                           "Since this story exists not only in Christianity, the Jewish and Islamic religions also adhere to these commandments. "
+                           "Therefore, here, on the top of the mountain, at an altitude of 2,285 m, each of these religions has its own temple dedicated to it. "
+                           "There is also a chapel dedicated to the Trinity, and a mosque of about the same size, and the Jews will show the way to the cave, which, "
+                           "according to legend, served as a refuge for Moses for 40 days while he communicated with God.",
+                           'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-7-Mount-Sinai-e1491279059652.jpg']}
+    skiResorts = {}
+    lakes = {'Karun': ["Karun is a salt lake in Egypt, on the territory of the Faiyum oasis. The area is about 233 km². "
+                       "It is located at a level of 45 m below sea level. The modern lake Karun is the remnant of a large lake located in the same place and having an area of 1270 to 1700 km². "
+                       "Initially, it was a vast expanse of water, which gradually dried up for reasons still unknown.",
+                       'https://rutraveller.ru/icache/place/2/343/2343_603x354.jpg']}
+    rivers = {'Nile': ["The Nile River is the country's main waterway. "
+                       "This is, first of all, a source of fresh water for the Egyptians (although the quality of this water, from the point of view of hygienists, leaves a very big question). "
+                       "The Nile carries its waters along a narrow valley, surrounded by rocks on both sides, from Sudan to the Mediterranean Sea. "
+                       "The total length of the river is about 1,545 kilometers. In the north, in the Cairo region, the width of the river delta reaches 250 kilometers.",
+                       'https://switki.ru/assets/i/ai/4/7/6/i/3275005.jpg']}
+    # currency
+    currencyName = 'EGP'
+    currencyEqualsToDollar = 24.57
+
+    # military
+    milPolBlock = "None"
+    amountOfPeopleInArmy = 438500
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 309
+    menAverageLifeExpectancy = 69.8
+    womenAverageLifeExpectancy = 75.1
+
+    # climat
+    juneAverageTemperature = 34
+    decemberAverageTemperature = 19
+    averageHumidity = 52
+    averageDurationOfWinter = 3
+    averageRainfallPerMonth = 27
+    averageNumberOfFoggyDaysPerYear = 12
+    averageNumberOfRainyDaysPerYear = 14
+    averageNumberOfClearDays = 317
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 1  # [1, 3]
+    assessmentOfFamilyLife = 1  # [1, 3]
+    attitudeTowardsLGBT = 1  # [1, 3]
+
+    # population
+    populationCount = 104300000
+    procentOfMales = 50.2
+    procentOfFemales = 49.8
+    populationDensityPerSquareKilometer = 105.7
+    speedOfLife = 1  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 76
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 48
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 2  # Мегабиты в секунду
+    freeWifi = 1  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 39
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    #############################   Egypt   #############################
 
     cc.createBorders()
     cc.close()
