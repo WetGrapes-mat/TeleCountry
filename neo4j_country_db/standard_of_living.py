@@ -1,7 +1,7 @@
 from neo4j_country_db.requests import Request
 
 
-class CostLivingRequest(Request):
+class StandartLivingRequest(Request):
 
     def findAllInfo(self):
         with self.driver.session() as session:
@@ -15,76 +15,23 @@ class CostLivingRequest(Request):
 
     @staticmethod
     def _findCounryNames(tx):
-        result = tx.run("""
-        match(n:Country) return n.name as Country
-        """)
+        result = tx.run("""match(n:Country) return n.name as Country""")
         return [info["Country"] for info in result]
 
     @staticmethod
     def _findAllInfo(tx):
-        result = tx.run("""match (c:Country)-[:economic_situation]-(r)-[:salaries]-(s), 
-        (r)-[:clothing_prices]-(cp), 
-        (r)-[:prices_in_restaurants]-(pr), 
-        (r)-[:childcare_prices]-(chcp), 
-        (r)-[:buy_prices]-(bp), 
-        (r)-[:utilities_prices]-(up), 
-        (r)-[:rent_prices]-(rp), 
-        (r)-[:sports_prices]-(spp), 
-        (r)-[:transportation_prices]-(tp), 
-        (r)-[:prices_in_markets]-(pm) 
+        result = tx.run("""match (c:Country)-[:healthcare]-(hc), 
+        (c)-[:crime_indexes]-(ci), 
+        (c)-[:climat]-(clim), 
         return c.name as Country, 
-        s.averageMonthlyNetSalary as averageMonthlyNetSalary, 
-        cp.dress as dress, 
-        cp.jeans as jeans, 
-        cp.pairOfMenLeatherBusinessShoes as pairOfMenLeatherBusinessShoes, 
-        cp.pairOfNikeRunningShoes as pairOfNikeRunningShoes, 
-        pr.cappuccino as cappuccino, 
-        pr.domesticBeerRestaurant as domesticBeerRestaurant, 
-        pr.importedBeerRestaurant as importedBeerRestaurant, 
-        pr.mcMealAtMcDonalds as mcMealAtMcDonalds, 
-        pr.mealFor2PeopleMidRestaurant as mealFor2PeopleMidRestaurant, 
-        pr.mealInexpensiveRestaurant as mealInexpensiveRestaurant, 
-        pr.pepsi as pepsi, pr.water as water, 
-        chcp.internationalPrimarySchool as internationalPrimarySchool, 
-        chcp.preschool as preschool,
-        bp.pricePerSquareMeterToBuyApartmentInCityCentre as pricePerSquareMeterToBuyApartmentInCityCentre, 
-        bp.pricePerSquareMeterToBuyApartmentOutsideOfCentre as pricePerSquareMeterToBuyApartmentOutsideOfCentre, 
-        up.mobileTariffLocal as mobileTariffLocal, 
-        up.internet as internet, 
-        up.basic as basic, 
-        rp.apartment1RoomInCityCentre as apartment1RoomInCityCentre, 
-        rp.apartment1RoomOutsideOfCentre as apartment1RoomOutsideOfCentre, 
-        rp.apartment3RoomsInCityCentre as apartment3RoomsInCityCentre, 
-        rp.apartment3RoomsOutsideOfCentre as apartment3RoomsOutsideOfCentre, 
-        spp.cinema as cinema, 
-        spp.fitnessClub as fitnessClub, 
-        spp.tennisCourt as tennisCourt, 
-        tp.gasoline as gasoline, 
-        tp.monthlyPass as monthlyPass, 
-        tp.oneWayTicketLocal as oneWayTicketLocal, 
-        tp.taxi1hourWaiting as taxi1hourWaiting, 
-        tp.taxi1km as taxi1km, tp.taxiStart as taxiStart, 
-        tp.toyotaCorollaSedan as toyotaCorollaSedan, 
-        tp.volkswagenGolf as volkswagenGolf, 
-        pm.apples as apples, 
-        pm.banana as banana, 
-        pm.beefRound as beefRound, 
-        pm.bottleOfWine as bottleOfWine, 
-        pm.chickenFillets as chickenFillets, 
-        pm.cigarettesPack as cigarettesPack, 
-        pm.domesticBeer as domesticBeer, 
-        pm.eggs as eggs, 
-        pm.importedBeer as importedBeer, 
-        pm.lettuce as lettuce, 
-        pm.loafOfFreshWhiteBread as loafOfFreshWhiteBread, 
-        pm.localCheese as localCheese, 
-        pm.milk as milk, 
-        pm. onion as onion, 
-        pm.oranges as oranges, 
-        pm.potato as potato, 
-        pm.rice as rice, 
-        pm.tomato as tomato, 
-        pm.waterBigBottle as waterBigBottle
+        hc.accuracyAndCompletenessInFillingOutReports as
+        hc.convenienceOfLocationForYou as
+        hc.equipmentForModernDiagnosisAndTreatment as modern_equipment
+        hc.friendlinessAndCourtesyOfTheStaff as
+        hc.satisfactionWithCostToYou as
+        hc.satisfactionWithResponsivenessInMedicalInstitutions as
+        hc.skillAndCompetencyOfMedicalStaff as skill_and_competency
+        hc.speedInCompletingExaminationAndReports as speed
         """)
         return [{"Country": info["Country"],
                  "averageMonthlyNetSalary": info["averageMonthlyNetSalary"],
@@ -142,7 +89,7 @@ class CostLivingRequest(Request):
                  "waterBigBottle": info["waterBigBottle"]} for info in result]
 
 
-standart_living_db = CostLivingRequest()
+standart_living_db = StandartLivingRequest()
 
 if __name__ == "__main__":
     pass
