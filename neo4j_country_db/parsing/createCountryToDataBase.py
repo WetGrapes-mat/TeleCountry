@@ -1817,5 +1817,256 @@ if __name__ == "__main__":
     # cc.createOceans()
     #############################   Spain   #############################
 
+    #############################   Portugal   #############################
+
+    # Country
+    countryName = "Portugal"
+    officialLanguage = "Portuguese"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Lisbon': [True, True, 'Atlantic ocean'],
+        'Portu': [True, True, 'Atlantic ocean'],
+        'Amadora': [True, True, 'Atlantic ocean'],
+        'Braga': [True, False, None],
+        'Setubal': [True, True, 'Atlantic ocean'],
+        'Faro': [True, True, 'Atlantic ocean']}
+
+    # education
+    universities = {'Lisbon': ['Polytechnic Institute', 'University of Lisbon'],
+                    'Portu': ['Universidade do Porto'],
+                    'Faro': ['Universidade do Algarve']}
+    faculties = {
+        'Polytechnic Institute': ['Faculty of Education', 'Faculty of Engineering', 'Faculty of Medicine', 'Faculty of Business'],
+        'University of Lisbon': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Science',
+                                 'Faculty of Education', 'Faculty of Medicine'],
+        'Universidade do Porto': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Business',
+                                  'Faculty of Engineering', 'Faculty of Medicine'],
+        'Universidade do Algarve': ['Faculty of Business', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Engineering']}
+    programs = {
+        'Polytechnic Institute': ['Magistracy', 'Undergraduate'],
+        'University of Lisbon': ['Magistracy', 'Undergraduate', 'Doctoral'],
+        'Universidade do Porto': ['Magistracy', 'Undergraduate', 'Doctoral'],
+        'Universidade do Algarve': ['Magistracy', 'Undergraduate']}
+    links = {'Polytechnic Institute': 'https://www.ipl.pt',
+             'University of Lisbon': 'https://www.ulisboa.pt',
+             'Universidade do Porto': 'https://www.up.pt/',
+             'Universidade do Algarve': 'https://www.ualg.pt/'}
+    images = {
+        'Polytechnic Institute': 'https://smapse.com/storage/2019/08/z1-21.jpg',
+        'University of Lisbon': 'https://smapse.com/storage/2020/12/universidade-de-lisboa-smapse7.jpg',
+        'Universidade do Porto': 'https://www.estudarfora.org.br/wp-content/uploads/2020/04/unipo.jpg',
+        'Universidade do Algarve': 'https://www.clbrief.com/wp-content/uploads/2020/11/algarve-uni-2-1000x642.jpg'}
+    # общага
+    hostel = {'Polytechnic Institute': 'Yes',
+              'University of Lisbon': 'Yes',
+              'Universidade do Porto': 'Yes',
+              'Universidade do Algarve': 'Yes'}
+    # стипендия
+    scolarship = {'Polytechnic Institute': 'Yes',
+                  'University of Lisbon': 'Yes',
+                  'Universidade do Porto': 'Yes',
+                  'Universidade do Algarve': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'Polytechnic Institute': 'A certain number of students can enter the university every year. '
+                                 'A special selection committee makes its decision on the recruitment of first-year students, based on data on past academic performance. '
+                                 'The results of the entrance exams are also taken into account. By and large, not only residents of Portugal, but also the entire globe, apply for places in the university.',
+        'University of Lisbon': 'The deadline for submitting documents is from June 20 to July 20.',
+        'Universidade do Porto': 'High school diploma (12 years), certificates of additional programs (International Foundation), documents confirming the completion of 1-2 courses. '
+                                 'Proficiency in Portuguese - B2 according to CEFRL. '
+                                 'Compliance with the prerequisites (physical, functional or professional conditions) established for the study cycle they intend to take.',
+        'Universidade do Algarve': 'Enrollment to study at the university is based on the previously provided results of the exams passed. '
+                                   'Each academic year is traditionally divided into semesters.'}
+    costs = {'Polytechnic Institute': 3200,
+             'University of Lisbon': 1900,
+             'Universidade do Porto': 3500,
+             'Universidade do Algarve': 3460}
+
+    sights = {'Obidos Castle': ["A true favorite among the medieval castles of Portugal can be considered the castle of Obidos, located on a hill, "
+                                "offering a wonderful view of the surroundings of the city of the same name: vineyards, windmills, bright terracotta roofs of the surrounding houses. "
+                                "The castle itself attracts many tourists with its battlements, preserved from the Middle Ages to the present day in surprisingly good condition. "
+                                "In the form in which we see the castle now, it was built in the 13th century, and before that, in the era of the Roman Empire, "
+                                "there were public baths and a square, which played the role of the center of the political life of the settlement. "
+                                "After the fall of the Roman Empire, with the coming to power of the Visigoths, a fortress was built on this site, around which a settlement was formed - the future city of Obidos. "
+                                "In the 8th century, the fortress passed into the possession of the Muslims, and only in the 13th century did the Portuguese king Afonso recapture this building. "
+                                "Today, this landmark of Portugal has retained its appearance, which is why it attracts many tourists - you can walk around the castle grounds, "
+                                "study its architecture - arched passages, medieval bas-reliefs, as well as view magnificent views of the surroundings from a height.",
+                                'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/6e/7b/06/castelo-de-obidos.jpg?w=1200&h=-1&s=1'],
+              'Pena Palace': ["Sintra is a suburb of the Portuguese capital, the most important in terms of attractions in Portugal. "
+                              "Not far from Sintra, in the mountains, there is an unusual castle-palace of Pena. "
+                              "Its uniqueness lies in the fact that initially an empty monastery was taken as its basis, which was erected here back in the distant 12th century in honor of the Mother of God. "
+                              "Over time, the temple fell into disrepair. "
+                              "The inconspicuous and abandoned chapel, lost in the mountains, was remembered only in the 16th century, when King Manuel I, "
+                              "being very religious, turned his gaze to this temple and to the rather vast empty lands around it. "
+                              "From that moment, the reconstruction of the sanctuary began - it was rebuilt from stone and stood for about 2 more centuries, "
+                              "until a powerful earthquake known throughout Europe happened, which turned the monastery into ruins. "
+                              "And only in 1838, King Fernando II buys the land along with the ruins of the temple and the picturesque adjacent territories on the mountain. "
+                              "He orders to rebuild a palace on these lands, which later became the summer residence of the royal family. "
+                              "Romantic Fernando made a significant contribution to the design of the castle and its surrounding areas. "
+                              "As a result, a beautiful and majestic building has grown on these lands with an exotic exterior, representing a mixture of several styles, "
+                              "bright facades and an amazing park, with its winding paths, cozy gazebos and rich colors of outlandish plants.",
+                              'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-3-The-Pena-Palace-e1497061654426.jpg'],
+              'Alto Douro': ["The Alto Douro region has long been known for producing wine of exceptional taste and quality for over 2,000 years. "
+                             "Local climatic conditions have such weather features that allow you to collect generous harvests of grapes of various varieties. "
+                             "The area is distinguished by a rather steep soil relief, from different sides it is protected from winds and moisture by the mountains of Montemuro and Maran, "
+                             "which creates a dry and hot climate here, which is most favorable for the ripening of grapes and for obtaining fragrant fortified wines. "
+                             "The wine produced here takes first place in international competitions, and this once again confirms the quality of local products. "
+                             "Traveling through the wine attractions of Portugal, in one of the local farms you can have a tasting of drinks, buy delicious wine or port wine. "
+                             "If you wish, you can take part in the harvest and the subsequent wine festival, feel the taste of life in this beautiful and fertile land.",
+                             'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-5-Alto-Douro-e1497062089463.jpg']}
+    beaches = {'Praia da Marina beach': ["The beach is distinguished not only by its exquisite beauty, "
+                                         "but also by the steepness of the coastline, therefore, to get to the water, you have to go down a long and steep staircase, but it's worth it. "
+                                         "Below you will see the coast from a new angle - many islands-rocks, which have bizarre shapes due to prolonged exposure to water and wind, "
+                                         "in an ensemble with the sea create an amazingly beautiful landscape. "
+                                         "On the beach, you can not only swim or soak up the sun - outdoor enthusiasts can explore the local bays, caves and grottoes. "
+                                         "Despite the wild scenery, the beach itself is landscaped - there is parking, a restaurant, rental of swimming equipment, lifeguards work. "
+                                         "There is also the opportunity to snorkel and explore the rich underwater world - it may not be as rich as in the Red Sea, but all kinds of shrimp, "
+                                         "colorful fish and starfish are present here in abundance.",
+                                         'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-11-Praia-da-Marinha-e1497064402881.jpg'],
+               "Praia de Sao Rafael": ["San Rafael is beautiful, like all the beaches in the south of Portugal. "
+                                       "It is surrounded by several limestone cliffs with unique water caves. "
+                                       "Here, the purest water and soft sand, however, during low tide and strong surf, "
+                                       "it is very difficult to enter the water - immediately behind the sandy strip, the bottom is lined with stones. "
+                                       "You need to go down the stairs to the beach, although the descent is not big. "
+                                       "The infrastructure of de Sao Rafael is quite well developed: there are many public showers, there are shops, there is an excellent restaurant serving fresh seafood. "
+                                       "There is a large free car park nearby. But there are no places to rent sunbeds.",
+                                       'https://kuku.travel/wp-content/uploads/2018/04/%D0%9F%D0%BB%D1%8F%D0%B6-Praia-de-Sao-Rafael.jpg'],
+               'Praia da Coelha': ["5 km east of Albufeira there is a small Coelha beach with a sand strip of 70-80 m long, completely protected from the winds by high cliffs. "
+                                   "Like many beaches around Albufeira, it has been awarded the Blue Flag. "
+                                   "Clean and gentle entry into the water makes this beach attractive for a relaxing holiday with kids, and many adults will enjoy snorkeling among the coastal cliffs. "
+                                   "In summer, the water warms up to an average of + 20-23 ºC.",
+                                   'https://kuku.travel/wp-content/uploads/2018/04/%D0%A4%D0%BE%D1%82%D0%BE-%D0%BF%D0%BB%D1%8F%D0%B6%D0%B0-Praia-da-Coelha.jpg']}
+    mountains = {'Pico': ["Pico is a dormant active stratovolcano located on the Mid-Atlantic Ridge and is the highest point of the ridge, Pico Island and Portugal.",
+                          'https://upload.wikimedia.org/wikipedia/commons/f/fd/Picocanal.jpg'],
+                 'Pico do Arieiro': ["Pico do Arieiro is the third highest mountain on the island of Madeira, "
+                                     "the main island of the archipelago of the same name in the Atlantic Ocean, after Pico Ruivo and Pico das Torres. "
+                                     "It is a good vantage point for viewing the surrounding landscapes, "
+                                     "as well as one of the options for the starting point of the PR1 Vereda do Areeiro hiking route.",
+                                     'https://upload.tury.club/data/41f045bafea2d2b40352c725132f5394/9A3PBhFx/GwcyrlD8.jpg'],
+                 'Pico Ruivo': ['Pico Ruivo is the highest mountain in Madeira, the main island of the Madeira archipelago in the Atlantic Ocean. '
+                                'The height of the mountain is 1862 meters. It is also the third highest peak in Portugal.',
+                                'https://fs.tonkosti.ru/9g/z6/9gz6f3rpujoksckogkgks4wsc.jpg']}
+    skiResorts = {}
+    lakes = {'Lagoa do Fogo': ["This lake is situated on Sao Miguel island, Azores. It is the second largest lake on the island. In 1974 it was declared a natural reserve. "
+                               "It covers an area of 13.6 km², located at an altitude of 947 m above sea level, "
+                               "located on the cauldron of an extinct volcano, which formed about 15,000 years ago",
+                               'https://s9.travelask.ru/uploads/hint_place/000/115/653/image/aa2b00ee315d4f6aed788503f3c9c91f.jpg'],
+             'Pateira de Fermentelos': ["This is the largest natural lake in the entire Iberian Peninsula, which is known as a habitat for a variety of flora and fauna. "
+                                        "It is fed by two rivers, the Settima and the Agueda, which converge at the lake. "
+                                        "Pateira de Fermentelos offers its guests excellent fishing, canoeing, boating and sailing. "
+                                        "In the nearest city, Aveiro, tourists will find many options for accommodation.",
+                                        'https://womanadvice.ru/sites/default/files/49/2018-03-03_1703/pateyra_de_fermentelos.jpg'],
+             'Lake Obidos': ['In this unique location, located in the Obidos and Caldas da Reina regions of Portugal, the lake is bordered by a sea lagoon. '
+                             'As well as relaxing on stunning beaches, you can enjoy shellfishing, boating, sailing, windsurfing and canoeing. '
+                             'In the nearby town of Obidos, tourists will find several small guesthouses and hotels, authentic Portuguese cuisine and an impressive medieval fortress.',
+                             'https://womanadvice.ru/sites/default/files/49/2018-03-03_1703/ozero_obidush.jpg']}
+    rivers = {'Minho': ["Length - 340 km, basin area - 22.5 thousand km². "
+                        "The sources of Minho are in the Cantabrian Mountains in the Meira region of the province of Lugo, then the river flows through the hilly terrain of the autonomous community of Galicia. "
+                        "After the confluence of the main tributary, the Sil River, the valley becomes wider. "
+                        "The last 80 km before it flows into the Atlantic Ocean, Minho is the border between Spain and Portugal.",
+                        'https://img.freepik.com/premium-photo/panoramic-view-of-cerveira-and-the-river-minho-on-the-border-between-portugal-and-spain_462054-914.jpg'],
+              'Tacho': ["Tajo flows in Spain through the autonomous communities of Aragon, Castile-La Mancha, Madrid and Extremadura, "
+                        "then a small section of the river runs along the border of Spain and Portugal. "
+                        "A river flows through the territory of Portugal under the name Tagus. "
+                        "To the southeast of Lisbon, the river is crossed by the Vasco da Gama Bridge, 17.2 km long. "
+                        "The river flows into the bay of Mar da Paglia, which is sometimes considered its estuary. "
+                        "The double name of the river, as a rule, is reflected on geographical maps. "
+                        "On the territory of Spain, the river is called Tajo, and in Portugal the name changes to Tejo: "
+                        "there is an analogy for the change of names in the Western Dvina in the territories of Russia and Belarus, "
+                        "which in the territory of Latvia changes its name to the Daugava, as well as the Neman in Belarus, "
+                        "which is in the territory of Lithuania called Nemunas.",
+                        'https://thumbs.dreamstime.com/b/%D1%80%D0%B5%D0%BA%D0%B0-%D1%82%D0%B0%D1%85%D0%BE-35824273.jpg']}
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 0.95
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 27250
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 443
+    menAverageLifeExpectancy = 75.3
+    womenAverageLifeExpectancy = 82
+
+    # climat
+    juneAverageTemperature = 22
+    decemberAverageTemperature = 16
+    averageHumidity = 71
+    averageDurationOfWinter = 3
+    averageRainfallPerMonth = 68
+    averageNumberOfFoggyDaysPerYear = 26
+    averageNumberOfRainyDaysPerYear = 112
+    averageNumberOfClearDays = 184
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 47330000
+    procentOfMales = 49.4
+    procentOfFemales = 50.6
+    populationDensityPerSquareKilometer = 92.1
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+    friendlyToForeigners = 1
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 29.56
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 28  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 25
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+    #############################   Portugal   #############################
     cc.createBorders()
     cc.close()
