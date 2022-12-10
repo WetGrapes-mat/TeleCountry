@@ -1,3 +1,5 @@
+import random
+
 from neo4j_country_db.country_migration import country_migration_db
 
 
@@ -60,7 +62,7 @@ class CountryMigrationAgent:
                  f'Отношение к иностранцам (от 1 до 3) {info["friendlyToForeigners"]}\n' \
                  f'Мество в глобальном рейтинге {info["globalRank"]}\n' \
                  f'Комфорт жизни с семьей (от 1 до 3) {info["assessmentOfFamilyLife"]}\n' \
-                 f'Уровени свободы слова (от 1 до 3) {info["freedomOfSpeech"]}\n' \
+                 f'Уровени свободы слова (от 1 до 3) {info["freeWifi"]}\n' \
                  f'Доспуность беспталного WiFi (от 1 до 3) {info["speedOfInternetMbps"]}\n' \
                  f'Национальная валюта {info["nameMoney"]}\n' \
                  f'Курс к долару {info["oneDollarEquals"]}\n'
@@ -85,6 +87,7 @@ class CountryMigrationAgent:
                 self.country_choose[i['nameCountry']] += i['communicationOnEnglish']
             except:
                 self.country_choose[i['nameCountry']] = i['communicationOnEnglish']
+
         temp2 = country_migration_db.findtransport()
         for i in temp2:
             try:
@@ -136,12 +139,15 @@ class CountryMigrationAgent:
         temp_r = 9999999
         for co, am in self.country_choose.items():
             if co in temp3:
-                if abs(am - self.user) < temp_r:
-                    temp_r = abs(am - self.user)
+                a = abs(am*random.uniform(0.98, 1) - self.user)
+                if a < temp_r:
+                    temp_r = a
                     rezult = co
         if rezult:
+            self.country_choose = dict()
             return f"{self.answer_preparation(rezult)} "
         else:
+            self.country_choose = dict()
             return f"К сожелению страны с задаными вами параметрами не нашлось."
 
 
