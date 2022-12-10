@@ -2,6 +2,7 @@ from aiogram import types, Dispatcher
 from create_bot import bot
 from keybords import other
 from neo4j_country_db import rq
+from keybords import start_keybord
 
 
 answer_user = dict()
@@ -9,7 +10,7 @@ answer_user = dict()
 
 async def command_start(message: types.Message):
     try:
-        await bot.send_message(message.from_user.id, 'Вода', reply_markup=other.ikb_water)
+        await bot.send_message(message.from_user.id, 'Привет выбери кнопку', reply_markup=start_keybord.kb_start)
     except:
         pass
 
@@ -69,7 +70,7 @@ async def capital_cb(callback: types.CallbackQuery, callback_data: dict) -> None
 def register_handlers_other(dp: Dispatcher):
     dp.register_message_handler(command_start, commands=['start'])
     dp.register_message_handler(echo)
-    dp.register_callback_query_handler(water_cb, other.cb_water.filter())
-    dp.register_callback_query_handler(capital_cb, other.cb_capital.filter())
+    # dp.register_callback_query_handler(water_cb, other.cb_water.filter())
+    # dp.register_callback_query_handler(capital_cb, other.cb_capital.filter())
 
 
