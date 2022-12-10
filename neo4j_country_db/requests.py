@@ -4,7 +4,7 @@ from neo4j import GraphDatabase
 class Request:
 
     def __init__(self):
-        self.driver = GraphDatabase.driver("bolt://localhost:7999", auth=("neo4j", "admin"))
+        self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "12345678"))
 
     def close(self):
         self.driver.close()
@@ -12,7 +12,7 @@ class Request:
     def findAllPrices(self):
         with self.driver.session() as session:
             info = session.execute_write(self._findAllPrices)
-            return info   
+            return info
 
 
 #================Это пример (потом удалиться)==============
