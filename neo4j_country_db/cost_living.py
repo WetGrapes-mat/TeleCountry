@@ -8,6 +8,18 @@ class CostLivingRequest(Request):
             info = session.execute_write(self._findAllPrices)
             return info
 
+    def findCountryNames(self):
+        with self.driver.session() as session:
+            info = session.execute_write(self._findCounryNames)
+            return info
+
+    @staticmethod
+    def _findCounryNames(tx):
+        result = tx.run("""
+        match(n:Country) return n.name as Country
+        """)
+        return [info["Country"] for info in result]
+
     @staticmethod
     def _findAllPrices(tx):
         result = tx.run("""match (c:Country)-[:economic_situation]-(r)-[:salaries]-(s), 
