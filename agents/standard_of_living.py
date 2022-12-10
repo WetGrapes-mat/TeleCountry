@@ -1,18 +1,16 @@
 from neo4j_country_db.standard_of_living import standart_living_db
-import cost_living
+from agents import cost_living
 import math
 
-coefficients = {"purchasingPowerInclRentIndex": 0.4,
-                "housePriceToIncomeRatio": 1,
-                "costOfLivingIndex": 0.1,
-                "safetyIndex": 0.5,
-                "healthIndex": 0.4,
-                "trafficTimeIndex": 0.5,
-                "pollutionIndex": 0.666667,
-                "climateIndex": 0.33333333333,
+coefficients = {"purchasingPowerInclRentIndex": 0.03333,
+                "costOfLivingIndex": 0.03333,
+                "safetyIndex": 0.33333,
+                "healthIndex": 0.3333,
+                "pollutionIndex": 0.3333,
+                "climateIndex": 0.03333,
                 "air_quality_index": 0.07,
                 "drinking_water_quality_accessibility_index": 0.02,
-                "water_pollution_index": 0.2,
+                "water_pollution_index": 0.02,
                 "garbage_disposal_satisfaction_index": 0.01,
                 "clean_and_tidy_index": 0.01,
                 "noise_and_light_pollution_index": 0.01,
@@ -84,8 +82,8 @@ class StandartLiving:
         overall += self.expCalcStandart(
             self.info[i]["comfortable_to_spend_time"] * self.coefficients["comfortable_to_spend_time_index"])
 
-        print(self.info[i]["Country"] + str((overall * 25) ** (1 / (0.68307 * math.e))))
-        return max(0.0, (overall * 25) ** (1 / (0.68307 * math.e)))
+        print("Ecology: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.68307 * math.e))))
+        return max(0.0, ((overall * 25) ** (1 / (0.68307 * math.e))))
 
     def calculateSafetyIndex(self, i: int):
         overall = 31.8
@@ -116,15 +114,15 @@ class StandartLiving:
             self.info[i]["problem_corruption_bribery"] * self.coefficients["problem_corruption_bribery_index"])
         overall = max(0.0, overall)
 
-        print(self.info[i]["Country"] + str((overall * 25) ** (1 / (0.538365 * math.e))))
+        print("Safety: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.538365 * math.e))))
         return min(100.0, (overall * 25) ** (1 / (0.538365 * math.e)))
 
     def calculateClimateIndex(self, i: int):
         index = 1
         if (self.info[i]["averageHumidity"]) < 40 or (self.info[i]["averageHumidity"]) > 60:
-            humidex = math.exp(self.expCalcStandart(((abs(self.info[i]["averageHumidity"] - 50)) - 10))
+            index = math.exp(self.expCalcStandart(((abs(self.info[i]["averageHumidity"] - 50)) - 10))
                                * self.coefficients["hum_index"])
-
+        print("Climat: " + self.info[i]["Country"] + str(index*100))
         return index*100
 
     def calculateHealthIndex(self, i: int):
@@ -144,33 +142,41 @@ class StandartLiving:
         overall += self.expCalcStandart(
             self.info[i]["cost"] * self.coefficients["cost_index"])
 
-        print(self.info[i]["Country"] + str((overall * 25) ** (1 / (0.465526 * math.e))))
+        print("Health: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.465526 * math.e))))
         return min(100.0, (overall * 25) ** (1 / (0.465526 * math.e)))
 
     def calculateCostOfLivingIndex(self, i: int):
         self.cl.get_information()
         cost = {}
         cost = self.cl.count_function(0, 0, 1, 0, "своя машина", "1-к в центре", cost, i)
-        index = cost.values()[0] / 1424
+        index = list(cost.values())[0] / 1424
+        print("Cost of living: " + self.info[i]["Country"] + str(index * 100))
         return index * 100
 
     def calculatePurchaisingPowerIndex(self, i: int):
         self.cl.get_information()
         cost = {}
         cost = self.cl.count_function(0, 0, 1, 0, "своя машина", "1-к в центре", cost, i)
-        index = (cost.values()[0] / self.info[i]["salary"]) / ((1424 + 3844) / 5982)
+        index = (list(cost.values())[0] / self.info[i]["salary"]) / ((1424 + 3844) / 5982)
+        print("Purchasing index: " + self.info[i]["Country"] + str(index * 100))
         return index * 100
 
     def finalCalculation(self, i):
-        return max(0.0, min(100, (100
-                                  + (self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
-                                  - (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
+        print("Result " + str((self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
+                                  + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
                                   + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
                                   + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
-                                  - (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
+                                  + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
+                                  + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"])))
+        return max(0.0, min(100, ((self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
+                                  + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
+                                  + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
+                                  + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
+                                  + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
                                   + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"]))))
 
     def get_country_rating(self):
+        self.get_information()
         result = {}
         for i in range(len(self.info)):
             curr_country = self.finalCalculation(i)
@@ -180,5 +186,7 @@ class StandartLiving:
         for i in sorted_values:
             for key, value in result.items():
                 if i == value:
-                    string_result += f'{key} -- {self.to_fixed(i)} $\n'
+                    string_result += f'{key} -- {self.to_fixed(i)}\n'
         return string_result
+
+st = StandartLiving()
