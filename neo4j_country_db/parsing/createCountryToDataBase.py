@@ -399,11 +399,56 @@ class CountryCreator:
         match (italy:Country {name:"Italy"})
         match (portugal:Country {name:"Portugal"})
         match (argentina:Country {name:"Argentina"})
-  
+        match (poland:Country {name:"Poland"})
+        match (germany:Country {name:"Germany"})
+        match (czech:Country {name:"Czech"})
+        match (slovakia:Country {name:"Slovakia"})
+        match (hungary:Country {name:"Hungary"})
+        match (uk:Country {name:"United Kingdom"})
+        match (finland:Country {name:"Finland"})
+        match (sweden:Country {name:"Sweden"})
+        match (norway:Country {name:"Norway"})
+        match (france:Country {name:"France"})
+
+
+        create (poland)-[:borders_with]->(czech)
+        create (poland)-[:borders_with]->(germany)
+        create (poland)-[:borders_with]->(slovakia)
+
+        create (czech)-[:borders_with]->(poland)
+        create (czech)-[:borders_with]->(germany)
+        create (czech)-[:borders_with]->(slovakia)
+
+        create (germany)-[:borders_with]->(poland)        
+        create (germany)-[:borders_with]->(czech)
+        create (germany)-[:borders_with]->(france)
+
+        create (slovakia)-[:borders_with]->(poland)      
+        create (slovakia)-[:borders_with]->(czech)
+        create (slovakia)-[:borders_with]->(hungary) 
+
+        create (hungary)-[:borders_with]->(slovakia)
+
+        create (finland)-[:borders_with]->(sweden)
+        create (finland)-[:borders_with]->(norway)
+
+        create (sweden)-[:borders_with]->(finland)
+        create (sweden)-[:borders_with]->(norway)
+
+        create (norway)-[:borders_with]->(finland)
+        create (norway)-[:borders_with]->(sweden)
+        
+        create (france)-[:borders_with]->(germany)
         create (canada)-[:borders_with]->(usa)
         create (usa)-[:borders_with]->(canada)
         
         create (spain)-[:borders_with]->(portugal)
+        create (spain)-[:borders_with]->(france)
+        create (france)-[:borders_with]->(spain)
+        
+        create (italy)-[:borders_with]->(france)
+        create (france)-[:borders_with]->(italy)
+        
         create (portugal)-[:borders_with]->(spain)
         \n'''
         result = tx.run(request)
@@ -717,8 +762,8 @@ if __name__ == "__main__":
     nightLifeEntertainment = 3  # [1, 3]
 
     # citizenship
-    citizenshipGlobalRank = 7
-    friendlyToForeigners = 1
+    citizenshipGlobalRank = 5
+    friendlyToForeigners = 2
 
     # communication
     communicationOnEnglish = 3  # [1, 3]
@@ -2441,6 +2486,2637 @@ if __name__ == "__main__":
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
     #############################   Argentina   #############################
+    #############################   POLAND   #############################
+
+    # Country
+    countryName = "Poland"
+    officialLanguage = "Polish"
+
+    # cities    name    isBig WashesBy
+    cities = {'Warsaw': [True, True, None], 'Krakow': [True, False, None], 'Lodz': [True, False, None],
+              'Wroclaw': [True, True, None], 'Bialystok': [True, False, None], 'Sopot': [False, True, 'Baltic Sea'],
+              'Gdynia': [False, True, 'Baltic Sea'], 'Gdansk': [False, True, 'Baltic Sea']}
+
+    # education
+    universities = {
+        'Warsaw': ['University of Economics and Human Sciences', 'University of Engineering and Health'],
+        # https://univerpl.com.ua/ru/universiteti-varshavi/
+        'Krakow': ['Jagiellonian University', 'Krakow Academy named after A.F. Modzhevsky'],
+        # https://univerpl.com.ua/ru/universiteti-krakova/
+        'Lodz': ['Łódź University of Technology', 'University of Lodz'],
+        'Wroclaw': ['Wrocław University of Science and Technology', 'University of Wrocław'],
+        'Bialystok': ['Bialystok Technical University', 'University of Bialystok']}
+
+    faculties = {'University of Economics and Human Sciences': ['Faculty of Economics',
+                                                                'Faculty of Social Sciences',
+                                                                'Faculty of Computer Engineering and Software',
+                                                                'Faculty of Law', 'Faculty of Medicine'],
+                 'University of Engineering and Health': ['Faculty of Social Sciences',
+                                                          'Faculty of Architecture',
+                                                          'Faculty of Engineering', 'Faculty of Science'],
+                 'Jagiellonian University': ['Faculty of Law', 'Faculty of Medicine',
+                                             'Faculty of Social Sciences', 'Faculty Science'],
+                 'Krakow Academy named after A.F. Modzhevsky': ['Faculty of Arts',
+                                                                'Faculty of Engineering',
+                                                                'Faculty of Computer Engineering and Software'],
+                 'Łódź University of Technology': [
+                     'Faculty of Engineering',
+                     'Faculty of Science',
+                     'Faculty of Architecture',
+                     'Faculty of Economics'],
+                 'University of Lodz': ['Faculty of Science', 'Faculty of Social Sciences',
+                                        'Faculty of Computer Engineering and Software', 'Faculty of Economics'],
+                 'Wrocław University of Science and Technology': ['Faculty of Architecture', 'Faculty of Science',
+                                                                  'Faculty of Engineering',
+                                                                  'Faculty of Economics'],
+                 'University of Wrocław': ['Faculty of Science',
+                                           'Faculty of Computer Engineering and Software',
+                                           'Faculty of Social Sciences'],
+                 'Bialystok Technical University': ['Faculty of Architecture',
+                                                    'Faculty of Computer Engineering and Software',
+                                                    'Faculty of Engineering',
+                                                    'Faculty of Economics'],
+                 'University of Bialystok': ['Faculty of Social Sciences',
+                                             'Faculty of Computer Engineering and Software', 'Faculty of Economics']}
+
+    programs = {'University of Economics and Human Sciences': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University of Engineering and Health': ['Magistracy'],
+                'Jagiellonian University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Krakow Academy named after A.F. Modzhevsky': ['Foundation', 'Undergraduate', 'MBA'],
+                'Łódź University of Technology': ['Magistracy', 'Undergraduate'],
+                'University of Lodz': ['Magistracy', 'Undergraduate'],
+                'Wrocław University of Science and Technology': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University of Wrocław': ['Magistracy', 'Undergraduate'],
+                'Bialystok Technical University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University of Bialystok': ['Magistracy', 'Undergraduate']}
+    links = {'University of Economics and Human Sciences': 'https://vizja.pl/en/',
+             'University of Engineering and Health': 'https://entrant.eu/en/university/universytet-kosmetologiyi-ta-doglyadu-za-zdorov-yam/',
+             'Jagiellonian University': 'https://en.uj.edu.pl/en_GB/start',
+             'Krakow Academy named after A.F. Modzhevsky': 'https://en.ka.edu.pl/',
+             'Łódź University of Technology': 'https://p.lodz.pl/',
+             'University of Lodz': 'https://www.uni.lodz.pl/en',
+             'Wrocław University of Science and Technology': 'https://pwr.edu.pl/en/',
+             'University of Wrocław': 'https://uwr.edu.pl/',
+             'Bialystok Technical University': 'https://pb.edu.pl/',
+             'University of Bialystok': 'https://uwb.edu.pl/home'}
+    images = {
+        'University of Economics and Human Sciences': 'https://vizja.pl/en/wp-content/uploads/sites/2/2021/02/aeh-widok.jpg',
+        'University of Engineering and Health': 'https://entrant.eu/wp-content/uploads/2017/12/Wyz-sza-Szko-a-Inz-ynierii-i-Zdrowia.jpg',
+        'Jagiellonian University': 'https://kafkadesk.org/wp-content/uploads/2021/05/Jagiellonian-University.png',
+        'Krakow Academy named after A.F. Modzhevsky': 'https://en.ka.edu.pl/wp-content/uploads/afmku3.jpg',
+        'Łódź University of Technology': 'https://study.gov.pl/sites/default/files/styles/wiz/public/foto_ucz_wiz/86/dfz_1448_70.jpg?itok=T4Q_vkzp',
+        'University of Lodz': 'https://study.gov.pl/sites/default/files/styles/wiz/public/foto_ucz_wiz/90/wfl.jpg?itok=haO8CSqe',
+        'Wrocław University of Science and Technology': 'https://s3.ap-south-1.amazonaws.com/gotouniv/cover_photo/1119/cover_photo_1500X500.jpg',
+        'University of Wrocław': 'https://study.gov.pl/sites/default/files/styles/wiz/public/foto_ucz_wiz/1/_mg_3243_copy_77.jpg?itok=EcTdGl1R',
+        'Bialystok Technical University': 'https://smapse.ru/storage/2019/08/z1-3.jpg',
+        'University of Bialystok': 'https://study.gov.pl/sites/default/files/styles/wiz/public/foto_ucz_wiz/1/1_235.jpg?itok=Rv93iCE-'}
+    # общага
+    hostel = {'University of Economics and Human Sciences': 'Yes',
+              'University of Engineering and Health': 'Yes',
+              'Jagiellonian University': 'Yes',
+              'Krakow Academy named after A.F. Modzhevsky': 'No',
+              'Łódź University of Technology': 'Yes',
+              'University of Lodz': 'No',
+              'Wrocław University of Science and Technology': 'No',
+              'University of Wrocław': 'No',
+              'Bialystok Technical University': 'Yes',
+              'University of Bialystok': 'Yes'}
+    # стипендия
+    scolarship = {'University of Economics and Human Sciences': 'Yes',
+                  'University of Engineering and Health': 'Yes',
+                  'Jagiellonian University': 'Yes',
+                  'Krakow Academy named after A.F. Modzhevsky': 'Yes',
+                  'Łódź University of Technology': 'Yes',
+                  'University of Lodz': 'Yes',
+                  'Wrocław University of Science and Technology': 'Yes',
+                  'University of Wrocław': 'Yes',
+                  'Bialystok Technical University': 'Yes',
+                  'University of Bialystok': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {'University of Economics and Human Sciences': 'photo. '
+                                                                  'passport. '
+                                                                  'high school diploma and attachment to high school diploma with subjects and grades. '
+                                                                  'bachelor diploma and transcript of studies (for Masters studies). '
+                                                                  'certificate of language proficiency (if available)',
+                    'University of Engineering and Health': 'minimum GPA of 2 in order to stand a good chance to get admission',
+                    'Jagiellonian University': 'complete TOEFL exam with a minimum score of 87. c) TOEFL/IELTS scores if the applicants native language is not English.',
+                    'Krakow Academy named after A.F. Modzhevsky': 'Request a list of necessary documents directly from a university, as it may vary for different countries.',
+                    'Łódź University of Technology': 'Legalised original (or duplicate) of relevant education certificate(s). Documentary evidence of learning. Polish translation of the certificate (diploma). Passport.',
+                    'University of Lodz': 'A high school diploma, a transcript of records showing the subjects/grades and a certificate of proficiency in English (unless the secondary education was taught in English)',
+                    'Wrocław University of Science and Technology': 'Passport for inspection,'
+                                                                    'your application form printed out from the application system and signed;'
+                                                                    'transfer details of payment for your fees (application, tuition, student ID);'
+                                                                    'your language certificate or another document serving as such'
+                                                                    'for undergraduate programs: your secondary school diploma with a list of grades, for postgraduate programs: your Bachelor’s diploma with a full academic transcript. These documents should be legalized/apostilled and presented together with a certified translation into Polish or English made by a sworn translator.',
+                    'University of Wrocław': 'High School graduation certificate or equivalent with decision about nostrification (learn more about nostrification procedure on our website)'
+                                             'High School transcript of grades.'
+                                             'Certificate confirming access to higher education in your country.',
+                    'Bialystok Technical University': 'Secondary school certificate (12 years of education) being the equivalent of Polish secondary school certificate. English language international B2 certificate (upper intermediate) such as FCE, IELTS (min. 6 points),',
+                    'University of Bialystok': 'Positive grades in two out of four subjects - Chemistry, Biology, Physics or Mathematics - must be shown on the certificate. or have passed the Matura Exam (High School Final Exam) in two out of four subjects: Chemistry, Biology, Physics or Mathematics.'}
+
+    costs = {'University of Economics and Human Sciences': 2600,
+             'University of Engineering and Health': 4300,
+             'Jagiellonian University': 3500,
+             'Krakow Academy named after A.F. Modzhevsky': 3200,
+             'Łódź University of Technology': 2700,
+             'University of Lodz': 2400,
+             'Wrocław University of Science and Technology': 4100,
+             'University of Wrocław': 3000,
+             'Bialystok Technical University': 2400,
+             'University of Bialystok': 13500}
+
+    # resort
+    sights = {'Warsaw Old Town': [
+        "Traveling around the country is worth starting with an acquaintance with the historical district of its official capital. It is represented by a market square with a large number of shops, cafes and restaurants for every taste and color. A positive feature of this landmark of Poland is the richness of the area with monuments of medieval architecture. It is interesting to know that the Old Town was founded back in the 13th century, initially it was surrounded by an earthen rampart, later it was replaced with brick walls. Don't forget to bring your camera to take many beautiful photos.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/1-The_Warsaw_Old_Town-e1518313891144.jpg'],
+        'Marienburg Castle': [
+            "Among the main attractions of the country is the 'nest' of German knights. The brick bulk of this castle rises on the banks of the Nogat River, which flows 80 km from the border with the Kaliningrad region of the Russian Federation. Its history began 700 years ago, when the residence of the Teutons was officially transferred from Venice to Marienburg. The fortress was repeatedly completed and decorated. In 1945, the castle was heavily damaged, but after the end of World War II, it was literally rebuilt. Now a museum functions within the walls of the building, there are interesting weapons collections, amber jewelry, and armor.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/2-Malbork_Castle-e1518314093567.jpg'],
+        'Tatras': [
+            "This is the name of the Carpathian mountain system, the highest point of which reaches 2499 m. This place attracts tourists not only with heights in the range of 1800-2500 m, but also with glacial cirques, mountain lakes in large numbers, and deep valleys. The rating of this attraction in Poland is rated as high, all because there is still a ski resort here, known as Zakopane. From the capital, you can get here by train. The Tatras are also known for caves, of which there are really many.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/3-Tatry-e1518314227738.jpg']}
+    beaches = {'Debki': [
+        "Hidden behind the coastal forest, far from the main routes, has long attracted lovers of wild beaches and windsurfers. There are no large crowds of people here and you can enjoy plenty of clean beaches and excellent sand. And the “correct” wind creates all the conditions for practicing water sports.",
+        'https://polomedia.ru/sites/default/files/news/05-14/plaza2.jpg'],
+        "Krynica Morska": [
+            "The Baltic Spit is a corner of the Baltic coast that has not yet been fully discovered by tourists. But here, vacationers have at their disposal two water spaces at once: the Vistula (Kaliningrad) Bay and the main part of the Baltic Sea. And you can walk from one coast to another in just a few minutes. In addition, it is in these places that the sun shines brightest on the entire Polish Baltic coast. And the most unforgettable impression is made by the wide sandy beach, which has repeatedly received the Blue Flag certificate.",
+            'https://polomedia.ru/sites/default/files/news/05-14/plaza3.jpg'],
+        'Sopot': [
+            "Sopot beaches have both admirers and opponents. However, the fact that this is a resort with a truly European atmosphere is indisputable. And soft sand is just one of those details that impress tourists. It is here that the stars of the Gdynia Opener Festival rest - the fun these days does not stop until the morning. The longest wooden pier in Europe attracts tourists. And to this we should add stylish architecture, excellent restaurants and the proximity of the sights of Gdansk.",
+            'https://polomedia.ru/sites/default/files/news/05-14/plaza4.jpg']}
+    mountains = {'Świętokrzyskie mountains': [
+        "The Świętokrzyskie Mountains (Góry Świętokrzyskie) is a low mountain range in south-central Poland. The highest point is Mount Lysitsa (614 meters above sea level). Despite their modest size, these mountains are popular with tourists. There are two main reasons for this.\n"
+        "First, the Świętokrzyskie Mountains are the oldest in Poland. They formed 500 million years ago! Looking at such antiquity, you begin to perceive everything completely differently ... Secondly, in the Swietokrzyski National Park you can admire stunning views. For example, amazing rocky slopes hidden between dense forests, or beautiful spacious valleys (the width of the Vilkovskaya Valley reaches four kilometers).",
+        'https://api.culture.pl/sites/default/files/styles/1920_auto/public/2019-07/goloborze_en.jpg?itok=iBCQnZAq'],
+        'Tatras': [
+            "The Tatras are the highest mountain range in Poland. It is located in the very south of the country, on the border with Slovakia. The highest point in the Polish Tatras is Mount Rysy (2499 meters above sea level), although there are higher peaks in Slovakia. The Tatras are the only high mountain range in Poland, which is why they are very popular among tourists.\n "
+            "Giewont without a cross and other unusual pictures of the Tatras a hundred years ago\n"
+            "We will not find such a mountain world frozen in the frame before the tourist era either in hundreds of albums available on the market, or in guidebooks around Zakopane and the surrounding area.",
+            'https://api.culture.pl/sites/default/files/styles/1920_auto/public/2019-07/morskie_oko_en.jpg?itok=ccIU-EIZ'],
+        'Peniny': [
+            "The Pieniny mountain range is located an hour northeast of the Tatras. The highest point is Three Crowns (Trzy Korony), 982 meters above sea level.\n"
+            "Pieniny is most often associated with rafting on the Dunajec River, winding through the mountain gorge. For eight kilometers you can admire the picturesque views of the rocky cliffs. The Peniny are also famous for their pine trees growing on the steep mountain slopes. The most famous of them is the pine tree on Mount Sokolitsa",
+            'https://api.culture.pl/sites/default/files/styles/1920_auto/public/2019-07/sosna_na_skolicy_w_pieninach_en.jpg?itok=bnAE2HK2']}
+    skiResorts = {'Zakopane': [
+        "The most famous and prestigious ski resort in Poland is Zakopane. Thanks to a very developed infrastructure, it gained great popularity, which ensured its fame as the “winter capital” of the country. It is located in a picturesque basin at the foot of the Tatras, 116 km from Krakow. On the territory of the resort there are 6 main ski areas in the altitude range of 860-2000 m, which are assigned different levels of difficulty. This opens up almost unlimited possibilities for skiing and luge. The lifts work from morning until late at night for quite a long time. The ski season starts here in early December and lasts almost until mid-April. In total, there are more than 60 lifts in Zakopane and its environs, and the total length of the slopes exceeds 65 km.",
+        'https://shoppingpl.com/uploads/images/Vidpochynok%20v%20Polshi/Narty%20w%20Polsce/Narty%20w%20Zakopanem.jpg'],
+        'Kasprowy-Verkh': [
+            "Among skiers, the most popular place in the Zakopane region is the Kasprowy Wierch base on the mountain of the same name in the Tatra National Park, which is located almost on the Polish-Slovak border about 10 km south of the famous town. Sometimes it is also called the 'sacred mountain of Polish skiing'. Height - 1987 meters above sea level. Many believe that more than one generation of skiers grew up on this mountain. And this is not surprising. The infrastructure is constantly being developed here and the service for ski lovers is being improved. One of the features of this mountain is the presence of only natural snow cover, which forces skiers to take into account the vagaries of the weather. However, the pleasure of skiing on moderately compacted and moderately loose snow can only be appreciated by real skiers.",
+            'https://shoppingpl.com/uploads/images/Vidpochynok%20v%20Polshi/Narty%20w%20Polsce/Narty%20w%20Kasprowy-Wierch.jpg'],
+        'Skiing extravaganza in Bialka Tatrzanska': [
+            "Every year, the popularity of the Białka Tatrzańska ski resort in the Lesser Poland Voivodeship is growing at an incredible pace. From Krakow, it is better to get to it along the Zakopianka highway - in good weather, you will quickly overcome less than a hundred kilometers. If you depart from Zakopane, then this resort can be reached in half an hour by car.",
+            'https://shoppingpl.com/uploads/images/Vidpochynok%20v%20Polshi/Narty%20w%20Polsce/Narty%20w%20Bialka%20Tatrzanska.jpg']}
+    lakes = {'Elk': [
+        "Lake Elk, formed by the melting of a glacier and surrounded by dense forest, is a secret that Poles would rather not share with anyone. The reservoir is located in the Masurian Lake District region and is transformed with the advent of each season. In the summer, outdoor enthusiasts flock to the town of Elk, famous for its terracotta-roofed houses, and flock to the grassy shores of the lake to watch kayaks surrounded by emerald pines. When autumn arrives, a light fog appears over Lake Elk, water lilies bloom in the water, and the foliage on the trees turns a warm dark brown color.",
+        'https://bstatic.com/data/xphoto/1182x887/540/54070855.jpg?size=S'],
+        'Lake Chos': [
+            "Lake Chos, located in the heart of the Masurian Lake District, is the largest of the three lakes that surround the town of Mrągowo. In the summer, vacationers lazily sunbathe on the boardwalks along the banks. Due to the large water surface area, sailing is also popular. Arriving at the lake in winter, you will get a completely different, but no less amazing experience. In the cold season, snow-covered trees lean over lonely reeds, reflecting the modest elegance of winter.",
+            'https://bstatic.com/data/xphoto/1182x887/540/54070840.jpg?size=S'],
+        'Augustow lakes': [
+            "The Augustow Lakes, surrounding the spa town of Augustow, are a constellation of sapphire pools. Lakes Necko, Rospuda and Saino, Beloe Augustovskoe Lake and Lake Studzenichno are just a few options to choose from, while the Augustow Canal is great for kayaking. It stretches across the entire Augustovskaya Pushcha to Belarus. The ancient trees in this forest provide a protective canopy, and the only sound you will hear is the splashing of water from your oars. Lovers of romantic views should head to the secluded Saino Lake and admire the sunrise.",
+            'https://bstatic.com/data/xphoto/1182x887/540/54070836.jpg?size=S']}
+    rivers = {'river_name1': ["dicsr", '_river'],
+              'river_name2': ["discr", '_river'],
+              'river_name3': ["discr", '_river']}
+
+    # currency
+    currencyName = 'PLN'
+    currencyEqualsToDollar = 4.52
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 125500
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 227
+    menAverageLifeExpectancy = 74  # years
+    womenAverageLifeExpectancy = 82  # years
+
+    # climat
+    juneAverageTemperature = 21.9  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 71.25  # %
+    averageDurationOfWinter = 3  # month
+    averageRainfallPerMonth = 50  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 156  # days
+    averageNumberOfRainyDaysPerYear = 136  # days
+    averageNumberOfClearDays = 73  # days
+
+    # Man-made disasters
+    nameMMD = 'Warsaw gas explosion'
+    typeOfMMD = 'gas explosion'
+    yearOfMMD = 1979
+    aomuntOfDeadPeople = 49
+    aomuntOfInjuredPeople = 135
+    territoryOfPollution = 0
+    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
+    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 1  # [1, 3]
+
+    # population
+    populationCount = 37780000
+    procentOfMales = 48.2
+    procentOfFemales = 51.8
+    populationDensityPerSquareKilometer = 121.2
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+    friendlyToForeigners = 1
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 45
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 85  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 52.6
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   POLAND   #############################
+
+    #############################   CZECH   ##############################
+
+    # Country
+    countryName = "Czech"
+    officialLanguage = "Czech"
+
+    # cities     name   isBig WashesBy
+    cities = {'Prague': [True, True, None], 'Brno': [True, True, None], 'Pilsen': [True, True, None],
+              'Ostrava': [True, True, None], 'Olomouc': [True, True, None]}
+
+    # education
+    universities = {'Prague': ['Czech Technical University in Prague', 'Prague City University'],
+                    'Brno': ['Brno University of Technology', 'Masaryk University'],
+                    'Pilsen': ['University of West Bohemia', 'Charles University'],
+                    'Ostrava': ['University of Ostrava', 'Ostrava University of Technology'],
+                    'Olomouc': ['Palacký University Olomouc', 'Moravian University Olomouc']}
+
+    faculties = {
+        'Czech Technical University in Prague': ['Faculty of Architecture', 'Faculty of Medicine',
+                                                 'Faculty of Engineering',
+                                                 'Faculty of Computer Engineering and Software'],
+        'Prague City University': ['Faculty of Arts', 'Faculty of Economics',
+                                   'Faculty of Computer Engineering and Software'],
+        'Brno University of Technology': ['Faculty of Architecture', 'Faculty of Computer Engineering and Software',
+                                          'Faculty of Economics',
+                                          'Faculty of Engineering',
+                                          'Faculty of Computer Engineering and Software',
+                                          'Faculty of Arts'],
+        'Masaryk University': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Science', 'Faculty of Arts',
+                               'Faculty of Economics', 'Faculty of Computer Engineering and Software'],
+        'University of West Bohemia': ['Faculty of Science', 'Faculty of Arts', 'Faculty of Economics',
+                                       'Faculty of Engineering', 'Faculty of Law'],
+        'Charles University': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Arts',
+                               'Faculty of Science', 'Faculty of Social Sciences'],
+        'University of Ostrava': ['Faculty of Science', 'Faculty of Arts', 'Faculty of Social Sciences',
+                                  'Faculty of Medicine'],
+        'Ostrava University of Technology': ['Faculty of Economics',
+                                             'Faculty of Engineering', 'Faculty of Computer Engineering and Software'],
+        'Palacký University Olomouc': ['Faculty of Medicine', 'Faculty of Arts', 'Faculty of Science',
+                                       'Faculty of Education', 'Faculty of Law'],
+        'Moravian University Olomouc': ['Faculty of Economics', 'Faculty of Social Sciences']}
+
+    programs = {'Czech Technical University in Prague': ['Magistracy', 'Undergraduate'],
+                'Prague City University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Brno University of Technology': ['Magistracy', 'Undergraduate'],
+                'Masaryk University': ['Foundation', 'Undergraduate', 'MBA'],
+                'University of West Bohemia': ['Magistracy', 'Undergraduate'],
+                'Charles University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University of Ostrava': ['Magistracy', 'Undergraduate'],
+                'Ostrava University of Technology': ['Magistracy', 'Undergraduate'],
+                'Palacký University Olomouc': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Moravian University Olomouc': ['Magistracy', 'Undergraduate']}
+    links = {'Czech Technical University in Prague': 'https://www.cvut.cz/en',
+             'Prague City University': 'https://www.praguecityuniversity.cz/',
+             'Brno University of Technology': 'https://www.vut.cz/en/',
+             'Masaryk University': 'https://www.muni.cz/en',
+             'University of West Bohemia': 'https://www.zcu.cz/en/index.html',
+             'Charles University': 'https://cuni.cz/uken-1.html',
+             'University of Ostrava': 'https://www.osu.eu/',
+             'Ostrava University of Technology': 'https://www.vsb.cz/en',
+             'Palacký University Olomouc': 'https://www.upol.cz/en/',
+             'Moravian University Olomouc': 'https://www.mvso.cz/en'}
+
+    images = {
+        'Czech Technical University in Prague': 'https://keystoneacademic-res.cloudinary.com/image/upload/q_auto,f_auto,w_743,c_limit/element/13/136733_32cf6ae7-460a-4c2a-8f89-93860bb45f99.jpg',
+        'Prague City University': 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Prague_College%2C_Polska_10%2C_Prague_2%2C_Czechia.JPG',
+        'Brno University of Technology': 'https://i.ytimg.com/vi/4bqqlkmjv-M/maxresdefault.jpg',
+        'Masaryk University': 'https://www.em.muni.cz/cache-thumbs/kampus2-790x395-544916530.jpg',
+        'University of West Bohemia': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/ZCU-FAV-FST-UUD1.jpg/1200px-ZCU-FAV-FST-UUD1.jpg',
+        'Charles University': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Praha%2C_Star%C3%A9_M%C4%9Bsto%2C_N%C3%A1m%C4%9Bst%C3%AD_Jana_Palacha%2C_FF_UK_01.jpg/1200px-Praha%2C_Star%C3%A9_M%C4%9Bsto%2C_N%C3%A1m%C4%9Bst%C3%AD_Jana_Palacha%2C_FF_UK_01.jpg',
+        'University of Ostrava': 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Ostrava_dekanat_PrF_OU_20080426.jpg',
+        'Ostrava University of Technology': 'https://www.timeshighereducation.com/sites/default/files/styles/article785xauto/public/image_2_2.jpg?itok=oVZR1sIr',
+        'Palacky University Olomouc': 'https://msmstudy.eu/wp-content/uploads/2021/06/Sloj-15-5.jpg',
+        'Moravian University Olomouc': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1020300050/e6c40d2985f1dbe6bd3b18ad42db6eac34b2cf5c.jpg?s=640'}
+    # общага
+    hostel = {'Czech Technical University in Prague': 'Yes',
+              'Prague City University': 'Yes',
+              'Brno University of Technology': 'Yes',
+              'Masaryk University': 'Yes',
+              'University of West Bohemia': 'Yes',
+              'Charles University': 'No',
+              'University of Ostrava': 'No',
+              'Ostrava University of Technology': 'No',
+              'Palacky University Olomouc': 'Yes',
+              'Moravian University Olomouc': 'No'}
+    # стипендия
+    scolarship = {'Czech Technical University in Prague': 'Yes',
+                  'Prague City University': 'Yes',
+                  'Brno University of Technology': 'Yes',
+                  'Masaryk University': 'Yes',
+                  'University of West Bohemia': 'Yes',
+                  'Charles University': 'Yes',
+                  'University of Ostrava': 'Yes',
+                  'Ostrava University of Technology': 'Yes',
+                  'Palacky University Olomouc': 'Yes',
+                  'Moravian University Olomouc': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {
+        'Czech Technical University in Prague': 'A certificate of successful graduation from a secondary school.'
+                                                'A duly completed and submitted application for a study programme.'
+                                                'Documentary evidence that fees and charges have been paid.'
+                                                'Compliance with the requirements for the entrance procedures.',
+        'Prague City University': 'Confirmation of English level upon entry. Letter of motivation. Portfolio (only School of Art & Design & Creative Media Production). Final interview.',
+        'Brno University of Technology': 'Curriculum vitae. '
+                                         'Statement of purpose '
+                                         'Recommendation letter (if required) '
+                                         'English language qualifications TOEFL (if required) ',
+        'Masaryk University': 'diploma or statement of expected graduation. '
+                              'diploma supplement/Transcript of records. '
+                              'CV. '
+                              'proof of English language level. '
+                              'motivation letter. '
+                              'own academic work/publication (e.g. bachelor, diploma thesis) '
+                              'copy of passport.',
+        'University of West Bohemia': 'Curriculum vitae. '
+                                      'Statement of purpose '
+                                      'Recommendation letter (if required) '
+                                      'English language qualifications TOEFL (if required) ',
+        'Charles University': 'Curriculum vitae. '
+                              'Statement of purpose '
+                              'Recommendation letter (if required) '
+                              'English language qualifications TOEFL (if required) ',
+        'University of Ostrava': 'Senior School Certificates. '
+                                 'Official Transcripts. '
+                                 'English Language Proficiency Scores. '
+                                 'Norwegian Language Proficiency Scores. '
+                                 'CV/Resume. '
+                                 'Letter of Recommendations. '
+                                 'Personal Statement. ',
+        'Ostrava University of Technology': 'A certificate of successful graduation from a secondary school.'
+                                            'A duly completed and submitted application for a study programme.'
+                                            'Documentary evidence that fees and charges have been paid.'
+                                            'Compliance with the requirements for the entrance procedures.',
+        'Palacky University Olomouc': 'diploma or statement of expected graduation. '
+                                      'diploma supplement/Transcript of records. '
+                                      'CV. '
+                                      'proof of English language level. '
+                                      'motivation letter. '
+                                      'own academic work/publication (e.g. bachelor, diploma thesis) '
+                                      'copy of passport.',
+        'Moravian University Olomouc': 'Student visa. '
+                                       'Online Application form. '
+                                       'TOEFL Certificate. '
+                                       'World Education Services evaluation. '
+                                       'Passport. '
+                                       'Photographs. '
+                                       'IELTS Certificate. '
+                                       'Proof of fee payment. '
+                                       'Health and Life Insurance'}
+
+    costs = {'Czech Technical University in Prague': 4700,
+             'Prague City University': 4500,
+             'Brno University of Technology': 4900,
+             'Masaryk University': 3900,
+             'University of West Bohemia': 3700,
+             'Charles University': 3750,
+             'University of Ostrava': 4100,
+             'Ostrava University of Technology': 4500,
+             'Palacky University Olomouc': 3400,
+             'Moravian University Olomouc': 3550}
+
+    # resort
+    sights = {'Prague Castle': [
+        "One of the most important sights of the Czech Republic, which has literally become a symbol of the state, is the largest castle in Prague Castle, located in Prague. It is a whole complex of buildings, temples and fortifications surrounding the main squares and courtyards of the city. This is a whole district of the city, quite large in area, which performs a cultural, historical and political role. Previously, the castle served as the residence of Czech kings and emperors, today it plays the role of a representative office of the country's president. The residence is guarded by a large military unit, consisting of six hundred Guardians of the City. Every hour there is a changing of the guard, and at noon this action is even accompanied by a special orchestra. Guests of the city specially come to the walls of the complex in order to watch this solemn ceremony.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Czech-1-Prague-Castle-e1491202258920.jpg'],
+        'The Charles Bridge': [
+            "Speaking about what to visit in the Czech Republic in the first place, special attention should be paid to the Charles Bridge, which has become a real hallmark of the country in our time. By the way, there are 18 bridges in the capital of the Czech Republic, fraught with a rich history, but undoubtedly the Charles Bridge is the oldest and most beautiful among them. In addition to its immediate function - connecting the opposite banks of the Vltava River, this bridge has occupied an important place in the history of the city. The bridge was conceived by the Czech king Charles IV, opened in 1402, since then it has undergone some changes - a horse-drawn road passed through it, trams ran for a long time, but now the bridge has become pedestrian again, which attracts many tourists and is a favorite place for walking .",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Czech-2-The-Charles-Bridge-e1491202450286.jpg'],
+        'Wenceslas Square': [
+            "While traveling around Prague, you don't have to think about what to see in the Czech Republic - sooner or later, by accident or on purpose, you will still find yourself in the very heart of the city - on Wenceslas Square. Here, even in the middle of the night, hundreds of people are walking and hurrying somewhere, luring countless shops and restaurants with their signs.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Czech-3-Wenceslas-Square--e1491202625918.jpg']}
+    beaches = {}
+    mountains = {'Jizera mountains': [
+        "Located 120 km from Prague (Liberec Region). The northernmost mountain range, adjacent to the Krkonoše mountains. The name of the mountains comes from the local river. The largest peaks in the Czech Republic are Jizere and Smrk. Dozens of streams and streams that flow down from the mountains give special beauty.",
+        'https://chezgid.ru/wp-content/uploads/2019/07/Jizerskie-gory.png'],
+        'Giant Mountains': [
+            "The mountain is located 160 km from the Czech capital. The highest point is 1601 m (Mount Snezhka). The ski season starts on December 1 and lasts until the end of April. The total length of the mountain range is 454 km. It is considered one of the most popular and unique mountain ranges in the country. At the foot of the mountain there is a ski resort - Pec pod Snezhkou, where there are slopes for both professionals and beginners. In winter, you can do both ski slopes and pedestrian crossings. In summer, the ideal option is to take a walk, enjoy the local scenic beauties and sights. There are special routes for conquering peaks.",
+            'https://chezgid.ru/wp-content/uploads/2019/07/Krkonoshe.jpg'],
+        'Eagle Mountains': [
+            "Settled on the border. The highest point - Velka Deshtna - 1115 m. The area is ideal for active holidaymakers, those who love hiking and winter activities. In the circle you can visit castles and fortresses, a dam with a reservoir. There are 5 ski slopes for tourists with different levels of training and routes for hiking and cycling. You can visit the school of skiers and snowboarders, order an animation program. You can really get real relaxation on a summer vacation in the mountains.",
+            'https://chezgid.ru/wp-content/uploads/2019/07/Orlitskie-gory.jpg']}
+    skiResorts = {'Spindlerov Mlyn': [
+        "One of the most famous resorts in the Czech Republic, located at an altitude of up to 1300 meters above sea level. It is located on the territory of the Krkonoše Nature Park. Spindlerov Mlyn became known as a resort in the 19th century. Today, sports competitions are constantly held here, and most tourists come from Russia, Poland, Holland and Germany. For snowboarders, there are ramps and a springboard. About 100 kilometers of trails for cross-country skiers have been laid in the forest. There are also ski schools, equipment rentals and cafes where you can have a cheap meal on St. Peter. Skiers are transported by a free bus that runs between St. Peter and Medvedin.",
+        'https://www.krkonose.eu/sites/default/files/headers/krkonose-spindleruv-mlyn-10.jpg'],
+        'Giant Mountains': [
+            "This ski resort is located in the northeast of the country, almost on the border with Poland. The highest peak is called Śnieżka, its height is 1602 m. The Krkonoš Mountains Natural Mountain Park is located on the territory of the resort. In winter, it is usually very crowded here, but the snow here lasts from November to April, so there is plenty of time for everyone to ride. There are 16 ski slopes on the Krkonoše, as well as ski lifts and three cable cars. The length of the trails is about 4 km.",
+            'https://pragagid.ru/wp-content/uploads/2012/11/k.jpg'],
+        'Yested': [
+            "Mount Jested, 1012 m high, is known as an excellent place for cycling and skiing. There are three ski jumps, training and sports tracks (5 of them are of increased difficulty). The necessary amount of snow is maintained with the help of 'snow cannons', some trails are suitable for evening skiing due to lighting. There are lifts on the territory of the resort, which can transport up to 4 thousand people per hour.",
+            'https://www.vinegret.cz/wp-content/uploads/2014/04/%D0%BF%D0%B0%D0%BA%D1%83%D1%80%D1%86%D0%BD.jpg/640/1280']}
+    lakes = {'Lhota': [
+        "Lake Lhota is located just 40 kilometers from Prague. This is a very clean and beautiful reservoir, which arose by flooding a former quarry. The beach here is sandy, like the bottom of the lake; mighty pine trees grow along the shore, thanks to which the tart aroma of coniferous trees hovers here in summer. Entrance to the territory near the lake is paid - a ticket for the day costs 50 kroons. You can settle down anywhere near the lake, although one of the beaches is given over to nudist. There are always a lot of people here in the summer, but the lake is large and the whole crowd, dispersing along the beach, interferes little with each other.",
+        'http://rupoint.cz/wp-content/uploads/2015/07/lhota-e1438346532698.jpg'],
+        'Konětopy': [
+            "The twin brother of Lake Lhota is located about a 15-minute drive from it and the same 40 kilometers from Prague. This is also a former flooded quarry. Konětopy differs only in that there is no pine forest here and no trees grow on the sandy beach. The water is just as clean and clear. Entrance ticket for the whole day - 50 kroons. The beach is also open until 21:00. It is forbidden to pitch tents on the territory.",
+            'http://rupoint.cz/wp-content/uploads/2015/07/9421823549_1f973e0894_z-e1438346378197.jpg'],
+        'Mahovo': [
+            "The legendary Makhovo Lake is one of the busiest summer spots in the Czech Republic. In hot weather, young people, families with children and cheerful companies from all over the country flock here. Summer music festivals often take place here, the largest of which is Finlandia Macháč.",
+            'http://rupoint.cz/wp-content/uploads/2015/07/m-chovo-jezero-e1438346123178.jpg']}
+    rivers = {'Vltava': [
+        "The Vltava is the largest river in the Czech Republic, its length is about 430 km, the basin area is slightly more than 28,000 km2. It flows through almost the entire territory of the country, originating on the Black Mountain in the Sumava National Park, just six hundred meters from the German border, and flowing into the Laba, or Elbe in German, in the northern part of the country near the town of Melnik.",
+        'https://praga-praha.ru/pix/2014/01/%D0%92%D0%BB%D1%82%D0%B0%D0%B2%D0%B0-4_1000400.webp'],
+        'Odra': [
+            "The Odra River, or as it is also called the Oder, with a total length of 854 km, originates in the Eastern Sudetenland, flows through Poland, forming most of the Polish-German border, and flows into the Baltic Sea.",
+            'https://praga-praha.ru/wp-content/uploads/2019/03/%D0%A0%D0%B5%D0%BA%D0%B0-%D0%9E%D0%B4%D1%80%D0%B0-3-800x598.jpg'],
+        'Labe': [
+            "The second longest river in the Czech Republic, the Laba, flows through the northwest of the country for 370.74. The middle and lower reaches are in Germany. Laba flows into the North Sea at a distance of 1165 km from the source.",
+            'https://praga-praha.ru/pix/2019/01/%D0%A0%D0%B5%D0%BA%D0%B0-%D0%9B%D0%B0%D0%B1%D0%B0-4_740300.webp']}
+
+    # currency
+    currencyName = 'CZK'
+    currencyEqualsToDollar = 23.39
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 24900
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 369
+    menAverageLifeExpectancy = 73.9  # years
+    womenAverageLifeExpectancy = 80.7  # years
+
+    # climat
+    juneAverageTemperature = 18  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 77  # %
+    averageDurationOfWinter = 4  # month
+    averageRainfallPerMonth = 43.75  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 157  # days
+    averageNumberOfRainyDaysPerYear = 135  # days
+    averageNumberOfClearDays = 73  # days
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 10700000
+    procentOfMales = 49.1
+    procentOfFemales = 50.9
+    populationDensityPerSquareKilometer = 135.8
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 4
+    friendlyToForeigners = 2
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 20
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 65  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 54.8
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   CZECH   #############################
+
+    #############################   GERMANY   #############################
+
+    # Country
+    countryName = "Germany"
+    officialLanguage = "Deutsch"
+
+    # cities     name   isBig WashesBy
+    cities = {'Berlin': [True, True, None], 'Hamburg': [True, True, None], 'Bremen': [True, True, None],
+              'Dresden': [True, True, None], 'Nuremberg': [True, True, None]}
+
+    # education
+    universities = {'Berlin': ['Humboldt University of Berlin', 'Technical University of Berlin'],
+                    'Hamburg': ['University of Hamburg', 'HafenCity University Hamburg'],
+                    'Bremen': ['University of Bremen', 'Jacobs University Bremen'],
+                    'Dresden': ['Dresden University of Technology', 'Dresden University of Applied Sciences'],
+                    'Nuremberg': ['Nuremberg Institute of Technology', 'Academy of Fine Arts']}
+    faculties = {'Humboldt University of Berlin': ['Faculty of Law', 'Faculty of Science', 'Faculty of Arts',
+                                                   'Faculty of Economics', 'Faculty of Education'],
+                 'Technical University of Berlin': ['Faculty of Education',
+                                                    'Faculty of Science',
+                                                    'Faculty of Computer Engineering and Software',
+                                                    'Faculty of Economics'],
+                 'University of Hamburg': ['Faculty of Law', 'Faculty of Economics',
+                                           'Faculty of Social Sciences', 'Faculty of Medicine', 'Faculty of Education',
+                                           'Faculty of Science'],
+                 'HafenCity University Hamburg': ['Faculty of Architecture', 'Faculty of Engineering',
+                                                  'Faculty of Science'],
+                 'University of Bremen': ['Faculty of Science',
+                                          'Faculty of Computer Engineering and Software', 'Faculty of Law',
+                                          'Faculty of Social Sciences'],
+                 'Jacobs University Bremen': ['Faculty of Computer Engineering and Software', 'Faculty of Science',
+                                              'Faculty of Economics', 'Faculty of Social Sciences'],
+                 'Dresden University of Technology': ['Faculty of Science',
+                                                      'Faculty of Social Sciences',
+                                                      'Faculty of Education',
+                                                      'Faculty of Arts', 'Faculty of Computer Engineering and Software',
+                                                      'Faculty of Engineering'],
+                 'Dresden University of Applied Sciences': ['Faculty of Science', 'Faculty of Social Sciences'],
+                 'Nuremberg Institute of Technology': ['Faculty of Science',
+                                                       'Faculty of Architecture',
+                                                       'Faculty of Arts',
+                                                       'Faculty of Computer Engineering and Software',
+                                                       'Faculty of Engineering'],
+                 'Academy of Fine Arts': ['Faculty of Arts', 'Faculty of Social Sciences',
+                                          'Faculty of Architecture', 'Faculty of Law']}
+
+    programs = {'Humboldt University of Berlin': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Technical University of Berlin': ['Magistracy', 'Undergraduate'],
+                'University of Hamburg': ['Magistracy', 'Undergraduate'],
+                'HafenCity University Hamburg': ['Foundation', 'Undergraduate', 'MBA'],
+                'University of Bremen': ['Magistracy', 'Undergraduate'],
+                'Jacobs University Bremen': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Dresden University of Technology': ['Magistracy', 'Undergraduate'],
+                'Dresden University of Applied Sciences': ['Magistracy', 'Undergraduate'],
+                'Nuremberg Institute of Technology': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Academy of Fine Arts': ['Magistracy', 'Undergraduate']}
+    links = {'Humboldt University of Berlin': 'https://www.hu-berlin.de/en',
+             'Technical University of Berlin': 'https://www.tu.berlin/en/',
+             'University of Hamburg': 'https://www.uni-hamburg.de/en.html',
+             'HafenCity University Hamburg': 'https://www.hcu-hamburg.de/',
+             'University of Bremen': 'https://www.uni-bremen.de/',
+             'Jacobs University Bremen': 'https://www.jacobs-university.de/',
+             'Dresden University of Technology': 'https://tu-dresden.de/?set_language=en',
+             'Dresden University of Applied Sciences': 'https://www.htw-dresden.de/',
+             'Nuremberg Institute of Technology': 'https://www.th-nuernberg.eu/',
+             'Academy of Fine Arts': 'https://www.academyoffinearts.in/'}
+
+    images = {
+        'Humboldt University of Berlin': 'https://www.ru.studies-in-europe.eu/img/uczelnie/a1673/g/Berlin-Universitat-zwischen-1890-und-1900-p2961.jpg',
+        'Technical University of Berlin': 'https://www.easyuni.my/media/institution/photo/2016/07/16/Technical-University-of-Berlin.jpg.600x400_q85.jpg',
+        'University of Hamburg': 'https://assets.rrz.uni-hamburg.de/instance_assets/uni/12806281/esa1-schell-screen-733x414-e6d55adb6924963e9d96a322f0a0e4be712b5b1c.jpg',
+        'HafenCity University Hamburg': 'https://study-eu.s3.amazonaws.com/uploads/image/path/127/wide_fullhd_hcu-hamburg.jpg',
+        'University of Bremen': 'https://welcometobremen.de/wp-content/uploads/2016/09/uni-mensa-von-oben-scaled.jpg',
+        'Jacobs University Bremen': 'https://upload.wikimedia.org/wikipedia/commons/5/5b/Jacobs_University_Bremen_Campus.JPG',
+        'Dresden University of Technology': 'https://upload.wikimedia.org/wikipedia/commons/7/7d/TU-Dresden-Georg-Schumann-Bau.jpg',
+        'Dresden University of Applied Sciences': 'https://www.uni-assist.de/fileadmin/_processed_/f/c/csm_htw-dresden_Peter_Sebb_a636786b53.jpg',
+        'Nuremberg Institute of Technology': 'https://lh3.googleusercontent.com/p/AF1QipOxSsHPztWk5UMayvik0qPfKxPRPTz_G1ZsHAYs=s680-w680-h510',
+        'Academy of Fine Arts': 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Dresden_Germany_City-views-from-tower-of-Frauenkirche-01.jpg'}
+    # общага
+    hostel = {'Humboldt University of Berlin': 'Yes',
+              'Technical University of Berlin': 'Yes',
+              'University of Hamburg': 'Yes',
+              'HafenCity University Hamburg': 'Yes',
+              'University of Bremen': 'Yes',
+              'Jacobs University Bremen': 'No',
+              'Dresden University of Technology': 'No',
+              'Dresden University of Applied Sciences': 'No',
+              'Nuremberg Institute of Technology': 'Yes',
+              'Academy of Fine Arts': 'Yes'}
+    # стипендия
+    scolarship = {'Humboldt University of Berlin': 'Yes',
+                  'Technical University of Berlin': 'Yes',
+                  'University of Hamburg': 'Yes',
+                  'HafenCity University Hamburg': 'Yes',
+                  'University of Bremen': 'Yes',
+                  'Jacobs University Bremen': 'Yes',
+                  'Dresden University of Technology': 'Yes',
+                  'Dresden University of Applied Sciences': 'Yes',
+                  'Nuremberg Institute of Technology': 'Yes',
+                  'Academy of Fine Arts': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {'Humboldt University of Berlin': 'Academic records and transcripts.'
+                                                     'Language Proficiency Proof.'
+                                                     'A CV (from the commencement of education at school-level)'
+                                                     'Fee Receipt produced by Uni-Assist.'
+                                                     'Photocopy of Passport or an Identification Card ( Applicable only to EU Students)',
+                    'Technical University of Berlin': 'Admission Requirement: To secure admission in TU berlin, Applicants are required to have a bachelors degree in a relevant field. Additionally, international students also have to demonstrate proficiency in English or German language depending upon the language of instruction of the program.',
+                    'University of Hamburg': 'Higher education entrance eligibility- German Abitur. '
+                                             'Academic transcripts. '
+                                             'School leaving certificate. '
+                                             'English language proficiency proof. '
+                                             'German language proficiency proof. ',
+                    'HafenCity University Hamburg': 'Language Proficiency Proof.'
+                                                    'A CV (from the commencement of education at school-level)'
+                                                    'Fee Receipt produced by Uni-Assist.'
+                                                    'Photocopy of Passport or an Identification Card ( Applicable only to EU Students)',
+                    'University of Bremen': 'Certificate of Bachelor degree or official academic transcript of Study Records of your Bachelor studies. '
+                                            'Detailed and current curriculum vitae (CV), written in English. '
+                                            'Letter of Motivation, explaining your interest for enrollment in the Master of Ecology program, written in English. ',
+                    'Jacobs University Bremen': 'Academic transcripts. '
+                                                'School leaving certificate. '
+                                                'English language proficiency proof. '
+                                                'German language proficiency proof.',
+                    'Dresden University of Technology': 'Valid passport.'
+                                                        'Two-recent Passport size photo.'
+                                                        'University entrance qualification recognized by Germany (A-Levels or equivalent)'
+                                                        'Proof of previous academic performance.'
+                                                        'Proof of financial resources (8,700 EUR per year)'
+                                                        'Letter of admission from the TU Dresden.',
+                    'Dresden University of Applied Sciences': 'Valid passport.'
+                                                              'Two-recent Passport size photo.'
+                                                              'University entrance qualification recognized by Germany (A-Levels or equivalent)'
+                                                              'Proof of previous academic performance.',
+                    'Nuremberg Institute of Technology': 'Certificate of Bachelor degree or official academic transcript of Study Records of your Bachelor studies. '
+                                                         'Detailed and current curriculum vitae (CV), written in English.',
+                    'Academy of Fine Arts': 'Basic admissions materials. Application form or online application. '
+                                            'Statement of Intent. One page essay explaining personal goals for graduate school or essay related to a topic as required by the Department. '
+                                            'Resume. '
+                                            'Portfolio/Demo Reel. '
+                                            'Additional Materials. '
+                                            'Complete Your Application. '
+                    }
+
+    costs = {'Humboldt University of Berlin': 3100,
+             'Technical University of Berlin': 3500,
+             'University of Hamburg': 2900,
+             'HafenCity University Hamburg': 3200,
+             'University of Bremen': 3150,
+             'Jacobs University Bremen': 2750,
+             'Dresden University of Technology': 3300,
+             'Dresden University of Applied Sciences': 3150,
+             'Nuremberg Institute of Technology': 3600,
+             'Academy of Fine Arts': 2500}
+
+    sights = {'Cologne Cathedral': [
+        "At the highest point of the Cathedral Hill in Cologne is a true masterpiece of Gothic architecture - Cologne Cathedral. It is officially referred to as the Cathedral of Saints Peter and Mary. The mere appearance of this cathedral causes genuine admiration. The architecture of the majestic building seems to be woven from a lace of stone towers, columns and pilasters, united in a single architectural composition. And the general shape of the building, when viewed from above, is made in the form of a Latin cross. The Cologne Cathedral became the most important landmark of Germany not only due to its appearance, but also due to its rich history.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Germany-1-Cologne-Cathedral-e1492727734625.jpg'],
+        'Neuschwanstein Castle': [
+            "At the first glance at the facade of Neuschwanstein Castle from afar, there is a stable association of this amazingly beautiful building with a toy. So implausible seems this beauty of neat ivory turrets topped with pointed emerald domes. An incredibly beautiful natural background in the form of alpine slopes immersed in the greenery of forests gives even more fabulousness.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Germany-2-Neuschwanstein-Castle-e1492727971928.jpg'],
+        'Brandenburg Gate': [
+            "If you are wondering which landmark of Germany is the true symbol of the country, and what should be seen in Germany first of all, then you should definitely see the Brandenburg Gate. This is a truly legendary building, impressive in its size, architecture and symbolizing the most important milestones in the history of the country. The gates represent an almost complete copy of the Propylaea arch on the Parthenon. Their total height is 26 meters, the structure has 6 pillars and 5 corridors, the main of which is intended for the passage of ceremonial corteges.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Germany-3-The-Brandenburg-Gate-e1492728193602.jpg']}
+    beaches = {'Westerland': [
+        "the largest seaside resort on the North Sea in the city of Westerland. On the map, this island is recognizable, because it has the shape of a dancing ballerina on pointe shoes, and she has become a symbol of the island. Thanks to the excellent organization of tourism in this area, the resort received the popular name 'Beverly Hills' in Germany. Evening promenades along the coast of the North Sea during sunset will leave an unforgettable experience of visiting this beach.",
+        'https://1001beach.ru/img/posts/966/750/westerland_beach-1.webp?t=1580401960'],
+        "Langeoog": [
+            "this is an ecologically clean resort, because there are no private vehicles on its territory. Bicycles or horse-drawn taxis are used to move around the city. The exceptions are the fire department and ambulance, they have several cars at their disposal. The beach is also known for its frequent and high tides. This was the main reason for the beach to move several hundred meters to the east in 50 years.",
+            'https://1001beach.ru/img/posts/967/750/langeoog_beach-1.webp?t=1580401967'],
+        'Binz': [
+            "Binz Beach is recognized as one of the most beautiful and cleanest beaches on the Baltic coast. The reputation of the resort has been impeccable for over 150 years. Every year, Binz Beach receives the international environmental symbol 'Blue Flag' - a sign of compliance with water quality and safety standards. Binz Beach is a combination of seaside architecture with incredible seascapes. The coastal zone is buried in the greenery of centuries-old oaks, chestnuts, elms and poplars. And the waters surrounding the island are national protected areas.",
+            'https://1001beach.ru/img/posts/965/750/binz_beach-1.webp?t=1580401954']}
+    mountains = {'bavarian alps': [
+        "On the territory of the Bavarian Alps there are a lot of convenient hiking trails and various routes for tourists. The forests of the foothills are represented by deciduous and coniferous trees, and there are also many diverse berry bushes or herbal plants. These are not only beautiful places for a walk, but also luxurious places for organizing a spa holiday in order to improve people's health.",
+        'https://сезоны-года.рф/sites/default/files/resize/images/okruzhayushhij_mir/Germany_gory_1-500x328.jpg'],
+        'black forest': [
+            "In addition to the Alps in Germany, there is also the Black Forest massif (translated as 'Black Forest'), which is slightly smaller in size and is characterized by rather dark-looking forests with a large number of pines and firs. It is located in the south-west of the state, and also has a huge number of useful mineral springs on its territory.",
+            'https://сезоны-года.рф/sites/default/files/resize/images/okruzhayushhij_mir/Germany_gory_2-500x333.jpg'],
+        'Brocken': [
+            "In the center of the country there is a small massif that does not have large peaks and the maximum height of the mountains here is only 1141 (Broken Peak). In appearance, these mountain formations resemble the Urals.",
+            'https://сезоны-года.рф/sites/default/files/resize/images/okruzhayushhij_mir/Germany_gory_3-500x346.jpg']}
+    skiResorts = {'Oberstdorf-Kleinwalsertal': [
+        "Both on the German side and on the Austrian side in Vorarlberg, winter sports enthusiasts will find a variety of ski slopes of all difficulty levels.",
+        'https://www.kleinwalsertal.com/Fotos/Fotoshootings/Bastian%20Morell/Ski%20Alpin/image-thumb__1088991__hero-img/Ifen%20Panorama%20%40Bastian%20Morell%20%282%29.jpg'],
+        'Winterberg': [
+            "With 34 pistes with a total length of 27.5 km over seven mountains and modern ski lifts, the largest ski resort in the Sauerland and the Northwest region ranks third in Cozy Cabins offering a holiday of the highest standard.",
+            'https://upload.wikimedia.org/wikipedia/commons/3/39/Skiliftkarussell_Winterberg.jpg'],
+        'Hörnerdörfer': [
+            "Allgäu's five ski resorts have joined forces to create a network of ski lifts, offering excellent conditions for the whole family Children and beginners love the wide and level slopes. Experienced winter sports enthusiasts prefer the pistes around Riedbergerhorn-Grasgeren, Bolsterlang, Balderschwang and Ofterschwang.",
+            'https://www.hoernerdoerfer.de/images/ogcyo3oq2k0-/winterliches-fischen-im-allgaeu-winterurlaub-in-den-hoernerdoerfern.jpg']}
+    lakes = {'Königssee': [
+        "The third deepest German lake is located in Bavaria, surrounded by mountains and, like many local lakes, has a glacial origin. This is one of the cleanest reservoirs, they move along it only on ships with an electric motor, pedal drive or oars. Tourists are sure to be shown how the mountain echo sounds. Worthy of admiration is the Church of St. Bartholomew in the middle of the lake and the old hunting castle with an ice non-melting chapel.",
+        'https://must-see.top/wp-content/uploads/2018/06/kenigsze-700x464.jpg'],
+        'Müritz': [
+            "The largest lake in Germany is located on the territory of the national reserve of the same name, where you can see endangered species of plants, birds and animals up close. To observe them, more than 600 km of paths for pedestrians and cyclists have been laid, and special towers have also been erected. In total, there are more than a hundred small lakes in the park. Boating or boat trips are no less educational than walking.",
+            'https://must-see.top/wp-content/uploads/2018/06/myurits-700x466.jpg'],
+        'lake constance': [
+            "In Europe, this is the third largest lake, its waters wash the coasts of three countries. The coastline of Germany is the longest and is 173 km long. The Germans call it the Swabian Sea. For lovers of water sports such as windsurfing, sailing, canoeing, yachting, the lake is indispensable. A ferry service runs between the coastal towns all year round. The lake has its own fleet of ships from three states.",
+            'https://must-see.top/wp-content/uploads/2018/06/bodenskoe-ozero-700x438.jpg']}
+    rivers = {'Danube': [
+        "A huge river with crystal clear water. The Danube is considered the second longest river in Europe after the Volga. The Danube flows through half of the continent. The source of the river is located on the territory of Germany in the mountains of the Black Forest. The river crosses the territories of ten countries and passes through four vibrant capitals: Belgrade, Budapest, Bratislava and Vienna. It flows into the Black Sea.",
+        'https://must-see.top/wp-content/uploads/2019/04/dunai--700x470.jpg'],
+        'Rhine': [
+            "It is the longest river in Germany. The Rhine can be considered the personification of all of Europe. The river starts in the Alps and flows into the North Sea. The Rhine plays a huge role in Germany's trade and economic relations with other countries, as well as in the cultural life of the country. Along the banks of the Rhine, a large number of ancient fortresses and castles have been preserved. A cruise ship runs regularly on the river.",
+            'https://must-see.top/wp-content/uploads/2019/04/rei-n-700x467.jpg'],
+        'Elbe': [
+            "It flows through the lands of Germany and the Czech Republic. However, most of it is in the territory of the Germans. The Elbe originates in the Czech Republic high in the Giant Mountains (1368 km above sea level). The river flows into the North Sea. On the Elbe, there are beautiful German cities: Hamburg, Macdeburg, Dresden with spacious embankments and many places of interest for tourists.",
+            'https://must-see.top/wp-content/uploads/2019/04/elba-700x453.jpg']}
+
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 182832
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 413
+    menAverageLifeExpectancy = 77.2  # years
+    womenAverageLifeExpectancy = 82.4  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = 0  # °C
+    averageHumidity = 79  # %
+    averageDurationOfWinter = 3  # month
+    averageRainfallPerMonth = 52.08  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 89  # days
+    averageNumberOfRainyDaysPerYear = 140  # days
+    averageNumberOfClearDays = 136  # days
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 83130000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 240
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+    friendlyToForeigners = 0
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 42.1
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 49  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 70.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   GERMANY   #############################
+
+    #############################   SLOVAKIA   #############################
+
+    # Country
+    countryName = "Slovakia"
+    officialLanguage = "Slovak"
+
+    # cities     name      isBig WashesBy
+    cities = {'Bratislava': [True, True, None], 'Kosice': [True, True, None], 'Nitra': [True, True, None],
+              'Presov': [True, True, None], 'Banska Bystrica': [True, True, None]}
+
+    # education
+    universities = {'Bratislava': ['Slovak University of Technology in Bratislava', 'Comenius University Bratislava'],
+                    'Kosice': ['University of Veterinary Medicine in Kosice', 'Pavol Josef Safarik University'],
+                    'Nitra': ['Slovak University of Agriculture in Nitra', 'Constantine the Philosopher University'],
+                    'Presov': ['University of Presov', 'International Business College ISM Slovakia in Presov'],
+                    'Banska Bystrica': ['Matej Bel University in Banská Bystrica',
+                                        'Academy of Arts in Banská Bystrica']}
+    faculties = {'Slovak University of Technology in Bratislava': ['Faculty of Engineering',
+                                                                   'Faculty of Engineering',
+                                                                   'Faculty of Science',
+                                                                   'Faculty of Architecture'],
+                 'Comenius University Bratislava': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Arts',
+                                                    'Faculty of Science', 'Faculty of Education',
+                                                    'Faculty of Medicine'],
+                 'University of Veterinary Medicine in Kosice': ['Faculty of Medicine'],
+                 'Pavol Josef Safarik University': ['Faculty of Medicine', 'Faculty of Science'],
+                 'Slovak University of Agriculture in Nitra': ['Faculty of Forestry', 'Faculty of Science',
+                                                               'Faculty of Engineering',
+                                                               'Faculty of Economics'],
+                 'Constantine the Philosopher University': ['Faculty of Arts', 'Faculty of Science',
+                                                            'Faculty of Computer Engineering and Software'],
+                 'University of Presov': ['Faculty of Arts', 'Faculty of Economics',
+                                          'Faculty of Education', 'Faculty of Medicine'],
+                 'International Business College ISM Slovakia in Presov': ['Faculty of Economics',
+                                                                           'Faculty of Law'],
+                 'Matej Bel University in Banská Bystrica': ['Faculty of Economics', 'Faculty of Science',
+                                                             'Faculty of Arts', 'Faculty of Education',
+                                                             'Faculty of Law'],
+                 'Academy of Arts in Banská Bystrica': ['Faculty of Arts']}
+
+    programs = {'Slovak University of Technology in Bratislava': ['Magistracy', 'Undergraduate'],
+                'Comenius University Bratislava': ['Magistracy', 'Undergraduate'],
+                'University of Veterinary Medicine in Kosice': ['Magistracy', 'Undergraduate'],
+                'Pavol Josef Safarik University': ['Foundation', 'Undergraduate', 'MBA'],
+                'Slovak University of Agriculture in Nitra': ['Magistracy', 'Undergraduate'],
+                'Constantine the Philosopher University': ['Magistracy', 'Undergraduate'],
+                'University of Presov': ['Magistracy', 'Undergraduate', 'MBA'],
+                'International Business College ISM Slovakia in Presov': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Matej Bel University in Banská Bystrica': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Academy of Arts in Banská Bystrica': ['Magistracy', 'Undergraduate']}
+    links = {'Slovak University of Technology in Bratislava': 'https://www.stuba.sk/english.html?page_id=132',
+             'Comenius University Bratislava': 'https://uniba.sk/en/',
+             'University of Veterinary Medicine in Kosice': 'https://www.uvlf.sk/en',
+             'Pavol Josef Safarik University': 'https://www.upjs.sk/en/faculty-of-medicine/',
+             'Slovak University of Agriculture in Nitra': 'https://www.uniag.sk/en/main-page',
+             'Constantine the Philosopher University': 'https://www.ukf.sk/en/university',
+             'University of Presov': 'https://www.unipo.sk/en/',
+             'International Business College ISM Slovakia in Presov': 'https://free-apply.com/en/university/1070300002',
+             'Matej Bel University in Banská Bystrica': 'https://www.umb.sk/ru/',
+             'Academy of Arts in Banská Bystrica': 'https://www.aku.sk/en/'}
+
+    images = {
+        'Slovak University of Technology in Bratislava': 'https://www.stuba.sk/buxus/images/cache/stu.full_banner/stu/informacie_o/stu/str_7-8_STU.jpg',
+        'Comenius University Bratislava': 'https://free-student-slovakia.org/wp-content/uploads/2022/02/181031_uk_cae3d20d78.jpg',
+        'University of Veterinary Medicine in Kosice': 'https://lh3.googleusercontent.com/p/AF1QipMUQ-8AbsRqgjl3qxepLPSBIOKkTIrtFqpDLjpM=s680-w680-h510',
+        'Pavol Josef Safarik University': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1070300007/c58b9fc854a6401f7e811d18d695e74346f35c43.jpg?s=640',
+        'Slovak University of Agriculture in Nitra': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1070300020/b2c9719c09f88be391b1757dce4435a85d335560.jpg?s=640',
+        'Constantine the Philosopher University': 'https://msmstudy.sk/wp-content/uploads/2021/01/filozof1.jpg',
+        'University of Presov': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Slovakia_Presov_926.JPG/1200px-Slovakia_Presov_926.JPG',
+        'International Business College ISM Slovakia in Presov': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1070300002/4f4bbfe732b046dc0237f7106172a9003f46ba42.jpg?s=640',
+        'Matej Bel University in Banská Bystrica': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1070300005/9f4b6c3eae377b7cc1ca9cabda09d395d8cfd1c5.jpg?s=640',
+        'Academy of Arts in Banská Bystrica': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1070300001/a790c079076aa593450a78192a1c60ba67b07b63.jpg?s=640'}
+    # общага
+    hostel = {'Slovak University of Technology in Bratislava': 'Yes',
+              'Comenius University Bratislava': 'Yes',
+              'University of Veterinary Medicine in Kosice': 'Yes',
+              'Pavol Josef Safarik University': 'Yes',
+              'Slovak University of Agriculture in Nitra': 'Yes',
+              'Constantine the Philosopher University': 'No',
+              'University of Presov': 'Yes',
+              'International Business College ISM Slovakia in Presov': 'No',
+              'Matej Bel University in Banská Bystrica': 'Yes',
+              'Academy of Arts in Banská Bystrica': 'No'}
+    # стипендия
+    scolarship = {'Slovak University of Technology in Bratislava': 'Yes',
+                  'Comenius University Bratislava': 'Yes',
+                  'University of Veterinary Medicine in Kosice': 'Yes',
+                  'Pavol Josef Safarik University': 'Yes',
+                  'Slovak University of Agriculture in Nitra': 'Yes',
+                  'Constantine the Philosopher University': 'Yes',
+                  'University of Presov': 'Yes',
+                  'International Business College ISM Slovakia in Presov': 'Yes',
+                  'Matej Bel University in Banská Bystrica': 'Yes',
+                  'Academy of Arts in Banská Bystrica': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {'Slovak University of Technology in Bratislava': 'Higher Certificate '
+                                                                     '40% in English. '
+                                                                     '30% in either Mathematics or Mathematical Literacy. '
+                                                                     '40% in Life Orientation. '
+                                                                     '50% in four vocational subjects.',
+                    'Comenius University Bratislava': 'Maintain a minimum IB of 24 in order to stand a good chance to get admission into Comenius University in Bratislava',
+                    'University of Veterinary Medicine in Kosice': '5 GCSEs at grades 9 to 4 (A* to C), or equivalent, including English, maths and science',
+                    'Pavol Josef Safarik University': 'Valid passport.'
+                                                      'Two-recent Passport size photo.'
+                                                      'University entrance qualification recognized by Germany (A-Levels or equivalent)'
+                                                      'Proof of previous academic performance.',
+                    'Slovak University of Agriculture in Nitra': 'Application form '
+                                                                 'Decision on recognition of documents on completed secondary education which is issued by the Regional Office of Education in Nitra, Department of Vocational and Methodological Activities, J. Vuruma 1, 949 01 Nitra (procedure for processing the above documents). '
+                                                                 'Curriculum Vitae. '
+                                                                 'Proof of payment of the fee for admission procedure. ',
+                    'Constantine the Philosopher University': 'Higher Certificate '
+                                                              '40% in English. '
+                                                              '30% in either Mathematics or Mathematical Literacy. '
+                                                              '40% in Life Orientation. '
+                                                              '50% in four vocational subjects.',
+                    'University of Presov': 'A copy of the passport (page with photo and personal data). '
+                                            'Autobiography in Slovak. '
+                                            'The original certificate of study of subjects and grades for the 8th, 9th, 10th and first six months of the 11th grade, plus a translation into Slovak (if there is no certificate yet). '
+                                            'Statement of health '
+                                            'Valid health insurance policy. '
+                                            'The original document on recognition of the equivalence of the previous education of a foreigner in Slovakia, issued by the Presevo regional department of the education department. '
+                                            '6 photo cards 30 x 35 mm.',
+                    'International Business College ISM Slovakia in Presov': 'Application form '
+                                                                             'Decision on recognition of documents on completed secondary education which is issued by the Regional Office of Education in Nitra, Department of Vocational and Methodological Activities, J. Vuruma 1, 949 01 Nitra (procedure for processing the above documents). '
+                                                                             'Curriculum Vitae. '
+                                                                             'Proof of payment of the fee for admission procedure. ',
+                    'Matej Bel University in Banská Bystrica': 'Valid passport.'
+                                                               'Two-recent Passport size photo.'
+                                                               'University entrance qualification recognized by Germany (A-Levels or equivalent)'
+                                                               'Proof of previous academic performance.',
+                    'Academy of Arts in Banská Bystrica': 'Higher Certificate '
+                                                          '40% in English. '
+                                                          '30% in either Mathematics or Mathematical Literacy. '
+                                                          '40% in Life Orientation. '
+                                                          '50% in four vocational subjects.'}
+
+    costs = {'Slovak University of Technology in Bratislava': 900,
+             'Comenius University Bratislava': 890,
+             'University of Veterinary Medicine in Kosice': 950,
+             'Pavol Josef Safarik University': 990,
+             'Slovak University of Agriculture in Nitra': 930,
+             'Constantine the Philosopher University': 2500,
+             'University of Presov': 1000,
+             'International Business College ISM Slovakia in Presov': 1100,
+             'Matej Bel University in Banská Bystrica': 970,
+             'Academy of Arts in Banská Bystrica': 830}
+
+    sights = {'Old town of Bratislava': [
+        "It is not difficult to guess that a large number of historical monuments are concentrated in this place. It does not do on the streets without government agencies, offices. The western part of the settlement is represented by a hilly surface, there is a castle, embassies of various countries. The eastern section of the Old Town is the historical and administrative center. There are many monuments, churches and other sights on the territory.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/1-The_Old_Town_of_Bratislava-e1518579004639.jpg'],
+        'Yasovska cave': [
+            "Excursions in Slovakia are often organized from the town of Stos in the direction of the village of Jasov. There is an underground formation interesting for tourists, namely, on the territory of a park of national importance. There is a Premonstratensian monastery nearby, so until some time the cave was used exclusively by monks. The total length of the dungeon reaches 2811 m, but only 720 m are open for excursions. The described landmark of Slovakia is interesting for its bizarre limestone layers, underground waterfalls. The halls inside are located at different levels, the differences between them sometimes reach 30 m.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/2-Jasovska_Cave-e1518579440564.jpg'],
+        'Spissky Castle': [
+            "Not everyone knows, but in this country it is customary to call castles “grads”. The one that will be discussed is one of the largest in the country. The construction of Spišský began in the 11th century, based on the remains of a Celtic settlement. The castle repeatedly successfully repelled enemy attacks, all because it was built on dolomite rocks, 200 m high. It was repeatedly rebuilt, reconstructed, so the Renaissance, Romanesque Gothic can be traced in the architecture of the building. Today, the building houses a museum that presents medieval utensils, furniture, weapons and armor to the attention of guests.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/3-Spissky_Hrad-e1518579928122.jpg']}
+    beaches = {}
+    mountains = {'High Tatras': [
+        "The highest Slovak mountains, the High Tatras, are the biggest tourist and climbing attraction in the entire country. Their main ridge, 26 km long, practically does not fall below 2,000 meters above sea level. The highest peak - Gerlakhovsky shtit (2655 m above sea level) is also the highest peak in all the Carpathians. Attractions are beautiful views, mountain lakes, beautiful waterfalls and local antelope - chamois.",
+        'https://cdn.gigaplaces.com/storage_thumbs/301/301_1170_531_60.webp?v=1659950559'],
+        'Western Tatras': [
+            "The Western Tatras are located in both Slovakia and Poland and belong to two national parks - the Tatra National Park and the Tatrza National Park. The highest peak is Banikov (2178 m above sea level). The most popular part of the mountains is Rogache with sharp rocky ridges.",
+            'https://cdn.gigaplaces.com/storage_thumbs/40862/40862_1170_531_60.webp?v=1659958709'],
+        'Belianske Tatras': [
+            'In the very east of the Tatras there is a beautiful limestone part - Belianske Tatras. Due to the protection of nature, the Tatra National Park has the fewest hiking trails, and even the highest peak of Gavran (2152 m) is not officially open for tourism.',
+            'https://cdn.gigaplaces.com/storage_thumbs/40864/40864_1170_531_60.webp?v=1659952218']}
+    skiResorts = {'Jasna Low Tatras': [
+        "Unique views, a wide range of slopes and modern cable cars - all this is Jasná Nízke Tatry, the largest ski resort in Slovakia. Jasná offers 46 km of slopes, 30 transport units, 15 bars and restaurants.",
+        'http://sacr3-files.s3-eu-west-1.amazonaws.com/_processed_/csm_Jasn%25C3%25A1%2520N%25C3%25ADzke%2520Tatry%252001%2520%25283%2529_e9a1c0edd3.jpg'],
+        'SNOW PARK Donovaly': [
+            "The PARK SNOW Donovaly ski resort is located on the border of the Low Tatra and Velka Fatra national parks. It is one of the most famous in Slovakia. Landmark Donoval - the second largest children's complex in Europe.",
+            'http://sacr3-files.s3-eu-west-1.amazonaws.com/_processed_/csm_DJI_0465_resize_79d7fcefb6.jpg'],
+        'Vratna Mala Fatra': [
+            "Vratna Free Time Zone is located in the Malá Fatra National Park and is one of the four highest resorts in Slovakia. The height of the slopes is up to 1520 meters above sea level.",
+            'http://sacr3-files.s3-eu-west-1.amazonaws.com/_processed_/csm_Vr%25C3%25A1tna%2520Mal%25C3%25A1%2520Fatra%2520003_046af4a4a1.jpg']}
+    lakes = {'Wieliczke Pleso': [
+        "Velice Pleso is a lake on the lower level of the upper part of the Velicka Valley in the High Tatras. The name of the lake is associated with the expansion of the former city of Velka (now the urban quarter of Poprad). This territory originally belonged to the Gerlakhovsky and Velkoslavkovsky districts, but got its name from the city of Velka.",
+        'https://waterresources.ru/wp-content/uploads/2020/09/velicke-pleso.jpg'],
+        'Kuhaida': [
+            "Kuhaida is a natural place for relaxing and swimming in Bratislava. Its name comes from the German Kuhheide, which indicates the original purpose of this area.",
+            'https://waterresources.ru/wp-content/uploads/2020/09/kuhajda-ozero-bratislava.jpg'],
+        'Zlate-Pieski': [
+            'Zlate Pieski is a lake in Bratislava, in the Ruzhinov region. The width is about 400 meters, the depth is about 30 meters. Around the lake there are places for sports, in the center of the lake there is a wooded island. Used for swimming.',
+            'https://waterresources.ru/wp-content/uploads/2020/09/zlate-peski.jpg']}
+    rivers = {'Danube': [
+        "The second longest river in Europe (after the Volga), 'international' river, the longest river in the European Union. Length - 2960 km. The river takes its source in Germany, in the mountains of the Black Forest.",
+        'https://travelfotokor.ru/bratislava/picbig/40dunay.jpg'],
+        'Tisza': [
+            "A river in central Europe, the left and longest tributary of the Danube. Tisza originates in the east of the Transcarpathian region of Ukraine. It is formed by merging near the city of Rakhova, the Black Tisa and White Tisa rivers. The source of the Black Tisa is located on the northeastern slopes of the Svidovets ridge at an altitude of 1400 m above sea level. Belaya Tisa originates on the southwestern slopes of the Chernogora massif, at an altitude of 1650 m above sea level.",
+            'https://upload.wikimedia.org/wikipedia/commons/4/4c/Szeged-tisza3.jpg'],
+        'Bebrava': [
+            "A river in western Slovakia, a tributary of the Nitra. It flows through Banovce nad Bebravou.",
+            'https://womanadvice.ru/sites/default/files/imagecache/width_660/49/2019-04-23_2034/reka_gron_slovakiya.jpg']}
+
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 26200
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 300
+    menAverageLifeExpectancy = 75.8  # years
+    womenAverageLifeExpectancy = 75.8  # years
+
+    # climat
+    juneAverageTemperature = 19.6  # °C
+    decemberAverageTemperature = 1.7  # °C
+    averageHumidity = 75  # %
+    averageDurationOfWinter = 3.5  # month
+    averageRainfallPerMonth = 48.3  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 70  # days
+    averageNumberOfRainyDaysPerYear = 142  # days
+    averageNumberOfClearDays = 153  # days
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 5447000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 114
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 9
+    friendlyToForeigners = 1
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 44.3
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 45.47  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 70.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   SLOVAKIA   #############################
+
+    #############################   HUNGARY   #############################
+
+    # Country
+    countryName = "Hungary"
+    officialLanguage = "Hungarian"
+
+    # cities     name      isBig WashesBy
+    cities = {'Budapest': [True, True, None], 'Debrecen': [True, True, None], 'Szeged': [True, True, None],
+              'Miskolc': [True, True, None], 'Pecs': [True, True, None]}
+
+    # education
+    universities = {'Budapest': ['Eötvös Loránd University', 'Semmelweis University'],
+                    'Debrecen': ['University of Debrecen', 'Debrecen University of Reformed Theology'],
+                    'Szeged': ['University of Szeged'],
+                    'Miskolc': ['University of Miskolc'],
+                    'Pecs': ['University of Pecs']}
+    faculties = {'Eötvös Loránd University': ['Faculty of Economics', 'Faculty of Education',
+                                              'Faculty of Computer Engineering and Software', 'Faculty of Law',
+                                              'Faculty of Science',
+                                              'Faculty of Social Science'],
+                 'Semmelweis University': ['Faculty of Medicine'],
+                 'University of Debrecen': ['Faculty of Economics',
+                                            'Faculty of Engineering', 'Faculty of Law',
+                                            'Faculty of Computer Engineering and Software',
+                                            'Faculty of Medicine', 'Faculty of Arts'],
+                 'Debrecen University of Reformed Theology': ['Faculty of Social Sciences', 'Faculty of Medicine'],
+                 'University of Szeged': ['Faculty of Forestry', 'Faculty of Social Sciences',
+                                          'Faculty of Medicine', 'Faculty of Economics', 'Faculty of Engineering'],
+                 'University of Miskolc': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software',
+                                           'Faculty of Engineering', 'Faculty of Economics',
+                                           'Faculty of Arts', 'Faculty of Law'],
+                 'University of Pecs': ['Faculty of Economics',
+                                        'Faculty of Education', 'Faculty of Engineering',
+                                        'Faculty of Computer Engineering and Software', 'Faculty of Law']}
+
+    programs = {'Eötvös Loránd University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Semmelweis University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University of Debrecen': ['Magistracy', 'Undergraduate'],
+                'Debrecen University of Reformed Theology': ['Foundation', 'Undergraduate'],
+                'University of Szeged': ['Magistracy', 'Undergraduate'],
+                'University of Miskolc': ['Magistracy', 'Undergraduate', 'MBA'],
+                'University of Pecs': ['Magistracy', 'Undergraduate']}
+    links = {'Eötvös Loránd University': 'https://www.elte.hu/en/',
+             'Semmelweis University': 'https://semmelweis.hu/english/',
+             'University of Debrecen': 'https://www.edu.unideb.hu/',
+             'Debrecen University of Reformed Theology': 'https://drhe.hu/',
+             'University of Szeged': 'https://u-szeged.hu/',
+             'University of Miskolc': 'https://www.uni-miskolc.hu/',
+             'University of Pecs': 'https://ajk.pte.hu/hu'}
+
+    images = {
+        'Eötvös Loránd University': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/59/1b/07/eotvos-lorand-tudomanyegyetem.jpg?w=1200&h=-1&s=1',
+        'Semmelweis University': 'https://images.squarespace-cdn.com/content/v1/565f850be4b020f4bf35b831/1645194846588-M7UZOWPJI4B4RBKQFY3Z/semmelweis-1.jpg?format=2500w',
+        'University of Debrecen': 'https://upload.wikimedia.org/wikipedia/commons/7/73/DebrecenDSCN3583.JPG',
+        'Debrecen University of Reformed Theology': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1034800047/1498844e9143feac370d0e377d8b3c3c43837d67.jpg?s=640',
+        'University of Szeged': 'https://study-eu.s3.amazonaws.com/uploads/image/path/335/social_1200_university-of-szeged.jpg',
+        'University of Miskolc': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/UnivMiskolc_Main.jpg/1200px-UnivMiskolc_Main.jpg',
+        'University of Pecs': 'https://img.emg-services.net/institutes/institute28808/universityofpecs_institute-1-1-1-1-1-1-1-1-1.png'}
+    # общага
+    hostel = {'Eötvös Loránd University': 'No',
+              'Semmelweis University': 'Yes',
+              'University of Debrecen': 'Yes',
+              'Debrecen University of Reformed Theology': 'Yes',
+              'University of Szeged': 'Yes',
+              'University of Miskolc': 'Yes',
+              'University of Pecs': 'No'}
+    # стипендия
+    scolarship = {'Eötvös Loránd University': 'Yes',
+                  'Semmelweis University': 'Yes',
+                  'University of Debrecen': 'Yes',
+                  'Debrecen University of Reformed Theology': 'Yes',
+                  'University of Szeged': 'Yes',
+                  'University of Miskolc': 'Yes',
+                  'University of Pecs': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {'Eötvös Loránd University': 'discrpt',
+                    'Semmelweis University': 'discrpt',
+                    'University of Debrecen': 'discrpt',
+                    'Debrecen University of Reformed Theology': 'discrpt',
+                    'University of Szeged': 'discrpt',
+                    'University of Miskolc': 'discrpt',
+                    'University of Pecs': 'discrpt'}
+
+    costs = {'Eötvös Loránd University': 4800,
+             'Semmelweis University': 13000,
+             'University of Debrecen': 6500,
+             'Debrecen University of Reformed Theology': 5000,
+             'University of Szeged': 3000,
+             'University of Miskolc': 1000,
+             'University of Pecs': 1650}
+
+    sights = {'Buda Castle': [
+        "This monumental building opens in all its grandeur and splendor from Gellert Mountain, although its dome can be seen from almost anywhere in the center of Budapest.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Hungary-2-Buda-Castle-e1492062571682.jpg'],
+        'Eger Castle': [
+            "Its heroic story began in 1552, during the attack of thousands of Turkish troops. According to documents, at that time there were no more than 2,300 defenders in the fortress, who managed to resist the enemy and prevent him from entering the city. But in 1701, the Austrian army managed to come close to the structure and blow up most of it. Restoration of the destroyed building began only in 1925.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Hungary-4-The-Castle-of-Eger-e1492062934254.jpg'],
+        'Bükk National Park': [
+            "The park is located on the hills of the same name, the tops of which are covered with huge oaks and beeches. On all slopes there are walking and cycling paths, there are many signs and benches for rest. At the foot of the hills there are orchards and vineyards, from which excellent local wine is made.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Gloriette_meadow_and_B--kk_hills_Szilv--sv--rad_Hungary-e1508401430953.jpg']}
+    beaches = {'Shifok': [
+        "Siofok beaches are very popular among tourists. The extensive length allows you to comfortably accommodate everyone who wants to relax near the water. The entrance to the lake is gentle, the shore is sandy, so you can swim here with your children. Resort guests are offered various types of entertainment: cycling, beach volleyball, horseback riding.",
+        'https://blog.ufs-online.ru/media/2217/shutterstock_4620976.jpg?anchor=center&mode=crop&width=1440&height=872&rnd=132206560600000000'],
+        "Helikon Beach": [
+            "Lake Balaton is beautiful in any weather. A great place for walking and relaxing: feed the swans, ride a ship, take a leisurely walk along the embankment, swim or have a bite to eat in a cafe - everyone will find entertainment to their liking.",
+            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/84/cf/a1/una-spiaggia-immersa.jpg?w=1200&h=-1&s=1'],
+        'Roman Beach': [
+            "If you ever come to Bp you must take a visit to “Római Part”. It is a little bit far away from the center but if the weather is good and you want to have a little rest from the busy city visit this place. There are a lot of small restaurat where you can eat fish, chicken and some other tipical hungarian food. There are a lot of place where you can drink or eat an icecream. The place is just next to the Danube and you can go down to the coast. It is wort to come to this place.",
+            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/35/d2/3f/romai-part.jpg?w=1200&h=-1&s=1']}
+    mountains = {'Kekesh': [
+        "Mount Kekes rises 12 kilometers northeast of Gyöngyös in the district of Heves and is part of the Matra massif. In terms of popularity among tourists visiting Hungary, it is second only to Lake Balaton and the Danube. There are several hotels and ski slopes, and at the top is the Kekes-teto TV tower.",
+        'https://top10a.ru/wp-content/uploads/2019/12/1-22.jpg'],
+        'Hidas Berk': [
+            "the second highest peak in Hejvs and also the second highest mountain in Hungary. It is located near the Parade in the already mentioned county of Heves. Hidas Berk is a steep-sided volcanic mountain and one of the country's top tourist attractions, loved by hikers and rock climbers.",
+            'https://top10a.ru/wp-content/uploads/2019/12/2-22-2048x1365.jpg'],
+        'Galia-teto': [
+            'Galia-teto is the third highest mountain in Hungary and in the Matra mountain range (after Kekes and Hidas-Berk, which we will talk about later). It is a major tourist attraction with an altitude of 964 meters.',
+            'https://top10a.ru/wp-content/uploads/2019/12/3-21.jpg']}
+    skiResorts = {'Matra': [
+        "In the Matra mountain range (Matra, 100 km from Budapest) there are slopes with three lifts. Matra provides guests with arguably the best skiing spots in Hungary. Snow covers the ground here for 80-100 days a year. The two highest peaks of the massif - Kekesteto (Kekesteto, 1014 m) and Galyateto (Galyateto, 965 m) - are great for winter sports.",
+        'https://www.yestravel.ru/upload/information_system_29/5/2/1/item_521/information_items_property_47949.jpg'],
+        'bukk': [
+            "You can also go skiing in the Bukk mountain range, 30 km from the city of Miskolc, in the Bankut ski park. This is the largest (and most popular) ski park in the most picturesque corner of northern Hungary, where snow lies until the end of March. There are 8 slopes (including 2 for beginners), a 10 km cross-country skiing track and a toboggan run, 8 lifts and a 'children's lift' for beginners. There are evening lighting, rental, ski schools. The restaurant is right next to the ski lifts. You can get there by bus from Miskolc or by car on the M3 road.",
+            'https://imigrant-hungary.com/media/2015/02/2015-08-20-imigrant-8.jpg'],
+        'Magas Hill': [
+            "The longest training runs in Hungary are located on the slopes of Magas Hill in Šatoraljayhöy. This northern city, lying literally near the border of Slovakia, is the center of a region famous for its winemaking. Since December 2001, the longest lift in Hungary (1332 m) has been operating here.",
+            'https://journeying.ru/images/stories/fabf309000c8e2f279a4c41ae51822ac(1).jpg']}
+    lakes = {'Heviz': [
+        "Lake Heviz is located in the west of Hungary in a small town of the same name. This popular holiday destination is open all year round and is the largest thermal lake in Europe.",
+        'https://img.tourister.ru/files/1/7/5/2/5/1/2/1/original.jpg'],
+        'Balaton': [
+            "Lake Balaton in Hungary is often called the 'Hungarian Sea', since there is no sea in the country, but this body of water resembles it - both in size and color. Depending on the sunlight, Lake Balaton acquires either a light green or an azure blue hue. The fresh lake Balaton has long become a popular resort in Europe: people from different countries, with different levels of income, alone and with the whole family come here in winter and summer.",
+            'https://img.tourister.ru/files/1/9/5/0/2/6/4/0/original.jpg'],
+        'Tisza': [
+            "Lake Tisza is one of the most famous resorts in Hungary. Being a creation of human hands, it covers an area of 127 square meters. Like a children's mosaic, the artificial reservoir consists of several parts, has 16 islands and 10 culverts.",
+            'https://s1.1zoom.ru/big0/85/339620-svetik.jpg']}
+    rivers = {'Atea': [
+        "A small river in the Somesh river basin. It starts in Romania, flows through the village of Atea and then crosses the border with Hungary, where it becomes a tributary of the Somes River.",
+        'https://upload.wikimedia.org/wikipedia/commons/4/4c/Szeged-tisza3.jpg'],
+        'Baltsaia': [
+            "A tributary of the Somesh River. The river starts in the area of the village of Dacia, Romania, is all covered with canals and today is part of the irrigation system of the Somes Plain, also called the Keleti River or the Keleti Canal. The canal crosses the border of Hungary, where it reaches the Somesh River.",
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Villach_Drau.JPG/250px-Villach_Drau.JPG'],
+        'Barkau': [
+            "A river originating in Salaj County, Romania. It has a length of 134 kilometers and a basin area of 2025 km². It flows into Crisul Repede near Seghalom.",
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Zala_rzeka.jpg/250px-Zala_rzeka.jpg']}
+
+    # currency
+    currencyName = 'HUF'
+    currencyEqualsToDollar = 390.46
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 31080
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 332
+    menAverageLifeExpectancy = 71  # years
+    womenAverageLifeExpectancy = 78.8  # years
+
+    # climat
+    juneAverageTemperature = 24  # °C
+    decemberAverageTemperature = 1  # °C
+    averageHumidity = 68.1  # %
+    averageDurationOfWinter = 3.5  # month
+    averageRainfallPerMonth = 46.9  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 76  # days
+    averageNumberOfRainyDaysPerYear = 135  # days
+    averageNumberOfClearDays = 154  # days
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 9_710_000
+    procentOfMales = 47.62
+    procentOfFemales = 52.38
+    populationDensityPerSquareKilometer = 107
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 4
+    friendlyToForeigners = 0
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 29
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 42.11  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 51.3
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   HUNGARY   #############################
+
+    #############################   UNITED KINGDOM   #############################
+
+    # Country
+    countryName = "United Kingdom"
+    officialLanguage = "English"
+
+    # cities     name      isBig WashesBy
+    cities = {'London': [True, True, None], 'Edinburgh': [True, True, "Northern ocean"],
+              'Birmingham': [True, True, None],
+              'Manchester': [True, True, None], 'Belfast': [True, True, "Irish sea"]}
+
+    # education
+    universities = {'London': ['University College London', 'Imperial College London'],
+                    'Edinburgh': ['University of Edinburgh', 'Heriot-Watt University'],
+                    'Birmingham': ['University of Birmingham', 'Aston University'],
+                    'Manchester': ['University of Manchester', 'University of Salford'],
+                    'Belfast': ["Queen's University Belfast"]}
+    faculties = {'University College London': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Law',
+                                               'Faculty of Medicine', 'Faculty of Architecture',
+                                               'Faculty of Science'],
+                 'Imperial College London': ['Faculty of Engineering', 'Faculty of Medicine',
+                                             'Faculty of Science'],
+                 'University of Edinburgh': ['Faculty of Law', 'Faculty of Arts', 'Faculty of Medicine',
+                                             'Faculty of Education',
+                                             'Faculty of Science'],
+                 'Heriot-Watt University': ['Faculty of Engineering', 'Faculty of Social Sciences', 'Faculty of Arts',
+                                            'Faculty of Economics', 'Faculty of Computer Engineering and Software'],
+                 'University of Birmingham': ['Faculty of Arts', 'Faculty of Social Sciences',
+                                              'Faculty of Economics', 'Faculty of Law',
+                                              'Faculty of Education', 'Faculty of Computer Engineering and Software',
+                                              'Faculty of Engineering'],
+                 'Aston University': ['Faculty of Economics', 'Faculty of Social Sciences', 'Faculty of Engineering',
+                                      'Faculty of Science', 'Faculty of Education'],
+                 'University of Manchester': ['Faculty of Medicine', 'Faculty of Health',
+                                              'Faculty of Science', 'Faculty of Engineering', 'Faculty of Humanities'],
+                 'University of Salford': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Arts',
+                                           'Faculty of Health', 'Faculty of Economics'],
+                 "Queen's University Belfast": ['Faculty of Arts', 'Faculty of Humanities', 'Faculty of Social Science',
+                                                'Faculty of Engineering', 'Faculty of Science', 'Faculty of Medicine']}
+
+    programs = {'University College London': ['Magistracy', 'Undergraduate'],
+                'Imperial College London': ['Magistracy', 'Undergraduate'],
+                'University of Edinburgh': ['Magistracy', 'Undergraduate'],
+                'Heriot-Watt University': ['Foundation', 'Undergraduate', 'MBA'],
+                'University of Birmingham': ['Magistracy', 'Undergraduate'],
+                'Aston University': ['Magistracy', 'Undergraduate'],
+                'University of Manchester': ['Magistracy', 'Undergraduate'],
+                'University of Salford': ['Magistracy', 'Undergraduate'],
+                "Queen's University Belfast": ['Magistracy', 'Undergraduate', 'MBA']}
+    links = {'University College London': 'https://www.ucl.ac.uk/',
+             'Imperial College London': 'https://www.imperial.ac.uk/',
+             'University of Edinburgh': 'https://www.ed.ac.uk/',
+             'Heriot-Watt University': 'https://www.hw.ac.uk/',
+             'University of Birmingham': 'https://www.birmingham.ac.uk/index.aspx',
+             'Aston University': 'https://www.aston.ac.uk/',
+             'University of Manchester': 'https://www.manchester.ac.uk/',
+             'University of Salford': 'https://www.salford.ac.uk/international',
+             "Queen's University Belfast": 'https://www.qub.ac.uk/'}
+
+    images = {
+        'University College London': 'https://www.ucl.ac.uk/prospective-students/undergraduate/sites/prospective_students_undergraduate/files/contact-details/porticowelcomesized.png',
+        'Imperial College London': 'https://www.imperial.ac.uk/ImageCropToolT4/imageTool/uploaded-images/homepage-default-social--tojpeg_1523872141375_x1.jpg',
+        'University of Edinburgh': 'https://www.scotland.org/images/uploads/general/The_University_of_Edinburgh_Hero_Image.jpg',
+        'Heriot-Watt University': 'https://www.hw.ac.uk/malaysia/img/schema-malaysia-campus-4x3_rdax_800x600_100s.jpg',
+        'University of Birmingham': 'https://cdn.rt.emap.com/wp-content/uploads/sites/4/2022/11/08092427/University-of-Birmingham-shutterstock.jpg',
+        'Aston University': 'https://www.aston.ac.uk/sites/default/files/2021-07/aston-university-clearing-2021.jpg',
+        'University of Manchester': 'https://images3.content-hci.com/commimg/video/CH/myhc_301811.jpg',
+        'University of Salford': 'http://intake.education/sites/default/files/salford.jpg',
+        "Queen's University Belfast": 'https://blog.intostudy.com/wp-content/uploads/2020/12/QUB-Lanyon-Building_3542-1.jpg'}
+    # общага
+    hostel = {'University College London': 'Yes',
+              'Imperial College London': 'Yes',
+              'University of Edinburgh': 'Yes',
+              'Heriot-Watt University': 'Yes',
+              'University of Birmingham': 'Yes',
+              'Aston University': 'No',
+              'University of Manchester': 'No',
+              'University of Salford': 'No',
+              "Queen's University Belfast": 'Yes'}
+    # стипендия
+    scolarship = {'University College London': 'Yes',
+                  'Imperial College London': 'Yes',
+                  'University of Edinburgh': 'Yes',
+                  'Heriot-Watt University': 'Yes',
+                  'University of Birmingham': 'Yes',
+                  'Aston University': 'Yes',
+                  'University of Manchester': 'Yes',
+                  'University of Salford': 'Yes',
+                  "Queen's University Belfast": 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {
+        'University College London': 'High School Diploma + Recognition of 1 year university rejection recognized by UCL with a GPA of at least 4.5/5.0. If there is a discrepancy, the samples are taken for the preparatory year. '
+                                     'The level of English proficiency depends on the program. ',
+        'Imperial College London': 'Education at the university in English; all students for whom it is not native must confirm a good level of English',
+        'University of Edinburgh': 'Applicants must have an excellent level of English, having passed the TOEFL iBT exam with at least 90 points or IELTS at least 6.5',
+        'Heriot-Watt University': 'certificate of successful completion of the Foundation (Heriot-Watt University Degree Entry Program) with grades not lower than “B”; IELTS 6.0, not less than 5.5 for each part.',
+        'University of Birmingham': '12 years of education or Foundation Certificate. '
+                                    'Certificate of complete secondary education '
+                                    'IELTS (Academic): minimum 6.0 (not lower than 5.5 in each part) '
+                                    'Motivation letter',
+        'Aston University': 'Education at the university in English; all students for whom it is not native must confirm a good level of English',
+        'University of Manchester': 'high school diploma with a high GPA. '
+                                    'score sheet. '
+                                    'IELTS - 5.5-6.0',
+        'University of Salford': 'certificate of successful completion of the Foundation (Heriot-Watt University Degree Entry Program) with grades not lower than “B”; IELTS 6.0, not less than 5.5 for each part.',
+        "Queen's University Belfast": 'high school diploma with a high GPA. '
+                                      'score sheet. '
+                                      'IELTS - 5.5-6.0'}
+
+    costs = {'University College London': 11000,
+             'Imperial College London': 10000,
+             'University of Edinburgh': 9000,
+             'Heriot-Watt University': 9500,
+             'University of Birmingham': 9600,
+             'Aston University': 8900,
+             'University of Manchester': 9700,
+             'University of Salford': 9500,
+             "Queen's University Belfast": 9400}
+
+    sights = {'Buckingham Palace': [
+        "residence of the Queen of Great Britain. Since the 19th century, this place has been considered permanent for official receptions. In addition, the British royal family lives here.",
+        'https://tripmydream.cc/travelhub/travel/blocks/20/986/block_20986.jpg?v1'],
+        'Big Ben': [
+            "British symbol of greatness. If you ask a local resident what is considered the most popular attraction in the UK, he will immediately name this majestic building.",
+            'https://tripmydream.cc/travelhub/travel/blocks/20/988/block_20988.jpg?v1'],
+        'Trafalgar Square': [
+            "UK National Treasure. Those who want to take a break from the bustle of the city and admire the magnificent fountains come here.",
+            'https://tripmydream.cc/travelhub/travel/blocks/20/990/block_20990.jpg?v1']}
+    beaches = {'Whitstable Beach, Kent': [
+        "This is a pebble city beach. It is still considered one of the best coastlines in the UK. Although walking on the rocks is quite unpleasant, the clear water and wonderful view make up for the inconvenience. In addition, for those who hate sand in slippers, this beach is a win-win option. The nearby city lures tourists with various festivals and performances. For example, in Kent they began to organize an annual oyster festival. Near the shore there are many shops and cafes where you can hide from the rain, have a bite to eat and buy souvenirs. On your way from the beach, you won't be able to resist stopping by Eliot's at 1 Harbor Street for the best crab sandwich on the coast.",
+        'https://assets.gq.ru/photos/5d9f40e3fa7d480009651a25/master/w_1600,c_limit/1-WHITSTABLE%20BEACH-getty.jpg'],
+        "Seven Sisters Beach, Sussex": [
+            "one of the most spectacular coastlines in Britain. It is famous for the pristine white chalk cliffs that skirt this beach. They seem to protect vacationers from the rest of the unromantic world. The place has such a name because these rocks have seven peaks located along the sea. At the very edge of the cliff above the beach stretches a winding path. Not everyone will be able to walk along it, because this activity is not for the faint of heart. Seven Sisters is a great place for outdoor activities, as well as lovers of unforgettable views and wild birds, of which there are a lot.",
+            'https://assets.gq.ru/photos/5d9f40e312ff0a0008b0fcb4/master/w_1600,c_limit/2-SEVEN%20SISTERS-gettyimages-494984827.jpg'],
+        'Brancaster Beach, Norfolk': [
+            "North Norfolk is known for its many beautiful beaches. To enjoy the modest and pristine beauty of nature, head to Brancaster. This sandy beach stretches for miles - there is a place for everyone on the golden sand. This beach is ideal for long walks with dogs or for morning runs. For wildlife lovers, the Titchwell Marsh Preserve is only two miles from the beach. In it, if you're lucky, you can even see seals basking in the sun. On the beach, it is worth following the tide schedule. When the waves go far enough, the wreckage of a sunken ship from the Second World War opens up to the eyes of tourists. If you get tired of looking at the ruins, you can visit the always crowded 'Crab Shack', which serves incredibly tasty lobsters and crab rolls.",
+            'https://assets.gq.ru/photos/5d9f40e32129f20008bdbb89/master/w_1600,c_limit/3-BRANCASTER%20BEACH-getty.jpg']}
+    mountains = {'ben nevis': [
+        "mountain in the Grampian Mountains (Highland region, Scotland). It is the highest point in the British Isles. Locals call the mountain abbreviated - Ben.",
+        'http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcQWXv-L8z6gN--5q6Lx04jDPEanqGLj5a8ctgC8EBn4mpOYlNSOf4T9PJVZyY707Nfo'],
+        'snowdon': [
+            "the highest mountain in Wales. Highest mountain in Great Britain south of the Scottish Highlands. Located in the Snowdonia National Park in Gwynedd. The summit of Snowdon is known as Yr Wyddfa (mound) and is 1085 meters above sea level. The name 'Snowdon' comes from the Old English Snow Dun, meaning 'snowy hill'.",
+            'http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcQyYFnF3gqXICWcFhdU386XZAHXwfLgYTT0b6Lg-xN1BEPNZGqYVOn9rVlTpTyRj7hF'],
+        'Scafell Pike': [
+            'It is located in Cumbria, on the territory of the Lake District National Park or the Lake District. It has an altitude of 978 m (3209 ft) above sea level. Scafell Pike is the highest mountain in England.',
+            'http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcTJg-Gm0KZt6CTHe8ZXrT0JxAma5KUmH6sLhAcaHkqoasd5_fYcaHN2yUCXRnbVA27-']}
+    skiResorts = {'Nevis Range': [
+        "The Nevis Range ski resort is located in Fort William, near Scotland. There are 20 km of slopes for skiing and snowboarding. There are also 12 lifts for transporting guests. The winter sports area is located between 655 and 1221 m.",
+        'https://ski-atlas.ru/wp-content/uploads/2019/10/NevisRange-4-780x405.jpg'],
+        'glenshee': [
+            "Glenshee ski resort is located in the mountains of Great Britain and Scotland. There are 40 km of slopes for skiing and snowboarding. There are also 21 lifts for transporting guests. The winter sports area is located between 650 and 900 m.",
+            'https://ski-atlas.ru/wp-content/uploads/2019/10/Glenshee-1-700x405.jpeg'],
+        'Glencoe Mountain': [
+            "The ski resort of Glencoe Mountain is located in the mountains of Great Britain and Scotland. There are 24.3 km of slopes for skiing and snowboarding. There are also 8 lifts for transporting guests. The winter sports area is located between 360 and 1070 m.",
+            'https://ski-atlas.ru/wp-content/uploads/2019/10/Glencoe-3-780x405.jpg']}
+    lakes = {'Derwentwater': [
+        "The picturesque reservoir is located in the north-west of England, on the territory of the Lake District National Park (Lake District) in the county of Cumbria. It is worth noting that free access to the lake is allowed only five days a year.",
+        'https://s.zagranitsa.com/images/articles/3879/870x486/a715d9b737e6e529f0a1241e8a058589.jpg?1466784935'],
+        'Bassenthwaite Lake': [
+            "The lake is also located on the territory of the Lake District National Park, two kilometers from the village of the same name. It is notable for the fact that a huge number of species of birds are found in the vicinity. There are about seventy of them here. That is why Bassenthwaite is considered the best place to watch feathered friends.",
+            'https://s.zagranitsa.com/images/articles/3879/870x486/237ce9b248dde8e03c82632880cb5ced.jpg?1466784935'],
+        'Windermere': [
+            "This is the largest of the natural lakes in England, and it is also located in the national park in the county of Cumbria. There are 18 small islands on the reservoir, which create landscapes of amazing beauty.",
+            'https://s.zagranitsa.com/images/articles/3879/870x486/cdb73f21066209957587a801903c6aaa.jpg?1466784935']}
+    rivers = {'Thames': [
+        "With a channel length of 346 kilometers (215 miles), the Thames is the longest river in England and the second longest in the United Kingdom. It originates at Thames Head in Gloucestershire and flows into the North Sea, forming the Thames Estuary. Of particular significance is that the river flows through London, the capital of the United Kingdom. However, in London there is only a short section of it. In London, the Thames is dependent on tides that are 7 meters (23 feet) high and reach the lock at Teddington. The drainage basin of the river covers a vast area in the southeast and west of England. The river is fed by more than 20 tributaries. More than 80 islands and areas with both fresh and salt water are located on the Thames, which guarantees a variety of wildlife.",
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/River.thames.viewfromtowerbridge.london.arp.jpg/1200px-River.thames.viewfromtowerbridge.london.arp.jpg'],
+        'Esk': [
+            "The River Esk flows through two areas of Scotland at once (Dumfries and Galloway) and flows into the mouth of the Solway River. Before flowing into the mouth of the Solway River, its streams pass through a small area of the rural English county of Cumbria. The river originates in the high ground east of the town of Moffat and its two main tributaries, the Black Esk and the White Esk, merge at the southern end of Castle Air Forest. Its waters flow through the Eskdale meadow before its confluence with the Lidder Water, which defines the border between Scotland and England, passing the town of Lanen in a southerly and easterly direction. Before passing the small rural town of Loguetown, the River Esk enters England, mixing its waters with the River Lane, and near the mouth of the Eden flows into the mouth of another river, the Solway.",
+            'https://thumbs.dreamstime.com/b/river-esk-cutting-tourist-fishing-town-whitby-north-yorkshire-england-uk-river-esk-whitby-195012827.jpg'],
+        'Lyne': [
+            "The Line is an English river that flows through the county of Cumbria. The Line originates near the village of Stepolton, where the Black Line and White Line rivers mix their waters to form a single Line. Both of these rivers are fed by waters flowing further to the north-east, namely in the wooded area of Kerpshope, belonging to the county of Cumbria, which is located close to the border of Scotland and Northumberland. Thus, the Black Line is fed by waters from the Blackline Comman source, and the White Line from the Whiteline Comman. After these streams meet each other, the river continues its course in a southwesterly direction to the town of Linefoot, where it flows into Frontier Esk. This river should not be confused with the tributary of the Tweed - Water Line, flowing in one of the regions of Scotland - Scotland Borders.",
+            'https://upload.wikimedia.org/wikipedia/commons/6/66/Black_Lyne_-_geograph.org.uk_-_663740.jpg']}
+
+    # currency
+    currencyName = 'GBP'
+    currencyEqualsToDollar = 0.84
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 188000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 264
+    menAverageLifeExpectancy = 79.0  # years
+    womenAverageLifeExpectancy = 82.9  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = 8  # °C
+    averageHumidity = 79  # %
+    averageDurationOfWinter = 4  # month
+    averageRainfallPerMonth = 59.3  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 56  # days
+    averageNumberOfRainyDaysPerYear = 149  # days
+    averageNumberOfClearDays = 160  # days
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 67_330_000
+    procentOfMales = 48
+    procentOfFemales = 52
+    populationDensityPerSquareKilometer = 277.12
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 4
+    friendlyToForeigners = 1
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 58.8
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 50.4  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 83.6
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   UNITED KINGDOM   #############################
+
+    #############################   FINLAND   #############################
+
+    # Country
+    countryName = "Finland"
+    officialLanguage = "Finnish"
+
+    # cities     name      isBig WashesBy
+    cities = {'Helsinki': [True, True, "The Gulf of Finland"], 'Turku': [True, True, "Baltic Sea"],
+              'Tampere': [True, True, None],
+              'Oulu': [True, True, "Baltic Gulf"], 'Rovaniemi': [True, True, None]}
+
+    # education
+    universities = {'Helsinki': ['University of Helsinki', 'Hanken School of Economics'],
+                    'Turku': ['University of Turku', 'Abo Akademi University'],
+                    'Tampere': ['University of Tampere'],
+                    'Oulu': ['University of Oulu', 'Oulu University of Applied Sciences'],
+                    'Rovaniemi': ['University of Lapland', 'Lapland University of Applied Sciences']}
+    faculties = {'University of Helsinki': ['Faculty of Forestry', 'Faculty of Arts',
+                                            'Faculty of Education', 'Faculty of Law', 'Faculty of Medicine',
+                                            'Faculty of Science', 'Faculty of Social Sciences'],
+                 'Hanken School of Economics': ['Faculty of Economics'],
+                 'University of Turku': ['Faculty of Education', 'Faculty of Humanities', 'Faculty of Law',
+                                         'Faculty of Medicine', 'Faculty of Science', 'Faculty of Engineering'],
+                 'Abo Akademi University': ['Faculty of Arts',
+                                            'Faculty of Education', 'Faculty of Science', 'Faculty of Engineering',
+                                            'Faculty of Social Sciences', 'Faculty of Economics'],
+                 'University of Tampere': ['Faculty of Architecture', 'Faculty of Education', 'Faculty of Engineering',
+                                           'Faculty of Science', 'Faculty of Computer Engineering and Software',
+                                           'Faculty of Economics', 'Faculty of Medicine'],
+                 'University of Oulu': ['Faculty of Science', ' Faculty of Medicine',
+                                        'Faculty of Humanities', 'Faculty of Engineering'],
+                 'Oulu University of Applied Sciences': ['Faculty of Education',
+                                                         'Faculty of Medicine',
+                                                         'Faculty of Science', 'Faculty of Engineering',
+                                                         'Faculty of Economics'],
+                 'University of Lapland': ['Faculty of Arts', 'Faculty of Education',
+                                           'Faculty of Law', 'Faculty of Social Sciences'],
+                 'Lapland University of Applied Sciences': ['Faculty of Social Sciences',
+                                                            'Faculty of Engineering',
+                                                            'Faculty of Computer Engineering and Software']}
+
+    programs = {'University of Helsinki': ['Magistracy', 'Undergraduate'],
+                'Hanken School of Economics': ['Magistracy', 'Undergraduate'],
+                'University of Turku': ['Magistracy', 'Undergraduate'],
+                'Abo Akademi University': ['Foundation', 'Undergraduate', 'MBA'],
+                'University of Tampere': ['Magistracy', 'Undergraduate'],
+                'University of Oulu': ['Magistracy', 'Undergraduate'],
+                'Oulu University of Applied Sciences': ['Magistracy', 'Undergraduate'],
+                'University of Lapland': ['Magistracy', 'Undergraduate'],
+                'Lapland University of Applied Sciences': ['Magistracy', 'Undergraduate', 'MBA']}
+    links = {'University of Helsinki': 'https://www.helsinki.fi/en',
+             'Hanken School of Economics': 'https://www.hanken.fi/en',
+             'University of Turku': 'https://www.utu.fi/en',
+             'Abo Akademi University': 'https://www.abo.fi/en/',
+             'University of Tampere': 'https://www.tuni.fi/en',
+             'University of Oulu': 'https://www.oulu.fi',
+             'Oulu University of Applied Sciences': 'https://www.oamk.fi',
+             'University of Lapland': 'https://www.ulapland.fi',
+             'Lapland University of Applied Sciences': 'https://www.lapinamk.fi'}
+
+    images = {
+        'University of Helsinki': 'https://www.helsinki.fi/assets/drupal/styles/og_images/s3/media-image/we-stand-with-ukraine_0.jpg?itok=xwhNgkys',
+        'Hanken School of Economics': 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Svenska_Handelsh%C3%B6gskolan_Helsingfors.jpg',
+        'University of Turku': 'https://www.turku.fi/sites/default/files/thumbnails/image/turun-yliopisto-paarakennus.jpg',
+        'Abo Akademi University': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/%C3%85bo_Akademi_main_building.jpg/1200px-%C3%85bo_Akademi_main_building.jpg',
+        'University of Tampere': 'https://smapse.ru/storage/2020/05/1-85.jpg',
+        'University of Oulu': 'https://smapse.com/storage/2021/02/converted/825_585_9054-hires.jpg',
+        'Oulu University of Applied Sciences': 'https://trail.fi/static/f02d0baec78d366d4807f38534d847b0/OAMK_kampus_722A1206_kuvaaja_Antti_J_Leinonen.jpg',
+        'University of Lapland': 'https://eddanorden.files.wordpress.com/2015/03/university_of_lapland3.jpg',
+        'Lapland University of Applied Sciences': 'https://www.edunation.co/wp-content/uploads/2022/01/Rovaniemi-Campus.jpg'}
+    # общага
+    hostel = {'University of Helsinki': 'Yes',
+              'Hanken School of Economics': 'Yes',
+              'University of Turku': 'Yes',
+              'Abo Akademi University': 'Yes',
+              'University of Tampere': 'Yes',
+              'University of Oulu': 'No',
+              'Oulu University of Applied Sciences': 'No',
+              'University of Lapland': 'No',
+              'Lapland University of Applied Sciences': 'Yes'}
+    # стипендия
+    scolarship = {'University of Helsinki': 'Yes',
+                  'Hanken School of Economics': 'Yes',
+                  'University of Turku': 'Yes',
+                  'Abo Akademi University': 'Yes',
+                  'University of Tampere': 'Yes',
+                  'University of Oulu': 'Yes',
+                  'Oulu University of Applied Sciences': 'Yes',
+                  'University of Lapland': 'Yes',
+                  'Lapland University of Applied Sciences': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {
+        'University of Helsinki': 'To enter the University of Helsinki, you must submit a document confirming your education (diploma or certificate). '
+                                  'Along with the application for admission, it is necessary to send a motivation letter, resume and letters of recommendation from the previous place of study.',
+        'Hanken School of Economics': 'the applicant must provide information about previous academic performance and passed exams',
+        'University of Turku': 'For admission to the bachelors degree, you must provide a school leaving certificate and pass an exam in Finnish',
+        'Abo Akademi University': 'the applicant must provide information about previous academic performance and passed exams',
+        'University of Tampere': 'the applicant must provide information about previous academic performance and passed exams',
+        'University of Oulu': 'To enter the University of Oulu, a Russian applicant must provide the original diploma and transcript or school certificate.',
+        'Oulu University of Applied Sciences': 'Fill out an online application. Provide educational documents. Pass the entrance exams. Write a resume and a motivation letter (masters degree).',
+        'University of Lapland': 'the applicant must provide information about previous academic performance and passed exams',
+        'Lapland University of Applied Sciences': 'the applicant must provide information about previous academic performance and passed exams'
+    }
+
+    costs = {'University of Helsinki': 1500,
+             'Hanken School of Economics': 1100,
+             'University of Turku': 1500,
+             'Abo Akademi University': 10000,
+             'University of Tampere': 3000,
+             'University of Oulu': 1100,
+             'Oulu University of Applied Sciences': 1000,
+             'University of Lapland': 1000,
+             'Lapland University of Applied Sciences': 1000
+             }
+
+    sights = {'Senate Square and Cathedral (Helsinki)': [
+        "The main square of the country's capital. Three buildings form the basis of the architectural ensemble of the square. One of them is the building of the State Council, on its facade there is the oldest clock in Finland. Nearby is the building of the University of Helsinki and its library. Above them rises the Cathedral. Snow-white walls, five green domes and 12 statues of the apostles on the roof make the cathedral majestic and solemn.",
+        'https://top10.travel/wp-content/uploads/2015/05/senatskaya-ploshchad-1.jpg'],
+        'Esplanade Park (Helsinki)': [
+            "The park is 400 meters long, with lime trees planted around the perimeter. Founded in the 1830s. The undoubted decoration of the park are beautifully decorated luxurious flower beds. The park contains many monuments to famous and historical figures. Cultural entertainment is represented by the Swedish Theatre, as well as one of the oldest restaurants, Kappeli. Artists of various genres perform daily on its stage.",
+            'https://top10.travel/wp-content/uploads/2015/05/park-esplanadi.jpg'],
+        'Sveaborg Fortress (Helsinki)': [
+            "The impregnable bastions of the walled city of Sveaborg are located on rocky islands near Helsinki. This place is under the protection of UNESCO. The fortress houses a large number of museums of various subjects - a military museum, a customs museum, a weapons museum, a toy museum. Guided tours of the submarine, which participated in the Second World War. On two islands, you can see the remains of military fortifications.",
+            'https://top10.travel/wp-content/uploads/2015/05/krepost-sveaborg-1.jpg']}
+    beaches = {'Hietaniemi': [
+        "Hietaniemi Beach is one of the most popular Finnish beaches among vacationers. A special attraction, along with a long sandy shore, is given by its convenient location right in the center of Helsinki, in the Töölö area, and easy accessibility. It is curious that the beach was created artificially at the beginning of the 20th century, in the place where the sand unloaded from barges was originally stored. Now it is a popular holiday destination, which the Finns themselves call Hietsu, which means “fine sandy”.",
+        'https://1001beach.ru/img/posts/1995/750/hietaniemi-1.webp?t=1580386695'],
+        "Yuyuteri": [
+            "Yyteri Beach is the most picturesque sandy beach in Western Finland. It is located in the resort of the same name, about 17 km from the center of Pori. Incredible white sand dunes, surf-friendly waves and an easy-to-reach location have made this coast one of the northern country's most popular beach destinations.",
+            'https://1001beach.ru/img/posts/1996/750/yyteri-1.webp?t=1580386702'],
+        'Nallikari': [
+            "A well-developed beach near the village called Hietasaari. You can get to the place by buses that run monthly, or by a trackless train, but only in summer. The beach covers an area of almost half a kilometer, is considered public and free.",
+            'https://1001beach.ru/img/posts/1982/750/nallikari-1.webp?t=1580386616']}
+    mountains = {'Kovddoskaisi': [
+        "It is considered one of the most dangerous and its height is 1242 m. It is the fourth highest mountain in Finland, but only experienced climbers can climb it, as it may not be safe for amateurs.",
+        'https://fin-ware.ru/wp-content/uploads/2021/09/gori_finland_5.jpg'],
+        'Aavasaksa': [
+            "Mount Aavasaksa is located in Lapland, Finland. It is considered the southernmost point of the country. Its height is 242 meters. The mountain is included in the list of National Heritage, in 1876 it was visited by Emperor Alexander II. At the top of the mountain, for a long time, a cafe famous throughout the district worked, the decor of which was hunting trophies.",
+            'http://openarium.ru/foto/IyXgHiijsF60Lm.jpg'],
+        'Aakenustunturi': [
+            "Mount Aakenustunturi is located in Lapland, Finland. Its height is 570 meters. Not far from the mountain is the resort of Kittila, popular among skiers, and Mount Ylläs, whose height is 719 meters.",
+            'http://openarium.ru/foto/3zL8f6cF51fC5s.jpg']}
+    skiResorts = {'Levi': [
+        "The ski resort Levi (hereinafter in Finnish - Levi) is a great example of the fact that for winter adventures it is not necessary to fly to the Alps or the Tatras. Unforgettable impressions can be obtained right here at the northern neighbors. There are 27 ski lifts, 42 ski slopes, a snow park and 7 cafes, cross-country trails, trails for snowshoe hikers and snowmobile trails.",
+        'https://ee.tallink.com/documents/10192/31064102/southpointlevi-soome-suusatama.jpg/6ba4e21f-b360-612b-099e-852572ab3a1a?t=1547109046874'],
+        'Ylläs': [
+            "The ski resort of Ylläs, about 1,000 kilometers from Helsinki, in Lapland, is a wonderfully peaceful place. If queues for lifts have long been a characteristic feature of large resorts, then in Ylläs on 63 slopes with 28 lifts there is enough space for everyone. The length of the longest route is as much as 3 kilometers. If you are going to Ylläs with the whole family, it is worth making a stop in Rovaniemi along the way, where the Finnish Santa Claus lives.",
+            'https://ee.tallink.com/documents/10192/31064102/yllas-suusakeskus-soomes.jpg/97172ad8-7a1a-d7ec-041a-4725beff08cd?t=1547109668375'],
+        'Tahko': [
+            "Tahko, located about 450 kilometers from Helsinki, is a well-known ski resort with 32 slopes and 21 ski lifts. The length of one of the slopes exceeds one kilometer. For lovers of extreme sports, a recently renovated snow park and trick area (Jukulautastriitti) with various rails and jumps are open.",
+            'https://ee.tallink.com/documents/10192/31064102/tahko-suusakeskus-soomes.jpg/c545aaa5-13f0-72d2-a363-1a7649bdaae3?t=1547110340898']}
+    lakes = {'saima': [
+        "The largest lake in Finland, also one of the four largest lakes in Europe. Its mascot and symbol is the seal, the Saimaa seal. The Finns carefully guard the declining population of this rare freshwater seal (they resemble, by the way, the Baikal seals). Neat safaris are organized for tourists on the lake to observe the seals from a safe distance, and in 2018, WWF launched live broadcasts from their rookeries (permissions for filming were hardly taken from them). In winter, they go skating right on the lake, ride reindeer sleds, and fish.",
+        'https://cdn2.tu-tu.ru/image/pagetree_node_data/1/28451c14dd79fc8c291ac51133df4cac/'],
+        'Päijanne': [
+            "The second largest Finnish lake is also very deep - up to 95 meters. This does not prevent it from completely freezing in winter, so since December it has already been full of skaters and skiers. There are almost 2 thousand islands of different sizes in this lake - it's very beautiful. In addition to being part of a national park, the lake is also connected to Helsinki by an underground aqueduct. But there are also many old nice cities around the lake that are worth visiting, for example, after drinking a different drink in each: Lahti, Sysmä, Muurame, Luhanka, Assikkala, Padasjoki.",
+            'https://cdn2.tu-tu.ru/image/pagetree_node_data/1/5089ac33276d621308e56c7c17fdf058/'],
+        'Oulujärvi': [
+            "This shallow, only 7 meters, lake is located almost in the center of Finland. Thanks to this shallow depth, it warms up, and thanks to the swamps around it, it fills with nutritious brown water, where many species of fish live and thrive - even pike fishing competitions take place here. There are also several hundred islands here, the largest of which have accommodations.",
+            'https://cdn2.tu-tu.ru/image/pagetree_node_data/1/19bb45ea6b7895269742d8339e57b3b9/']}
+    rivers = {'Muonioelven': [
+        "Muonioelven is a river in the north of Sweden and Finland, the largest tributary of the Turneelven River. Both rivers together form the state border between the two countries.",
+        'https://waterresources.ru/wp-content/uploads/2020/08/muonioelven.jpg'],
+        'Turneelven': [
+            "Turneelven (Turne-elv) is a river in the north of Sweden and Finland. The basin area is 40.2 thousand km². Average water consumption - 380 m³ / s",
+            'https://waterresources.ru/wp-content/uploads/2020/08/turneelven-1-2048x1536.jpg'],
+        'Velikaya (river, flows into the Gulf of Finland)': [
+            "Great (Vilajoki) and Russia. It flows into the Baltiets Bay of the Gulf of Finland. The catchment area is 344 km², of which 73.4% in Finland and 26.6% in Russia. The length of the Russian part of the river is 20 km.",
+            'https://waterresources.ru/wp-content/uploads/2020/08/velikaya-reka-vpadaet-v-finskij-zaliv.jpg']}
+
+    # currency
+    currencyName = 'FIM'
+    currencyEqualsToDollar = 5.73
+
+    # military
+    milPolBlock = "Finnish Defense Forces"
+    amountOfPeopleInArmy = 23800
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 302
+    menAverageLifeExpectancy = 79.2  # years
+    womenAverageLifeExpectancy = 84.0  # years
+
+    # climat
+    juneAverageTemperature = 22  # °C
+    decemberAverageTemperature = -6  # °C
+    averageHumidity = 77  # %
+    averageDurationOfWinter = 5  # month
+    averageRainfallPerMonth = 80  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 82  # days
+    averageNumberOfRainyDaysPerYear = 139  # days
+    averageNumberOfClearDays = 144  # days
+
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 5_542_000
+    procentOfMales = 49
+    procentOfFemales = 51
+    populationDensityPerSquareKilometer = 18
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 2
+    friendlyToForeigners = 0
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 45
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 79.40  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 82.8
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   FINLAND   #############################
+
+    #############################   NORWAY   #############################
+
+    # Country
+    countryName = "Norway"
+    officialLanguage = "Norwegian"
+
+    # cities     name      isBig WashesBy
+    cities = {'Oslo': [True, True, None], 'Drammen': [True, True, None], 'Bergen': [True, True, "Northern ocean"],
+              'Trondheim': [True, True, "Trondheimsfjorden"], 'Stavanger': [True, True, "Northern ocean"]}
+
+    # education
+    universities = {'Oslo': ['University of Oslo', 'Oslo Metropolitan University'],
+                    'Bergen': ['University of Bergen', 'Norwegian School of Economics'],
+                    'Trondheim': ['Norwegian University of Science and Technology'],
+                    'Stavanger': ['University of Stavanger']}
+    faculties = {'University of Oslo': ['Faculty of Health', 'Faculty of Education', 'Faculty of Social Sciences',
+                                        'Faculty of Engineering', 'Faculty of Arts'],
+                 'Oslo Metropolitan University': ['Faculty of Health', 'Faculty of Education',
+                                                  'Faculty of Social Sciences',
+                                                  'Faculty of Engineering', 'Faculty of Arts'],
+                 'University of Bergen': ['Faculty of Arts',
+                                          'Faculty of Humanities', 'Faculty of Law', 'Faculty of Science',
+                                          'Faculty of Medicine', 'Faculty of Social Sciences'],
+                 'Norwegian School of Economics': ['Faculty of Economics',
+                                                   'Faculty of Social Science'],
+                 'Norwegian University of Science and Technology': ['Faculty of Architecture', 'Faculty of Arts',
+                                                                    'Faculty of Humanities',
+                                                                    'Faculty of Computer Engineering and Software',
+                                                                    'Faculty of Engineering',
+                                                                    'Faculty of Medicine'],
+                 'University of Stavanger': ['Faculty of Arts', 'Faculty of Education', 'Faculty of Science',
+                                             'Faculty of Engineering', 'Faculty of Health']}
+
+    programs = {'University of Oslo': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Oslo Metropolitan University': ['Magistracy', 'Undergraduate'],
+                'University of Bergen': ['Foundation', 'Undergraduate', 'MBA'],
+                'Norwegian School of Economics': ['Magistracy', 'Undergraduate'],
+                'Norwegian University of Science and Technology': ['Magistracy', 'Undergraduate'],
+                'University of Stavanger': ['Magistracy', 'Undergraduate']}
+    links = {'University of Oslo': 'https://www.uio.no/english/',
+             'Oslo Metropolitan University': 'https://www.oslomet.no/en/',
+             'University of Bergen': 'https://www.uib.no/en',
+             'Norwegian School of Economics': 'https://www.nhh.no/en/',
+             'Norwegian University of Science and Technology': 'https://www.ntnu.edu/',
+             'University of Stavanger': 'https://www.uis.no/en'}
+
+    images = {
+        'University of Oslo': 'https://study-eu.s3.amazonaws.com/uploads/image/path/90/wide_fullhd_university-of-oslo.jpg',
+        'Oslo Metropolitan University': 'https://www.oslomet.no/var/oslomet/storage/images/5/5/1/9/119155-2-eng-GB/P35-2400-1200.jpg',
+        'University of Bergen': 'http://univero.cc/public/media/university/imgs/2/02268120008aauj2nEED4_R_550_412_R5.png',
+        'Norwegian School of Economics': 'https://ap-production-media-archive.s3.eu-north-1.amazonaws.com/uploads/6iXnN53VwnoxQyMlmxQnoQsobID0SRdCXfhEj9zu.jpg',
+        'Norwegian University of Science and Technology': 'https://www.lifeinnorway.net/wp-content/uploads/2021/07/ntnu-trondheim-main-building.jpg',
+        'University of Stavanger': 'https://www.uis.no/sites/default/files/styles/gutenberg_align_left/public/2021-12/Semsterstart%202021%20EOJ%20plen%202_0.jpg'}
+    # общага
+    hostel = {'University of Oslo': 'Yes',
+              'Oslo Metropolitan University': 'Yes',
+              'University of Bergen': 'Yes',
+              'Norwegian School of Economics': 'No',
+              'Norwegian University of Science and Technology': 'Yes',
+              'University of Stavanger': 'No'}
+    # стипендия
+    scolarship = {'University of Oslo': 'Yes',
+                  'Oslo Metropolitan University': 'Yes',
+                  'University of Bergen': 'Yes',
+                  'Norwegian School of Economics': 'No',
+                  'Norwegian University of Science and Technology': 'Yes',
+                  'University of Stavanger': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {'University of Oslo': 'exams in Norwegian. the minimum results should be as follows: '
+                                          'PTE Academic - 62;'
+                                          'TOEFL - 90;'
+                                          'IELTS - 6.5.',
+                    'Oslo Metropolitan University': 'Confirm knowledge of Norwegian, you need to pass all parts of the Bergentest at the B2 + level or the language test at the university at the C + mark',
+                    'University of Bergen': 'a high level of previous academic achievement and a language proficiency certificate are required',
+                    'Norwegian School of Economics': 'The admission committee makes admission to the university based on the applicants performance and the results of the exams passed',
+                    'Norwegian University of Science and Technology': 'provide a certificate or diploma of previously received education. Documents must be officially translated into English, Norwegian or another Scandinavian language.',
+                    'University of Stavanger': 'higher specialized education, resume, letter of intent, TOEFL 80, IELTS 6.0.'
+                    }
+
+    costs = {'University of Oslo': 73,
+             'Oslo Metropolitan University': 9000,
+             'University of Bergen': 700,
+             'Norwegian School of Economics': 800,
+             'Norwegian University of Science and Technology': 500,
+             'University of Stavanger': 100}
+
+    sights = {'Geirangerfjord': [
+        "It is unlikely that you will remain indifferent if you see this creation of nature with your own eyes. We are talking about a small, but with a magnificent landscape, a fjord. Its length is 20 km, but this does not prevent it from being the most visited. Assessing all the sights of Norway, seasoned tourists put in the first place exactly the deep-water emerald sea bay with rocky shores. If your soul craves entertainment, you can fish, go kayaking, try rafting. It also offers horseback riding and even in the summer you can go skiing.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/1-Geiranger_Fjord-e1518234899683.jpg'],
+        'Roros': [
+            "Numerous positive reviews has one of the UNESCO sites. In the past, it was a city where copper ore miners lived, now this place is associated with tourism. From the history of the sights of Norway, it is known that the city was designed and built by King Christian IV, he was an architect. In the period 1678-1718. the settlement was attacked by the Swedes, they burned it, but the life of the city did not end there. Over time, it was restored, today every tourist can appreciate the splendor of the restored living open-air museum.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/2-Roros-e1518235473603.jpg'],
+        'Vöringsfossen': [
+            "The Hardangerfjord contains the sights of Norway, and more than one. Among them, the famous waterfall far beyond the borders of the country deserves special attention. It is located in the county of Hordaland, its height is 182 m. The official description of this place says that there is an observation deck nearby, from which you can clearly see the waterfall and the often appearing rainbow.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/3-Voringsfossen-e1518236720135.jpg']}
+    beaches = {'Godalen': ["Godalen is the number one beach area for swimmers and picnic lovers.",
+                           'https://1001beach.ru/img/posts/2473/750/godalen-1.webp?t=1580389144'],
+               "Sellesanden": [
+                   "On the west coast of Norway, there is the romantic town of Selje. One of the secrets of its attraction is a wonderful beach called Sellesanden. It is incredibly popular with tourists.",
+                   'https://1001beach.ru/img/posts/2474/750/seljesanden-1.webp?t=1580389149'],
+               'Hellest': ["Hellest Beach is located in the southwestern region of Norway, Rogaland.",
+                           'https://1001beach.ru/img/posts/2477/750/uttakleiv-1.webp?t=1580389167']}
+    mountains = {'Hardangervidda': [
+        "This is the largest high-altitude European plateau with an area of 8 thousand km2. The first mountains appeared here 5 million years ago, and the current ridges were fixed in the last 10 thousand years. A lot of glaciers have been preserved here, for example, Hardangerjokulen (the largest), Solfonn, Napsfonn. The decoration is a hat-shaped mountain - Horteigen. The largest peaks reach 1.6 thousand meters above the sea in the south and west of the plateau. Several small rivers and waterfalls flow here.",
+        'https://сезоны-года.рф/sites/default/files/resize/images/okruzhayushhij_mir/Norway_gory_1-500x375.jpg'],
+        'Lyngsalpene': [
+            "This array of mountains, only 300 km from the Arctic Circle, is distinguished by very harsh climatic conditions. There are peaks under a thousand meters, as well as gorges, glaciers and reservoirs. Mount Sturgalten, 1200 meters high, is popular among athletes and winter lovers.",
+            'https://сезоны-года.рф/sites/default/files/resize/images/okruzhayushhij_mir/Norway_gory_2-500x332.jpg'],
+        'Sunnmør Alps': [
+            "Tourism activities are also developed in these mountainous regions. Climbing Mount Slogen, whose height is one and a half thousand meters above sea level, is especially in demand.",
+            'https://сезоны-года.рф/sites/default/files/resize/images/okruzhayushhij_mir/Norway_gory_3-500x333.jpg']}
+    skiResorts = {'Hemsedal': [
+        "Hemsedal is located in a picturesque area called the 'Scandinavian Alps' and located halfway between the two largest cities in the country - Oslo and Bergen. This resort is well-deservedly popular among both Norwegians and foreign tourists. Whole companies or families usually come here, since Hemsedal has excellent conditions not only for skiing, but also for additional recreation.",
+        'https://guide-tours.ru/wp-content/uploads/2021/11/hemsedal-gornolyzhnyj-kurort.jpg'],
+        'Trysil': [
+            "Trysil is a winter resort located 160 km from the Norwegian capital, near the border with Sweden. It is great for a family holiday, as there are a large number of tracks for children and beginners, a high level of infrastructure and service. The tracks in Trysil are located on the slopes of Trysilfjellet, which towers over the area by 1.1 km. The slopes and the surrounding area are covered with coniferous forests, which gives the local air a healing effect.",
+            'https://guide-tours.ru/wp-content/uploads/2021/11/trjusil-gornolyzhnyj-kurort.jpg'],
+        'Voss': [
+            "Voss is a ski center in the western part of Norway, near the Oslo-Bergen highway. The slopes on which the downhill slopes are equipped are located in close proximity to the railway station, so that tourists, leaving the car, immediately enter the territory of the ski resort. On the slopes of a nearby mountain, 24 tracks are equipped, of which 14 are for alpine skiing, and the rest for snowboarding, freestyle, slalom",
+            'https://guide-tours.ru/wp-content/uploads/2021/11/voss-gornolyzhnyj-kurort.jpg']}
+    lakes = {'Bondhus': [
+        "Bondhus is rightfully considered the most beautiful Norwegian lake. This picturesque reservoir of glacial origin is located in the Folgefonna nature reserve. The lake is formed by the melt waters of the glacier of the same name, which tourists can also see. The path to the valley where Bondhus is located lies in the middle of a protected forest of extraordinary beauty. Surrounded by forested mountains, the lake is the best place for a romantic photo shoot. Literally every frame from here is a real magazine shot.",
+        'https://mirsg.ru/shared/upload/IMAGES/Articles/Lakes/2.jpg'],
+        'Myosa': [
+            "Mjøsa is the largest lake in Norway. The lake is located in three local provinces at once - Hedmark, Oppland and Akershus; By the way, it is on the banks of the Mjøsa that the famous Norwegian town of Lillehammer is located. It is a resort town that hosted the 1994 Winter Olympics. Mjøsa is also included in the list of the deepest lakes in Norway. Its depth is 449 meters.",
+            'https://mirsg.ru/shared/upload/IMAGES/Articles/Lakes/3.jpg'],
+        'Hornindalsvatnet': [
+            "Hornindalsvatnet is the Norwegian deepest lake record holder. In this case, the depth of the lake is 514 meters, and this fact allows the reservoir to rightfully be considered the deepest lake not only in Norway, but throughout Europe.",
+            'https://mirsg.ru/shared/upload/IMAGES/Articles/Lakes/4-1.jpg']}
+    rivers = {'Lakselv': [
+        "flows in the Finnmark region. Its name in translation means 'Salmon River'. It is most convenient for fly fishing, due to the lack of dense vegetation along the banks and the many bends at the confluence of the river into the Pursangenfjord. Salmon begin to enter Lakselv around mid-July, so August is considered the best time for fishing.",
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/1c/b4/85/stabbursdalen-lodge.jpg?w=500&h=300&s=1'],
+        'Gaula': [
+            "Gaula (Gaula) in the Trondelag region is considered one of the best salmon rivers in Europe for sport fishing. It belongs to the Trondheimfjord basin and is known for both large salmon and its large numbers.",
+            'https://thumbs.dreamstime.com/z/%D1%80%D0%B5%D0%BA%D0%B0-gaula-%D0%BD%D0%BE%D1%80%D0%B2%D0%B5%D0%B3%D0%B8%D1%8F-127315808.jpg'],
+        'Namsen': [
+            "Namsen in Trondelag, where the beginning of fishing was laid by the English lords who came here in the 1850s. They also invented the most popular method of fishing on the river at present - harling.",
+            'https://upload.wikimedia.org/wikipedia/commons/a/a3/Namsen_sett_fra_Kvatningenfjell%2C_Namsos_i_bakgrunnen.jpg']}
+
+    # currency
+    currencyName = 'NOK'
+    currencyEqualsToDollar = 10.14
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 29000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 442
+    menAverageLifeExpectancy = 81.1  # years
+    womenAverageLifeExpectancy = 84.1  # years
+
+    # climat
+    juneAverageTemperature = 20  # °C
+    decemberAverageTemperature = -3  # °C
+    averageHumidity = 77  # %
+    averageDurationOfWinter = 3.3  # month
+    averageRainfallPerMonth = 73  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 65  # days
+    averageNumberOfRainyDaysPerYear = 133  # days
+    averageNumberOfClearDays = 167  # days
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 5_408_000
+    procentOfMales = 50.57
+    procentOfFemales = 49.43
+    populationDensityPerSquareKilometer = 15
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 3
+    friendlyToForeigners = 0
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 70
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 23.5  # Мегабиты в секунду
+    freeWifi = 1  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 80.5
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   NORWAY   #############################
+
+    #############################   SWEDEN   #############################
+
+    # Country
+    countryName = "Sweden"
+    officialLanguage = "Swedish"
+
+    # cities     name      isBig WashesBy
+    cities = {'Stockholm': [True, True, "Baltic Sea"], 'Orebro': [True, True, None], 'Linkoping': [True, True, None],
+              'Jonkoping': [True, True, "Vättern"], 'Goteborg': [True, True, "Kattegat"]}
+
+    # education
+    universities = {'Stockholm': ['Karolinska Institute', 'Stockholm University'],
+                    'Orebro': ['Orebro University'],
+                    'Linkoping': ['Linkoping University'],
+                    'Jonkoping': ['Jonkoping University'],
+                    'Goteborg': ['University of Gothenburg', 'Chalmers University of Technology']}
+    faculties = {'Karolinska Institute': ['Faculty of Medicine',
+                                          'Faculty of Science', 'Faculty of Social Sciences'],
+                 'Stockholm University': ['Faculty of Humanities', 'Faculty of Law', 'Faculty of Social Sciences',
+                                          'Faculty of Science'],
+                 'Orebro University': ['Faculty of Economics', 'Faculty of Science', 'Faculty of Engineering',
+                                       'Faculty of Humanities', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                       'Faculty of Health'],
+                 'Linkoping University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Education',
+                                          'Faculty of Medicine', 'Faculty of Health', 'Faculty of Science',
+                                          'Faculty of Engineering'],
+                 'Jonkoping University': ['Faculty of Computer Engineering and Software', 'Faculty of Engineering',
+                                          'Faculty of Science'],
+                 'University of Gothenburg': ['Faculty of Computer Engineering and Software', 'Faculty of Humanities',
+                                              'Faculty of Education',
+                                              'Faculty of Arts', 'Faculty of Science', 'Faculty of Social Sciences'],
+                 'Chalmers University of Technology': ['Faculty of Architecture',
+                                                       'Faculty of Computer Engineering and Software',
+                                                       'Faculty of Social Sciences',
+                                                       'Faculty of Engineering']}
+    programs = {'Karolinska Institute': ['Magistracy', 'Undergraduate'],
+                'Stockholm University': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Orebro University': ['Magistracy', 'Undergraduate'],
+                'Linkoping University': ['Foundation', 'Undergraduate', 'MBA'],
+                'Jonkoping University': ['Magistracy', 'Undergraduate'],
+                'University of Gothenburg': ['Magistracy', 'Undergraduate', 'MBA'],
+                'Chalmers University of Technology': ['Magistracy', 'Undergraduate']}
+    links = {'Karolinska Institute': 'https://ki.se/en',
+             'Stockholm University': 'https://www.su.se/cmlink/stockholm-university',
+             'Orebro University': 'https://www.oru.se/english/',
+             'Linkoping University': 'https://liu.se/en',
+             'Jonkoping University': 'https://ju.se/en',
+             'University of Gothenburg': 'https://www.gu.se/en',
+             'Chalmers University of Technology': 'https://www.chalmers.se/en/Pages/default.aspx'}
+
+    images = {
+        'Karolinska Institute': 'https://ehef.id/storage/app/uploads/public/5d1/9cc/ce3/5d19ccce38e24274187271.jpg',
+        'Stockholm University': 'https://civis.eu/storage/files/atmosfar-miljo-webb-034.jpg',
+        'Orebro University': 'https://www.oru.se/globalassets/oru-sv/om-universitetet/bilder/campus/campus-uso-mv.jpg?w=720',
+        'Linkoping University': 'https://liu.se/dfsmedia/dd35e243dfb7406993c1815aaf88a675/35182-50065/campus-valla-vinterljus-20191202-liu-3678?as=1&w=640&h=360&cr=1&crw=640&crh=360&bc=%23ffffff',
+        'Jonkoping University': 'https://study-eu.s3.amazonaws.com/uploads/image/path/689/wide_fullhd_jonkoping-university-sweden-patrik-svedberg-HLK-JIBS_STUD_130906-4131.jpg',
+        'University of Gothenburg': 'https://www.gu.se/sites/default/files/styles/100_10_5_xlarge_1x/public/2019-11/Vasaparken-universitetets-huvudbyggnad.jpg?h=ba76c1ff&itok=83TrW1sU',
+        'Chalmers University of Technology': 'https://smapse.com/storage/2020/11/chalmers-university-of-technology-smapse8.jpg'}
+    # общага
+    hostel = {'Karolinska Institute': 'Yes',
+              'Stockholm University': 'Yes',
+              'Orebro University': 'Yes',
+              'Linkoping University': 'Yes',
+              'Jonkoping University': 'Yes',
+              'University of Gothenburg': 'No',
+              'Chalmers University of Technology': 'No'}
+    # стипендия
+    scolarship = {'Karolinska Institute': 'Yes',
+                  'Stockholm University': 'Yes',
+                  'Orebro University': 'Yes',
+                  'Linkoping University': 'Yes',
+                  'Jonkoping University': 'Yes',
+                  'University of Gothenburg': 'Yes',
+                  'Chalmers University of Technology': 'Yes'
+                  }
+    # требования к поступлению
+    requirements = {
+        'Karolinska Institute': 'English proficiency at least 7.0 on the IELTS scale and an average score close to the maximum',
+        'Stockholm University': 'English proficiency at least 7.0 on the IELTS scale and an average score close to the maximum',
+        'Orebro University': 'It is noteworthy that the main factor in terms of recruiting students for a special admissions committee is considered to be the academic performance of each applicant.',
+        'Linkoping University': 'Certificate of general secondary education with grades and a certified translation Confirmation of the study of mathematics Motivation letter IELTS or TOEFL certificate (IELTS not lower than 6.5).',
+        'Jonkoping University': 'Certificate of general secondary education with grades and a certified translation Confirmation of the study of mathematics Motivation letter IELTS or TOEFL certificate (IELTS not lower than 6.5).',
+        'University of Gothenburg': 'application for participation in the scholarship program; copy of the passport; summary; motivation letter (no more than 500 words); the title page of an application for one of the masters programs that was submitted on the site.',
+        'Chalmers University of Technology': 'High School Diploma Swedish as a Second Language 3 Certificate English 6 Certificate.'}
+
+    costs = {'Karolinska Institute': 4300,
+             'Stockholm University': 11000,
+             'Orebro University': 12000,
+             'Linkoping University': 1300,
+             'Jonkoping University': 8600,
+             'University of Gothenburg': 900,
+             'Chalmers University of Technology': 27000}
+
+    sights = {'Wadsten Castle': [
+        "It is worth starting acquaintance with an impressive reminder of the glorious history of the state. On its territory, the described fortress is one of the oldest, because it began to be built back in 1545. Not all tourists know that Vadsten Castle originally had 4 round towers, 3 residential buildings made of stone, and several outbuildings. At a certain point, the need for fortifications disappeared, so they were hidden. The decision to turn the building into a historical monument was made in the 20th century, for which large-scale restoration work was carried out.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/1-The_Vadstena_castle-e1519091907580.jpg'],
+        'Vasa Museum': [
+            "The sights of Sweden cannot but surprise with their diversity and uniqueness. A vivid proof of this is the museum in the form of a ship, which has survived to this day from the 17th century. Until now, it is considered the pride of the Swedish navy. Presumably, he sank from the fact that not quite correct calculations were made, there were too many jewelry and gold. The ship ended up at the bottom of Stockholm harbor during its first voyage, which happened in 1628.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/2-he_Vasa_Museum-e1519092120105.jpg'],
+        'Old town Gamla Stan': [
+            "Thinking about what to visit in Sweden? Take a look at the historical center of Stockholm, which until the 80s was called the City Between Bridges. It was founded back in the 13th century, which is easy to guess from its medieval paths, cobbled streets, houses in the North German Gothic style. In the very center there is a picturesque square known as Stortorget. In 1520, it was on it that the Danish king brutally cracked down on the Swedish nobles. Many more attractions in Sweden are concentrated in the Old Town of Gamla Stan.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2018/02/3-Gamla_Stan-e1519092337257.jpg']}
+    beaches = {'Ribersborg': [
+        "Ribersborg beach is a popular holiday destination in Malmö at any time of the year in Sweden. The beach and coastal zone of the largest city surprises tourists not only with its history, but also with daily entertainment events along the entire coast of Öresund. The beach is so popular that locals and tourists recognize it even by other names - 'Ribban', as the people of Sweden call it, or 'Scandinavian Copacobana', this name is firmly entrenched in tourist publications.",
+        'https://1001beach.ru/img/posts/1569/750/ribersborg_beach-1.webp?t=1580384392'],
+        "Sandhammaren": [
+            "Sandhammaren beach rightfully competes for the title of the best beach holiday destination in Sweden. Surprisingly warm sands and cool waters of the Baltic are located in the southeast of the country, in Osterlen. More precisely, the beach covers an area of several kilometers from the village of Löderups-Strandbad in the eastern part of the region to the famous Skåne province (southeastern part).",
+            'https://1001beach.ru/img/posts/1570/750/sandhammaren_beach-1.webp?t=1580384406'],
+        'Smedsuddsbadet': [
+            "Despite the hard-to-pronounce name for tourists, this beach is considered one of the best in Sweden and regularly makes lists of the most popular places for summer holidays near the water. It is located directly in the capital of the country - Stockholm - in the Kungsholmen district, and it can be easily reached by taxi or get off at the Fridhemsplan metro station.",
+            'https://1001beach.ru/img/posts/1730/750/smedsuddsbadet-1.webp?t=1580385208']}
+    mountains = {'Kebnekaise': [
+        "Kebnekaise is located in Lapland, about 150 km north of the Arctic Circle and west of Kiruna. The summit is composed of gabbro and quartz syenites. It has two peaks - the southern one, covered with a glacier, 2106 meters high, and the northern one, 2097 meters high.",
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Duolbagorni.jpg/310px-Duolbagorni.jpg'],
+        'Sarekchokko': [
+            "It is located in the county of Norrbotten, in the Sarek National Park. The mountain is easy to climb, except for the north side. The most convenient route goes along the western ridge of the mountain. It is the second highest mountain in Sweden after Kebnekaise and the sixth in the Scandinavian Peninsula. For the first time, the Swede G.W. Bucht climbed the mountain on July 8, 1879 with 4 Saami guides. The first winter ascent took place in 1916.",
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sarektj%C3%A5kko-fr%C3%A5n-ruotes-25.jpg/1200px-Sarektj%C3%A5kko-fr%C3%A5n-ruotes-25.jpg'],
+        'Cascasapakte': [
+            "Kaskasapakte is a mountain peak in Sweden, one of the highest in the country. The summit is located in the historic province of Lappland, northeast of Mount Kebnekaise, Sweden's highest peak. At the foot of Kaskasapakte is the glacial lake Tarfala.",
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Tarfala.jpg/280px-Tarfala.jpg']}
+    skiResorts = {'Ore': [
+        "Åre is the largest ski center in Scandinavia, which has been recognized as the best in Sweden for several years in a row. It consists of four villages - Duved, Tegefjäll, Åre By and Åre Björnen. There are 89 ski slopes, 41 ski lifts, a trick park, slopes for children and beginner skiers, cross-country trails and 75 restaurants and cafes. The total length of the slopes is about 100 kilometers, and the longest of them is 6.5 kilometers. The highest point of the resort is at an altitude of 1274 meters above sea level.",
+        'https://ee.tallink.com/documents/10192/31064102/are-suusakuurort-rootsis.jpg/4f7f35c8-b2f8-4c0b-aeea-809841f628de?t=1512466871125'],
+        'Salen': [
+            "Sälen is very popular among Swedes thanks in large part to its reputation as the best family ski resort in all of Sweden. In addition to skiing, there are many other interesting activities here. For example, you can combine your mountain ticket with the entrance ticket to the Experium water park and, after an active day on the slopes, relax in the jacuzzi or ride the water slides.",
+            'https://ee.tallink.com/documents/10192/31064102/saleni-suusakuurort-rootsis.jpg/865f7785-9e09-4a00-b4e9-ef90a561d82d?t=1512466870999'],
+        'Vemdalen': [
+            "A small but quite comfortable ski center in Central Sweden. Vemdalen has four ski resorts: Björnrike, Klövsjö, Storhogna and Vemdalsskalet, as well as very picturesque nature. The snow cover here appears quite early, and the slopes open already in November. Pleasant atmosphere, groomed pistes and stable snow make Vemdalen one of the most popular ski resorts among Estonian tourists. In addition, it is not as far to get here as in Are.",
+            'https://ee.tallink.com/documents/10192/31064102/vemdaleni-suusakuurort-rootsis.jpg/40258b1c-c41b-4278-bedb-1233b9101696?t=1512466871000']}
+    lakes = {'Vättern': [
+        "The total area of the lake is 1912 km², with a coastal zone - about 4503 km²; height above sea level is 88 m. The deepest point is located south of the island of Visingsö (Swedish Visingsö) and has a depth of 128 meters. The average depth of the lake is 40 meters. The length of the coastline is about 642 km. The volume is 74 km³, the water level in the lake is maintained by special equipment (previously, the water level often changed).",
+        'https://waterresources.ru/wp-content/uploads/2020/09/vettern-2.jpg'],
+        'Venern': [
+            "Vänern is a lake in southern Sweden on the border of the counties of Västra Götaland and Värmland. Vänern is the largest lake in Sweden and Western Europe, and also the third largest in Europe after Lake Ladoga and Lake Onega.",
+            'https://waterresources.ru/wp-content/uploads/2020/09/venern.jpg'],
+        'Sommen': [
+            "Sommen is a lake in southern Sweden. It is located in the historical province of Östergötland in the historical region of Götaland on the border with the province of Småland, 40 km east of Lake Vättern, the second largest lake in Sweden. The nearest city is Tranos.",
+            'https://waterresources.ru/wp-content/uploads/2020/09/sommen-ozero.jpg']}
+    rivers = {'Muonioelven': [
+        "Muonioelven is a river in the north of Sweden and Finland, the largest tributary of the Turneelven River. Both rivers together form the state border between the two countries.",
+        'https://waterresources.ru/wp-content/uploads/2020/08/muonioelven.jpg'],
+        'Tourneelven': [
+            "Tourne Elv originates from Lake Tourneträsk in the Scandinavian mountains in Sweden near the border with Norway and flows in a southeasterly direction through the Lapland plateau to the Gulf of Bothnia. After taking in the largest tributary, the Muonyoelven forms the border with Finland. The length of the river is 565 km (this is the hydrological length measured from the sources of Muonyoelven). In the upper reaches there are waterfalls, rapids and numerous lakes. Freezes from November to May.",
+            'https://waterresources.ru/wp-content/uploads/2020/08/turneelven-1-2048x1536.jpg'],
+        'Kalixelven': [
+            "The length of the river is 460.65 km. The catchment area is 18.130 km². The average water consumption is 289 m³/s. Kalikselven originates on the slopes of Mount Kebnekaise and flows eastward to the Gulf of Bothnia. In the upper reaches there are waterfalls and numerous lakes. Freezes from November to May.",
+            'https://waterresources.ru/wp-content/uploads/2020/08/kalikselven.jpg']}
+    # currency
+    currencyName = 'CHF'
+    currencyEqualsToDollar = 0.95
+
+    # military
+    milPolBlock = "None"
+    amountOfPeopleInArmy = 140304
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 411
+    menAverageLifeExpectancy = 80.8  # years
+    womenAverageLifeExpectancy = 84.0  # years
+
+    # climat
+    juneAverageTemperature = 21  # °C
+    decemberAverageTemperature = -2  # °C
+    averageHumidity = 75  # %
+    averageDurationOfWinter = 4.0  # month
+    averageRainfallPerMonth = 51  # mm (?)
+    averageNumberOfFoggyDaysPerYear = 70  # days
+    averageNumberOfRainyDaysPerYear = 136  # days
+    averageNumberOfClearDays = 159  # days
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 3  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 10_420_000
+    procentOfMales = 50
+    procentOfFemales = 50
+    populationDensityPerSquareKilometer = 25
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 2
+    friendlyToForeigners = 1
+
+    # communication
+    communicationOnEnglish = 3  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 41
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 55.18  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 84.3
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+
+    #############################   SWEDEN   #############################
+
+    #############################   FRANCE   #############################
+
+    # Country
+    countryName = "France"
+    officialLanguage = "French"
+
+    # cities
+    cities = {  # isBig isResort washesBy
+        'Paris': [True, True, None],
+        'Nantes': [True, True, None],
+        'Toulouse': [True, False, None],
+        'Montpellier': [True, False, None],
+        'Lyon': [True, False, None],
+        'Colmar': [False, True, None],
+        'Arcshon': [True, True, 'Bay of Biscay'],
+        'Quimper': [False, True, 'Celtic sea']}
+
+    # education
+    universities = {'Paris': ['Superior Normal School, Paris', 'Pierre and Marie Curie University (Paris VI)'],
+                    'Nantes': ['Nantes University'],
+                    'Toulouse': ['University of Toulouse - Jean Jaurès']}
+    faculties = {
+        'Superior Normal School, Paris': ['Faculty of Social Sciences', 'Faculty of Science'],
+        'Pierre and Marie Curie University (Paris VI)': ['Faculty of Medicine', 'Faculty of Engineering',
+                                                         'Faculty of Science'],
+        'Nantes University': ['Faculty of Medicine', 'Faculty of Social Sciences', 'Faculty of Science',
+                              'Faculty of Law', 'Faculty of Arts'],
+        'University of Toulouse - Jean Jaurès': ['Faculty of Arts', 'Faculty of Social Sciences']}
+    programs = {
+        'Superior Normal School, Paris': ['Magistracy', 'Undergraduate', 'MBA'],
+        'Pierre and Marie Curie University (Paris VI)': ['Magistracy', 'Undergraduate'],
+        'Nantes University': ['Magistracy', 'Undergraduate'],
+        'University of Toulouse - Jean Jaurès': ['Magistracy', 'Undergraduate']}
+    links = {'Superior Normal School, Paris': 'https://www.ens.psl.eu/en',
+             'Pierre and Marie Curie University (Paris VI)': 'https://www.sorbonne-universite.fr/',
+             'Nantes University': 'https://english.univ-nantes.fr/',
+             'University of Toulouse - Jean Jaurès': 'https://www.univ-tlse2.fr/home'}
+    images = {
+        'Superior Normal School, Paris': 'https://smapse.com/storage/2018/11/ecole-normale-superieure.jpg',
+        'Pierre and Marie Curie University (Paris VI)': 'https://smapse.com/storage/2018/09/related-image-1.jpeg',
+        'Nantes University': 'https://www.euniwell.eu/fileadmin/_processed_/5/6/csm_2020-07-20-Uni-Nantes-Main-picture_f6ef389ede.jpg',
+        'University of Toulouse - Jean Jaurès': 'https://www.univ-tlse2.fr/medias/photo/universite_1500638826879-jpg?ID_FICHE=191397'}
+    # общага
+    hostel = {'Superior Normal School, Paris': 'Yes',
+              'Pierre and Marie Curie University (Paris VI)': 'Yes',
+              'Nantes University': 'Yes',
+              'University of Toulouse - Jean Jaurès': 'Yes'}
+    # стипендия
+    scolarship = {'Superior Normal School, Paris': 'Yes',
+                  'Pierre and Marie Curie University (Paris VI)': 'Yes',
+                  'Nantes University': 'Yes',
+                  'University of Toulouse - Jean Jaurès': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'Superior Normal School, Paris': 'Upon admission to Ecole Normal, an applicant must provide documents translated into French or English about previous education: a diploma or an extract from a record book, as well as a school certificate or a diploma of secondary specialized education. Notarization of the diploma is not required.',
+        'Pierre and Marie Curie University (Paris VI)': 'foreign applicants must demonstrate a high level of French language proficiency - at least B2, backed up by a TCF or DELF language certificate.',
+        'Nantes University': 'For admission to the university, the student is required to provide information about the results of the exams passed.',
+        'University of Toulouse - Jean Jaurès': 'To enroll in the University of Toulouse, you will need to submit a registration application on the official website of the university, sign up for a meeting with the admissions committee, at which you should provide: School certificate, Diplomas from previous places of study, if available, Certificate of knowledge of the French language (minimum TCF B2, DELF B2 or DUEF B2), Certificate of payment of CVEC (registration fee).'}
+    costs = {'Superior Normal School, Paris': 1055,
+             'Pierre and Marie Curie University (Paris VI)': 1385,
+             'Nantes University': 950,
+             'University of Toulouse - Jean Jaurès': 1000}
+
+    sights = {'Eiffel Tower': [
+        "If you are still thinking about what to see in France, immediately go to its capital, because there are so many sights of Paris that even a partial study of them will not fit in one trip. The symbol of Paris, as you might guess, has become the main attraction of France - the Eiffel Tower - one of the most visited and recognizable architectural objects in the world.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/France-1-The-Eiffel-Tower-e1492754610997.jpg'],
+        'Louvre': [
+            "A former fortress, once a palace, and now a museum - all these reincarnations have gone through the Louvre in Paris in its lifetime, which has become the most visited museum, where millions of people from all over the world come every year. The most distant past and present are intertwined here in hundreds of thousands of exhibits, of which only 35 thousand we can see with our own eyes. The thing is that there will not be enough exhibition space to display all these values, while many exhibits also require special storage conditions.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/France-2-The-Louvre-e1492754751417.jpg'],
+        'Palace of Versailles': [
+            "Having wondered what to see in France, without hesitation go to one of the most respectable cities located 20 km from the capital. After all, here is a luxurious and relatively young palace and park complex, which once served as the residence of the French kings, and today has also become a famous landmark of France. This is the Palace of Versailles - an outstanding masterpiece in the history of world architecture. The layout of the park of the Palace of Versailles is also the highest achievement in the park art of France.",
+            'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/France-3-The-Palace-of-Versailles-e1492754919622.jpg']}
+    beaches = {'Porto-Vecchio': [
+        "Corsica - that's where the best beaches of France are located !!! Porto-Vecchio, or Portivechju in the Corsican dialect, has one of the most beautiful beaches of the Isle of Beauty. Corsica is already famous for its beautiful beaches, but the magnificent Santa Giulia beach is picturesque cliffs, white sand and turquoise sea - everything you need for a paradise.",
+        'https://frenchtrip.ru/wp-content/uploads/2016/02/Porto-Vecchio-beaches-Plyazh-Santa-Dzhuliya-plyazhi-Porto-Vekko.png'],
+        "Biarritz": [
+            "Beach lovers and surfers gather at the Grande Plage in Biarritz, one of the most beautiful beaches in the Basque country. It extends from the rock de la Vierge to the lighthouse.",
+            'http://www.planetware.com/photos-large/F/france-biarritz-port-vieux-beach.jpg']
+    }
+    mountains = {'Mont Blanc': [
+        "What could be more legendary than the top of Mont Blanc? This 4,809 m high mountain, nicknamed the “roof of Europe”, proudly rises above the Alps and is able to enchant everyone, young and old, with its beauty. However, you do not need to be an experienced climber to truly enjoy a mountain holiday. We offer you several ideas for walks, views and exciting excursions where you absolutely do not need climbing crampons!",
+        'https://images.france.fr/zeaejvyq9bhj/63b08MuCp8ZmvxuvsndjXA/5eb1f4521f86d25d0851baec03ffe831/Les_Contamines_Montjoie__5_-header.jpg?w=1120&h=490&q=70&fm=webp&fit=fill'],
+        'Contamine-Montjoie': [
+            "Contamine-Montjoie is the highest natural reserve in France and the only protected natural area in the Mont Blanc massif. Spread at an altitude of 1,000 to 4,000 meters, this reserve features landscapes of all kinds, from forests to glaciers, as well as a rich variety of biological species. Among them is the black grouse, a typical alpine bird that lives in Contamines-Montjoie and hibernates during the winter, comfortably nestled in a snow igloo. To enjoy the walk without disturbing this alpine bird's sleep, follow the signs for places to avoid.",
+            'https://images.france.fr/zeaejvyq9bhj/78lmMpURJyZ829eigWwEdi/00098b219520c7cfbc0c1ad9d8ee04a2/Les_Contamines_Montjoie__7_.jpg?w=680&h=680&q=70&fm=webp&fit=fill'],
+    }
+    skiResorts = {'Le Carro dArache': [
+        "Perched on a mountain balcony, this charming village is the gateway to 265 km of pistes in the Grand Massif ski area, linked to Morillon, Flaine, Samoens and Sixt-Fer-à-Cheval. The predominantly forested ski area of Les Carro d'Arache (External link) offers stunning views of the surrounding peaks and Mont Blanc. For several years now, the resort has been implementing the concept of sustainable development: for example, a bioclimatic hotel (the only one in the resort) has been created here, and the ski area has been awarded the Green Globe mark.",
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/a0/4b/40/les-carroz-d-araches.jpg?w=700&h=500&s=1'],
+                  'Le Contamine-Montjoie': [
+                      "This resort, located in the heart of the Pays du Mont Blanc, consists of several small villages. From the local ski area, you can easily get to the resorts of Hautelus and Val Joly. The vast expanses of snow and spruce forests of the Contamines-Montjoie Nature Reserve (External link) can also be explored on snowshoes or on the touring skis offered by the racing guides.",
+                      'https://cdn.france-montagnes.com/sites/default/files/styles/facebook/public/station/hiver/Village-3.jpg?itok=nfHdsdwI'],
+                  'Champagny-en-Vanoise': [
+                      "Offering guests access to 225 km of Paradiski pistes, the resort of Champagny is the perfect option for a fabulous ski holiday in La Grande Plagne: an extensive ski area that stretches to glaciers at an altitude of more than 3000 m, perfect snow cover, an endless variety of landscapes and reliefs, and all this - over 425 km of tracks! Champagny is divided into 2 districts:",
+                      'https://img.pac.ru/resorts/213098/259133/big/FE8039CB7F0001012DB955B94B701D1C.jpg']}
+    lakes = {'Lake Geneva': [
+        "The largest alpine lake, divided between the two countries by the will of history, Geneva is one of the most popular tourist destinations in Europe. Its northern shores belong to Switzerland, the southern shores belong to France, and they are separated by several kilometers of impeccably clear blue water. Lake Geneva in France is patriotically called Lac-Leman - and it actually consists of two reservoirs: Big and Small. Despite the fact that tourism in full swing is observed mainly on the Swiss coast, the French coast has also not been left out of the tourist boom. The most popular resort of the Republic of Thonon-les-Bains is not very well known in the Russian market, but its younger brother Evian annually receives a significant portion of domestic tourists.",
+        'https://fs.tonkosti.ru/sized/f700x700/88/bd/88bdsfy9jugw4kksw8cgwww80.jpg'],
+             'Allo': [
+                 "The most “non-resort” and one of the most picturesque lakes in France, Lake Allo (Lac d’Allos) is comfortably located in a valley between the mountain peaks of the Alpes Haute Provence. There is no tourist life on its shores at all, but this does not prevent the lake from being among the most desirable places for hiking. Lake Allo was formed a couple of tens of thousands of years ago as a result of the descent of a glacier, and the water in it is exceptionally clean and just as cold. And it is also one of the largest high-altitude lakes in Europe - with an area of 60 hectares, Lake Allo is located at an altitude of 2200 meters above sea level.",
+                 'https://fs.tonkosti.ru/sized/f700x700/36/1q/361qgqrbbm2o8so8w80cg8swo.jpg'],
+             'Annecy': [
+                 "Incredibly beautiful Lake Annecy, located in the department of Haute-Savoie in the Pre-Alpine region of France, is the second largest inland reservoir of the Republic and a popular place for a “non-hot” beach holiday. The city of the same name boasts a considerable number of significant historical sights, including a medieval castle and a palace on an island in the center of the city channel. And in small resorts along the shores of the lake, you can have a great rest surrounded by very beautiful nature, among silence and blessed solitude.",
+                 'https://fs.tonkosti.ru/sized/f700x700/bh/vl/bhvl3ynlids8g4000k0ggcssw.jpg']}
+    rivers = {'Loire': [
+        "Loire with a length of 1012 kilometers, flowing through Orleans, Tours, Nantes, has become the longest French river. The Loire river basin covers a fifth of the territory of France, but in terms of average water flow, the river is inferior to the Rhone and the Seine.",
+        'https://s9.travelask.ru/system/images/files/001/461/409/wysiwyg_jpg/19537.jpg?1615371497'],
+              'Rhone': [
+                  "The full-flowing Rhone begins in Switzerland (Rhone Glacier, Valais canton) and flows into the Mediterranean Sea (Gulf of Lion). Therefore, out of the total length of the Rhone (812 km), French territory accounts for 'only' 545 kilometers.",
+                  'https://s9.travelask.ru/system/images/files/001/460/800/wysiwyg_jpg/%D1%84%D0%BE%D1%82%D0%BE_5._%D0%A0%D0%BE%D0%BD%D0%B0.jpg?1615042708'],
+              'Seine': [
+                  "Russian tourists associate the name of the Seine with Paris. This is natural, since the Seine flows through the center of the metropolis, its channel flows around the Ile de la Cité, the historical center of Paris, on both sides. But the Seine basin, which begins and ends within France, covers 78,650 square kilometers, which is up to 10% of the country's area. On the main channel of the long river (776 km) there are such large cities as Le Havre, Rouen, Poissy. In these cities, in addition to Poissy, cargo and passenger river ports operate. The Seine is characterized by a high level of industrial pollution, floods reaching up to 8.68 meters in Paris (2010). In Le Havre and Rouen, the level of the Seine is influenced by sea tides (2–7 meters high).",
+                  'https://s9.travelask.ru/system/images/files/001/460/801/wysiwyg_jpg/%D1%84%D0%BE%D1%82%D0%BE_6._%D0%A1%D0%B5%D0%BD%D0%B0.jpg?1615042788']}
+    # currency
+    currencyName = 'EUR'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "NATO"
+    amountOfPeopleInArmy = 203250
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 323
+    menAverageLifeExpectancy = 79.4
+    womenAverageLifeExpectancy = 85.2
+
+    # climat
+    juneAverageTemperature = 25
+    decemberAverageTemperature = 9
+    averageHumidity = 65
+    averageDurationOfWinter = 4
+    averageRainfallPerMonth = 49
+    averageNumberOfFoggyDaysPerYear = 125
+    averageNumberOfRainyDaysPerYear = 90
+    averageNumberOfClearDays = 150
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 2  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 67500000
+    procentOfMales = 48.7
+    procentOfFemales = 51.3
+    populationDensityPerSquareKilometer = 119.8
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 2
+    friendlyToForeigners = 0
+
+    # communication
+    communicationOnEnglish = 2  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 26
+    developmentLevelOfPublicTransport = 3  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 192.25  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 68.6
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+    #############################   FRANCE   #############################
 
     cc.createBorders()
     cc.close()
