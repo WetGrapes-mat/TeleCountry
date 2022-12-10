@@ -20,98 +20,103 @@ class CountryCreator:
         self.driver.close()
 
     def createBase(self, countryName, citiesDict, officialLanguage,
-                  # currency
-                  currencyName, currencyEqualsToDollar,
-                  # military
-                  milPolBlock, amountOfPeopleInArmy,
-                  # healthcare
-                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
-                  # climat
-                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
-                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
-                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                  # security
-                  situationInTheCountry, freedomOfSpeech,
-                  assessmentOfFamilyLife, attitudeTowardsLGBT,
-                  # population
-                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
-                  speedOfLife, workPlaces, nightLifeEntertainment,
-                  # citizenship
-                  citizenshipGlobalRank,
-                  # communication
-                  communicationOnEnglish,
-                  # transport
-                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
-                  # internet
-                  speedOfInternetMbps, freeWifi,
-                  # education
-                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
-                  requirements,
-                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                   # currency
+                   currencyName, currencyEqualsToDollar,
+                   # military
+                   milPolBlock, amountOfPeopleInArmy,
+                   # healthcare
+                   numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                   # climat
+                   juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                   averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                   averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                   # security
+                   situationInTheCountry, freedomOfSpeech,
+                   assessmentOfFamilyLife, attitudeTowardsLGBT,
+                   # population
+                   populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                   speedOfLife, workPlaces, nightLifeEntertainment,
+                   # citizenship
+                   citizenshipGlobalRank,
+                   # communication
+                   communicationOnEnglish,
+                   # transport
+                   averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                   # internet
+                   speedOfInternetMbps, freeWifi,
+                   # education
+                   rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                   requirements,
+                   hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
                    ):
         with self.driver.session() as session:
             base = session.execute_write(self._createBase, countryName, citiesDict, officialLanguage,
-                  # currency
-                  currencyName, currencyEqualsToDollar,
-                  # military
-                  milPolBlock, amountOfPeopleInArmy,
-                  # healthcare
-                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
-                  # climat
-                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
-                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
-                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                  # security
-                  situationInTheCountry, freedomOfSpeech,
-                  assessmentOfFamilyLife, attitudeTowardsLGBT,
-                  # population
-                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
-                  speedOfLife, workPlaces, nightLifeEntertainment,
-                  # citizenship
-                  citizenshipGlobalRank,
-                  # communication
-                  communicationOnEnglish,
-                  # transport
-                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
-                  # internet
-                  speedOfInternetMbps, freeWifi,
-                  # education
-                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
-                  requirements,
-                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                                         # currency
+                                         currencyName, currencyEqualsToDollar,
+                                         # military
+                                         milPolBlock, amountOfPeopleInArmy,
+                                         # healthcare
+                                         numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy,
+                                         womenAverageLifeExpectancy,
+                                         # climat
+                                         juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                                         averageDurationOfWinter, averageRainfallPerMonth,
+                                         averageNumberOfFoggyDaysPerYear,
+                                         averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                                         # security
+                                         situationInTheCountry, freedomOfSpeech,
+                                         assessmentOfFamilyLife, attitudeTowardsLGBT,
+                                         # population
+                                         populationCount, procentOfMales, procentOfFemales,
+                                         populationDensityPerSquareKilometer,
+                                         speedOfLife, workPlaces, nightLifeEntertainment,
+                                         # citizenship
+                                         citizenshipGlobalRank,
+                                         # communication
+                                         communicationOnEnglish,
+                                         # transport
+                                         averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                                         # internet
+                                         speedOfInternetMbps, freeWifi,
+                                         # education
+                                         rankingOfNationalEducationSystem, universities, faculties, programs, costs,
+                                         links, images,
+                                         requirements,
+                                         hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers,
+                                         friendlyToForeigners
                                          )
             return base
 
     @staticmethod
     def _createBase(tx, countryName, citiesDict, officialLanguage,
-                  # currency
-                  currencyName, currencyEqualsToDollar,
-                  # military
-                  milPolBlock, amountOfPeopleInArmy,
-                  # healthcare
-                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
-                  # climat
-                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
-                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
-                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
-                  # security
-                  situationInTheCountry, freedomOfSpeech,
-                  assessmentOfFamilyLife, attitudeTowardsLGBT,
-                  # population
-                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
-                  speedOfLife, workPlaces, nightLifeEntertainment,
-                  # citizenship
-                  citizenshipGlobalRank,
-                  # communication
-                  communicationOnEnglish,
-                  # transport
-                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
-                  # internet
-                  speedOfInternetMbps, freeWifi,
-                  # education
-                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
-                  requirements,
-                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                    # currency
+                    currencyName, currencyEqualsToDollar,
+                    # military
+                    milPolBlock, amountOfPeopleInArmy,
+                    # healthcare
+                    numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                    # climat
+                    juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                    averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                    averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                    # security
+                    situationInTheCountry, freedomOfSpeech,
+                    assessmentOfFamilyLife, attitudeTowardsLGBT,
+                    # population
+                    populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                    speedOfLife, workPlaces, nightLifeEntertainment,
+                    # citizenship
+                    citizenshipGlobalRank,
+                    # communication
+                    communicationOnEnglish,
+                    # transport
+                    averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                    # internet
+                    speedOfInternetMbps, freeWifi,
+                    # education
+                    rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                    requirements,
+                    hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
                     ):
         # country
         resultStr = 'create (country:Country {name:"%s"})' % (str(countryName))
@@ -185,7 +190,8 @@ class CountryCreator:
         # cities
         index = 1
         for city in citiesDict:
-            resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s", isResort:"%s"})' % (index, city, str(citiesDict[city][0]), str(citiesDict[city][1]))
+            resultStr += '\ncreate (city%d:City {name:"%s", isBig:"%s", isResort:"%s"})' % (
+            index, city, str(citiesDict[city][0]), str(citiesDict[city][1]))
             resultStr += '\ncreate (country)-[:has_city]->(city%d)' % index
             if index == 1:
                 resultStr += '\ncreate (country)-[:capital]->(city%d)' % index
@@ -210,7 +216,7 @@ class CountryCreator:
         if beaches:
             for beach in beaches.keys():
                 resultStr += '\ncreate (beach%d:Beach {name:"%s", description:"%s", image:"%s"})' % (
-                index, beach, beaches[beach][0], beaches[beach][1])
+                    index, beach, beaches[beach][0], beaches[beach][1])
                 resultStr += '\ncreate (country)-[:beach]->(beach%d)' % (index)
                 index += 1
 
@@ -246,7 +252,6 @@ class CountryCreator:
                 resultStr += '\ncreate (country)-[:skiResort]->(skiResort%d)' % (index)
                 index += 1
 
-
         index = 1
         fac = 1
         univ_ind = 1
@@ -270,7 +275,7 @@ class CountryCreator:
                         host = 'No'
                         scolar = 'No'
                     resultStr += '\ncreate (univ%d:University {name:"%s",link:"%s",cost:%d,hostel:"%s",scolarship:"%s",image:"%s",requirements:"%s"})' % (
-                    univ_ind, univ, link, cost, host, scolar, image, req)
+                        univ_ind, univ, link, cost, host, scolar, image, req)
                     for faculty in faculties[univ]:
                         resultStr += '\nmerge (faculty%d:Faculty {name:"%s"})' % (fac, faculty)
                         resultStr += '\nmerge (univ%d)-[:faculty]->(faculty%d)' % (univ_ind, fac)
@@ -295,11 +300,17 @@ class CountryCreator:
         resultStr += '\ncreate (language:Language {name:"%s"})' % (str(officialLanguage))
         resultStr += '\ncreate (country)-[:official_language]->(language)'
         # currency
-        resultStr += '\ncreate (currency:Currency {name:"%s", oneDollarEquals:%s})' % (str(currencyName), currencyEqualsToDollar)
+        resultStr += '\ncreate (currency:Currency {name:"%s", oneDollarEquals:%s})' % (
+        str(currencyName), currencyEqualsToDollar)
         resultStr += '\ncreate (country)-[:currency]->(currency)'
         # military political block
-        resultStr += '\ncreate (militaryPoliticalBlock:MilitaryPoliticalBlock {name:"%s"})' % (str(milPolBlock))
-        resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock)'
+        index = 1
+        if milPolBlock:
+            for block in milPolBlock:
+                resultStr += '\nmerge (militaryPoliticalBlock%d:MilitaryPoliticalBlock {name:"%s"})' % (
+                index, str(block))
+                resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock%d)' % index
+                index += 1
         # military Power
         resultStr += '\ncreate (militaryPower:MilitaryPower {amountOfPeople:%d})' % amountOfPeopleInArmy
         resultStr += '\ncreate (country)-[:military_power]->(militaryPower)'
@@ -332,7 +343,7 @@ class CountryCreator:
 
         # internet
         resultStr += '\ncreate (internet:Internet {speedOfInternetMbps:%d, freeWifi:%d})' % (
-        speedOfInternetMbps, freeWifi)
+            speedOfInternetMbps, freeWifi)
         resultStr += '\ncreate (country)-[:internet]->(internet)'
         print('+', countryName)
         result = tx.run(resultStr)
@@ -351,8 +362,8 @@ class CountryCreator:
         resultStr += '\nmatch (country)->[:climat]->(climat)'
         resultStr += 'create (manMadeDisaster:ManMadeDisaster {name:"%s", typeOfMMD:"%s", aomuntOfDeadPeople:%d,' \
                      '                                         aomuntOfInjuredPeople:%d, territoryOfPollution:"%d km^2"})' % (
-                     nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
-                     aomuntOfInjuredPeople, territoryOfPollution)
+                         nameOfDisaster, typeOfMMD, aomuntOfDeadPeople,
+                         aomuntOfInjuredPeople, territoryOfPollution)
         resultStr += 'create (climat)-[:man_made_disaster]->(manMadeDisaster)'
 
         result = tx.run(resultStr)
@@ -382,45 +393,18 @@ class CountryCreator:
     def _createBorders(tx):
         request = '''
         match (canada:Country {name:"Canada"})
-        match (poland:Country {name:"Poland"})
-        match (germany:Country {name:"Germany"})
-        match (czech:Country {name:"Czech"})
-        match (slovakia:Country {name:"Slovakia"})
-        match (hungary:Country {name:"Hungary"})
-        match (uk:Country {name:"United Kingdom"})
-        match (finland:Country {name:"Finland"})
-        match (sweden:Country {name:"Sweden"})
-        match (norway:Country {name:"Norway"})
+        match (uae:Country {name:"United Arab Emirates"})
+        match (usa:Country {name:"United States of America"})
+        match (spain:Country {name:"Spain"})
+        match (italy:Country {name:"Italy"})
+        match (portugal:Country {name:"Portugal"})
+        match (argentina:Country {name:"Argentina"})
+  
+        create (canada)-[:borders_with]->(usa)
+        create (usa)-[:borders_with]->(canada)
         
-        
-        create (poland)-[:borders_with]->(czech)
-        create (poland)-[:borders_with]->(germany)
-        create (poland)-[:borders_with]->(slovakia)
-
-        create (czech)-[:borders_with]->(poland)
-        create (czech)-[:borders_with]->(germany)
-        create (czech)-[:borders_with]->(slovakia)
-        
-        create (germany)-[:borders_with]->(poland)        
-        create (germany)-[:borders_with]->(czech)
-        
-        create (slovakia)-[:borders_with]->(poland)      
-        create (slovakia)-[:borders_with]->(czech)
-        create (slovakia)-[:borders_with]->(hungary) 
-        
-        create (hungary)-[:borders_with]->(slovakia)
-        
-        create (finland)-[:borders_with]->(sweden)
-        create (finland)-[:borders_with]->(norway)
-        
-        create (sweden)-[:borders_with]->(finland)
-        create (sweden)-[:borders_with]->(norway)
-        
-        create (norway)-[:borders_with]->(finland)
-        create (norway)-[:borders_with]->(sweden)
-
-         
-        
+        create (spain)-[:borders_with]->(portugal)
+        create (portugal)-[:borders_with]->(spain)
         \n'''
         result = tx.run(request)
 
@@ -448,26 +432,30 @@ if __name__ == "__main__":
 
     # cities    name   isBig isResort washesBy
     cities = {'Ottawa': [True, True, None], 'Toronto': [True, False, None], 'Montreal': [True, True, None],
-              'Quebec': [True, True, 'Atlantic ocean'], 'Vancouver': [True, True, 'Pacific ocean'], 'Victoria': [False, True, 'Salish sea']}
-    sights = {'Parliament building of Canada': ["The architectural complex, which hosts working meetings of the Canadian government, looks like a medieval castle from the outside. "
-                                                "It is located in a convenient location for travelers - in the heart of Ottawa. "
-                                                "The gray stone from which the building is built seems gloomy at first glance. "
-                                                "However, the overall composition of the building is so precise and accurate that the complex inspires involuntary respect. "
-                                                "It seems that the architects who built the complex in 1860 were fanatically devoted to the idea of symmetry in architecture."
-                                                "The pointed towers are located strictly symmetrically with respect to the central column, on which the clock runs, visible from everywhere. "
-                                                "The strength of the building is evidenced by the fact that the gray stone is also covered with copper plates. "
-                                                "However, in 1916 the building did not survive the devastating fire. "
-                                                "Reconstruction work was carried out in an organized manner, but they dragged on until 1922.",
-                                                'https://cdn.britannica.com/29/179429-050-EDBCAE49/Parliament-Buildings-Ottawa.jpg'],
-              'Oratory of St. Joseph': ["Among those sights that you must visit in Canada is the Oratory of St. Joseph. Construction work began in 1904. "
-                                        "The initiative of the project belongs to André Bessette. "
-                                        "The original version of the oratorio was a small chapel that nestled comfortably on the slopes of Mont Royal next to Notre Dame College. "
-                                        "The church quickly became popular, the number of parishioners increased every year. "
-                                        "Therefore, already in 1917, a church for 1000 people was built here."
-                                        "The church keeps the memory of many miracles performed by Brother Andre Bessette. "
-                                        "It is significant that Pope John Paul II recognized the miracles that are attributed to brother Andrew. "
-                                        "The recognition took place in 1982, and already in 2010 the canonization of brother Andrei took place. "
-                                        "He was canonized by Pope Benedict XVII.", 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/2c/de/a9/photo0jpg.jpg?w=1200&h=1200&s=1'],
+              'Quebec': [True, True, 'Atlantic ocean'], 'Vancouver': [True, True, 'Pacific ocean'],
+              'Victoria': [False, True, 'Salish sea']}
+    sights = {'Parliament building of Canada': [
+        "The architectural complex, which hosts working meetings of the Canadian government, looks like a medieval castle from the outside. "
+        "It is located in a convenient location for travelers - in the heart of Ottawa. "
+        "The gray stone from which the building is built seems gloomy at first glance. "
+        "However, the overall composition of the building is so precise and accurate that the complex inspires involuntary respect. "
+        "It seems that the architects who built the complex in 1860 were fanatically devoted to the idea of symmetry in architecture."
+        "The pointed towers are located strictly symmetrically with respect to the central column, on which the clock runs, visible from everywhere. "
+        "The strength of the building is evidenced by the fact that the gray stone is also covered with copper plates. "
+        "However, in 1916 the building did not survive the devastating fire. "
+        "Reconstruction work was carried out in an organized manner, but they dragged on until 1922.",
+        'https://cdn.britannica.com/29/179429-050-EDBCAE49/Parliament-Buildings-Ottawa.jpg'],
+              'Oratory of St. Joseph': [
+                  "Among those sights that you must visit in Canada is the Oratory of St. Joseph. Construction work began in 1904. "
+                  "The initiative of the project belongs to André Bessette. "
+                  "The original version of the oratorio was a small chapel that nestled comfortably on the slopes of Mont Royal next to Notre Dame College. "
+                  "The church quickly became popular, the number of parishioners increased every year. "
+                  "Therefore, already in 1917, a church for 1000 people was built here."
+                  "The church keeps the memory of many miracles performed by Brother Andre Bessette. "
+                  "It is significant that Pope John Paul II recognized the miracles that are attributed to brother Andrew. "
+                  "The recognition took place in 1982, and already in 2010 the canonization of brother Andrei took place. "
+                  "He was canonized by Pope Benedict XVII.",
+                  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/2c/de/a9/photo0jpg.jpg?w=1200&h=1200&s=1'],
               'Niagara Falls': ["Niagara Falls is included in the list of natural attractions in Canada. "
                                 "In addition, it is considered one of the wonders of the world. "
                                 "The waterfall is located on the border of Canada and America. "
@@ -476,66 +464,77 @@ if __name__ == "__main__":
                                 'This is fully true, since a giant water stream falls from a 50-meter height. '
                                 'Millions of travelers come here to see this unique natural phenomenon with their own eyes.',
                                 'https://cdn.britannica.com/30/94430-050-D0FC51CD/Niagara-Falls.jpg']}
-    beaches = {'Wasaga Beach': ["The longest freshwater beach in the world, attracting tourists with its 12 km of sandy coastline. "
-                                "The warm, shallow waters of the beach are ideal for swimming, while the soft white sand is ideal for picnicking, "
-                                "relaxing and watching the beautiful sunset. This urban beach, which is somewhat reminiscent of the famous beaches in Florida: "
-                                "Daytona Beach and Fort Lauderdale.",
-                                'https://a.travel-assets.com/findyours-php/viewfinder/images/res70/83000/83440-Wasaga-Beach-Provincial-Park.jpg'],
-               "Brady’s Beach": ["Bradis Beach is located in a very secluded area on the Pacific Ocean. The only way to get here is by ferry, plane or timber barge. "
-                                 "Yes, the path is not easy, but the rest here is worth such a voyage. Try to be there during the Music by The Sea festival. "
-                                 "By August, the water here warms up to temperatures suitable for a refreshing swim. "
-                                 "The advantages of this beach are that it is surrounded by the Pacific Rim National Park, the ocean, and the territory of the Indians. "
-                                 "Excellent diving. Proximity to Barkley Sound islands inhabited by sea lions and bald eagles.",
-                                 "https://i.pinimg.com/originals/7a/a9/8e/7aa98ea42f317f0d87f38eac822fe7ab.jpg"],
-               'Ingonish Beach': ["Ingonish Beach is the only beach in the Cape Breton Highlands National Park, with a unique opportunity to swim in both fresh and sea water. "
-                                  "This sandy beach is washed away in winter and washed back by waves every spring, and a natural barrier separates the lake from the waters of the Atlantic Ocean. "
-                                  "In addition to swimming, here you will be offered to go on a boat trip to go fishing and, of course, watch the whales in their habitat.",
-                                  'https://i0.wp.com/anotherwalkinthepark.com/wp-content/uploads/2015/01/briarisland_capebreton_canon-1503.jpg?ssl=1']}
-    mountains = {'Robson': ['The highest point of the Rocky Mountains; it is also the highest point of the Canadian Rockies. '
-                           'The mountain is located within the Robson Provincial Park in British Columbia.',
-                            'https://s9.travelask.ru/system/images/files/001/326/820/wysiwyg_jpg/x1l4g1t1xa911.jpg?1560886998'],
-                 'Temple': ['Mountain in Banff National Park in the Canadian Rockies, the 7th highest peak in Alberta. '
-                            'The Temple is located in the Bow River Valley between Paradise Creek and Moraine Creek and is the highest point in the Lake Louise region.',
-                            'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mount_Temple.jpg/640px-Mount_Temple.jpg'],
-                 'Snow House': ['A mountain on the continental divide of the Columbia Icefield on the border of Banff and Jasper National Parks. '
-                                'Located in the Canadian Rockies on the border of British Columbia and Alberta. The height of the peak is 3456 m.',
-                                'https://img2.goodfon.com/wallpaper/nbig/8/55/winter-landscape-snow-zima-3936.jpg'],
-                 'Assiniboine': ['Pyramidal mountain located on the American Continental Divide on the border of the Canadian provinces of Alberta and British Columbia. '
-                                 'The height is 3618 m above sea level.',
-                                 'https://offtracktravel.ca/wp-content/uploads/2020/03/viewpoint-mount-assiniboine-sunburst-bc-1000x750.jpg']}
+    beaches = {'Wasaga Beach': [
+        "The longest freshwater beach in the world, attracting tourists with its 12 km of sandy coastline. "
+        "The warm, shallow waters of the beach are ideal for swimming, while the soft white sand is ideal for picnicking, "
+        "relaxing and watching the beautiful sunset. This urban beach, which is somewhat reminiscent of the famous beaches in Florida: "
+        "Daytona Beach and Fort Lauderdale.",
+        'https://a.travel-assets.com/findyours-php/viewfinder/images/res70/83000/83440-Wasaga-Beach-Provincial-Park.jpg'],
+               "Brady’s Beach": [
+                   "Bradis Beach is located in a very secluded area on the Pacific Ocean. The only way to get here is by ferry, plane or timber barge. "
+                   "Yes, the path is not easy, but the rest here is worth such a voyage. Try to be there during the Music by The Sea festival. "
+                   "By August, the water here warms up to temperatures suitable for a refreshing swim. "
+                   "The advantages of this beach are that it is surrounded by the Pacific Rim National Park, the ocean, and the territory of the Indians. "
+                   "Excellent diving. Proximity to Barkley Sound islands inhabited by sea lions and bald eagles.",
+                   "https://i.pinimg.com/originals/7a/a9/8e/7aa98ea42f317f0d87f38eac822fe7ab.jpg"],
+               'Ingonish Beach': [
+                   "Ingonish Beach is the only beach in the Cape Breton Highlands National Park, with a unique opportunity to swim in both fresh and sea water. "
+                   "This sandy beach is washed away in winter and washed back by waves every spring, and a natural barrier separates the lake from the waters of the Atlantic Ocean. "
+                   "In addition to swimming, here you will be offered to go on a boat trip to go fishing and, of course, watch the whales in their habitat.",
+                   'https://i0.wp.com/anotherwalkinthepark.com/wp-content/uploads/2015/01/briarisland_capebreton_canon-1503.jpg?ssl=1']}
+    mountains = {
+        'Robson': ['The highest point of the Rocky Mountains; it is also the highest point of the Canadian Rockies. '
+                   'The mountain is located within the Robson Provincial Park in British Columbia.',
+                   'https://s9.travelask.ru/system/images/files/001/326/820/wysiwyg_jpg/x1l4g1t1xa911.jpg?1560886998'],
+        'Temple': ['Mountain in Banff National Park in the Canadian Rockies, the 7th highest peak in Alberta. '
+                   'The Temple is located in the Bow River Valley between Paradise Creek and Moraine Creek and is the highest point in the Lake Louise region.',
+                   'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Mount_Temple.jpg/640px-Mount_Temple.jpg'],
+        'Snow House': [
+            'A mountain on the continental divide of the Columbia Icefield on the border of Banff and Jasper National Parks. '
+            'Located in the Canadian Rockies on the border of British Columbia and Alberta. The height of the peak is 3456 m.',
+            'https://img2.goodfon.com/wallpaper/nbig/8/55/winter-landscape-snow-zima-3936.jpg'],
+        'Assiniboine': [
+            'Pyramidal mountain located on the American Continental Divide on the border of the Canadian provinces of Alberta and British Columbia. '
+            'The height is 3618 m above sea level.',
+            'https://offtracktravel.ca/wp-content/uploads/2020/03/viewpoint-mount-assiniboine-sunburst-bc-1000x750.jpg']}
     skiResorts = {'Whistler Blackcomb': ['At the heart of Whistler and Blackcomb is the charming village of Whistler. '
                                          "You don't even have to ski to enjoy your trip to Whistler, but if you do, you'll find "
                                          'seemingly limitless terrain that can accommodate any level of skier, from first timers to extreme skiers. '
                                          "You'll find beautiful wide-open bowls at Mount Whistler and incredible groomed runs on both mountains. "
                                          "On Blackcomb, the Horstmann Glacier offers year-round skiing.",
                                          'https://skibookings.com/wp-content/uploads/201712_wb_paulmorrison_village_064.jpg'],
-                  'Lake Louise': ["Lake Louise, in the heart of the Rocky Mountains and less than an hour from the city of Banff, is one of Canada's most famous resorts. "
-                                  "From the slopes, majestic scenery stretches over the Luke Valley and the surrounding mountains and beyond to the palatial Fairmont Chateau Lake Louise. "
-                                  "This is a mountain for all skiers, from extreme skiers to families coming here to learn about the sport. "
-                                  "In a resort with 4,200 acres of rocky terrain, the resort offers a combination of wide-open bowls, steepness, flumes and plenty of groomed trails."
-                                  "The Lake Louise Ski Resort doesn't have an onsite location, but it does have fantastic daytime facilities at the base, as well as restaurants serving delicious food, "
-                                  "as well as other restaurants in the mountains. Skiers can take a dip in the nearby village of Lake Louise or the town of Banff.",
-                                  'https://skitheworld.com/wp-content/uploads/2018/12/LAke-louise-ski-village.jpg'],
-                  'Revelstoke': ["Located in the interior of British Columbia, about 2.5 hours from the city of Kelowna, Revelstoke is a bit harder to get to some resorts, but well worth it. "
-                                 "The mountain sees a large number of powder days; few crowds; and offers great terrain, from open bowls to tree trails and starter areas. "
-                                 "Add to that the affordable accommodation options in Revelstoke; ski slopes, ski slopes on the mountain; and fabulous mountain scenery and it's hard to beat this resort. "
-                                 "This is not the place for a glamorous five-star experience or shopping experience. It is a mountain of skiers and a great place for families.",
-                                 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/34/81/6a/the-sutton-place-hotel.jpg?w=700&h=-1&s=1']}
-    lakes = {'Louise': ["A natural wonder of Banff National Park. Lies surrounded by the Rocky Mountains and the bright greenery of the forest, at an altitude of 1646 meters. "
-                        "The unusual emerald color of the water is due to the presence of rock particles brought into the lake by glaciers. The area of the lake is 0.8 km2. "
-                        "On the shore there is a 5-star hotel, a number of campsites and tourist centers, nearby is the famous ski resort. "
-                        "Hiking and cycling routes are organized around the reservoir. Canoe excursions are available.",
-                        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/01/25/ce/47/moraine-lake.jpg?w=700&h=-1&s=1'],
+                  'Lake Louise': [
+                      "Lake Louise, in the heart of the Rocky Mountains and less than an hour from the city of Banff, is one of Canada's most famous resorts. "
+                      "From the slopes, majestic scenery stretches over the Luke Valley and the surrounding mountains and beyond to the palatial Fairmont Chateau Lake Louise. "
+                      "This is a mountain for all skiers, from extreme skiers to families coming here to learn about the sport. "
+                      "In a resort with 4,200 acres of rocky terrain, the resort offers a combination of wide-open bowls, steepness, flumes and plenty of groomed trails."
+                      "The Lake Louise Ski Resort doesn't have an onsite location, but it does have fantastic daytime facilities at the base, as well as restaurants serving delicious food, "
+                      "as well as other restaurants in the mountains. Skiers can take a dip in the nearby village of Lake Louise or the town of Banff.",
+                      'https://skitheworld.com/wp-content/uploads/2018/12/LAke-louise-ski-village.jpg'],
+                  'Revelstoke': [
+                      "Located in the interior of British Columbia, about 2.5 hours from the city of Kelowna, Revelstoke is a bit harder to get to some resorts, but well worth it. "
+                      "The mountain sees a large number of powder days; few crowds; and offers great terrain, from open bowls to tree trails and starter areas. "
+                      "Add to that the affordable accommodation options in Revelstoke; ski slopes, ski slopes on the mountain; and fabulous mountain scenery and it's hard to beat this resort. "
+                      "This is not the place for a glamorous five-star experience or shopping experience. It is a mountain of skiers and a great place for families.",
+                      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/34/81/6a/the-sutton-place-hotel.jpg?w=700&h=-1&s=1']}
+    lakes = {'Louise': [
+        "A natural wonder of Banff National Park. Lies surrounded by the Rocky Mountains and the bright greenery of the forest, at an altitude of 1646 meters. "
+        "The unusual emerald color of the water is due to the presence of rock particles brought into the lake by glaciers. The area of the lake is 0.8 km2. "
+        "On the shore there is a 5-star hotel, a number of campsites and tourist centers, nearby is the famous ski resort. "
+        "Hiking and cycling routes are organized around the reservoir. Canoe excursions are available.",
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/01/25/ce/47/moraine-lake.jpg?w=700&h=-1&s=1'],
              'Moraine': ["One of the most beautiful and photographed lakes in the world. Business card of Canada. "
                          "Its stunning landscapes can be found in many magazines and catalogs, on Canadian currency, Windows screensaver, etc. "
                          "It lies in the Valley of the Ten Peaks of the famous Banff Park, at an altitude of 1885 meters. "
                          "Origin - glacial. The area is 0.5 km2. Routes have been laid out for tourists, it is better to move along them with an experienced guide. "
-                         "A hotel was built on the shore, there is a boat rental.", 'https://media-cdn.tripadvisor.com/media/photo-s/10/23/d3/72/moraine-lake.jpg'],
-             'Superior': ['The largest in terms of area in the composition of the Great Five and among the fresh lakes of the world. '
-                          'Located in Canada and the USA. It occupies an area of 82.7 thousand km2. The shores are indented, there are large bays, islands. '
-                          'There are many parks on the lake, a marine reserve has been created. The water is cold, even in summer it does not exceed 4 ° C, in winter it does not freeze due to frequent storms. '
-                          'The lake is rich in fish. Navigable. The major port is Thunder Bay. The southern part of the reservoir is known as the graveyard of ships.',
-                          'https://webmandry.com/wp-content/uploads/2019/07/Samye-bolshie-ozera-kakoe-samoe-bolshoe-ozero-v-mire-2-Verhnee.jpg']}
+                         "A hotel was built on the shore, there is a boat rental.",
+                         'https://media-cdn.tripadvisor.com/media/photo-s/10/23/d3/72/moraine-lake.jpg'],
+             'Superior': [
+                 'The largest in terms of area in the composition of the Great Five and among the fresh lakes of the world. '
+                 'Located in Canada and the USA. It occupies an area of 82.7 thousand km2. The shores are indented, there are large bays, islands. '
+                 'There are many parks on the lake, a marine reserve has been created. The water is cold, even in summer it does not exceed 4 ° C, in winter it does not freeze due to frequent storms. '
+                 'The lake is rich in fish. Navigable. The major port is Thunder Bay. The southern part of the reservoir is known as the graveyard of ships.',
+                 'https://webmandry.com/wp-content/uploads/2019/07/Samye-bolshie-ozera-kakoe-samoe-bolshoe-ozero-v-mire-2-Verhnee.jpg']}
     rivers = {'Yukon': ["One of the largest rivers of the North American continent originates in Lake Marsh. "
                         "Most of the Yukon is located in the United States, but the source is located in the Canadian province of the same name. "
                         'A tributary of the Yukon, the Klondike, is famous for the gold rush of the 20th century. '
@@ -549,29 +548,38 @@ if __name__ == "__main__":
                            "and fry are in some cases transported to the ocean by the US Army. "
                            "The total length of the river is 2000 km.",
                            'https://www.americanrivers.org/wp-content/uploads/2016/03/Columbia-River-Credit-Alan-Majchrowicz-header.jpg'],
-              'Churchill': ["Thanks to an artificial canal built in the 20th century, most of the water from the Churchill River goes to Saskatchewan to increase hydroelectric power generation. "
-                            "The river originates in the central part of the province of Saskatchewan and carries its waters east to Hudson Bay. "
-                            "The rich flora and fauna of the river basin was the reason for its nomination for inclusion in the List of Protected Rivers of Canada.",
-                            'https://media.socastsrm.com/wordpress/wp-content/blogs.dir/900/files/2022/05/churchill-falls-1969-heritage-nl.jpg']}
+              'Churchill': [
+                  "Thanks to an artificial canal built in the 20th century, most of the water from the Churchill River goes to Saskatchewan to increase hydroelectric power generation. "
+                  "The river originates in the central part of the province of Saskatchewan and carries its waters east to Hudson Bay. "
+                  "The rich flora and fauna of the river basin was the reason for its nomination for inclusion in the List of Protected Rivers of Canada.",
+                  'https://media.socastsrm.com/wordpress/wp-content/blogs.dir/900/files/2022/05/churchill-falls-1969-heritage-nl.jpg']}
     universities = {'Ottawa': ['Carleton University', 'University of Ottawa'],
                     'Toronto': ['York University', 'University of Toronto'],
                     'Montreal': ['Montreal University', 'Polytechnique Montreal'],
                     'Quebec': ['Laval University', 'TELUQ University'],
                     'Vancouver': ['University of British Columbia', 'University Canada West']}
-    faculties = {'Carleton University': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
+    faculties = {'Carleton University': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
+                                         'Faculty of Education',
                                          'Faculty of Law', 'Faculty of Science', 'Faculty of Social Sciences'],
                  'University of Ottawa': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Education',
-                                          'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Social Sciences'],
-                 'York University': ['Faculty of Education', 'Faculty of Arts', 'Faculty of Medicine', 'Faculty of Science'],
+                                          'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law',
+                                          'Faculty of Social Sciences'],
+                 'York University': ['Faculty of Education', 'Faculty of Arts', 'Faculty of Medicine',
+                                     'Faculty of Science'],
                  'University of Toronto': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Medicine'],
-                 'Montreal University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Law', 'Faculty of Medicine',
+                 'Montreal University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Law',
+                                         'Faculty of Medicine',
                                          'Faculty of Education'],
-                 'Polytechnique Montreal': ['Faculty of Computer Engineering and Software', 'Faculty of Science', 'Faculty of Medicine'],
-                 'Laval University': ['Faculty of Arts', 'Faculty of Law', 'Faculty of Education', 'Faculty of Forestry', 'Faculty of Medicine'],
+                 'Polytechnique Montreal': ['Faculty of Computer Engineering and Software', 'Faculty of Science',
+                                            'Faculty of Medicine'],
+                 'Laval University': ['Faculty of Arts', 'Faculty of Law', 'Faculty of Education',
+                                      'Faculty of Forestry', 'Faculty of Medicine'],
                  'TELUQ University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Medicine'],
-                 'University of British Columbia': ['Faculty of Business', 'Faculty of Forestry', 'Faculty of Education',
+                 'University of British Columbia': ['Faculty of Business', 'Faculty of Forestry',
+                                                    'Faculty of Education',
                                                     'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law'],
-                 'University Canada West': ['Faculty of Arts', 'Faculty of Computer Engineering and Software', 'Faculty of Education',
+                 'University Canada West': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
+                                            'Faculty of Education',
                                             'Faculty of Law', 'Faculty of Science', 'Faculty of Social Sciences']}
     programs = {'Carleton University': ['Magistracy', 'Undergraduate'],
                 'University of Ottawa': ['Magistracy', 'Undergraduate'],
@@ -593,16 +601,16 @@ if __name__ == "__main__":
              'TELUQ University': 'https://www.teluq.ca',
              'University of British Columbia': 'https://www.ubc.ca',
              'University Canada West': 'https://www.ucanwest.ca'}
-    images = {'Carleton University': 'carleton_university',
-              'University of Ottawa': 'university_of_ottawa',
-              'York University': 'york_university',
-              'University of Toronto': 'university_of_toronto',
-              'Montreal University': 'montreal_university',
-              'Polytechnique Montreal': 'politechnique_montreal',
-              'Laval University': 'laval_university',
-              'TELUQ University': 'teluq_university',
-              'University of British Columbia': 'university_of_british_columbia',
-              'University Canada West': 'university_canada_west'}
+    images = {'Carleton University': 'https://mtarch.com/wp-content/uploads/2012/06/River01-640x632.jpg',
+              'University of Ottawa': 'https://www.timeshighereducation.com/sites/default/files/institution/header_image/times_higner_education_profile_header_1950x700_v1.jpg',
+              'York University': 'https://www.timeshighereducation.com/sites/default/files/institution/header_image/vari-drone.jpeg',
+              'University of Toronto': 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Uoft_universitycollege.jpg',
+              'Montreal University': 'https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/university_of_montreal.jpg?itok=nvpq29hR',
+              'Polytechnique Montreal': 'https://www.letudiant.fr/uploads/mediatheque/ETU_ETU/1/9/1723919-polytechnique-montreal-1-3-original.jpg',
+              'Laval University': 'https://frenchitalian.washington.edu/sites/frenchitalian/files/styles/large/public/images/u_laval_quebec.png?itok=S64NOYC-',
+              'TELUQ University': 'https://upload.wikimedia.org/wikipedia/commons/2/29/T%C3%89LUQ_panorama.jpg',
+              'University of British Columbia': 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/1b/0f/b6/irving-k-barber-learning.jpg?w=1200&h=-1&s=1',
+              'University Canada West': 'https://www.ucanwest.ca/wp-content/uploads/2022/04/UCW-Vancouver-House-Campus-3.jpg'}
     hostel = {'Carleton University': 'Yes',
               'University of Ottawa': 'Yes',
               'York University': 'Yes',
@@ -612,11 +620,17 @@ if __name__ == "__main__":
               'Laval University': 'No',
               'TELUQ University': 'No',
               'University of British Columbia': 'Yes',
-              'University Canada West': 'university_canada_west'}
-    scolarship = {'Abu Dhabi University': 'Yes',
-                  'Khalifa University': 'Yes',
-                  'Murdoch University Dubai': 'Yes',
-                  'American University of Sharjah': 'Yes'}
+              'University Canada West': 'Yes'}
+    scolarship = {'Carleton University': 'Yes',
+                  'University of Ottawa': 'Yes',
+                  'York University': 'Yes',
+                  'University of Toronto': 'Yes',
+                  'Montreal University': 'Yes',
+                  'Polytechnique Montreal': 'No',
+                  'Laval University': 'No',
+                  'TELUQ University': 'No',
+                  'University of British Columbia': 'Yes',
+                  'University Canada West': 'Yes'}
     requirements = {'Carleton University': 'Four years of English. '
                                            'Three or more years of mathematics. '
                                            'Two or more years of science. '
@@ -632,7 +646,7 @@ if __name__ == "__main__":
                                              'The average score sufficient for admission should be at least 75-80% of the maximum possible. '
                                              'The age limit is at least 17 years old. '
                                              'English at IELTS level minimum 6.5 or TOEFL iBT 100+',
-                    'Montreal university': 'To secure admission at UdeM, international students are required to have a minimum GPA of 3.0 i.e 85% for UG programs, and a GPA of 3.3 i.e 88% for PG programs.y',
+                    'Montreal University': 'To secure admission at UdeM, international students are required to have a minimum GPA of 3.0 i.e 85% for UG programs, and a GPA of 3.3 i.e 88% for PG programs.y',
                     'Polytechnique Montreal': 'A certified or official French or English translation is required for any documentation not written in French or English. A copy of original documents as well as their official translations must be provided.'
                                               ' All documentation provided becomes property of Polytechnique Montréal and will not be returned to the applicant.',
                     'Laval University': 'You must hold the minimum diploma required for the level of studies you are pursuing and demonstrate an adequate level of French proficiency.',
@@ -649,7 +663,7 @@ if __name__ == "__main__":
              'University of Ottawa': 19041,
              'York University': 20102,
              'University of Toronto': 34045,
-             'Montreal university': 18400,
+             'Montreal University': 18400,
              'Polytechnique Montreal': 23000,
              'Laval University': 18151,
              'TELUQ University': 17256,
@@ -660,7 +674,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1.33
 
     # military
-    milPolBlock = "NATO"
+    milPolBlock = ["NATO"]
     amountOfPeopleInArmy = 92000
 
     # healthcare
@@ -746,7 +760,8 @@ if __name__ == "__main__":
                   # internet
                   speedOfInternetMbps, freeWifi,
                   # education
-                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images, requirements,
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
                   hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
                   )
     #############################   CANADA   #############################
@@ -770,7 +785,7 @@ if __name__ == "__main__":
                                           'Faculty of Medicine', 'Faculty of Law'],
                  'Khalifa University': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Medicine'],
                  'Murdoch University Dubai': ['Faculty of Computer Engineering and Software', 'Faculty of Business',
-                                              'Faculty of Psychology'],
+                                              'Faculty of Social Sciences'],
                  'American University of Sharjah': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
                                                     'Faculty of Engineering',
                                                     'Faculty of Medicine', 'Faculty of Science']}
@@ -814,14 +829,15 @@ if __name__ == "__main__":
              'Khalifa University': 7000,
              'Murdoch University Dubai': 42200,
              'American University of Sharjah': 22200}
-    sights = {'Burj Khalifa': ["What is the first thing that comes to mind when talking about the sights of the UAE? Of course, the grandiose Burj Khalifa. "
-                               "According to the project, this building was originally planned to be the tallest in the world, "
-                               "its height was kept secret until the end so that it could be adjusted if the building was designed higher. "
-                               "The height of this truly huge skyscraper is 828 m (163 floors), which is 196 m higher than the Shanghai Tower, which is 632 m high."
-                               "Inside this huge building, in addition to the hotel, there are apartments, a huge number of shopping centers and offices. "
-                               "The highest observation deck is located at an altitude of 472 m. The air inside the Dubai Tower, in addition to cooling, is additionally flavored. "
-                               "Not far from the skyscraper are the highest singing fountains in the world, which are an unusually beautiful sight.",
-                               'https://luxeadventuretraveler.com/wp-content/uploads/2012/12/Luxe-Adventure-Traveler-Dubai-Burj-Khalifa-6.jpg'],
+    sights = {'Burj Khalifa': [
+        "What is the first thing that comes to mind when talking about the sights of the UAE? Of course, the grandiose Burj Khalifa. "
+        "According to the project, this building was originally planned to be the tallest in the world, "
+        "its height was kept secret until the end so that it could be adjusted if the building was designed higher. "
+        "The height of this truly huge skyscraper is 828 m (163 floors), which is 196 m higher than the Shanghai Tower, which is 632 m high."
+        "Inside this huge building, in addition to the hotel, there are apartments, a huge number of shopping centers and offices. "
+        "The highest observation deck is located at an altitude of 472 m. The air inside the Dubai Tower, in addition to cooling, is additionally flavored. "
+        "Not far from the skyscraper are the highest singing fountains in the world, which are an unusually beautiful sight.",
+        'https://luxeadventuretraveler.com/wp-content/uploads/2012/12/Luxe-Adventure-Traveler-Dubai-Burj-Khalifa-6.jpg'],
               'Palm Islands': ["The Palm Islands can rightly be considered the eighth wonder of the world. "
                                "Of all that has been built by man, only this artificial archipelago and the Great Wall of China are visible from space. "
                                "This place is a business center, today it is the center of tourism of the entire Persian Gulf."
@@ -843,50 +859,56 @@ if __name__ == "__main__":
                                     "In total, about 20 compositions are performed per day without repetitions. "
                                     "Only at the very beginning of the performance a song in honor of the capital sounds.",
                                     'https://www.taritravel.com/upload/medialibrary/21b/21bb5ac705f6abad5813f7991efdb091.jpg']}
-    beaches = {'Cornish': ["Corniche Beach is located in the largest emirate and, at the same time, in the city of the same name, which is the capital of the UAE - in Abu Dhabi. "
-                           "Corniche Beach is called one of the symbols of Abu Dhabi - the infrastructure is well developed here, the surroundings are clean, there is a constant flow of tourists. "
-                           "There are no high waves here due to the nearby islands of Al Lulu and Al Marin. "
-                           "The promenade, about 5 km long, has everything you need to enjoy your vacation by the sea: "
-                           "here you can rent beach equipment, have fun on the rides, try international cuisine in coastal restaurants and cafes. "
-                           "Along the beach there are hotels that meet high standards and skyscrapers, which gives the beach a certain charm. "
-                           "There are three zones on the beach. There are paid and free. "
-                           "The beach and the sea are the same there, but there is still a difference: "
-                           "in paid areas you can rent sun loungers and towels, and there are also more local cafes and restaurants, beautiful small gardens with palm trees and flowers. "
-                           "The third zone is a special area for families - Family Beach Section. You have to pay to enter there, but this family corner is worth it.",
-                           'https://media.cntraveller.com/photos/611be91fa86777b29fbc4f00/16:9/w_2580,c_limit/beach-at-porthcurno-saint-levan-cornwall-conde-nast-traveller-18aug16-alamy.jpg'],
-               "Saadiyat": ["Saadiyat Beach is located on the artificial island of the same name, 5 kilometers from the UAE capital Abu Dhabi. "
-                            "The beach area has a length of 9 km. There is white soft sand, nice waves."
-                            " The beach has a calm atmosphere and allows you to relax from the bustle of the city. "
-                            "The beach itself can be divided into a public beach, party and a beach from hotels. "
-                            "We note right away that the hotels on this beach are mostly luxury. "
-                            "All areas on Saadiyat Beach are paid: the cheapest vacation is on the public beach, the most expensive is the beach of the Hyatt Hotel. "
-                            "Saadiyat has a huge selection of entertainment: water rides, yachts, surfing. "
-                            "For those who relax in the club or hotel zone, there is an opportunity to visit swimming pools, spas, fitness centers, elite restaurants and bars.",
-                            'https://fs.tonkosti.ru/0g/91/0g91mdjb4lzww8s0gkggwgoo0.jpg'],
-               'Jumeirah': ["Jumeirah Beach is the largest and most visited beach in Dubai, which includes several smaller beaches. "
-                            "It is named after the area that bears the same name and stretches for 20 km. "
-                            "The beaches succeed each other in a chain: first private, then public. "
-                            "The prices here are very different: you can relax on the free Jumeirah Open Beach, and on the beach at the Jumeirah Beach Hotel. "
-                            "The peculiarity of the beach is the view of the 7-star Burj Arab hotel. "
-                            "Everyone who stays at Jumeirah Beach does not miss the opportunity to take a picture against the backdrop of the sail hotel. "
-                            "By the way, because of the hotel, excursions from other Dubai beaches are organized to Jumeirah Beach. "
-                            "We will tell you about the most popular and best areas of this huge beach.",
-                            'https://www.timeoutdubai.com/cloud/timeoutdubai/2022/03/15/Dubais-best-beaches.jpg']}
-    mountains = {'Jebel Hafeet': ["The mountain located mainly in the vicinity of Al Ain, which is located in the Emirate of Abu Dhabi in the UAE. "
-                                  "Part of the mountain is surrounded by the border with Oman, and the peak is located entirely within the United Arab Emirates.",
-                                  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/b4/6a/9e/abu-dhabi-is-one-of-the.jpg?w=1200&h=-1&s=1'],
+    beaches = {'Cornish': [
+        "Corniche Beach is located in the largest emirate and, at the same time, in the city of the same name, which is the capital of the UAE - in Abu Dhabi. "
+        "Corniche Beach is called one of the symbols of Abu Dhabi - the infrastructure is well developed here, the surroundings are clean, there is a constant flow of tourists. "
+        "There are no high waves here due to the nearby islands of Al Lulu and Al Marin. "
+        "The promenade, about 5 km long, has everything you need to enjoy your vacation by the sea: "
+        "here you can rent beach equipment, have fun on the rides, try international cuisine in coastal restaurants and cafes. "
+        "Along the beach there are hotels that meet high standards and skyscrapers, which gives the beach a certain charm. "
+        "There are three zones on the beach. There are paid and free. "
+        "The beach and the sea are the same there, but there is still a difference: "
+        "in paid areas you can rent sun loungers and towels, and there are also more local cafes and restaurants, beautiful small gardens with palm trees and flowers. "
+        "The third zone is a special area for families - Family Beach Section. You have to pay to enter there, but this family corner is worth it.",
+        'https://media.cntraveller.com/photos/611be91fa86777b29fbc4f00/16:9/w_2580,c_limit/beach-at-porthcurno-saint-levan-cornwall-conde-nast-traveller-18aug16-alamy.jpg'],
+               "Saadiyat": [
+                   "Saadiyat Beach is located on the artificial island of the same name, 5 kilometers from the UAE capital Abu Dhabi. "
+                   "The beach area has a length of 9 km. There is white soft sand, nice waves."
+                   " The beach has a calm atmosphere and allows you to relax from the bustle of the city. "
+                   "The beach itself can be divided into a public beach, party and a beach from hotels. "
+                   "We note right away that the hotels on this beach are mostly luxury. "
+                   "All areas on Saadiyat Beach are paid: the cheapest vacation is on the public beach, the most expensive is the beach of the Hyatt Hotel. "
+                   "Saadiyat has a huge selection of entertainment: water rides, yachts, surfing. "
+                   "For those who relax in the club or hotel zone, there is an opportunity to visit swimming pools, spas, fitness centers, elite restaurants and bars.",
+                   'https://fs.tonkosti.ru/0g/91/0g91mdjb4lzww8s0gkggwgoo0.jpg'],
+               'Jumeirah': [
+                   "Jumeirah Beach is the largest and most visited beach in Dubai, which includes several smaller beaches. "
+                   "It is named after the area that bears the same name and stretches for 20 km. "
+                   "The beaches succeed each other in a chain: first private, then public. "
+                   "The prices here are very different: you can relax on the free Jumeirah Open Beach, and on the beach at the Jumeirah Beach Hotel. "
+                   "The peculiarity of the beach is the view of the 7-star Burj Arab hotel. "
+                   "Everyone who stays at Jumeirah Beach does not miss the opportunity to take a picture against the backdrop of the sail hotel. "
+                   "By the way, because of the hotel, excursions from other Dubai beaches are organized to Jumeirah Beach. "
+                   "We will tell you about the most popular and best areas of this huge beach.",
+                   'https://www.timeoutdubai.com/cloud/timeoutdubai/2022/03/15/Dubais-best-beaches.jpg']}
+    mountains = {'Jebel Hafeet': [
+        "The mountain located mainly in the vicinity of Al Ain, which is located in the Emirate of Abu Dhabi in the UAE. "
+        "Part of the mountain is surrounded by the border with Oman, and the peak is located entirely within the United Arab Emirates.",
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/b4/6a/9e/abu-dhabi-is-one-of-the.jpg?w=1200&h=-1&s=1'],
                  'Jabal Yibir': ["This is one of the best; if not the best mountain drive in UAE. "
                                  "Very steep climb and narrow hairpins. Dangerous but Adventurous. "
                                  "Won’t recommend to drive along with family though. Once you reached top of the mountain you are blessed with astonishing sceneries. "
                                  "Every angle will give you a perfect picture even for amateurs. "
                                  "You can see Dubai skyline along with setting sun and the marvelous Burj Khalifa at one view point.",
                                  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/dd/d1/2f/stopover-area.jpg?w=1200&h=-1&s=1'],
-                 'Jabal Bil Ays': ['The mountain in the northwestern Hajar Range in the Musandam province of Oman, and also in Ras Al Khaimah, United Arab Emirates. '
-                                    'The summit has a height of 1934 m.',
-                                   'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/View_from_Jebel_Jais_-_panoramio.jpg/1200px-View_from_Jebel_Jais_-_panoramio.jpg']}
-    skiResorts = {'Ski Dubai': ["An amusement park and the first indoor ski resort in the Middle East and one of the largest in the world with an area of about 22.5 thousand m², "
-                                "covered with artificial snow all year round. Capacity - 1.5 thousand visitors. Located in the Mall of the Emirates.",
-                                'https://static.toiimg.com/photo/40367677.cms']}
+                 'Jabal Bil Ays': [
+                     'The mountain in the northwestern Hajar Range in the Musandam province of Oman, and also in Ras Al Khaimah, United Arab Emirates. '
+                     'The summit has a height of 1934 m.',
+                     'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/View_from_Jebel_Jais_-_panoramio.jpg/1200px-View_from_Jebel_Jais_-_panoramio.jpg']}
+    skiResorts = {'Ski Dubai': [
+        "An amusement park and the first indoor ski resort in the Middle East and one of the largest in the world with an area of about 22.5 thousand m², "
+        "covered with artificial snow all year round. Capacity - 1.5 thousand visitors. Located in the Mall of the Emirates.",
+        'https://static.toiimg.com/photo/40367677.cms']}
     lakes = {}
     rivers = {}
     # currency
@@ -894,7 +916,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 3.67
 
     # military
-    milPolBlock = "None"
+    milPolBlock = []
     amountOfPeopleInArmy = 63000
 
     # healthcare
@@ -989,20 +1011,28 @@ if __name__ == "__main__":
     # cities    name   isBig  washesBy
     cities = {
         'New York': [True, True, 'Atlantic ocean'],
-              'Los Angeles': [True, True, 'Pacific ocean'], 'Chicago': [True, True, None], 'Houston': [True, False, 'Gulf of Mexico'],
-              'Miami': [False, True, 'Atlantic ocean'], 'Hawaii': [False, True, 'Pacific ocean'], 'Cambridge': [False, False, 'Atlantic ocean'],
-              'Palo Alto': [False, False, None]}
+        'Los Angeles': [True, True, 'Pacific ocean'], 'Chicago': [True, True, None],
+        'Houston': [True, False, 'Gulf of Mexico'],
+        'Miami': [False, True, 'Atlantic ocean'], 'Hawaii': [False, True, 'Pacific ocean'],
+        'Cambridge': [False, False, 'Atlantic ocean'],
+        'Palo Alto': [False, False, None]}
 
     # education
     universities = {'Cambridge': ['Harvard University'],
                     'Palo Alto': ['Stanford University'],
                     'Chicago': ['University of Chicago'],
                     'New York': ['New York University']}
-    faculties = {'Harvard University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Engineering', 'Faculty of Business', 'Faculty of Social Sciences'],
-                 'Stanford University': ['Faculty of Business', 'Faculty of Engineering', 'Faculty of Computer Engineering and Software',
-                                         'Faculty of Science', 'Faculty of Social Sciences',  'Faculty of Medicine', 'Faculty of Law'],
-                 'University of Chicago': ['Faculty of Law', 'Faculty of Social Sciences', 'Faculty of Medicine', 'Faculty of Business'],
-                 'New York University': ['Faculty of Arts', 'Faculty of Social Sciences',  'Faculty of Medicine', 'Faculty of Law']}
+    faculties = {
+        'Harvard University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Engineering', 'Faculty of Business',
+                               'Faculty of Social Sciences'],
+        'Stanford University': ['Faculty of Business', 'Faculty of Engineering',
+                                'Faculty of Computer Engineering and Software',
+                                'Faculty of Science', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                'Faculty of Law'],
+        'University of Chicago': ['Faculty of Law', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                  'Faculty of Business'],
+        'New York University': ['Faculty of Arts', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                'Faculty of Law']}
     programs = {'Stanford University': ['Magistracy', 'Undergraduate'],
                 'New York University': ['Magistracy', 'Undergraduate', 'MBA'],
                 'Harvard University': ['Magistracy', 'Undergraduate'],
@@ -1057,24 +1087,26 @@ if __name__ == "__main__":
              'New York University': 39000,
              'Stanford University': 54315}
 
-    sights = {'The Statue of Liberty': ["For the first time in America, people tend to see all the sights of the United States. "
-                                        "One of the most famous symbols of the country in the world - the Statue of Liberty - is located on a small island in the port of New York. "
-                                        "The majestic sculpture of a woman with a torch in her hand, stretched into the sky, has become the personification of America's freedom. "
-                                        "The crown on her head has seven rays, which means seven continents and seven oceans (according to Western geographical tradition). "
-                                        "In her other hand she holds a slab engraved with the date of the Declaration of Independence. "
-                                        "The monument was made by French masters by order of the US government and sent to the island in parts. "
-                                        "Here, the Americans have already assembled it on a built plinth. "
-                                        "The Statue of Liberty is not only a symbol, but also a functioning lighthouse in New York Harbor. "
-                                        "The height of the statue from the beginning of the pedestal to the top of the torch is 93 meters. "
-                                        "The figure is made of copper plates mounted on a steel frame.",
-                                        'https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY1MTc1MTk3ODI0MDAxNjA5/topic-statue-of-liberty-gettyimages-960610006-promo.jpg'],
-              'Central park': ["The sights of the United States are of great interest to tourists. New York's Central Park occupies a special place among them. "
-                               "It is an oasis of calm in the bustling business flow of Manhattan. The green zone is 4 km long and 800 meters wide. "
-                               "The opening of the park took place in 1859. Tens of thousands of workers ennobled the territory for another 20 years. "
-                               "About 5 million trees were planted, and the land was brought from ecologically clean areas. "
-                               "Now the park has a whole recreation infrastructure. "
-                               "These are various playgrounds, attractions, skating rinks and just lawns for a picnic.",
-                               'http://askandgo.ru/images/poi/2990.jpg'],
+    sights = {'The Statue of Liberty': [
+        "For the first time in America, people tend to see all the sights of the United States. "
+        "One of the most famous symbols of the country in the world - the Statue of Liberty - is located on a small island in the port of New York. "
+        "The majestic sculpture of a woman with a torch in her hand, stretched into the sky, has become the personification of America's freedom. "
+        "The crown on her head has seven rays, which means seven continents and seven oceans (according to Western geographical tradition). "
+        "In her other hand she holds a slab engraved with the date of the Declaration of Independence. "
+        "The monument was made by French masters by order of the US government and sent to the island in parts. "
+        "Here, the Americans have already assembled it on a built plinth. "
+        "The Statue of Liberty is not only a symbol, but also a functioning lighthouse in New York Harbor. "
+        "The height of the statue from the beginning of the pedestal to the top of the torch is 93 meters. "
+        "The figure is made of copper plates mounted on a steel frame.",
+        'https://www.history.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY1MTc1MTk3ODI0MDAxNjA5/topic-statue-of-liberty-gettyimages-960610006-promo.jpg'],
+              'Central park': [
+                  "The sights of the United States are of great interest to tourists. New York's Central Park occupies a special place among them. "
+                  "It is an oasis of calm in the bustling business flow of Manhattan. The green zone is 4 km long and 800 meters wide. "
+                  "The opening of the park took place in 1859. Tens of thousands of workers ennobled the territory for another 20 years. "
+                  "About 5 million trees were planted, and the land was brought from ecologically clean areas. "
+                  "Now the park has a whole recreation infrastructure. "
+                  "These are various playgrounds, attractions, skating rinks and just lawns for a picnic.",
+                  'http://askandgo.ru/images/poi/2990.jpg'],
               'White House': ["US attractions are represented by a very extensive list. "
                               "But the most important of them in terms of the history of executive power is, of course, the White House. "
                               "It is a symbol of America's democracy. The residence of the rulers of the country is named after the color of the building itself. "
@@ -1086,18 +1118,19 @@ if __name__ == "__main__":
                               "Tours are free, but you need to sign up six months in advance. "
                               "Despite the accessibility, there are employees of the US Secret Service in the building itself and along its perimeter.",
                               'https://www.rd.com/wp-content/uploads/2017/12/this-is-why-the-white-house-is-white-119809810-Orhan-Cam-ft.jpg'],
-              'Hollywood and Avenue of Stars': ["When asked by a tourist what to see in the USA, the answer comes with lightning speed - of course, Hollywood. "
-                                                "Everyone wants to visit the Dream Factory and see with their own eyes the places where legends live and are created. "
-                                                "Most of the film studios are located on the West Side. "
-                                                "In Hollywood, location shooting and film editing are carried out. "
-                                                "It also hosts the Oscars, America's highest award in the film industry. Since 2005, "
-                                                "Hollywood has been recognized as an independent territorial unit. "
-                                                "You can not pass by the famous landmark of the United States - Star Avenue. "
-                                                "It is the symbol of California and the most visited place in America. "
-                                                "The Alley is located in the courtyard of the Grauman Theater and is a complex of concrete slabs with copper stars. "
-                                                "It is on these stars that the names of celebrities are imprinted. There are about 2600 such plates. "
-                                                "The first star appeared back in 1958.",
-                                                'https://thumbs.dreamstime.com/b/famous-hollywood-boulevard-avenue-stars-los-angelos-california-usa-september-147460759.jpg']}
+              'Hollywood and Avenue of Stars': [
+                  "When asked by a tourist what to see in the USA, the answer comes with lightning speed - of course, Hollywood. "
+                  "Everyone wants to visit the Dream Factory and see with their own eyes the places where legends live and are created. "
+                  "Most of the film studios are located on the West Side. "
+                  "In Hollywood, location shooting and film editing are carried out. "
+                  "It also hosts the Oscars, America's highest award in the film industry. Since 2005, "
+                  "Hollywood has been recognized as an independent territorial unit. "
+                  "You can not pass by the famous landmark of the United States - Star Avenue. "
+                  "It is the symbol of California and the most visited place in America. "
+                  "The Alley is located in the courtyard of the Grauman Theater and is a complex of concrete slabs with copper stars. "
+                  "It is on these stars that the names of celebrities are imprinted. There are about 2600 such plates. "
+                  "The first star appeared back in 1958.",
+                  'https://thumbs.dreamstime.com/b/famous-hollywood-boulevard-avenue-stars-los-angelos-california-usa-september-147460759.jpg']}
     beaches = {'Siesta Beach': ["The beach located in the Gulf of Mexico on the coast of Florida. "
                                 "Siesta Beach has received numerous awards, including being named America's Best Beach in 2011. "
                                 " are lifeguards, showers and toilets, snack bars, souvenir shops, picnic tables, gazebos, sun loungers, equipped playgrounds, "
@@ -1107,40 +1140,43 @@ if __name__ == "__main__":
                                 "The width of the beach reaches 100 meters, a smooth entrance to the sea, "
                                 "the absence of big waves and a gentle shore make the beach a great place to relax with children.",
                                 'https://www.siestakeyluxuryrentalproperties.com/wp-content/uploads/2020/07/shutterstock_319854593.jpg'],
-               "Poipu Beach Park": ["Popular with visitors and locals alike, this crescent-shaped beach offers crystal-clear waters and occasional Hawaiian monk seal appearances. "
-                                    "(If you do spot a monk seal, please be mindful by staying at least 100 feet away and no flash photography as they are currently on the endangered species list.)"
-                                    " With lifeguards, picnic facilities, showers and a natural wading pool for young swimmers, it’s also a great destination for a family beach day. "
-                                    "There’s a bodyboarding site directly in front of the park for older children and novice adults, a surfing site for experienced surfers and a good reef for snorkeling. "
-                                    "From December through April, you can sometimes spot humpback whales in the distance.",
-                                    'https://poipubeach.org/wp-content/uploads/2014/05/poipu-beach-aerial.jpg'],
-               'Moonstone Beach': ["Famous for its dramatic coastline and breathtaking views, the Moonstone Beach Boardwalk is where your Cambria seaside escape begins. "
-                                   "Whether you want to sink your toes into the sand, catch glimpses of marine life swimming by, explore living tide pools, "
-                                   "or head out to sea for surfing, boating, and other aquatic adventures, you will find there is something for everyone to enjoy on Moonstone Beach. "
-                                   "Take a relaxing one-mile stroll along the Moonstone Beach Boardwalk. "
-                                   "Enjoy playful sea otters, watch whales and dolphins in season, "
-                                   "and spy the wildlife on-shore while taking in the stunning ocean views.",
-                                   'https://www.hikespeak.com/img/Central-Coast/SLO/Cambria/Moonstone_Beach_Boardwalk_IMG_9185.jpg']}
-    mountains = {'Appalachians': ["Mountain system in the east of the country, running through Massachusetts, New York, Ohio, Virginia, "
-                                  "Kentucky, Georgia, Alabama and numerous other states. Coal and other minerals are mined here. "
-                                  "The average height of the mountains in the system is no more than a kilometer above sea level. "
-                                  "The highest eastern point in the United States is Mount Mitchell in North Carolina. "
-                                  "It rises more than 2 thousand meters.",
-                                  'https://peakvisor.com/img/news/Appalachian-Mountains.jpg'],
+               "Poipu Beach Park": [
+                   "Popular with visitors and locals alike, this crescent-shaped beach offers crystal-clear waters and occasional Hawaiian monk seal appearances. "
+                   "(If you do spot a monk seal, please be mindful by staying at least 100 feet away and no flash photography as they are currently on the endangered species list.)"
+                   " With lifeguards, picnic facilities, showers and a natural wading pool for young swimmers, it’s also a great destination for a family beach day. "
+                   "There’s a bodyboarding site directly in front of the park for older children and novice adults, a surfing site for experienced surfers and a good reef for snorkeling. "
+                   "From December through April, you can sometimes spot humpback whales in the distance.",
+                   'https://poipubeach.org/wp-content/uploads/2014/05/poipu-beach-aerial.jpg'],
+               'Moonstone Beach': [
+                   "Famous for its dramatic coastline and breathtaking views, the Moonstone Beach Boardwalk is where your Cambria seaside escape begins. "
+                   "Whether you want to sink your toes into the sand, catch glimpses of marine life swimming by, explore living tide pools, "
+                   "or head out to sea for surfing, boating, and other aquatic adventures, you will find there is something for everyone to enjoy on Moonstone Beach. "
+                   "Take a relaxing one-mile stroll along the Moonstone Beach Boardwalk. "
+                   "Enjoy playful sea otters, watch whales and dolphins in season, "
+                   "and spy the wildlife on-shore while taking in the stunning ocean views.",
+                   'https://www.hikespeak.com/img/Central-Coast/SLO/Cambria/Moonstone_Beach_Boardwalk_IMG_9185.jpg']}
+    mountains = {'Appalachians': [
+        "Mountain system in the east of the country, running through Massachusetts, New York, Ohio, Virginia, "
+        "Kentucky, Georgia, Alabama and numerous other states. Coal and other minerals are mined here. "
+        "The average height of the mountains in the system is no more than a kilometer above sea level. "
+        "The highest eastern point in the United States is Mount Mitchell in North Carolina. "
+        "It rises more than 2 thousand meters.",
+        'https://peakvisor.com/img/news/Appalachian-Mountains.jpg'],
                  'Pacific mountains': ["These are mountain ranges off the coast of the United States. "
-                                     "The system begins in the north, where Mount Olympus rises 2.4 thousand meters in Washington. "
-                                     "The western slopes of these mountains descend into the ocean. "
-                                     "Then the Cascade Mountains rise to the south, forming a volcanic chain in California and Oregon. "
-                                     "The last major eruption here was in the 80s. "
-                                     "20th century The maximum height of the ridge in this area is 1,200 m.",
+                                       "The system begins in the north, where Mount Olympus rises 2.4 thousand meters in Washington. "
+                                       "The western slopes of these mountains descend into the ocean. "
+                                       "Then the Cascade Mountains rise to the south, forming a volcanic chain in California and Oregon. "
+                                       "The last major eruption here was in the 80s. "
+                                       "20th century The maximum height of the ridge in this area is 1,200 m.",
                                        'https://i.pinimg.com/736x/ef/be/93/efbe932a83360e8fc3854b8ddc30b891--mountain-range-south-island.jpg'],
                  'Rocky Mountains': ['In the Cordillera system, the ridge stretches for 4.5 thousand km. '
-                                    'In the south, the mountains begin in New Mexico, gradually rising and widening towards Utah. '
-                                    'Most of the major Rocky Mountains are located in Colorado. '
-                                    'Here, the highest point of the region is Mount Elbert with a height of 4.5 thousand meters above the sea. '
-                                    'Toward the northwest, the mountains decrease and narrow. '
-                                    'The Rocky Mountains are rich in minerals, so gold, silver, copper, and lead are mined there. '
-                                    'A national park has also been formed on the territory, protecting the thermal springs and geysers of the ridges. '
-                                    'The Rocky Mountains separate the Pacific and Atlantic oceans.',
+                                     'In the south, the mountains begin in New Mexico, gradually rising and widening towards Utah. '
+                                     'Most of the major Rocky Mountains are located in Colorado. '
+                                     'Here, the highest point of the region is Mount Elbert with a height of 4.5 thousand meters above the sea. '
+                                     'Toward the northwest, the mountains decrease and narrow. '
+                                     'The Rocky Mountains are rich in minerals, so gold, silver, copper, and lead are mined there. '
+                                     'A national park has also been formed on the territory, protecting the thermal springs and geysers of the ridges. '
+                                     'The Rocky Mountains separate the Pacific and Atlantic oceans.',
                                      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Moraine_Lake_17092005.jpg/1200px-Moraine_Lake_17092005.jpg']}
     skiResorts = {'Aspen': ["Aspen is one of the largest resorts in the United States. "
                             "It has a reputation as a prestigious and expensive resort. "
@@ -1158,24 +1194,27 @@ if __name__ == "__main__":
                                "Located on the border of Nevada, Heavenly has gaming centers and casinos where you can spend time in the evening. "
                                "There is a wide choice of bars, restaurants, night clubs and discos for young people.",
                                'https://travelask.ru/uploads/hint_place/000/070/715/image/129ebb8e0c8f5e6800fa5305b55af7d7.jpg'],
-                  'Keystone': ["Keystone is one of the largest ski resorts in Colorado where you can ski all day long with family and friends. "
-                               "You can go down on an inflatable ring from the Adventure Point hill, go ice skating on the picturesque Keystone Lake"
-                               " and visit the snow fortress at the top of Mount Dercum. The whole family will love it, and it's all in one place. "
-                               "After descending the slopes, you can go snowshoeing, cross-country skiing or ice skating, or simply relax in the spa.",
-                               'http://triplook.me/media/resorts/photo/5/e/u27.jpg']}
-    lakes = {'Okeechobee': ["Okeechobee is a freshwater lake in Florida. It occupies the Glades, Okeechobee, Martin, Palm Beach, and Hendry counties. "
-                            "By area, it is the largest lake in the southern United States and the second largest freshwater lake in area, located entirely in the country. "
-                            "Several small rivers flow into the lake, the largest being the Kissimmee. "
-                            "Several small channels of the Everglades biosystem flow from Okeechobee, to which the lake belongs. "
-                            "Also on the lake there are several small islands, the largest of which is Creamer, inhabited. "
-                            "The city of Cluiston is located on the south coast.",
-                            'https://i0.wp.com/courrierdesameriques.com/wp-content/uploads/2018/03/Clewiston-Lake-Okeechobee-Floride-0555.jpg?resize=708%2C531&ssl=1'],
-             'Ontario': ["Ontario is a lake in the United States and Canada, the lowest and smallest in area in the Great Lakes system. "
-                         "It is the fifth largest lake in the United States by area. "
-                         "The name of the lake comes from the language of the Huron Indian tribe and means Lake of shining waters. "
-                         "Later, the province of Ontario became known as the same. On old maps you can see different names of the lake. On the map from 1662-1663. "
-                         "The lake was called Ondiara.",
-                         'https://touristam.com/wp-content/uploads/2020/12/ozero-ontario-1.jpg'],
+                  'Keystone': [
+                      "Keystone is one of the largest ski resorts in Colorado where you can ski all day long with family and friends. "
+                      "You can go down on an inflatable ring from the Adventure Point hill, go ice skating on the picturesque Keystone Lake"
+                      " and visit the snow fortress at the top of Mount Dercum. The whole family will love it, and it's all in one place. "
+                      "After descending the slopes, you can go snowshoeing, cross-country skiing or ice skating, or simply relax in the spa.",
+                      'http://triplook.me/media/resorts/photo/5/e/u27.jpg']}
+    lakes = {'Okeechobee': [
+        "Okeechobee is a freshwater lake in Florida. It occupies the Glades, Okeechobee, Martin, Palm Beach, and Hendry counties. "
+        "By area, it is the largest lake in the southern United States and the second largest freshwater lake in area, located entirely in the country. "
+        "Several small rivers flow into the lake, the largest being the Kissimmee. "
+        "Several small channels of the Everglades biosystem flow from Okeechobee, to which the lake belongs. "
+        "Also on the lake there are several small islands, the largest of which is Creamer, inhabited. "
+        "The city of Cluiston is located on the south coast.",
+        'https://i0.wp.com/courrierdesameriques.com/wp-content/uploads/2018/03/Clewiston-Lake-Okeechobee-Floride-0555.jpg?resize=708%2C531&ssl=1'],
+             'Ontario': [
+                 "Ontario is a lake in the United States and Canada, the lowest and smallest in area in the Great Lakes system. "
+                 "It is the fifth largest lake in the United States by area. "
+                 "The name of the lake comes from the language of the Huron Indian tribe and means Lake of shining waters. "
+                 "Later, the province of Ontario became known as the same. On old maps you can see different names of the lake. On the map from 1662-1663. "
+                 "The lake was called Ondiara.",
+                 'https://touristam.com/wp-content/uploads/2020/12/ozero-ontario-1.jpg'],
              'Michigan': ['Michigan is a freshwater lake in the United States, one of the North American Great Lakes. '
                           'The only one of the Great Lakes that is entirely within the United States, the largest of those located entirely in the United States. '
                           'Located south of Lake Superior, connected to Lake Huron by the Strait of Mackinac, with the Mississippi River system - the Chicago-Lockport Canal. '
@@ -1207,7 +1246,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1
 
     # military
-    milPolBlock = "NATO"
+    milPolBlock = ['NATO', 'TIAR']
     amountOfPeopleInArmy = 1395350
 
     # healthcare
@@ -1303,8 +1342,10 @@ if __name__ == "__main__":
     # cities    name   isBig  washesBy
     cities = {
         'Rome': [True, False, None], 'Milan': [True, False, None], 'Naples': [True, True, 'Tyrrhenian Sea'],
-        'Turin': [True, False, None], 'Palermo': [True, True, 'Tyrrhenian Sea'], 'Venice': [False, True, 'Adriatic Sea'],
-        'Sicily': [False, True, 'Mediterranean Sea'], 'Rimini': [False, True, 'Adriatic Sea'], 'Bologna': [False, False, None]}
+        'Turin': [True, False, None], 'Palermo': [True, True, 'Tyrrhenian Sea'],
+        'Venice': [False, True, 'Adriatic Sea'],
+        'Sicily': [False, True, 'Mediterranean Sea'], 'Rimini': [False, True, 'Adriatic Sea'],
+        'Bologna': [False, False, None]}
 
     # education
     universities = {'Milan': ['Politecnico di Milano', 'University of Milan'],
@@ -1313,11 +1354,14 @@ if __name__ == "__main__":
     faculties = {
         'Politecnico di Milano': ['Faculty of Arts', 'Faculty of Medicine', 'Faculty of Engineering',
                                   'Faculty of Computer Engineering and Software', 'Faculty of Science'],
-        'University of Milan': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Science', 'Faculty of Social Sciences',
+        'University of Milan': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Science',
+                                'Faculty of Social Sciences',
                                 'Faculty of Computer Engineering and Software'],
-        'Sapienza University': ['Faculty of Business', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Engineering', 'Faculty of Medicine',
+        'Sapienza University': ['Faculty of Business', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Engineering',
+                                'Faculty of Medicine',
                                 'Faculty of Social Sciences', 'Faculty of Architecture', 'Faculty of Science'],
-        'Politecnico di Torino': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software', 'Faculty of Medicine', 'Faculty of Arts']}
+        'Politecnico di Torino': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software',
+                                  'Faculty of Medicine', 'Faculty of Arts']}
     programs = {
         'Politecnico di Milano': ['Magistracy', 'Undergraduate'],
         'University of Milan': ['Magistracy', 'Undergraduate'],
@@ -1327,15 +1371,16 @@ if __name__ == "__main__":
              'University of Milan': 'https://misom.unimi.it',
              'Sapienza University': 'https://www.uniroma1.it',
              'Politecnico di Torino': 'https://www.polito.it'}
-    images = {'Politecnico di Milano': 'https://italyadaegitim.com/wp-content/uploads/2020/11/politecnico-di-milano.jpg',
-             'University of Milan': 'https://diginlaw.files.wordpress.com/2021/04/02.-faculty-photo.jpg?w=1200',
-             'Sapienza University': 'https://smapse.ru/storage/2018/09/sapienza-universita-roma.jpg',
-             'Politecnico di Torino': 'https://fartakapply.com/wp-content/uploads/2020/09/6-POLITO.jpg'}
+    images = {
+        'Politecnico di Milano': 'https://italyadaegitim.com/wp-content/uploads/2020/11/politecnico-di-milano.jpg',
+        'University of Milan': 'https://diginlaw.files.wordpress.com/2021/04/02.-faculty-photo.jpg?w=1200',
+        'Sapienza University': 'https://smapse.ru/storage/2018/09/sapienza-universita-roma.jpg',
+        'Politecnico di Torino': 'https://fartakapply.com/wp-content/uploads/2020/09/6-POLITO.jpg'}
     # общага
     hostel = {'Politecnico di Milano': 'Yes',
-             'University of Milan': 'Yes',
-             'Sapienza University': 'No',
-             'Politecnico di Torino': 'No'}
+              'University of Milan': 'Yes',
+              'Sapienza University': 'No',
+              'Politecnico di Torino': 'No'}
     # стипендия
     scolarship = {'Politecnico di Milano': 'Yes',
                   'University of Milan': 'Yes',
@@ -1366,28 +1411,33 @@ if __name__ == "__main__":
     sights = {'Pantheon': ["A real achievement of the building technologies of antiquity, "
                            "a magnificent temple, which became a model of ancient architecture and gave rise to many imitators. "
                            "The Pantheon, fortunately, is perfectly preserved, so everyone can visit it. "
-                           "This is best done at noon, when a real pillar of light breaks through the hole in the roof.", 'https://top10.travel/wp-content/uploads/2014/10/panteon.jpg'],
-              'Coliseum': ["This is a visiting card of Rome, a building that is familiar even to those who have never left their hometown. "
-                           "Today, the Colosseum, of course, bears the marks of time and needs to be reconstructed. "
-                           "And still, a visit to this historical monument is included in the mandatory program of "
-                           "all tourists and leaves an indelible impression.", 'https://top10.travel/wp-content/uploads/2014/10/kolizey.jpg'],
+                           "This is best done at noon, when a real pillar of light breaks through the hole in the roof.",
+                           'https://top10.travel/wp-content/uploads/2014/10/panteon.jpg'],
+              'Coliseum': [
+                  "This is a visiting card of Rome, a building that is familiar even to those who have never left their hometown. "
+                  "Today, the Colosseum, of course, bears the marks of time and needs to be reconstructed. "
+                  "And still, a visit to this historical monument is included in the mandatory program of "
+                  "all tourists and leaves an indelible impression.",
+                  'https://top10.travel/wp-content/uploads/2014/10/kolizey.jpg'],
               'San Gimignano': ["City in Tuscany, near Florence. "
                                 "San Gimignano is known for the fact that it managed to preserve its medieval appearance and from afar it "
                                 "seems that horse-drawn carts still move along its streets, and knights with swords walk sedately. "
-                                "Be sure to see the 14 ancient towers and the local history museum.", 'https://top10.travel/wp-content/uploads/2014/10/san-gimignano.jpg']}
+                                "Be sure to see the 14 ancient towers and the local history museum.",
+                                'https://top10.travel/wp-content/uploads/2014/10/san-gimignano.jpg']}
     beaches = {'Red bay': ["Looking for a quiet beach to get away from everyone and have some peace and quiet? "
                            "Head to Favignana, a tiny island off the coast of Sicily. "
                            "Only a few thousand people live here and there are four dozen hotels on the entire island. "
                            "Getting here is not easy - only by ferry from Sicily, but that's why there are few people here. "
                            "The only thing that can overshadow your vacation is your phone, so don't forget to turn it off on the ship.",
                            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/a7/bf/3a/red-beach.jpg?w=1200&h=-1&s=1'],
-               "Marina Picola": ["The island of Capri has been an elite resort for a very long time: Caesar Augustus had a “cottage” here. "
-                                 "And since the days of the Roman Empire, for some reason (or perhaps just following the fashion), celebrities have flocked here. "
-                                 "Russian celebrities are no exception, almost every outstanding person in our recent history has visited Capri: "
-                                 "from Tchaikovsky and Bunin to Gorky and Lenin. "
-                                 "The beach at Marina Picola Bay is overshadowed by Capri's other famous beaches and attractions, such as the famous Blue Grotto. "
-                                 "But this is for the best, because today Capri is still an elite resort, and finding a secluded place here is not so easy.",
-                                 'https://tournavigator.pro/%D1%84%D0%BE%D1%82%D0%BE/other_1022_1003_1657754408.jpg'],
+               "Marina Picola": [
+                   "The island of Capri has been an elite resort for a very long time: Caesar Augustus had a “cottage” here. "
+                   "And since the days of the Roman Empire, for some reason (or perhaps just following the fashion), celebrities have flocked here. "
+                   "Russian celebrities are no exception, almost every outstanding person in our recent history has visited Capri: "
+                   "from Tchaikovsky and Bunin to Gorky and Lenin. "
+                   "The beach at Marina Picola Bay is overshadowed by Capri's other famous beaches and attractions, such as the famous Blue Grotto. "
+                   "But this is for the best, because today Capri is still an elite resort, and finding a secluded place here is not so easy.",
+                   'https://tournavigator.pro/%D1%84%D0%BE%D1%82%D0%BE/other_1022_1003_1657754408.jpg'],
                'Rabbit beach': ["Rabbit Beach has been repeatedly recognized as the best beach in the world. "
                                 "No wonder, because this is one of those places where you want to stay forever. "
                                 "The beach is located in a protected area, and it is not easy to get to it. "
@@ -1396,56 +1446,63 @@ if __name__ == "__main__":
                                 "And these 20 minutes, perhaps, will leave you even more impressions than the beach itself: "
                                 "the views from the mountain path are simply amazing.",
                                 'https://ostrova24.ru/wp-content/uploads/2017/05/ostrov-Lampeduza-v-Italii.jpg']}
-    mountains = {'Mont Blanc': ["Mont Blanc is a peak in the massif of the same name, rising above Lake Leman in the Alps. "
-                                "This is the highest point of the Alps, reaching a height of 4810 m above sea level. "
-                                "The highest mountain in the European Union and Europe, excluding the Caucasus Mountains as part of Europe. "
-                                "Located on the border of Italy and France.",
-                                'https://funart.pro/uploads/posts/2019-11/1573381953_monblan-gora-francija-3.jpg'],
-                 'Marmolada': ["Marmolada is a mountain in northeastern Italy, the highest mountain in the Dolomites. "
-                               "This is part of the ridge that stretches from west to east. "
-                               "In the west, the mountain breaks into steep cliffs, forming a stone wall several kilometers long. "
-                               "To the north is the relatively gentle Marmolada Glacier.",
-                               'https://st2.depositphotos.com/1355276/5612/i/950/depositphotos_56122677-stock-photo-marmolada-ski-resort-in-italy.jpg'],
-                 'Dolomites': ['The Dolomites are a mountain range in the Eastern Alps, part of the system of the Southern Limestone Alps. '
-                               'The massif is located in the northeastern part of Italy in the provinces of Belluno, Bolzano, Pordenone, Trento and Udine. '
-                               'The massif is bounded by river valleys: Isarco, Pusteria, Piave, Brenta and Adige.',
-                               'https://otdyhateli.com/wp-content/uploads/2017/03/The-Dolomites-1050x700.jpg']}
-    skiResorts = {'Breuil-Cervinia': ["The Breuil-Cervinia ski resort is located in the Valle d'Aosta region, at the foot of the Matterhorn rocky ridge (2050 above sea level). "
-                                      "It is considered one of the best in the north of the country. "
-                                      "From here, via a single ski area, you can reach the Swiss side of the Matterhorn on the slopes of Zermatt. "
-                                      "The entire winter season, even not at a very high altitude, there will be plenty of snow here, and this is almost 6 months a year. "
-                                      "In total, Cervinia covers more than 100 km of ski slopes of varying difficulty. "
-                                      "In summer, the cross-country ski run turns into a golf course. "
-                                      "Also in the summer, hiking is very developed and climbing to the top of the Matterhorn is popular.",
-                                      'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__live_banner__lb_image__1880bp/public/live_banner/Cervinia-1.jpg'],
-                  'Val Gardena': ["Val Gardena is one of the best ski resorts in Italy, divided into the three municipalities of Ortisei, Santa Cristina in Val Gardena and Selva di Val Gardena (Trentino-Alto Adige region). "
-                                  "Val Gardena is located in the heart of the Dolomites and offers some challenging pistes surrounded by beautiful pine forests. "
-                                  "The valley is very popular among tourists, partly because of the fact that the stages of the Ski World Cup take place here. "
-                                  "In total, there are 175 km of ski slopes, 115 km of cross-country trails and 83 ski lifts.",
-                                  'https://www.dolomiticlass.it/storage/localities/67/conversions/Selva_Gardena_inverno-tablet.jpg'],
-                  "Cortina d'Ampezzo": ["Cortina d'Ampezzo is located in the Veneto region, and is called the Pearl of the Dolomites, for the presence of slopes for every taste. "
-                                        "In total, they make up 115 km of ski slopes with different levels of difficulty. "
-                                        "Cortina d'Ampezzo is considered one of the most equipped ski resorts in Italy and is the ideal place for a family holiday. "
-                                        "One of the strengths of this resort is the presence of numerous hotels and inns that can satisfy the needs of even the most demanding tourists. "
-                                        "The main attraction of Cortina d'Ampezzo is, of course, the historic center of the city, where the main sports, antique and souvenir shops are located.",
-                                        'https://live.staticflickr.com/65535/49089210372_6f075ba8d5_o.jpg']}
-    lakes = {'Lago Maggiore': ["On the border of Lombardy, Piedmont and Switzerland, Lake Maggiore is located, an endless expanse of water that reflects the surrounding landscapes: "
-                               "fragrant pine groves, centuries-old forests and majestic mountains. "
-                               "In the middle of the emerald green vegetation and the blinding blue of the sky, numerous castles, "
-                               "palaces and Italian gardens rise, related to the two noble families that influenced the history of this place - the Visconti and the Borromeo. "
-                               "You can start your journey through these picturesque beauties from Stresa on the Piedmontese coast, "
-                               "opposite the Borromean Islands, real open-air museums: Bella Island with the Borromeo Palace, "
-                               "Madre Island with its stunning vegetation and the Fishermen's Island, on which, as the name suggests, there is a characteristic settlement. "
-                               "Verbania is another lively Piedmont town with a number of beautiful villas such as Villa Giulia, San Remigio and Taranto, "
-                               "where you can see 20,000 species of plants.",
-                               'https://www.travelbook.de/data/uploads/2022/04/gettyimages-642500890.jpg'],
-             'Lago di Bracciano': ["Lake Bracciano, also called Lake Sabatino, is of volcanic origin, only one river flows into it - Arrone, "
-                                   "originating on the southeast coast and carrying its waters to the Tyrrhenian Sea. "
-                                   "The coast of Italy's lake is conducive to long walks. "
-                                   "There are various establishments along the way. "
-                                   "Including restaurants whose cuisine specializes in dishes with lake fish. "
-                                   "The beach is wide with a large sandy area.",
-                                   'https://www.lazionascosto.it/wp-content/uploads/2019/05/lago-di-bracciano.jpg'],
+    mountains = {
+        'Mont Blanc': ["Mont Blanc is a peak in the massif of the same name, rising above Lake Leman in the Alps. "
+                       "This is the highest point of the Alps, reaching a height of 4810 m above sea level. "
+                       "The highest mountain in the European Union and Europe, excluding the Caucasus Mountains as part of Europe. "
+                       "Located on the border of Italy and France.",
+                       'https://funart.pro/uploads/posts/2019-11/1573381953_monblan-gora-francija-3.jpg'],
+        'Marmolada': ["Marmolada is a mountain in northeastern Italy, the highest mountain in the Dolomites. "
+                      "This is part of the ridge that stretches from west to east. "
+                      "In the west, the mountain breaks into steep cliffs, forming a stone wall several kilometers long. "
+                      "To the north is the relatively gentle Marmolada Glacier.",
+                      'https://st2.depositphotos.com/1355276/5612/i/950/depositphotos_56122677-stock-photo-marmolada-ski-resort-in-italy.jpg'],
+        'Dolomites': [
+            'The Dolomites are a mountain range in the Eastern Alps, part of the system of the Southern Limestone Alps. '
+            'The massif is located in the northeastern part of Italy in the provinces of Belluno, Bolzano, Pordenone, Trento and Udine. '
+            'The massif is bounded by river valleys: Isarco, Pusteria, Piave, Brenta and Adige.',
+            'https://otdyhateli.com/wp-content/uploads/2017/03/The-Dolomites-1050x700.jpg']}
+    skiResorts = {'Breuil-Cervinia': [
+        "The Breuil-Cervinia ski resort is located in the Valle d'Aosta region, at the foot of the Matterhorn rocky ridge (2050 above sea level). "
+        "It is considered one of the best in the north of the country. "
+        "From here, via a single ski area, you can reach the Swiss side of the Matterhorn on the slopes of Zermatt. "
+        "The entire winter season, even not at a very high altitude, there will be plenty of snow here, and this is almost 6 months a year. "
+        "In total, Cervinia covers more than 100 km of ski slopes of varying difficulty. "
+        "In summer, the cross-country ski run turns into a golf course. "
+        "Also in the summer, hiking is very developed and climbing to the top of the Matterhorn is popular.",
+        'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__live_banner__lb_image__1880bp/public/live_banner/Cervinia-1.jpg'],
+                  'Val Gardena': [
+                      "Val Gardena is one of the best ski resorts in Italy, divided into the three municipalities of Ortisei, Santa Cristina in Val Gardena and Selva di Val Gardena (Trentino-Alto Adige region). "
+                      "Val Gardena is located in the heart of the Dolomites and offers some challenging pistes surrounded by beautiful pine forests. "
+                      "The valley is very popular among tourists, partly because of the fact that the stages of the Ski World Cup take place here. "
+                      "In total, there are 175 km of ski slopes, 115 km of cross-country trails and 83 ski lifts.",
+                      'https://www.dolomiticlass.it/storage/localities/67/conversions/Selva_Gardena_inverno-tablet.jpg'],
+                  "Cortina d'Ampezzo": [
+                      "Cortina d'Ampezzo is located in the Veneto region, and is called the Pearl of the Dolomites, for the presence of slopes for every taste. "
+                      "In total, they make up 115 km of ski slopes with different levels of difficulty. "
+                      "Cortina d'Ampezzo is considered one of the most equipped ski resorts in Italy and is the ideal place for a family holiday. "
+                      "One of the strengths of this resort is the presence of numerous hotels and inns that can satisfy the needs of even the most demanding tourists. "
+                      "The main attraction of Cortina d'Ampezzo is, of course, the historic center of the city, where the main sports, antique and souvenir shops are located.",
+                      'https://live.staticflickr.com/65535/49089210372_6f075ba8d5_o.jpg']}
+    lakes = {'Lago Maggiore': [
+        "On the border of Lombardy, Piedmont and Switzerland, Lake Maggiore is located, an endless expanse of water that reflects the surrounding landscapes: "
+        "fragrant pine groves, centuries-old forests and majestic mountains. "
+        "In the middle of the emerald green vegetation and the blinding blue of the sky, numerous castles, "
+        "palaces and Italian gardens rise, related to the two noble families that influenced the history of this place - the Visconti and the Borromeo. "
+        "You can start your journey through these picturesque beauties from Stresa on the Piedmontese coast, "
+        "opposite the Borromean Islands, real open-air museums: Bella Island with the Borromeo Palace, "
+        "Madre Island with its stunning vegetation and the Fishermen's Island, on which, as the name suggests, there is a characteristic settlement. "
+        "Verbania is another lively Piedmont town with a number of beautiful villas such as Villa Giulia, San Remigio and Taranto, "
+        "where you can see 20,000 species of plants.",
+        'https://www.travelbook.de/data/uploads/2022/04/gettyimages-642500890.jpg'],
+             'Lago di Bracciano': [
+                 "Lake Bracciano, also called Lake Sabatino, is of volcanic origin, only one river flows into it - Arrone, "
+                 "originating on the southeast coast and carrying its waters to the Tyrrhenian Sea. "
+                 "The coast of Italy's lake is conducive to long walks. "
+                 "There are various establishments along the way. "
+                 "Including restaurants whose cuisine specializes in dishes with lake fish. "
+                 "The beach is wide with a large sandy area.",
+                 'https://www.lazionascosto.it/wp-content/uploads/2019/05/lago-di-bracciano.jpg'],
              'Lago di Garda': ['Lake Garda, or Benaco, is the largest lake in Italy. '
                                'In the south it is surrounded by moraine hills formed by the last glacier, and in the north by higher mountain '
                                'ranges that help maintain a mild Mediterranean climate. '
@@ -1460,7 +1517,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1835.88
 
     # military
-    milPolBlock = "NATO"
+    milPolBlock = ["NATO"]
     amountOfPeopleInArmy = 161550
 
     # healthcare
@@ -1555,7 +1612,8 @@ if __name__ == "__main__":
 
     # cities    name   isBig  washesBy
     cities = {
-        'Madrid': [True, False, None], 'Barcelona': [True, True, 'Balearic sea'], 'Valencia': [True, True, 'Balearic sea'],
+        'Madrid': [True, False, None], 'Barcelona': [True, True, 'Balearic sea'],
+        'Valencia': [True, True, 'Balearic sea'],
         'Seville': [True, False, None], 'Zaragoza': [True, False, None], 'Ibiza': [True, True, 'Balearic sea'],
         'Majorca': [True, True, 'Balearic sea'], 'San Sebastian': [False, True, 'Atlantic ocean']}
 
@@ -1564,10 +1622,14 @@ if __name__ == "__main__":
                     'Madrid': ['Saint Louis University'],
                     'Seville': ['University of Seville']}
     faculties = {
-        'University of Barcelona': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Science', 'Faculty of Business', 'Faculty of Social Sciences'],
-        'EU Business School': ['Faculty of Business', 'Faculty of Arts', 'Faculty of Social Sciences', 'Faculty of Education'],
-        'Saint Louis University': ['Faculty of Arts', 'Faculty of Social Sciences', 'Faculty of Medicine', 'Faculty of Education'],
-        'University of Seville': ['Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Law', 'Faculty of Computer Engineering and Software']}
+        'University of Barcelona': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Science',
+                                    'Faculty of Business', 'Faculty of Social Sciences'],
+        'EU Business School': ['Faculty of Business', 'Faculty of Arts', 'Faculty of Social Sciences',
+                               'Faculty of Education'],
+        'Saint Louis University': ['Faculty of Arts', 'Faculty of Social Sciences', 'Faculty of Medicine',
+                                   'Faculty of Education'],
+        'University of Seville': ['Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Law',
+                                  'Faculty of Computer Engineering and Software']}
     programs = {
         'University of Barcelona': ['Magistracy', 'Undergraduate', 'Doctoral'],
         'EU Business School': ['Magistracy', 'Undergraduate', 'MBA', 'Foundation'],
@@ -1593,29 +1655,30 @@ if __name__ == "__main__":
                   'Saint Louis University': 'Yes',
                   'University of Seville': 'Yes'}
     # требования к поступлению
-    requirements = {'University of Barcelona': 'There are no restrictions on the basis of religious views, as well as on the basis of gender for admission to the university. '
-                                               'Enrollment is made on the basis of the provided data on the academic achievements of the applicant.'
-                                               ' One of the conditions put forward by the university is knowledge of the Spanish language, which is assessed by a special test. '
-                                               'The list of documents required for admission is posted on the university website. '
-                                               'For foreign applicants - all documents included in the application package must have a notarized translation into Spanish. '
-                                               'Usually about 80% of applicants are enrolled, but depending on the prestige of the faculty, this figure may vary. '
-                                               'The cost of studying at the University of Barcelona is relatively low. '
-                                               "Obtaining a bachelor's degree will cost USD 1,000 per year, and an annual master's degree will cost USD 3,000. "
-                                               "There is also a scholarship program based on the competition.",
-                    'EU Business School': 'Age: 17+, Duration: 6-7 semesters (3 - 3.5 years), ECTS: 240, '
-                                          'Beginning of studies: August, October, February and June, '
-                                          'Language requirements: TOEFL iBT 80+, IELTS Academic 6.0+, CAE B2 (169+), '
-                                          'Academic requirements: completed secondary or secondary special education with good academic performance',
-                    'Saint Louis University': '1. Age: from 17 years old; '
-                                              '2. High school diploma (good and excellent grades and high GPA);'
-                                              '3. Proficiency in English: IELTS 6.5/TOEFL 80/Pearson Versant 69 or equivalent (certificate is valid for two years after the exam date); '
-                                              '4. Portfolio; '
-                                              '5. GPA-3.0; '
-                                              '6. High performance and knowledge in core disciplines.',
-                    'University of Seville': 'The admission procedure provides for the provision of a document confirming academic performance at the previous place of study. '
-                                             'Then comes the exam. According to the general results, enrollment takes place. '
-                                             'Everything related to admission, deadlines for submitting documents and the cost of individual programs is described on the official '
-                                             'website of the University of Seville.'}
+    requirements = {
+        'University of Barcelona': 'There are no restrictions on the basis of religious views, as well as on the basis of gender for admission to the university. '
+                                   'Enrollment is made on the basis of the provided data on the academic achievements of the applicant.'
+                                   ' One of the conditions put forward by the university is knowledge of the Spanish language, which is assessed by a special test. '
+                                   'The list of documents required for admission is posted on the university website. '
+                                   'For foreign applicants - all documents included in the application package must have a notarized translation into Spanish. '
+                                   'Usually about 80% of applicants are enrolled, but depending on the prestige of the faculty, this figure may vary. '
+                                   'The cost of studying at the University of Barcelona is relatively low. '
+                                   "Obtaining a bachelor's degree will cost USD 1,000 per year, and an annual master's degree will cost USD 3,000. "
+                                   "There is also a scholarship program based on the competition.",
+        'EU Business School': 'Age: 17+, Duration: 6-7 semesters (3 - 3.5 years), ECTS: 240, '
+                              'Beginning of studies: August, October, February and June, '
+                              'Language requirements: TOEFL iBT 80+, IELTS Academic 6.0+, CAE B2 (169+), '
+                              'Academic requirements: completed secondary or secondary special education with good academic performance',
+        'Saint Louis University': '1. Age: from 17 years old; '
+                                  '2. High school diploma (good and excellent grades and high GPA);'
+                                  '3. Proficiency in English: IELTS 6.5/TOEFL 80/Pearson Versant 69 or equivalent (certificate is valid for two years after the exam date); '
+                                  '4. Portfolio; '
+                                  '5. GPA-3.0; '
+                                  '6. High performance and knowledge in core disciplines.',
+        'University of Seville': 'The admission procedure provides for the provision of a document confirming academic performance at the previous place of study. '
+                                 'Then comes the exam. According to the general results, enrollment takes place. '
+                                 'Everything related to admission, deadlines for submitting documents and the cost of individual programs is described on the official '
+                                 'website of the University of Seville.'}
     costs = {'University of Barcelona': 3000,
              'EU Business School': 4900,
              'Saint Louis University': 10880,
@@ -1636,101 +1699,110 @@ if __name__ == "__main__":
                                   "The magnificent facades were supposed to symbolize the main stages of the life of Christ: the Birth, the Torments of Christ, the Resurrection. "
                                   "The amazing acoustics in the temple is due to the perfect bell system, and the columns, approaching the vaults, form a fantastic likeness of intertwining tree branches.",
                                   'https://media.decorateme.com/images/aa/48/d5/vitaia-forma-bashen-gaudi-obiasniaetsia-tem-chto.webp'],
-              'Ordesa y Monte Perdido National Park': ["The famous sights of Spain are also in its most remote corners. "
-                                                       "One of the first national parks - Ordesa y Monte Perdido Reserve - is still considered the most beautiful in the country. "
-                                                       "The main attraction of the park is the Ordesa Canyon. "
-                                                       "It impresses with huge rocks hanging from both sides of the mountain path. "
-                                                       "The river of the same name runs along the bottom of the canyon. "
-                                                       "Its waters are replenished by streams flowing down the slopes. "
-                                                       "The lower part of the park is represented by a dense forest, where you can meet many representatives of the forest fauna. "
-                                                       "There are many waterfalls that cascade one after another. "
-                                                       "Among them, the most powerful, perhaps, is the Cola de Caballo waterfall, from which the Ordesa River begins. "
-                                                       "Cows graze on the spacious meadows of the park, dense poplar and beech forests are located at the foot of the mountains.",
-                                                       'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Spain-9-Ordesa-y-Monte-Perdido-National-Park-e1491984613524.jpg']}
-    beaches = {'Rodas, Sie Islands': ["Rodas Beach (Playa de Rodas) topped the ranking of the best beaches in the world in 2007, according to the British newspaper The Guardian. "
-                                      "And this is no coincidence. "
-                                      "The Cies archipelago is made up of three large islands - Monteagudo, Faro, San Martino. Since 2002 they have been part of the National Park of the Atlantic Islands of Galicia. "
-                                      "Protected by the state. Here are the most beautiful beaches in Spain. "
-                                      "It is no coincidence that they are called paradises - there is impeccable white sand and huge areas of untouched nature. "
-                                      "Add to this the abundance of rare birds in the vicinity and dolphins in the ocean waters.",
-                                      'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__text_with_image___twi_image/public/2020-08/Praia-de-Rodas-beach.jpg'],
+              'Ordesa y Monte Perdido National Park': [
+                  "The famous sights of Spain are also in its most remote corners. "
+                  "One of the first national parks - Ordesa y Monte Perdido Reserve - is still considered the most beautiful in the country. "
+                  "The main attraction of the park is the Ordesa Canyon. "
+                  "It impresses with huge rocks hanging from both sides of the mountain path. "
+                  "The river of the same name runs along the bottom of the canyon. "
+                  "Its waters are replenished by streams flowing down the slopes. "
+                  "The lower part of the park is represented by a dense forest, where you can meet many representatives of the forest fauna. "
+                  "There are many waterfalls that cascade one after another. "
+                  "Among them, the most powerful, perhaps, is the Cola de Caballo waterfall, from which the Ordesa River begins. "
+                  "Cows graze on the spacious meadows of the park, dense poplar and beech forests are located at the foot of the mountains.",
+                  'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Spain-9-Ordesa-y-Monte-Perdido-National-Park-e1491984613524.jpg']}
+    beaches = {'Rodas, Sie Islands': [
+        "Rodas Beach (Playa de Rodas) topped the ranking of the best beaches in the world in 2007, according to the British newspaper The Guardian. "
+        "And this is no coincidence. "
+        "The Cies archipelago is made up of three large islands - Monteagudo, Faro, San Martino. Since 2002 they have been part of the National Park of the Atlantic Islands of Galicia. "
+        "Protected by the state. Here are the most beautiful beaches in Spain. "
+        "It is no coincidence that they are called paradises - there is impeccable white sand and huge areas of untouched nature. "
+        "Add to this the abundance of rare birds in the vicinity and dolphins in the ocean waters.",
+        'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__text_with_image___twi_image/public/2020-08/Praia-de-Rodas-beach.jpg'],
                "Burriana": ["Burriana (Playa Burriana) is one of the best beaches in Spain. "
                             "It is located in the city of Nerja (province of Malaga) along the Paseo Marítimo Antonio Mercero promenade. "
                             "The coastline is 800 meters long and 40 meters wide. "
                             "Playa Burriana is marked with the Blue Flag, famous for its clean sand, luxurious palm trees and many entertainments. "
                             "There are playgrounds, clubs, bars and restaurants.",
                             'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__text_with_image___twi_image/public/2020-08/Playa-Burriana-at-Nerja.jpg'],
-               'Playa de Palma, Mallorca': ["It is difficult to find a person who has not heard about this resort on the Mediterranean coast. "
-                                            "Its beauty is painted by artists and sung by poets. "
-                                            "Playa de Palma beach has been awarded the Blue Flag and proudly bears this award, delighting with white sand and developed infrastructure. "
-                                            "It is perfect for a family vacation, as the entrance to the sea is quite gentle here, and the bottom is sandy and soft, like a velvet cover. "
-                                            "On the beach there are playgrounds for playing volleyball, basketball, rental of bicycles and equipment for water activities, it is possible to rent sun loungers. "
-                                            "Within walking distance there are at least a dozen bars with refreshing drinks.",
-                                            'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__text_with_image___twi_image/public/2020-06/palma-de-mallorca-4.jpg']}
+               'Playa de Palma, Mallorca': [
+                   "It is difficult to find a person who has not heard about this resort on the Mediterranean coast. "
+                   "Its beauty is painted by artists and sung by poets. "
+                   "Playa de Palma beach has been awarded the Blue Flag and proudly bears this award, delighting with white sand and developed infrastructure. "
+                   "It is perfect for a family vacation, as the entrance to the sea is quite gentle here, and the bottom is sandy and soft, like a velvet cover. "
+                   "On the beach there are playgrounds for playing volleyball, basketball, rental of bicycles and equipment for water activities, it is possible to rent sun loungers. "
+                   "Within walking distance there are at least a dozen bars with refreshing drinks.",
+                   'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__text_with_image___twi_image/public/2020-06/palma-de-mallorca-4.jpg']}
     mountains = {'Mulasen': ["Mulasen is a mountain in southern Spain, the highest peak of the Iberian Peninsula. "
                              "It is located in the Sierra Nevada, one of the spurs of the Cordillera Penibetica. "
                              "On the northern slope of the mountain lies a small avalanche glacier, from which the river Khenil originates.",
                              'https://i.pinimg.com/736x/29/82/0e/29820ee0e5527c20b6d4d20b3c0b3c6f--natural-park-sierra-nevada.jpg'],
-                 'Aneto': ["Aneto Peak is the highest mountain in the Pyrenees, located in the province of Huesca, Spain. "
-                           "The third highest mountain in Spain. "
-                           "The mountain is also known by the French name Pic de Neto, but this name is rarely used, since the mountain is entirely in Spanish territory.",
-                           'https://peakfinder.ru/image/original/304_pik_aneto.jpg'],
+                 'Aneto': [
+                     "Aneto Peak is the highest mountain in the Pyrenees, located in the province of Huesca, Spain. "
+                     "The third highest mountain in Spain. "
+                     "The mountain is also known by the French name Pic de Neto, but this name is rarely used, since the mountain is entirely in Spanish territory.",
+                     'https://peakfinder.ru/image/original/304_pik_aneto.jpg'],
                  'Veleta': ['Veleta is a mountain peak in southern Spain, in the province of Granada in Andalusia. '
                             'It is part of the Sierra Nevada mountain range. One of the highest points in the entire Iberian Peninsula.',
                             'https://ic.pics.livejournal.com/vpervye1/34433614/1067216/1067216_original.jpg']}
-    skiResorts = {'Sierra Nevada': ["Sierra Nevada is the most popular resort in Spain, the highest geographical location. "
-                                    "It is located in the southwest, near Granada. The elite of society comes here: actors, famous people, politicians. "
-                                    "87 kilometers of slopes of different levels are equipped here, there are cross-country flat trails. "
-                                    "More than 400 cannons provide ideal coverage of the slopes. "
-                                    "Fashionable hotels, ski schools, all kinds of après-ski establishments are open for guests.",
-                                    'https://espanarusa.com/files/autoupload/3/21/70/3ealic0o48095.jpg'],
-                  'Baqueira-Beret': ["Baqueira Beret is the largest resort in the Pyrenees on the eastern side of the Aran Valley (Catalonia). "
-                                     "Here, among the magnificent landscapes, very reminiscent of the Alpine landscapes, the snow remains for a long time - until March. "
-                                     "110 km of diverse routes have been laid; stable snow cover is provided by 500 guns. "
-                                     "The resort is considered universal, democratic: skiers of all levels and ages come here. "
-                                     "The skiing season is from December to April.",
-                                     'https://i.f1g.fr/media/figaro/orig/2018/01/17/XVM346ad012-fac7-11e7-9962-196e3970bf6d.jpg'],
-                  'Port del Comte': ["Port del Comte is a relatively new resort, it has existed since the 70s. "
-                                     "XX century, located in the Eastern Pyrenees. "
-                                     "The length of its tracks is approximately 40 km; Ten lifts have been installed. "
-                                     "The local slopes have a low, simple relief; the local ski school employs dozens of instructors. "
-                                     "Ski season from late November to late March",
-                                     'https://upload.wikimedia.org/wikipedia/commons/b/b6/Port_del_Comte-Estivella.JPG']}
+    skiResorts = {
+        'Sierra Nevada': ["Sierra Nevada is the most popular resort in Spain, the highest geographical location. "
+                          "It is located in the southwest, near Granada. The elite of society comes here: actors, famous people, politicians. "
+                          "87 kilometers of slopes of different levels are equipped here, there are cross-country flat trails. "
+                          "More than 400 cannons provide ideal coverage of the slopes. "
+                          "Fashionable hotels, ski schools, all kinds of après-ski establishments are open for guests.",
+                          'https://espanarusa.com/files/autoupload/3/21/70/3ealic0o48095.jpg'],
+        'Baqueira-Beret': [
+            "Baqueira Beret is the largest resort in the Pyrenees on the eastern side of the Aran Valley (Catalonia). "
+            "Here, among the magnificent landscapes, very reminiscent of the Alpine landscapes, the snow remains for a long time - until March. "
+            "110 km of diverse routes have been laid; stable snow cover is provided by 500 guns. "
+            "The resort is considered universal, democratic: skiers of all levels and ages come here. "
+            "The skiing season is from December to April.",
+            'https://i.f1g.fr/media/figaro/orig/2018/01/17/XVM346ad012-fac7-11e7-9962-196e3970bf6d.jpg'],
+        'Port del Comte': ["Port del Comte is a relatively new resort, it has existed since the 70s. "
+                           "XX century, located in the Eastern Pyrenees. "
+                           "The length of its tracks is approximately 40 km; Ten lifts have been installed. "
+                           "The local slopes have a low, simple relief; the local ski school employs dozens of instructors. "
+                           "Ski season from late November to late March",
+                           'https://upload.wikimedia.org/wikipedia/commons/b/b6/Port_del_Comte-Estivella.JPG']}
     lakes = {'Lago de Sanabria': ["Lake Sanabria in Zamora is one of the largest in Spain and Europe. "
                                   "Its width is 1.5 kilometers, length - 3 kilometers, and depth - about 50 meters. "
                                   "Since there are many different types of water activities on the lake, you can meet hundreds of people enjoying water recreation here.",
                                   'https://upload.wikimedia.org/wikipedia/commons/8/80/Lago_de_Sanabria%2C_provincia_de_Zamora%2C_Espa%C3%B1a.jpg'],
-             'Lagos de Covadonga': ["Lagos de Covadonga are three glacial lakes in the Picos de Europa National Park in Spain. "
-                                    "Enol, La Ercina and El Brisial lakes have water only in the warm months of the year after the ice has melted. "
-                                    "This area is one of the most visited places of natural beauty in Spain, especially during the summer.",
-                                    'https://www.65ymas.com/uploads/s1/14/25/49/santuario-lagos-covadonga-asturias-2.jpeg'],
+             'Lagos de Covadonga': [
+                 "Lagos de Covadonga are three glacial lakes in the Picos de Europa National Park in Spain. "
+                 "Enol, La Ercina and El Brisial lakes have water only in the warm months of the year after the ice has melted. "
+                 "This area is one of the most visited places of natural beauty in Spain, especially during the summer.",
+                 'https://www.65ymas.com/uploads/s1/14/25/49/santuario-lagos-covadonga-asturias-2.jpeg'],
              'Lago de Sant Maurici': ['This stunning lake in Spain is located in the Pyrenees on the Catalan side. '
                                       'It is located in Espot in Lleida at an altitude of 1,910 meters. '
                                       'The lake is part of the Aiguestortes Natural Park, which is the only one in the Catalonia region. '
                                       'Lake Maurici is 1,100 meters long and 200 meters wide.',
                                       'https://1.bp.blogspot.com/-A55cdO4aPRQ/XoIqhXZ2VSI/AAAAAAAALCw/8E0xeUVUs6AOOq9f-w58onJX9KVJlLrfgCLcBGAsYHQ/s1600/estany-gerber-aiguestortes-2.jpg']}
-    rivers = {'Mundo': ["Located in the province of Albacete, next to the city of Riopar, it is the source of the world river, "
-                        "in particular in the Natural Park of Calares del Mundo y de la Sima, to which many people go to admire the beautiful waterfall and cave. "
-                        "The area known as Los Chorros, where the Mundo river originates, where springs and beautiful waterfalls are located, "
-                        "is accessible by a route of about 6.5 kilometers, which takes no more than two hours. "
-                        "The mountainous region surrounding the area offers visitors waterfalls between caves and tunnels. "
-                        "Along the trail you can hear how the riverbed descends abundantly parallel to the trail, "
-                        "leaving behind many lakes with crystal clear water, where trout lives.",
-                        'https://upload.wikimedia.org/wikipedia/commons/7/78/Nacimiento_del_R%C3%ADo_Mundo.jpg'],
-              'Tagus': ["The longest river in Spain originates in the Universal Mountains, west of the province of Teruel on the border with Cuenca, "
-                        "and flows off the coast of Portugal in the Atlantic Ocean. "
-                        "A monument with the symbols of the provinces of Teruel (bull with a star), Guadalajara (knight) and Cuenca (bowl) marks the beginning of its canal, "
-                        "which can be reached by car, and from this point you can start the route on foot. "
-                        "It passes through a pine forest until it reaches Casas de Fuente Garcia. "
-                        "The first stream of water from the Tagus falls there. "
-                        "It is located near the beautiful town of Albarracín, the ideal place to end your holiday in Teruel.",
-                        'https://terra-z.com/wp-content/uploads/2014/03/523.jpg']}
+    rivers = {'Mundo': [
+        "Located in the province of Albacete, next to the city of Riopar, it is the source of the world river, "
+        "in particular in the Natural Park of Calares del Mundo y de la Sima, to which many people go to admire the beautiful waterfall and cave. "
+        "The area known as Los Chorros, where the Mundo river originates, where springs and beautiful waterfalls are located, "
+        "is accessible by a route of about 6.5 kilometers, which takes no more than two hours. "
+        "The mountainous region surrounding the area offers visitors waterfalls between caves and tunnels. "
+        "Along the trail you can hear how the riverbed descends abundantly parallel to the trail, "
+        "leaving behind many lakes with crystal clear water, where trout lives.",
+        'https://upload.wikimedia.org/wikipedia/commons/7/78/Nacimiento_del_R%C3%ADo_Mundo.jpg'],
+              'Tagus': [
+                  "The longest river in Spain originates in the Universal Mountains, west of the province of Teruel on the border with Cuenca, "
+                  "and flows off the coast of Portugal in the Atlantic Ocean. "
+                  "A monument with the symbols of the provinces of Teruel (bull with a star), Guadalajara (knight) and Cuenca (bowl) marks the beginning of its canal, "
+                  "which can be reached by car, and from this point you can start the route on foot. "
+                  "It passes through a pine forest until it reaches Casas de Fuente Garcia. "
+                  "The first stream of water from the Tagus falls there. "
+                  "It is located near the beautiful town of Albarracín, the ideal place to end your holiday in Teruel.",
+                  'https://terra-z.com/wp-content/uploads/2014/03/523.jpg']}
     # currency
     currencyName = 'EUR'
     currencyEqualsToDollar = 0.95
 
     # military
-    milPolBlock = "NATO"
+    milPolBlock = ["NATO"]
     amountOfPeopleInArmy = 122850
 
     # healthcare
@@ -1837,12 +1909,14 @@ if __name__ == "__main__":
                     'Portu': ['Universidade do Porto'],
                     'Faro': ['Universidade do Algarve']}
     faculties = {
-        'Polytechnic Institute': ['Faculty of Education', 'Faculty of Engineering', 'Faculty of Medicine', 'Faculty of Business'],
+        'Polytechnic Institute': ['Faculty of Education', 'Faculty of Engineering', 'Faculty of Medicine',
+                                  'Faculty of Business'],
         'University of Lisbon': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Science',
                                  'Faculty of Education', 'Faculty of Medicine'],
         'Universidade do Porto': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Business',
                                   'Faculty of Engineering', 'Faculty of Medicine'],
-        'Universidade do Algarve': ['Faculty of Business', 'Faculty of Medicine', 'Faculty of Law', 'Faculty of Engineering']}
+        'Universidade do Algarve': ['Faculty of Business', 'Faculty of Medicine', 'Faculty of Law',
+                                    'Faculty of Engineering']}
     programs = {
         'Polytechnic Institute': ['Magistracy', 'Undergraduate'],
         'University of Lisbon': ['Magistracy', 'Undergraduate', 'Doctoral'],
@@ -1883,38 +1957,41 @@ if __name__ == "__main__":
              'Universidade do Porto': 3500,
              'Universidade do Algarve': 3460}
 
-    sights = {'Obidos Castle': ["A true favorite among the medieval castles of Portugal can be considered the castle of Obidos, located on a hill, "
-                                "offering a wonderful view of the surroundings of the city of the same name: vineyards, windmills, bright terracotta roofs of the surrounding houses. "
-                                "The castle itself attracts many tourists with its battlements, preserved from the Middle Ages to the present day in surprisingly good condition. "
-                                "In the form in which we see the castle now, it was built in the 13th century, and before that, in the era of the Roman Empire, "
-                                "there were public baths and a square, which played the role of the center of the political life of the settlement. "
-                                "After the fall of the Roman Empire, with the coming to power of the Visigoths, a fortress was built on this site, around which a settlement was formed - the future city of Obidos. "
-                                "In the 8th century, the fortress passed into the possession of the Muslims, and only in the 13th century did the Portuguese king Afonso recapture this building. "
-                                "Today, this landmark of Portugal has retained its appearance, which is why it attracts many tourists - you can walk around the castle grounds, "
-                                "study its architecture - arched passages, medieval bas-reliefs, as well as view magnificent views of the surroundings from a height.",
-                                'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/6e/7b/06/castelo-de-obidos.jpg?w=1200&h=-1&s=1'],
-              'Pena Palace': ["Sintra is a suburb of the Portuguese capital, the most important in terms of attractions in Portugal. "
-                              "Not far from Sintra, in the mountains, there is an unusual castle-palace of Pena. "
-                              "Its uniqueness lies in the fact that initially an empty monastery was taken as its basis, which was erected here back in the distant 12th century in honor of the Mother of God. "
-                              "Over time, the temple fell into disrepair. "
-                              "The inconspicuous and abandoned chapel, lost in the mountains, was remembered only in the 16th century, when King Manuel I, "
-                              "being very religious, turned his gaze to this temple and to the rather vast empty lands around it. "
-                              "From that moment, the reconstruction of the sanctuary began - it was rebuilt from stone and stood for about 2 more centuries, "
-                              "until a powerful earthquake known throughout Europe happened, which turned the monastery into ruins. "
-                              "And only in 1838, King Fernando II buys the land along with the ruins of the temple and the picturesque adjacent territories on the mountain. "
-                              "He orders to rebuild a palace on these lands, which later became the summer residence of the royal family. "
-                              "Romantic Fernando made a significant contribution to the design of the castle and its surrounding areas. "
-                              "As a result, a beautiful and majestic building has grown on these lands with an exotic exterior, representing a mixture of several styles, "
-                              "bright facades and an amazing park, with its winding paths, cozy gazebos and rich colors of outlandish plants.",
-                              'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-3-The-Pena-Palace-e1497061654426.jpg'],
-              'Alto Douro': ["The Alto Douro region has long been known for producing wine of exceptional taste and quality for over 2,000 years. "
-                             "Local climatic conditions have such weather features that allow you to collect generous harvests of grapes of various varieties. "
-                             "The area is distinguished by a rather steep soil relief, from different sides it is protected from winds and moisture by the mountains of Montemuro and Maran, "
-                             "which creates a dry and hot climate here, which is most favorable for the ripening of grapes and for obtaining fragrant fortified wines. "
-                             "The wine produced here takes first place in international competitions, and this once again confirms the quality of local products. "
-                             "Traveling through the wine attractions of Portugal, in one of the local farms you can have a tasting of drinks, buy delicious wine or port wine. "
-                             "If you wish, you can take part in the harvest and the subsequent wine festival, feel the taste of life in this beautiful and fertile land.",
-                             'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-5-Alto-Douro-e1497062089463.jpg']}
+    sights = {'Obidos Castle': [
+        "A true favorite among the medieval castles of Portugal can be considered the castle of Obidos, located on a hill, "
+        "offering a wonderful view of the surroundings of the city of the same name: vineyards, windmills, bright terracotta roofs of the surrounding houses. "
+        "The castle itself attracts many tourists with its battlements, preserved from the Middle Ages to the present day in surprisingly good condition. "
+        "In the form in which we see the castle now, it was built in the 13th century, and before that, in the era of the Roman Empire, "
+        "there were public baths and a square, which played the role of the center of the political life of the settlement. "
+        "After the fall of the Roman Empire, with the coming to power of the Visigoths, a fortress was built on this site, around which a settlement was formed - the future city of Obidos. "
+        "In the 8th century, the fortress passed into the possession of the Muslims, and only in the 13th century did the Portuguese king Afonso recapture this building. "
+        "Today, this landmark of Portugal has retained its appearance, which is why it attracts many tourists - you can walk around the castle grounds, "
+        "study its architecture - arched passages, medieval bas-reliefs, as well as view magnificent views of the surroundings from a height.",
+        'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/6e/7b/06/castelo-de-obidos.jpg?w=1200&h=-1&s=1'],
+              'Pena Palace': [
+                  "Sintra is a suburb of the Portuguese capital, the most important in terms of attractions in Portugal. "
+                  "Not far from Sintra, in the mountains, there is an unusual castle-palace of Pena. "
+                  "Its uniqueness lies in the fact that initially an empty monastery was taken as its basis, which was erected here back in the distant 12th century in honor of the Mother of God. "
+                  "Over time, the temple fell into disrepair. "
+                  "The inconspicuous and abandoned chapel, lost in the mountains, was remembered only in the 16th century, when King Manuel I, "
+                  "being very religious, turned his gaze to this temple and to the rather vast empty lands around it. "
+                  "From that moment, the reconstruction of the sanctuary began - it was rebuilt from stone and stood for about 2 more centuries, "
+                  "until a powerful earthquake known throughout Europe happened, which turned the monastery into ruins. "
+                  "And only in 1838, King Fernando II buys the land along with the ruins of the temple and the picturesque adjacent territories on the mountain. "
+                  "He orders to rebuild a palace on these lands, which later became the summer residence of the royal family. "
+                  "Romantic Fernando made a significant contribution to the design of the castle and its surrounding areas. "
+                  "As a result, a beautiful and majestic building has grown on these lands with an exotic exterior, representing a mixture of several styles, "
+                  "bright facades and an amazing park, with its winding paths, cozy gazebos and rich colors of outlandish plants.",
+                  'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-3-The-Pena-Palace-e1497061654426.jpg'],
+              'Alto Douro': [
+                  "The Alto Douro region has long been known for producing wine of exceptional taste and quality for over 2,000 years. "
+                  "Local climatic conditions have such weather features that allow you to collect generous harvests of grapes of various varieties. "
+                  "The area is distinguished by a rather steep soil relief, from different sides it is protected from winds and moisture by the mountains of Montemuro and Maran, "
+                  "which creates a dry and hot climate here, which is most favorable for the ripening of grapes and for obtaining fragrant fortified wines. "
+                  "The wine produced here takes first place in international competitions, and this once again confirms the quality of local products. "
+                  "Traveling through the wine attractions of Portugal, in one of the local farms you can have a tasting of drinks, buy delicious wine or port wine. "
+                  "If you wish, you can take part in the harvest and the subsequent wine festival, feel the taste of life in this beautiful and fertile land.",
+                  'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/06/Portugal-5-Alto-Douro-e1497062089463.jpg']}
     beaches = {'Praia da Marina beach': ["The beach is distinguished not only by its exquisite beauty, "
                                          "but also by the steepness of the coastline, therefore, to get to the water, you have to go down a long and steep staircase, but it's worth it. "
                                          "Below you will see the coast from a new angle - many islands-rocks, which have bizarre shapes due to prolonged exposure to water and wind, "
@@ -1932,57 +2009,64 @@ if __name__ == "__main__":
                                        "The infrastructure of de Sao Rafael is quite well developed: there are many public showers, there are shops, there is an excellent restaurant serving fresh seafood. "
                                        "There is a large free car park nearby. But there are no places to rent sunbeds.",
                                        'https://kuku.travel/wp-content/uploads/2018/04/%D0%9F%D0%BB%D1%8F%D0%B6-Praia-de-Sao-Rafael.jpg'],
-               'Praia da Coelha': ["5 km east of Albufeira there is a small Coelha beach with a sand strip of 70-80 m long, completely protected from the winds by high cliffs. "
-                                   "Like many beaches around Albufeira, it has been awarded the Blue Flag. "
-                                   "Clean and gentle entry into the water makes this beach attractive for a relaxing holiday with kids, and many adults will enjoy snorkeling among the coastal cliffs. "
-                                   "In summer, the water warms up to an average of + 20-23 ºC.",
-                                   'https://kuku.travel/wp-content/uploads/2018/04/%D0%A4%D0%BE%D1%82%D0%BE-%D0%BF%D0%BB%D1%8F%D0%B6%D0%B0-Praia-da-Coelha.jpg']}
-    mountains = {'Pico': ["Pico is a dormant active stratovolcano located on the Mid-Atlantic Ridge and is the highest point of the ridge, Pico Island and Portugal.",
-                          'https://upload.wikimedia.org/wikipedia/commons/f/fd/Picocanal.jpg'],
+               'Praia da Coelha': [
+                   "5 km east of Albufeira there is a small Coelha beach with a sand strip of 70-80 m long, completely protected from the winds by high cliffs. "
+                   "Like many beaches around Albufeira, it has been awarded the Blue Flag. "
+                   "Clean and gentle entry into the water makes this beach attractive for a relaxing holiday with kids, and many adults will enjoy snorkeling among the coastal cliffs. "
+                   "In summer, the water warms up to an average of + 20-23 ºC.",
+                   'https://kuku.travel/wp-content/uploads/2018/04/%D0%A4%D0%BE%D1%82%D0%BE-%D0%BF%D0%BB%D1%8F%D0%B6%D0%B0-Praia-da-Coelha.jpg']}
+    mountains = {'Pico': [
+        "Pico is a dormant active stratovolcano located on the Mid-Atlantic Ridge and is the highest point of the ridge, Pico Island and Portugal.",
+        'https://upload.wikimedia.org/wikipedia/commons/f/fd/Picocanal.jpg'],
                  'Pico do Arieiro': ["Pico do Arieiro is the third highest mountain on the island of Madeira, "
                                      "the main island of the archipelago of the same name in the Atlantic Ocean, after Pico Ruivo and Pico das Torres. "
                                      "It is a good vantage point for viewing the surrounding landscapes, "
                                      "as well as one of the options for the starting point of the PR1 Vereda do Areeiro hiking route.",
                                      'https://upload.tury.club/data/41f045bafea2d2b40352c725132f5394/9A3PBhFx/GwcyrlD8.jpg'],
-                 'Pico Ruivo': ['Pico Ruivo is the highest mountain in Madeira, the main island of the Madeira archipelago in the Atlantic Ocean. '
-                                'The height of the mountain is 1862 meters. It is also the third highest peak in Portugal.',
-                                'https://fs.tonkosti.ru/9g/z6/9gz6f3rpujoksckogkgks4wsc.jpg']}
+                 'Pico Ruivo': [
+                     'Pico Ruivo is the highest mountain in Madeira, the main island of the Madeira archipelago in the Atlantic Ocean. '
+                     'The height of the mountain is 1862 meters. It is also the third highest peak in Portugal.',
+                     'https://fs.tonkosti.ru/9g/z6/9gz6f3rpujoksckogkgks4wsc.jpg']}
     skiResorts = {}
-    lakes = {'Lagoa do Fogo': ["This lake is situated on Sao Miguel island, Azores. It is the second largest lake on the island. In 1974 it was declared a natural reserve. "
-                               "It covers an area of 13.6 km², located at an altitude of 947 m above sea level, "
-                               "located on the cauldron of an extinct volcano, which formed about 15,000 years ago",
-                               'https://s9.travelask.ru/uploads/hint_place/000/115/653/image/aa2b00ee315d4f6aed788503f3c9c91f.jpg'],
-             'Pateira de Fermentelos': ["This is the largest natural lake in the entire Iberian Peninsula, which is known as a habitat for a variety of flora and fauna. "
-                                        "It is fed by two rivers, the Settima and the Agueda, which converge at the lake. "
-                                        "Pateira de Fermentelos offers its guests excellent fishing, canoeing, boating and sailing. "
-                                        "In the nearest city, Aveiro, tourists will find many options for accommodation.",
-                                        'https://womanadvice.ru/sites/default/files/49/2018-03-03_1703/pateyra_de_fermentelos.jpg'],
-             'Lake Obidos': ['In this unique location, located in the Obidos and Caldas da Reina regions of Portugal, the lake is bordered by a sea lagoon. '
-                             'As well as relaxing on stunning beaches, you can enjoy shellfishing, boating, sailing, windsurfing and canoeing. '
-                             'In the nearby town of Obidos, tourists will find several small guesthouses and hotels, authentic Portuguese cuisine and an impressive medieval fortress.',
-                             'https://womanadvice.ru/sites/default/files/49/2018-03-03_1703/ozero_obidush.jpg']}
+    lakes = {'Lagoa do Fogo': [
+        "This lake is situated on Sao Miguel island, Azores. It is the second largest lake on the island. In 1974 it was declared a natural reserve. "
+        "It covers an area of 13.6 km², located at an altitude of 947 m above sea level, "
+        "located on the cauldron of an extinct volcano, which formed about 15,000 years ago",
+        'https://s9.travelask.ru/uploads/hint_place/000/115/653/image/aa2b00ee315d4f6aed788503f3c9c91f.jpg'],
+             'Pateira de Fermentelos': [
+                 "This is the largest natural lake in the entire Iberian Peninsula, which is known as a habitat for a variety of flora and fauna. "
+                 "It is fed by two rivers, the Settima and the Agueda, which converge at the lake. "
+                 "Pateira de Fermentelos offers its guests excellent fishing, canoeing, boating and sailing. "
+                 "In the nearest city, Aveiro, tourists will find many options for accommodation.",
+                 'https://womanadvice.ru/sites/default/files/49/2018-03-03_1703/pateyra_de_fermentelos.jpg'],
+             'Lake Obidos': [
+                 'In this unique location, located in the Obidos and Caldas da Reina regions of Portugal, the lake is bordered by a sea lagoon. '
+                 'As well as relaxing on stunning beaches, you can enjoy shellfishing, boating, sailing, windsurfing and canoeing. '
+                 'In the nearby town of Obidos, tourists will find several small guesthouses and hotels, authentic Portuguese cuisine and an impressive medieval fortress.',
+                 'https://womanadvice.ru/sites/default/files/49/2018-03-03_1703/ozero_obidush.jpg']}
     rivers = {'Minho': ["Length - 340 km, basin area - 22.5 thousand km². "
                         "The sources of Minho are in the Cantabrian Mountains in the Meira region of the province of Lugo, then the river flows through the hilly terrain of the autonomous community of Galicia. "
                         "After the confluence of the main tributary, the Sil River, the valley becomes wider. "
                         "The last 80 km before it flows into the Atlantic Ocean, Minho is the border between Spain and Portugal.",
                         'https://img.freepik.com/premium-photo/panoramic-view-of-cerveira-and-the-river-minho-on-the-border-between-portugal-and-spain_462054-914.jpg'],
-              'Tacho': ["Tajo flows in Spain through the autonomous communities of Aragon, Castile-La Mancha, Madrid and Extremadura, "
-                        "then a small section of the river runs along the border of Spain and Portugal. "
-                        "A river flows through the territory of Portugal under the name Tagus. "
-                        "To the southeast of Lisbon, the river is crossed by the Vasco da Gama Bridge, 17.2 km long. "
-                        "The river flows into the bay of Mar da Paglia, which is sometimes considered its estuary. "
-                        "The double name of the river, as a rule, is reflected on geographical maps. "
-                        "On the territory of Spain, the river is called Tajo, and in Portugal the name changes to Tejo: "
-                        "there is an analogy for the change of names in the Western Dvina in the territories of Russia and Belarus, "
-                        "which in the territory of Latvia changes its name to the Daugava, as well as the Neman in Belarus, "
-                        "which is in the territory of Lithuania called Nemunas.",
-                        'https://thumbs.dreamstime.com/b/%D1%80%D0%B5%D0%BA%D0%B0-%D1%82%D0%B0%D1%85%D0%BE-35824273.jpg']}
+              'Tacho': [
+                  "Tajo flows in Spain through the autonomous communities of Aragon, Castile-La Mancha, Madrid and Extremadura, "
+                  "then a small section of the river runs along the border of Spain and Portugal. "
+                  "A river flows through the territory of Portugal under the name Tagus. "
+                  "To the southeast of Lisbon, the river is crossed by the Vasco da Gama Bridge, 17.2 km long. "
+                  "The river flows into the bay of Mar da Paglia, which is sometimes considered its estuary. "
+                  "The double name of the river, as a rule, is reflected on geographical maps. "
+                  "On the territory of Spain, the river is called Tajo, and in Portugal the name changes to Tejo: "
+                  "there is an analogy for the change of names in the Western Dvina in the territories of Russia and Belarus, "
+                  "which in the territory of Latvia changes its name to the Daugava, as well as the Neman in Belarus, "
+                  "which is in the territory of Lithuania called Nemunas.",
+                  'https://thumbs.dreamstime.com/b/%D1%80%D0%B5%D0%BA%D0%B0-%D1%82%D0%B0%D1%85%D0%BE-35824273.jpg']}
     # currency
     currencyName = 'EUR'
     currencyEqualsToDollar = 0.95
 
     # military
-    milPolBlock = "NATO"
+    milPolBlock = ["NATO"]
     amountOfPeopleInArmy = 27250
 
     # healthcare
@@ -2010,7 +2094,7 @@ if __name__ == "__main__":
     populationCount = 47330000
     procentOfMales = 49.4
     procentOfFemales = 50.6
-    populationDensityPerSquareKilometer = 92.1
+    populationDensityPerSquareKilometer = 109.9
     speedOfLife = 3  # [1, 3]
     workPlaces = 3  # [1, 3]
     nightLifeEntertainment = 3  # [1, 3]
@@ -2068,5 +2152,295 @@ if __name__ == "__main__":
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
     #############################   Portugal   #############################
+    #############################   Argentina   #############################
+
+    # Country
+    countryName = "Argentina"
+    officialLanguage = "Spanish"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Buenos Aires': [True, True, 'Atlantic ocean'],
+        'Cordova': [True, False, None],
+        'Rosario': [True, False, None],
+        'Mendoza': [True, False, None],
+        'La Plata': [True, True, 'Atlantic ocean'],
+        'Mar del Plata': [False, True, 'Atlantic ocean'],
+        'Pinamar': [False, True, 'Atlantic ocean'],
+        'Miramar': [False, True, 'Atlantic ocean']}
+
+    # education
+    universities = {'Buenos Aires': ['University of Buenos Aires', 'Universidad de Palermo Argentina'],
+                    'La Plata': ['National University of La Plata'],
+                    'Rosario': ['Universidad Nacional de Rosario']}
+    faculties = {
+        'University of Buenos Aires': ['Faculty of Business', 'Faculty of Architecture', 'Faculty of Arts',
+                                       'Faculty of Social Sciences',
+                                       'Faculty of Law', 'Faculty of Engineering', 'Faculty of Medicine',
+                                       'Faculty of Science'],
+        'Universidad de Palermo Argentina': ['Faculty of Business', 'Faculty of Architecture', 'Faculty of Education',
+                                             'Faculty of Social Sciences'],
+        'National University of La Plata': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
+                                            'Faculty of Education',
+                                            'Faculty of Science', 'Faculty of Social Sciences',
+                                            'Faculty of Engineering',
+                                            'Faculty of Medicine', 'Faculty of Law', 'Faculty of Forestry',
+                                            'Faculty of Business',
+                                            'Faculty of Architecture', 'Faculty of Forestry'],
+        'Universidad Nacional de Rosario': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Science',
+                                            'Faculty of Business',
+                                            'Faculty of Architecture']}
+    programs = {
+        'University of Buenos Aires': ['Magistracy', 'Undergraduate'],
+        'Universidad de Palermo Argentina': ['Magistracy', 'Undergraduate', 'MBA'],
+        'National University of La Plata': ['Magistracy', 'Undergraduate'],
+        'Universidad Nacional de Rosario': ['Magistracy', 'Undergraduate']}
+    links = {'University of Buenos Aires': 'https://www.uba.ar',
+             'Universidad de Palermo Argentina': 'https://www.palermo.edu',
+             'National University of La Plata': 'https://www.unipage.net',
+             'Universidad Nacional de Rosario': 'https://unr.edu.ar/'}
+    images = {
+        'University of Buenos Aires': 'https://i0.wp.com/www.argencon.org/wp-content/uploads/2022/04/argencon_uba_110422.jpg?fit=1920%2C1080&ssl=1',
+        'Universidad de Palermo Argentina': 'https://fastly.4sqi.net/img/general/600x600/27422897_cc6kJ6R3ALL5CLDnno1c1nHarbnni-qT_PTb19iPnXg.jpg',
+        'National University of La Plata': 'https://forum.awd.ru/files/06/54/65838_68aa88ccc36031103bcacf0d49fd69be.jpg',
+        'Universidad Nacional de Rosario': 'https://conlagentenoticias.com/wp-content/uploads/2020/06/facultad-de-medicina-rosario.jpg'}
+    # общага
+    hostel = {'University of Buenos Aires': 'Yes',
+              'Universidad de Palermo Argentina': 'Yes',
+              'National University of La Plata': 'Yes',
+              'Universidad Nacional de Rosario': 'Yes'}
+    # стипендия
+    scolarship = {'University of Buenos Aires': 'Yes',
+                  'Universidad de Palermo Argentina': 'Yes',
+                  'National University of La Plata': 'Yes',
+                  'Universidad Nacional de Rosario': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'University of Buenos Aires': 'Unlike most universities, the academic year here is divided into quarters. '
+                                      'Annual education at the university costs only 1000 USD. Undergraduates of any direction for an annual stay in these walls must pay the same amount. '
+                                      'Most of the students use the opportunity to receive distance education. '
+                                      'All questions related to admission and payment procedure can be clarified on the official website of the university.',
+        'Universidad de Palermo Argentina': "To get an undergraduate education, you will need to pay an amount of about 5000 USD, and for a master's degree - about 7000 USD. "
+                                            "To enter the University of Palermo in Argentina, you must pass the entrance exams. As in many higher education institutions, the academic year here consists of semesters. "
+                                            "Universidad de Palermo Argentina is a relatively small institution. "
+                                            "The university accommodates about 10,000 thousand students (both local residents and guests from other states). "
+                                            "There are also about 1000 teaching staff here, including tinned professors, candidates and doctors of science.",
+        'National University of La Plata': 'To become a student, you need to submit an application and an application package, as well as pass exams. '
+                                           'The selection committee takes into account only the academic achievements of the applicant, without discriminating him on gender, religious or political grounds. '
+                                           'Tuition at the university is paid. For citizens of Argentina and foreigners, the tuition fee is 1000 USD / year. '
+                                           'This amount is the same for undergraduate and graduate students. '
+                                           'The cost of living during the period of study will cost the student in the amount of 450 to 880 USD per month.',
+        'Universidad Nacional de Rosario': 'Since 2013, to confirm the school certificate, it is necessary to pass specialized exams. '
+                                           'As for the certificate itself and its appendix, this issue should be clarified in advance with the selection committee of the selected university. '
+                                           'Perhaps an apostilled document with a legal Spanish translation made in Argentina will suffice. '
+                                           'Among other required documents: two photocopies of the international passport and photos for the student card. '
+                                           'The full list of documents for admission should be found on the website of the selected university - requirements may vary'}
+    costs = {'University of Buenos Aires': 1000,
+             'Universidad de Palermo Argentina': 5000,
+             'National University of La Plata': 1000,
+             'Universidad Nacional de Rosario': 1000}
+
+    sights = {'Iguazu Falls': ["The real pearl of the country are the Iguazu Falls. "
+                               "This is a real miracle of nature, consisting of a whole complex of waterfalls, the number of which reaches 275. "
+                               "They are located in the form of a crescent. One of the seven wonders of the world appeared as a result of a volcanic eruption. "
+                               "Interestingly, in translation, the name of the waterfall means big water. "
+                               "The treasure was discovered in 1541 by the Spaniard Cabeza de Vaca while traveling through the South American jungle. "
+                               "There are many legends associated with this place. One of them says that once God fell in love with an aboriginal beauty named Naipu, but these feelings were not mutual. "
+                               "Naipu loved another man, with whom she decided to sail away in a canoe. God got angry and cut the river, creating a waterfall so that the lovers would die.",
+                               'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/08/Iguazu_Falls_with_Rainbow-e1503547292769.jpg'],
+              'Nahuel Huapi National Park': [
+                  "Once in Argentina, it is impossible not to visit the amazing Nahuel Huapi National Park. "
+                  "This attraction is located in the very south of the country. The park got its name because of Lake Nahuel Huapi. "
+                  "The main territory of the park is seven hundred and eighty-five hectares. The main goal is the conservation of rare plants and animals. "
+                  "There are many representatives of the animal world, as well as powerful and majestic forests. Individual trees are about five hundred years old. "
+                  "One of the places that deserve attention in the park is the extinct volcano Tronador. Its height is about 3478 meters above sea level. "
+                  "You can see on the Internet the sights of Argentina with photos and descriptions.",
+                  'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/08/Cerro_Tronador-e1503550048710.jpg'],
+              'Talampaya Park': ["In the province of La Rioja, we offer tourists to visit the unique Talampaya Park. "
+                                 "It became national only in 1997, and in 2000 it ended up on the World Heritage List. "
+                                 "Due to the large number of rivers, many species of animals live here. "
+                                 "Archaeological excavations are constantly conducted in the park. "
+                                 "For example, a lot of evidence was found that dinosaurs lived here for a very long time. "
+                                 "The nature of the park is unique. Here you can find unique sculptures made of stone and sand. "
+                                 "The famous composition is The Lost City. The remains of a turtle that lived on the planet about two hundred and ten million years ago were found in the park.",
+                                 'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/08/Natsionalnyiy_park_Talampayya-e1503552911253.jpg']}
+    beaches = {'Miramar': [
+        "Miramar (Miramar) translated from Spanish translates as Look at the sea, in some sources you can find Overlooking the sea."
+        " The Argentinean resort is located on the Atlantic coast in the quiet town of Miramar, 40 km from Mar Del Plata. "
+        "The beach itself is located in the picturesque lagoon of La Bellenera, a quiet and peaceful place, which is often chosen by families with children.",
+        'https://1001beach.ru/img/posts/1032/750/las_grutas_beach-1.webp?t=1580381569'],
+               "Las Grutas": [
+                   "Las Grutas is located 15 km from the city of San Antonio Oeste on the coast of the Atlantic Ocean. "
+                   "Translated from Spanish, the name of the beach means caves and grottoes, which surround the beach area, turning it into a picturesque place. "
+                   "Locals call Las Grutas a piece of paradise in Patagonian land.",
+                   'https://1001beach.ru/img/posts/1034/750/villa_gesell_beach-1.webp?t=1580381584'],
+               'Pinamar': [
+                   "Pinamar is a small resort town, in which a huge number of tourists from the country's capital arrive in the warm season. "
+                   "It is located on the Atlantic coast about three hundred kilometers from Buenos Aires and about one hundred kilometers north of another popular resort in the country - Mar del Plata.",
+                   'https://1001beach.ru/img/posts/1030/750/carilo_beach-1.webp?t=1580381558']}
+    mountains = {'Aconcagua': ["The peak of this mountain reaches 6962 meters, it is also called the Stone Guard. "
+                               "Aconcagua is the main attraction in Argentina, because it is the highest mountain and an extinct volcano in all of South America. "
+                               "The summit is covered with permanent snow. The mountain is located in the center of the Andes. "
+                               "Another unique place here that nature has created is the Inca Bridge. "
+                               "Aconcagua attracts climbers with its grandeur.",
+                               'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Aconcagua2016.jpg/640px-Aconcagua2016.jpg'],
+                 'Fitzroy': ["There is a peak on the border between Chile and Argentina in Patagonia. "
+                             "The height of the peak is 3405 m. Often there is another name “Cerro Chalten”, which means “smoking mountain”. "
+                             "Clouds enveloping the top create a picture as if it is in the power of smoke. "
+                             "Jagged cliffs, as well as adverse weather conditions, get in the way of climbers,"
+                             " so conquering the summit is a rather difficult task.",
+                             'https://media-cdn.tripadvisor.com/media/photo-s/0f/31/cc/8b/photo0jpg.jpg'],
+                 'Serranha del Aguarage': [
+                     'Colored mountains striking with their uniqueness and beauty stretch for 154 km in the province of Jujuy. '
+                     'Locals call this mountain range Hornokal. The zigzag shape of the mountains has about 11 shades, if you carefully consider them. '
+                     'Such a natural miracle is due to various deposits of natural rocks that lie on top of each other in layers, creating a magnificent landscape.',
+                     'https://live.staticflickr.com/65535/49094173797_5eab0bd8eb_b.jpg']}
+    skiResorts = {
+        'La Jolla': ["The resort is located in Chubut, near Esquel, where one of the best snows in Argentina falls. "
+                     "La Jolla receives 900 cm of dry powder annually. "
+                     "Snowfall is usually expected in the fall - early, possibly mid-October. "
+                     "This is because the ski resort is oriented to the south. "
+                     "La Jolla is a small ski resort with little infrastructure. "
+                     "However, excellent snow cover compensates for this. "
+                     "Dry loose off-piste snow is what gives skiers the thrill of their lives. "
+                     "This resort offers unrivaled off-piste opportunities like no other. "
+                     "There are natural half-pipes, wide-open bowls, flutes, long groomed runs, everything an avid skier wants to see on a ski run. "
+                     "The forbidden territory of this resort is indescribable, with long miles of couloirs, wide bowls.",
+                     'https://skipedia.ru/wp-content/uploads/2017/11/3af8f8ee0380868ef2717ecef34ad6e5.jpg'],
+        'Cerro Chapelco': [
+            "Recently, Chapelco has spent resources improving its lifts, adding high-speed quads and gondolas to their base. "
+            "This gives skiers the opportunity to have a complete skiing experience in the snowy mountains of Argentina. "
+            "What distinguishes the landscape of this resort from other resorts is the hanging moss-covered trees. "
+            "Tourists will not find similar trees with grated powder anywhere else but this place. "
+            "As for the terrain, whether you are a beginner or an experienced skier, the ski area suits skiers of all levels.",
+            'https://bungary.ru/wp-content/uploads/2020/10/14.jpg'],
+        'Las Leñas': [
+            "Known for its steep slopes, stunning off-piste runs, Las Leñas welcomes many visitors of all abilities. "
+            "Although tourists, skiers, riders need to make a lot of efforts to get to the resort. "
+            "However, the location and scenic beauty make the trip even more worthwhile. "
+            "The epic terrain makes Las Leñas skiing a real treat. "
+            "The snow cover changes every year, but the quality is usually top notch, even during July. "
+            "Las Leñas offers one of the longest, most exciting runs in the world. "
+            "This makes it even more fun for intermediate to advanced hikers as they can experience a real skiing adventure "
+            "in the middle of summer when summer is at its peak in the US.",
+            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/c9/fd/7f/desde-la-pista-departamentos.jpg?w=600&h=400&s=1']}
+    lakes = {'Nahuel Huapi': [
+        "Lake Nahuel Huapi is not only famous for its beauty and grandeur, but many mysterious stories are associated with it. "
+        "It is believed that a monster lives at the very bottom of the lake, which sometimes appears from under the water. "
+        "Crowds of tourists travel to Argentina to see the mysterious beast. "
+        "Scientists have repeatedly come to discover the monster, but all to no avail. "
+        "Locals offer tourists all kinds of souvenirs in the form of a mysterious beast. "
+        "Trips around the park by car are offered, the length of the path is two hundred and eighty kilometers.",
+        'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/08/Ozero_Nahue%60l_Huapi-e1503549110284.jpge'],
+             'Buenos Aires': [
+                 "The border lake in the Andes between Chile and Argentina receives glacial nourishment of the highlands. "
+                 "Area - 1850 km². The maximum depth of the reservoir is 580 meters. T"
+                 "he rivers flowing from Buenos Aires carry their waters to the Pacifiс Ocean. "
+                 "In the west of the reservoir there are many fjords, the rest of the lake parts are located on the plain. "
+                 "There are wonderful marble grottoes on the Chilean side of the freshwater lake.",
+                 'https://must-see.top/wp-content/uploads/2019/09/buenos-ai-res-700x465.jpeg'],
+             'Lago Argentino': [
+                 'The freshwater reservoir is located in the province of Santa Cruz. The area is 1415 km². '
+                 'The maximum depth of the reservoir is 500 meters. The lake is part of the Los Glaciares National Park. '
+                 'The type of nutrition of the reservoir is considered glacial. Lago Argentino is a great place for fishing. '
+                 'The lake fauna consists of a huge number of fish species. Not far from this place is a large Argentine airport and the city of El Calafate.',
+                 'https://must-see.top/wp-content/uploads/2019/09/lago-arhentino-700x463.jpg']}
+    rivers = {'Paraná': [
+        "Parana - a river in South America, the second longest after the famous Amazon, takes 8th place in the list of the largest water systems on the planet. "
+        "It flows in the southeastern part of the continent, linking three countries: it partially serves as the natural state border of Brazil, Argentina and Paraguay. "
+        "The name of the river in the language of the Indian tribe Tupi means Big as the sea or Similar to the sea.",
+        'https://www.syl.ru/misc/i/ai/293549/1617532.jpg']}
+    # currency
+    currencyName = 'ARS'
+    currencyEqualsToDollar = 169.93
+
+    # military
+    milPolBlock = ['TIAR']
+    amountOfPeopleInArmy = 214000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 326
+    menAverageLifeExpectancy = 68.4
+    womenAverageLifeExpectancy = 73.8
+
+    # climat
+    juneAverageTemperature = 15
+    decemberAverageTemperature = 25
+    averageHumidity = 69
+    averageDurationOfWinter = 5
+    averageRainfallPerMonth = 98
+    averageNumberOfFoggyDaysPerYear = 26
+    averageNumberOfRainyDaysPerYear = 102
+    averageNumberOfClearDays = 105
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 3  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 45810000
+    procentOfMales = 48.9
+    procentOfFemales = 51.1
+    populationDensityPerSquareKilometer = 16.5
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 11
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 43.86
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 4  # Мегабиты в секунду
+    freeWifi = 2  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 34
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+    #############################   Argentina   #############################
+
     cc.createBorders()
     cc.close()
