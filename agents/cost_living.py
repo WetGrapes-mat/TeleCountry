@@ -11,7 +11,7 @@ coefficients = {"dress": 0.1,
                 "mealFor2PeopleMidRestaurant": 1.55,
                 "mealInexpensiveRestaurant": 2.17,
                 "water": 1.1625,
-                "internationalPrimarySchool": 0.8333333,
+                "internationalPrimarySchool": 0.08333333,
                 "mobileTariffLocal": 20.0,
                 "internet": 0.5,
                 "basic": 0.6071429,
@@ -61,84 +61,143 @@ class CostLiving:
 
     def get_information(self):
         self.prices = cost_living_db.findAllPrices()
-        # for price in self.prices:
-        #     print(price)
         cost_living_db.close()
+
+    def get_countries(self):
+        countries = cost_living_db.findCountryNames()
+        cost_living_db.close()
+        return countries
 
     def to_fixed(self, numObj: float):
         digits = 2
         return f"{numObj:.{digits}f}"
 
-    def count_cost_living(self, children_preschool: int, children_school: int, family_member_amount: int,
-                          smoking_packs: float, transportation: str, rent: str):
-        result_cost_living = ""
-        for i in range(len(self.prices)):
-            #  Учёт стоимости проживания не включая аренду и проезд
-            sum = (family_member_amount * (self.prices[i]["dress"] * self.coefficients["dress"]
-                   + self.prices[i]["jeans"] * self.coefficients["jeans"]
-                   + self.prices[i]["pairOfMenLeatherBusinessShoes"] * self.coefficients["pairOfMenLeatherBusinessShoes"]
-                   + self.prices[i]["pairOfNikeRunningShoes"] * self.coefficients["pairOfNikeRunningShoes"]
-                   + self.prices[i]["domesticBeerRestaurant"] * self.coefficients["domesticBeerRestaurant"]
-                   + self.prices[i]["importedBeerRestaurant"] * self.coefficients["importedBeerRestaurant"]
-                   + self.prices[i]["mcMealAtMcDonalds"] * self.coefficients["mcMealAtMcDonalds"]
-                   + self.prices[i]["mealFor2PeopleMidRestaurant"] * self.coefficients["mealFor2PeopleMidRestaurant"]
-                   + self.prices[i]["mealInexpensiveRestaurant"] * self.coefficients["mealInexpensiveRestaurant"]
-                   + self.prices[i]["water"] * self.coefficients["water"]
-                   + self.prices[i]["mobileTariffLocal"] * self.coefficients["mobileTariffLocal"]
-                   + self.prices[i]["internet"] * self.coefficients["internet"]
-                   + self.prices[i]["basic"] * self.coefficients["basic"]
-                   + self.prices[i]["cinema"] * self.coefficients["cinema"]
-                   + self.prices[i]["cappuccino"] * self.coefficients["cappuccino"]
-                   + self.prices[i]["fitnessClub"] * self.coefficients["fitnessClub"]
-                   + self.prices[i]["tennisCourt"] * self.coefficients["tennisCourt"]
-                   + self.prices[i]["apples"] * self.coefficients["apples"]
-                   + self.prices[i]["banana"] * self.coefficients["banana"]
-                   + self.prices[i]["beefRound"] * self.coefficients["beefRound"]
-                   + self.prices[i]["bottleOfWine"] * self.coefficients["bottleOfWine"]
-                   + self.prices[i]["chickenFillets"] * self.coefficients["chickenFillets"]
-                   + self.prices[i]["domesticBeer"] * self.coefficients["domesticBeer"]
-                   + self.prices[i]["eggs"] * self.coefficients["eggs"]
-                   + self.prices[i]["importedBeer"] * self.coefficients["importedBeer"]
-                   + self.prices[i]["lettuce"] * self.coefficients["lettuce"]
-                   + self.prices[i]["loafOfFreshWhiteBread"] * self.coefficients["loafOfFreshWhiteBread"]
-                   + self.prices[i]["localCheese"] * self.coefficients["localCheese"]
-                   + self.prices[i]["milk"] * self.coefficients["milk"]
-                   + self.prices[i]["onion"] * self.coefficients["onion"]
-                   + self.prices[i]["oranges"] * self.coefficients["oranges"]
-                   + self.prices[i]["potato"] * self.coefficients["potato"]
-                   + self.prices[i]["rice"] * self.coefficients["rice"]
-                   + self.prices[i]["tomato"] * self.coefficients["tomato"]
-                   + self.prices[i]["waterBigBottle"] * self.coefficients["waterBigBottle"])
-                   + self.prices[i]["preschool"] * children_preschool
-                   + self.prices[i]["internationalPrimarySchool"] * self.coefficients["internationalPrimarySchool"]
-                   * children_school
-                   + self.prices[i]["cigarettesPack"] * smoking_packs * 30)
-            # Учёт стоимости проживания с арендой квартиры
-            if rent == self.rent[0]:  # 1-комнатная квартира в центре города (аренда)
-                sum += self.prices[i]["apartment1RoomInCityCentre"]
-            elif rent == self.rent[1]:  # 3-комнатная квартира в центре города (аренда)
-                sum += self.prices[i]["apartment3RoomsInCityCentre"]
-            elif rent == self.rent[2]:  # 1-комнатная квартира на окраине города (аренда)
-                sum += self.prices[i]["apartment1RoomOutsideOfCentre"]
-            elif rent == self.rent[3]:  # 3-комнатная квартира на окраине города (аренда)
-                sum += self.prices[i]["apartment3RoomsOutsideOfCentre"]
-            elif rent == self.rent[4]:  # своё жильё
-                pass
-            else:
-                print("Некорректный ввод")
+    def count_function(self,
+                       children_preschool: int,
+                       children_school: int,
+                       family_member_amount: int,
+                       smoking_packs: float,
+                       transportation: str,
+                       rent: str,
+                       result: dict,
+                       i: int
+                       ):
+        # Учёт стоимости проживания не включая проезд
+        sum = (family_member_amount * (self.prices[i]["dress"] * self.coefficients["dress"]
+                                       + self.prices[i]["jeans"] * self.coefficients["jeans"]
+                                       + self.prices[i]["pairOfMenLeatherBusinessShoes"] * self.coefficients[
+                                           "pairOfMenLeatherBusinessShoes"]
+                                       + self.prices[i]["pairOfNikeRunningShoes"] * self.coefficients[
+                                           "pairOfNikeRunningShoes"]
+                                       + self.prices[i]["domesticBeerRestaurant"] * self.coefficients[
+                                           "domesticBeerRestaurant"]
+                                       + self.prices[i]["importedBeerRestaurant"] * self.coefficients[
+                                           "importedBeerRestaurant"]
+                                       + self.prices[i]["mcMealAtMcDonalds"] * self.coefficients["mcMealAtMcDonalds"]
+                                       + self.prices[i]["mealFor2PeopleMidRestaurant"] * self.coefficients[
+                                           "mealFor2PeopleMidRestaurant"]
+                                       + self.prices[i]["mealInexpensiveRestaurant"] * self.coefficients[
+                                           "mealInexpensiveRestaurant"]
+                                       + self.prices[i]["water"] * self.coefficients["water"]
+                                       + self.prices[i]["mobileTariffLocal"] * self.coefficients["mobileTariffLocal"]
+                                       + self.prices[i]["internet"] * self.coefficients["internet"]
+                                       + self.prices[i]["basic"] * self.coefficients["basic"]
+                                       + self.prices[i]["cinema"] * self.coefficients["cinema"]
+                                       + self.prices[i]["cappuccino"] * self.coefficients["cappuccino"]
+                                       + self.prices[i]["fitnessClub"] * self.coefficients["fitnessClub"]
+                                       + self.prices[i]["tennisCourt"] * self.coefficients["tennisCourt"]
+                                       + self.prices[i]["apples"] * self.coefficients["apples"]
+                                       + self.prices[i]["banana"] * self.coefficients["banana"]
+                                       + self.prices[i]["beefRound"] * self.coefficients["beefRound"]
+                                       + self.prices[i]["bottleOfWine"] * self.coefficients["bottleOfWine"]
+                                       + self.prices[i]["chickenFillets"] * self.coefficients["chickenFillets"]
+                                       + self.prices[i]["domesticBeer"] * self.coefficients["domesticBeer"]
+                                       + self.prices[i]["eggs"] * self.coefficients["eggs"]
+                                       + self.prices[i]["importedBeer"] * self.coefficients["importedBeer"]
+                                       + self.prices[i]["lettuce"] * self.coefficients["lettuce"]
+                                       + self.prices[i]["loafOfFreshWhiteBread"] * self.coefficients[
+                                           "loafOfFreshWhiteBread"]
+                                       + self.prices[i]["localCheese"] * self.coefficients["localCheese"]
+                                       + self.prices[i]["milk"] * self.coefficients["milk"]
+                                       + self.prices[i]["onion"] * self.coefficients["onion"]
+                                       + self.prices[i]["oranges"] * self.coefficients["oranges"]
+                                       + self.prices[i]["potato"] * self.coefficients["potato"]
+                                       + self.prices[i]["rice"] * self.coefficients["rice"]
+                                       + self.prices[i]["tomato"] * self.coefficients["tomato"]
+                                       + self.prices[i]["waterBigBottle"] * self.coefficients["waterBigBottle"])
+               + self.prices[i]["preschool"] * children_preschool
+               + self.prices[i]["internationalPrimarySchool"] * self.coefficients["internationalPrimarySchool"]
+               * children_school
+               + self.prices[i]["cigarettesPack"] * smoking_packs * 30)
 
-            # Учёт стоимости проживания с проездом
-            if transportation == self.transportation[0]:  # такси
-                sum += family_member_amount * (self.prices[i]["oneWayTicketLocal"] * self.coefficients["oneWayTicketLocal"]
-                        + self.prices[i]["taxi1hourWaiting"] * self.coefficients["taxi1hourWaiting"]
-                        + self.prices[i]["taxi1km"] * self.coefficients["taxi1km"]
-                        + self.prices[i]["taxiStart"] * self.coefficients["taxiStart"])
-            elif transportation == self.transportation[1]:  # своя машина
-                sum += family_member_amount * self.prices[i]["gasoline"] * self.coefficients["gasoline"]
-            elif transportation == self.transportation[2]:  # общественный транспорт
-                sum += family_member_amount * self.prices[i]["monthlyPass"] * self.coefficients["monthlyPass"]
+        # Учёт стоимости проживания с арендой квартиры
+        if rent == self.rent[0]:  # 1-комнатная квартира в центре города (аренда)
+            sum += self.prices[i]["apartment1RoomInCityCentre"]
+        elif rent == self.rent[1]:  # 3-комнатная квартира в центре города (аренда)
+            sum += self.prices[i]["apartment3RoomsInCityCentre"]
+        elif rent == self.rent[2]:  # 1-комнатная квартира на окраине города (аренда)
+            sum += self.prices[i]["apartment1RoomOutsideOfCentre"]
+        elif rent == self.rent[3]:  # 3-комнатная квартира на окраине города (аренда)
+            sum += self.prices[i]["apartment3RoomsOutsideOfCentre"]
+        elif rent == self.rent[4]:  # своё жильё
+            pass
+        else:
+            print("Некорректный ввод")
 
-            result_sum = self.to_fixed(sum)
-            result_cost_living += f'{self.prices[i]["Country"]} -- {result_sum} $\n'
+        # Учёт стоимости проживания с проездом
+        if transportation == self.transportation[0]:  # такси
+            sum += family_member_amount * (self.prices[i]["oneWayTicketLocal"] * self.coefficients["oneWayTicketLocal"]
+                                           + self.prices[i]["taxi1hourWaiting"] * self.coefficients["taxi1hourWaiting"]
+                                           + self.prices[i]["taxi1km"] * self.coefficients["taxi1km"]
+                                           + self.prices[i]["taxiStart"] * self.coefficients["taxiStart"])
+        elif transportation == self.transportation[1]:  # своя машина
+            sum += family_member_amount * self.prices[i]["gasoline"] * self.coefficients["gasoline"]
+        elif transportation == self.transportation[2]:  # общественный транспорт
+            sum += family_member_amount * self.prices[i]["monthlyPass"] * self.coefficients["monthlyPass"]
 
-        return result_cost_living
+        # result_sum = self.to_fixed(sum)
+        result[self.prices[i]["Country"]] = sum
+        # result_cost_living += f'{self.prices[i]["Country"]} -- {result_sum} $\n'
+        return result
+
+    def count_cost_living(self,
+                          children_preschool: int,
+                          children_school: int,
+                          family_member_amount: int,
+                          smoking_packs: float,
+                          transportation: str,
+                          rent: str,
+                          country: str):
+        result = {}
+        if country in self.get_countries():
+            for i in range(len(self.prices)):
+                if country == self.prices[i]['Country']:
+                    result = self.count_function(children_preschool,
+                                                 children_school,
+                                                 family_member_amount,
+                                                 smoking_packs,
+                                                 transportation,
+                                                 rent,
+                                                 result,
+                                                 i)
+                    break
+
+        elif country == "Рейтинг стран":
+            for i in range(len(self.prices)):
+                result = self.count_function(children_preschool,
+                                             children_school,
+                                             family_member_amount,
+                                             smoking_packs,
+                                             transportation,
+                                             rent,
+                                             result,
+                                             i)
+
+        string_result = ""
+        sorted_values = sorted(result.values())
+        for i in sorted_values:
+            for key, value in result.items():
+                if i == value:
+                    string_result += f'{key} -- {self.to_fixed(i)} $\n'
+
+        return string_result
