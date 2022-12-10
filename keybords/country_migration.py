@@ -27,8 +27,7 @@ i_button_2_transport = InlineKeyboardButton('2', callback_data=cb_transport.new(
 i_button_3_transport = InlineKeyboardButton('3', callback_data=cb_transport.new(3))
 i_button_4_transport = InlineKeyboardButton('4', callback_data=cb_transport.new(4))
 i_button_5_transport = InlineKeyboardButton('5', callback_data=cb_transport.new(5))
-ikb_transport = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_transport, i_button_2_transport, i_button_3_transport,
-                                                            i_button_4_transport, i_button_5_transport]])
+ikb_transport = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_transport, i_button_2_transport, i_button_3_transport]])
 
 cb_english = CallbackData('english', 'action')
 i_button_1_english = InlineKeyboardButton('1', callback_data=cb_english.new(1))
@@ -36,8 +35,7 @@ i_button_2_english = InlineKeyboardButton('2', callback_data=cb_english.new(2))
 i_button_3_english = InlineKeyboardButton('3', callback_data=cb_english.new(3))
 i_button_4_english = InlineKeyboardButton('4', callback_data=cb_english.new(4))
 i_button_5_english = InlineKeyboardButton('5', callback_data=cb_english.new(5))
-ikb_english = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_english, i_button_2_english, i_button_3_english,
-                                                            i_button_4_english, i_button_5_english]])
+ikb_english = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_english, i_button_2_english, i_button_3_english]])
 
 cb_workplace = CallbackData('workplace', 'action')
 i_button_1_workplace = InlineKeyboardButton('1', callback_data=cb_workplace.new(1))
@@ -45,8 +43,7 @@ i_button_2_workplace = InlineKeyboardButton('2', callback_data=cb_workplace.new(
 i_button_3_workplace = InlineKeyboardButton('3', callback_data=cb_workplace.new(3))
 i_button_4_workplace = InlineKeyboardButton('4', callback_data=cb_workplace.new(4))
 i_button_5_workplace = InlineKeyboardButton('5', callback_data=cb_workplace.new(5))
-ikb_workplace = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_workplace, i_button_2_workplace, i_button_3_workplace,
-                                                            i_button_4_workplace, i_button_5_workplace]])
+ikb_workplace = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_workplace, i_button_2_workplace, i_button_3_workplace]])
 
 cb_nightLife = CallbackData('nightLife', 'action')
 i_button_1_nightLife = InlineKeyboardButton('1', callback_data=cb_nightLife.new(1))
@@ -54,8 +51,7 @@ i_button_2_nightLife = InlineKeyboardButton('2', callback_data=cb_nightLife.new(
 i_button_3_nightLife = InlineKeyboardButton('3', callback_data=cb_nightLife.new(3))
 i_button_4_nightLife = InlineKeyboardButton('4', callback_data=cb_nightLife.new(4))
 i_button_5_nightLife = InlineKeyboardButton('5', callback_data=cb_nightLife.new(5))
-ikb_nightLife = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_nightLife, i_button_2_nightLife, i_button_3_nightLife,
-                                                            i_button_4_nightLife, i_button_5_nightLife]])
+ikb_nightLife = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_nightLife, i_button_2_nightLife, i_button_3_nightLife]])
 
 cb_lgbt = CallbackData('lgbt', 'action')
 i_button_1_lgbt = InlineKeyboardButton('1', callback_data=cb_lgbt.new(1))
@@ -63,5 +59,4 @@ i_button_2_lgbt = InlineKeyboardButton('2', callback_data=cb_lgbt.new(2))
 i_button_3_lgbt = InlineKeyboardButton('3', callback_data=cb_lgbt.new(3))
 i_button_4_lgbt = InlineKeyboardButton('4', callback_data=cb_lgbt.new(4))
 i_button_5_lgbt = InlineKeyboardButton('5', callback_data=cb_lgbt.new(5))
-ikb_lgbt = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_lgbt, i_button_2_lgbt, i_button_3_lgbt,
-                                                            i_button_4_lgbt, i_button_5_lgbt]])
+ikb_lgbt = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_lgbt, i_button_2_lgbt, i_button_3_lgbt]])

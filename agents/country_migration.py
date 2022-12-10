@@ -43,16 +43,29 @@ class CountryMigrationAgent:
         return c
 
     def answer_preparation(self, country):
-        info = country_migration_db.findinfocountry(country)
+        info = country_migration_db.findinfocountry(country)[0]
 
         z = (info['airPollution'] + info['waterPollution'] + info['dirtyAndUntidy']) // 3
-        x = info['comfortableToSpendTimeInTheCity']
         if info['decemberAverageTemperature'] == 0: info['decemberAverageTemperature'] = -1
         y = (((info['averageDurationOfWinter'] * info['decemberAverageTemperature']) / 2) +info[
             'juneAverageTemperature']) / 2
         if info['averageDurationOfWinter'] == 0: y = (info['decemberAverageTemperature'] + info[
             'juneAverageTemperature']) / 2
-        answer = f'Страна котомую мы для вас подобрали {info["name"] }\n'
+        answer = f'Страна котомую мы для вас подобрали {info["name"]}\n' \
+                 f'Немного параметров о стране:\n' \
+                 f'Население страны {info["count"]}\n' \
+                 f'Официальный язык {info["nameLan"]}\n' \
+                 f'Процент закрзясненности окружающей среды {z}%\n' \
+                 f'Процент комфортности проживания в стране {info["comfortableToSpendTimeInTheCity"]}\n' \
+                 f'Отношение к иностранцам (от 1 до 3) {info["friendlyToForeigners"]}\n' \
+                 f'Мество в глобальном рейтинге {info["globalRank"]}\n' \
+                 f'Комфорт жизни с семьей (от 1 до 3) {info["assessmentOfFamilyLife"]}\n' \
+                 f'Уровени свободы слова (от 1 до 3) {info["freedomOfSpeech"]}\n' \
+                 f'Доспуность беспталного WiFi (от 1 до 3) {info["speedOfInternetMbps"]}\n' \
+                 f'Национальная валюта {info["nameMoney"]}\n' \
+                 f'Курс к долару {info["oneDollarEquals"]}\n'
+
+        return answer
 
 
 
@@ -127,7 +140,7 @@ class CountryMigrationAgent:
                     temp_r = abs(am - self.user)
                     rezult = co
         if rezult:
-            return f"Для переезда наиболее подходящим будет {rezult} "
+            return f"{self.answer_preparation(rezult)} "
         else:
             return f"К сожелению страны с задаными вами параметрами не нашлось."
 

@@ -134,7 +134,7 @@ class CountryMigration(Request):
                         "cur.name as nameMoney,"
                         "cur.oneDollarEquals as oneDollarEquals, "
                         "po.count as count, "
-                        "l.nameLan as nameLan", name=name)
+                        "l.name as nameLan", name=name)
         return [{'name': info["nameCountry"],
                  'averageDurationOfWinter': info['averageDurationOfWinter'],
                  'juneAverageTemperature': info['juneAverageTemperature'],
@@ -231,6 +231,8 @@ if __name__ == "__main__":
 
     print(c)
     print(country_migration_db.findinfocountry("Canada"))
+    print(country_migration_db.findinfocountry("United Arab Emirates"))
+
 
 
 
