@@ -399,6 +399,7 @@ class CountryCreator:
         match (italy:Country {name:"Italy"})
         match (portugal:Country {name:"Portugal"})
         match (argentina:Country {name:"Argentina"})
+        match (brazil:Country {name:"Brazil"})
         match (poland:Country {name:"Poland"})
         match (germany:Country {name:"Germany"})
         match (czech:Country {name:"Czech"})
@@ -410,7 +411,10 @@ class CountryCreator:
         match (norway:Country {name:"Norway"})
         match (france:Country {name:"France"})
 
-
+        
+        create (brazil)-[:borders_with]->(argentina)
+        create (argentina)-[:borders_with]->(brazil)
+        
         create (poland)-[:borders_with]->(czech)
         create (poland)-[:borders_with]->(germany)
         create (poland)-[:borders_with]->(slovakia)
@@ -5117,6 +5121,262 @@ if __name__ == "__main__":
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
     #############################   FRANCE   #############################
+    #############################   Brazil   #############################
+
+    # Country
+    countryName = "Brazil"
+    officialLanguage = "Portuguese"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Brasilia': [True, False, None],
+        'Sao Paulo': [True, False, None],
+        'Rio de Janeiro': [True, True, 'Atlantic ocean'],
+        'Salvador': [True, True, 'Atlantic ocean'],
+        'Fortaleza': [True, True, 'Atlantic ocean'],
+        'Florianopolis': [False, True, 'Atlantic ocean'],
+        'Porto Seguro': [False, True, 'Atlantic ocean']}
+
+    # education
+    universities = {'Brasili': ['University of Brasília'],
+                    'Sao Paulo': ['University of Sao Paulo'],
+                    'Rio de Janeiro': ['Universidade do Estado do Rio de Janeiro'],
+                    'Fortaleza': ['Universidade Federal do Ceará']}
+    faculties = {
+        'University of Brasília': ['Faculty of Architecture', 'Faculty of Science', 'Faculty of Social Sciences',
+                                   'Faculty of Medicine', 'Faculty of Arts',
+                                   'Faculty of Computer Engineering and Software'],
+        'University of Sao Paulo': ['Faculty of Business', 'Faculty of Law', 'Faculty of Education'],
+        'Universidade do Estado do Rio de Janeiro': ['Faculty of Social Sciences', 'Faculty of Education', 'Faculty of Business'],
+        'Universidade Federal do Ceará': ['Faculty of Medicine', 'Faculty of Social Sciences', 'Faculty of Science',
+                              'Faculty of Law', 'Faculty of Arts']}
+    programs = {
+        'University of Brasília': ['Magistracy', 'Undergraduate'],
+        'University of Sao Paulo': ['Magistracy', 'Undergraduate'],
+        'Universidade do Estado do Rio de Janeiro': ['Magistracy', 'Undergraduate'],
+        'Universidade Federal do Ceará': ['Magistracy', 'Undergraduate']}
+    links = {'University of Brasília': 'https://international.unb.br',
+             'University of Sao Paulo': 'https://www.fearp.usp.br',
+             'Universidade do Estado do Rio de Janeiro': 'https://www.uerj.br',
+             'Universidade Federal do Ceará': 'https://www.ufc.br'}
+    images = {
+        'University of Brasília': 'https://smapse.ru/storage/2018/10/1200px-ib-unb.jpg',
+        'University of Sao Paulo': 'https://global.ncsu.edu/wp-content/uploads/sites/90/2019/03/USP.jpg',
+        'Universidade do Estado do Rio de Janeiro': 'https://cdn.osaogoncalo.com.br/img/normal/90000/uerj-divulgacao_00091014_0.jpg?xid=259075',
+        'Universidade Federal do Ceará': 'https://melhoresescolasmedicas.com/wp-content/uploads/2021/03/image_processing20200516-30496-1nwh9yc.jpeg'}
+    # общага
+    hostel = {'University of Brasília': 'Yes',
+              'University of Sao Paulo': 'Yes',
+              'Universidade do Estado do Rio de Janeiro': 'Yes',
+              'Universidade Federal do Ceará': 'Yes'}
+    # стипендия
+    scolarship = {'University of Brasília': 'Yes',
+                  'University of Sao Paulo': 'Yes',
+                  'Universidade do Estado do Rio de Janeiro': 'Yes',
+                  'Universidade Federal do Ceará': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'University of Brasília': "Enrollment of applicants is based on the results of entrance examinations. "
+                                  "To get a bachelor's degree in education, you need to pay about 1000 USD per year. "
+                                  "Although this amount is not large (compared to other higher prestigious institutions), "
+                                  "the quality of the knowledge and skills acquired at the University of Brasília is at the proper level, "
+                                  "it corresponds to the title of one of the best universities in the country. "
+                                  "At the university, an individual approach to each student and the possibility of distance learning are possible. "
+                                  "The University of Brasilia is also happy to open its doors to students from other countries who have come on a student "
+                                  "exchange program or a student program for students to jointly develop doctoral and master's degrees.",
+        'University of Sao Paulo': 'Passing the competition for admission to the University of Sao Paulo is not easy. '
+                                   'The applicant is enrolled only after passing serious exams. '
+                                   'Usually, out of ten young people who apply, only one remains to study. '
+                                   'Such a large competition is based not only on the demographic situation in the country, but also on low tuition fees. '
+                                   'It is approximately 1000 USD. for the annual rate. More detailed and final prices are based on the chosen specialty. '
+                                   'Information about them and the rules for admission can be found on the official USP website.',
+        'Universidade do Estado do Rio de Janeiro': 'To be enrolled in the chosen faculty, the student must successfully pass the entrance exams. '
+                                                    'The learning process of one academic year is divided into two approximately equal semesters. '
+                                                    "The cost of obtaining knowledge for applicants for a bachelor's degree is determined by the amount equivalent to $ 1,000 and paid in local currency. "
+                                                    "For a university with such ranking indicators, tuition fees are considered quite low. "
+                                                    "Those who study under the master's program pay the same amount for one year of stay within the walls of UERJ.",
+        'Universidade Federal do Ceará': 'For admission to the university, the student is required to provide information about the results of the exams passed.'}
+    costs = {'University of Brasília': 1000,
+             'University of Sao Paulo': 1000,
+             'Universidade do Estado do Rio de Janeiro': 1000,
+             'Universidade Federal do Ceará': 1000}
+
+    sights = {'Christ statue': ["The statue of Christ the Redeemer is the most recognizable in the country. "
+                                "It is located on Mount Corcovado. The outstretched arms of Christ symbolize the blessing of the city. "
+                                "Millions of tourists seek to get to Rio de Janeiro in order to see the statue of Christ the Redeemer. "
+                                "This famous landmark of Brazil was erected in honor of the 100th anniversary of independence. "
+                                "Work began in 1922. It is noteworthy that the fundraising for the construction was carried out by volunteers with the active participation of Bishop Sebastian Leme. "
+                                "It was originally planned that the statue of Christ would stand on the globe. "
+                                "But later the project was changed. "
+                                "The idea of the figure of Christ with outstretched arms belongs to the artist Carlos Osvaldo. "
+                                "The arm span reaches 28 meters. The pedestal is 8 meters, and the figure of Christ itself is 30 meters.",
+                                'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/03/Brazil-1-Christ-the-Redeemer-e1490429791222.jpg'],
+              'Waterfall Adam and Eve': ['The waterfall Adam and Eve can rightfully be considered the greatest natural attraction in Brazil. '
+                                           'The complex of waterfalls on the Iguazu River delights everyone who sees them. '
+                                           'They are on the border of Brazil and Argentina. '
+                                           'The complex of waterfalls became a UNESCO heritage site in the 80s of the last century. '
+                                           'Adam and Eve is located in Iguazu Park near the Bossetti Falls. '
+                                           'The waterfall Adam and Eve is especially beautiful on a sunny day, when millions of sprays reflect rays shimmering '
+                                           'with all the colors of the rainbow. At the same time, the spray cloud itself rises several meters - the force of the falling water flow is so great. '
+                                           'For tourists, solid viewing platforms are arranged here.',
+                                           'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/03/Brazil-2-Adam-and-Eve-waterfall-e1490430110461.jpg'],
+              "Devil's Throat": ["There is a unique set of waterfalls on the Iguazu River. "
+                                 "There are 275 of them here. The most impressive is the 700-meter ledge, which has a horseshoe shape. "
+                                 "Devil's Throat Falls consists of 14 streams of water that continuously fall from a height of 350 feet. "
+                                 "The waterfall is in a huge cloud of spray sparkling in the sun. "
+                                 "The Devil's Throat was opened to the Western world in 1541 by the famous traveler El Dorado Cabeza de Vaca. "
+                                 "The strength and power of the waterfall will be of interest to those who are thinking about what to see in Brazil. "
+                                 "The observation decks here are very strong, there is no danger for tourists. "
+                                 "Multi-stage platforms stretch for many kilometers, which makes it possible to admire this landmark of Brazil at any time.",
+                                 'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/03/Brazil-6-The-Devils-Throat-e1490431348162.jpg']}
+    beaches = {'Ipanema': ['Many people know about this beach not from geography lessons and not from their own tourist experience, '
+                           'but thanks to the popular bossa nova jazz song Girl from Ipanema. '
+                           'Its authors, Antonio Carlos Jobim and Vinicius de Moraes, made this beach no less famous than Copacabana. '
+                           'Interestingly, in translation from the Tupi language, this toponym is translated as bad, dangerous waters. '
+                           'In fact, the waves in this section are quite aggressive, so the beach is definitely worth a visit for surfers, '
+                           'but be careful for those who go here just to swim.',
+                           'https://1001beach.ru/img/posts/2346/750/ipanema-1.webp?t=1580388523'],
+               "Copacabana": ["Copacabana Beach is one of the visiting cards of Rio de Janeiro. "
+                              "It is famous for its white sand, developed infrastructure, huge size and picturesque landscapes. "
+                              "It is also loved for its cheerful and noisy atmosphere, a large number of entertainment and proximity to one "
+                              "of the most beautiful cities in the world.",
+                              'https://1001beach.ru/img/posts/2343/750/copacabana-1.webp?t=1580388500'],
+               'Campeche': ["Campeche Beach (Praia do Campeche) is one of the best holiday destinations in Brazil. "
+                            "On Santa Catarina, it occupies a leading position in the ratings of the tourism sector and is included "
+                            "in the top 5 famous resorts. Archaeological sites, gentle sun, kilometers of sand and clear water "
+                            "leave an indelible impression of the island. Therefore, having come here once, you want to come back again and again, "
+                            "which is what most tourists do, because the territory of the resort is only getting better every year.",
+                            'https://1001beach.ru/img/posts/2344/750/campeche-1.webp?t=1580388508']}
+    mountains = {'Neblin': ['Neblina is a mountain in South America, the highest point of the Guiana Highlands. '
+                            'Located on the border of Venezuela and Brazil. Lonely flat-topped mountain with steep slopes. '
+                            'Discovered in 1962 from a plane flying past. It rises above the sea of clouds in the form of an island. '
+                            'It is connected by a pass with the mountain on March 31.',
+                            'http://photos.wikimapia.org/p/00/00/58/66/85_big.jpg'],
+                 'March 31': ["March 31 - a mountain on the border of Brazil and Venezuela with an absolute height of 2974.18 m above sea level. "
+                              "It is part of the Neblina massif and the second highest mountain in Brazil after Mount Neblina.",
+                              'https://upload.wikimedia.org/wikipedia/commons/6/64/Pico_31_de_Mar%C3%A7o.JPG']}
+    skiResorts = {}
+    lakes = {'Lagoa Mirin': ["Lagoon lake, located on the coast in southern Brazil, on the border with Uruguay. "
+                             "It stretches for 220 km in length, and has a maximum width of 42 km. "
+                             "The total area is about 2000 km². Lagoa Mirin is separated from the Atlantic Ocean by an alluvial sandy marshy spit. "
+                             "The narrow channel of San Gonzalo Lake Lagoa Mirin is connected to Lake Patus. "
+                             "Shallow. Many rivers flow into it, the largest of which is the Jaguaran.",
+                             'https://upload.wikimedia.org/wikipedia/commons/7/72/Vista_da_Praia_da_Capilla%2C_Rio_Grande%2C_RS_%28cropped%29.jpg']}
+    rivers = {'Amazon': ["The most full-flowing river on the planet. The basin area is 7180 thousand km². "
+                         "In 2011, the river was recognized as one of the seven wonders of the world. "
+                         "The Amazon is a border river. "
+                         "The largest area is in Brazil, the western part flows to Bolivia, Peru, as well as Ecuador and Colombia. "
+                         "The Amazon flows into the Atlantic, flows near the equator. The river also has the largest delta on earth. "
+                         "The total length of the river is 6400 km",
+                         'https://must-see.top/wp-content/uploads/2019/09/amazonka-700x465.jpg'],
+              'San Francisco': ["The third longest river in South America. The basin area is 641 thousand km². "
+                                "Some areas of Sao Francisco are suitable for extreme tourism. "
+                                "In the 20th century, a cascade of hydroelectric power stations was built on the river. "
+                                "The beginning at San Francisco is in the heights of the Brazilian Plateau. "
+                                "The water area flows into the Atlantic Ocean. Waterfalls on the river reach 80 m. "
+                                "During the rainy season, the water level in this basin rises by 7 meters. "
+                                "Part of the river is navigable, the banks are considered inhabited. "
+                                "The length of the river is 2830 km",
+                                'https://must-see.top/wp-content/uploads/2019/09/san-fransisku-700x468.jpg'],
+              'Rio Negro': ["Left tributary of the famous Amazon River. "
+                            "The territory of the river basin is 600 thousand km². "
+                            "Rio Negro has the ability to spill over the nearby selva for 35 km in both directions. "
+                            "The navigable section of the river is 600 km. "
+                            "It differs from its tributaries by large seasonal fluctuations in water levels. "
+                            "The color of the waters of the Rio Negro is brown. "
+                            "The total length of the river is 2300 km",
+                            'https://must-see.top/wp-content/uploads/2019/09/riu-negru-700x462.jpg']}
+    # currency
+    currencyName = 'BRL'
+    currencyEqualsToDollar = 5.24
+
+    # military
+    milPolBlock = ['TIAR']
+    amountOfPeopleInArmy = 366500
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 317
+    menAverageLifeExpectancy = 72.4
+    womenAverageLifeExpectancy = 79.4
+
+    # climat
+    juneAverageTemperature = 24
+    decemberAverageTemperature = 26
+    averageHumidity = 78
+    averageDurationOfWinter = 3.5
+    averageRainfallPerMonth = 191
+    averageNumberOfFoggyDaysPerYear = 34
+    averageNumberOfRainyDaysPerYear = 128
+    averageNumberOfClearDays = 197
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 2  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 215681045
+    procentOfMales = 49.2
+    procentOfFemales = 50.8
+    populationDensityPerSquareKilometer = 25.3
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 11
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 41
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 4  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 17
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+    #############################   Brazil   #############################
 
     cc.createBorders()
     cc.close()
