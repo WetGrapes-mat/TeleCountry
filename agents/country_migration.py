@@ -3,6 +3,7 @@ from neo4j_country_db.country_migration import country_migration_db
 
 class CountryMigrationAgent:
     country_choose = dict()
+    user = None
 
     def climat_city(self):
         climat_country = {"1":dict(), "2":dict(), "3":dict()}
@@ -41,6 +42,19 @@ class CountryMigrationAgent:
         c = country_migration_db.findallcountry()
         return c
 
+    def answer_preparation(self, country):
+        info = country_migration_db.findinfocountry(country)
+
+        z = (info['airPollution'] + info['waterPollution'] + info['dirtyAndUntidy']) // 3
+        x = info['comfortableToSpendTimeInTheCity']
+        if info['decemberAverageTemperature'] == 0: info['decemberAverageTemperature'] = -1
+        y = (((info['averageDurationOfWinter'] * info['decemberAverageTemperature']) / 2) +info[
+            'juneAverageTemperature']) / 2
+        if info['averageDurationOfWinter'] == 0: y = (info['decemberAverageTemperature'] + info[
+            'juneAverageTemperature']) / 2
+        answer = f'Страна котомую мы для вас подобрали {info["name"] }\n'
+
+
 
     def city_in_country(self, country):
         c = country_migration_db.findcity(country)
@@ -51,40 +65,37 @@ class CountryMigrationAgent:
 
     def count_patams(self, params):
         temp1 = country_migration_db.findenglish()
+        self.user = (int(params['transport']) + int(params['english']) + int(params['workplace']) +
+                     int(params['nightlife']) + int(params['lgbt']))
         for i in temp1:
-            if i['communicationOnEnglish'] >= int(params['english']):
-                try:
-                    self.country_choose[i['nameCountry']] += i['communicationOnEnglish']
-                except:
-                    self.country_choose[i['nameCountry']] = i['communicationOnEnglish']
+            try:
+                self.country_choose[i['nameCountry']] += i['communicationOnEnglish']
+            except:
+                self.country_choose[i['nameCountry']] = i['communicationOnEnglish']
         temp2 = country_migration_db.findtransport()
         for i in temp2:
-            if i['developmentLevelOfPublicTransport'] >= int(params['transport']):
-                try:
-                    self.country_choose[i['nameCountry']] += i['developmentLevelOfPublicTransport']
-                except:
-                    self.country_choose[i['nameCountry']] = i['developmentLevelOfPublicTransport']
+            try:
+                self.country_choose[i['nameCountry']] += i['developmentLevelOfPublicTransport']
+            except:
+                self.country_choose[i['nameCountry']] = i['developmentLevelOfPublicTransport']
 
         temp3 = country_migration_db.findlifetype()
         for i in temp3:
-            if i['workPlaces'] >= int(params['workplace']):
-                try:
-                    self.country_choose[i['nameCountry']] += i['workPlaces']
-                except:
-                    self.country_choose[i['nameCountry']] = i['workPlaces']
-            if i['nightLifeEntertainment'] >= int(params['nightlife']):
-                try:
-                    self.country_choose[i['nameCountry']] += i['nightLifeEntertainment']
-                except:
-                    self.country_choose[i['nameCountry']] = i['nightLifeEntertainment']
+            try:
+                self.country_choose[i['nameCountry']] += i['workPlaces']
+            except:
+                self.country_choose[i['nameCountry']] = i['workPlaces']
+            try:
+                self.country_choose[i['nameCountry']] += i['nightLifeEntertainment']
+            except:
+                self.country_choose[i['nameCountry']] = i['nightLifeEntertainment']
 
         temp4 = country_migration_db.findlgbt()
         for i in temp4:
-            if i['attitudeTowardsLGBT'] >= int(params['lgbt']):
-                try:
-                    self.country_choose[i['nameCountry']] += i['attitudeTowardsLGBT']
-                except:
-                    self.country_choose[i['nameCountry']] = i['attitudeTowardsLGBT']
+            try:
+                self.country_choose[i['nameCountry']] += i['attitudeTowardsLGBT']
+            except:
+                self.country_choose[i['nameCountry']] = i['attitudeTowardsLGBT']
 
         self.country_choose = dict(sorted(self.country_choose.items(), key=lambda item: item[1], reverse = True))
 
@@ -93,7 +104,7 @@ class CountryMigrationAgent:
         # country_water = None
         # country_IsBig = None
         # country_tempricha = None
-        rezult = []
+        rezult = None
         if params['water'] == "True":
             country_water = self.water_city()
         else:
@@ -108,20 +119,15 @@ class CountryMigrationAgent:
         if country_water and country_IsBig and country_tempricha:
             temp3 = country_water.intersection(country_IsBig.intersection(country_tempricha))
         self.count_patams(params)
-
+        print(self.country_choose)
+        temp_r = 9999999
         for co, am in self.country_choose.items():
             if co in temp3:
-                rezult.append(co)
-        if len(rezult) >= 3:
-            return f"Для переезда наиболее подходящим будет {rezult[0]}  " \
-                   f"так же неплохим варинтом будет {rezult[1]}. " \
-                   f"И последний вариант который мы смогли вам подобраьт {rezult[2]}"
-        elif len(rezult) == 2:
-            return f"Для переезда наиболее подходящим будет {rezult[0]}  " \
-                   f"так же неплохим варинтом будет {rezult[1]}  "
-        elif len(rezult) == 1:
-            return f"Для переезда наиболее подходящим будет {rezult[0]}  " \
-                   f"так же неплохим варинтом будет {rezult[1]}. "
+                if abs(am - self.user) < temp_r:
+                    temp_r = abs(am - self.user)
+                    rezult = co
+        if rezult:
+            return f"Для переезда наиболее подходящим будет {rezult} "
         else:
             return f"К сожелению страны с задаными вами параметрами не нашлось."
 
@@ -143,5 +149,6 @@ agent = CountryMigrationAgent()
 if __name__ == "__main__":
     print(agent.water_city())
     print(agent.climat_city())
+    print({'water': 'True', 'isBig': 'True', 'climat': '1', 'transport': '5', 'english': '5', 'workplace': '4', 'nightlife': '4', 'lgbt': '1'})
 
-    print(agent.calculate({'water': 'True', 'isBig': 'False', 'climat': '2', 'transport': '1', 'english': '1', 'workplace': '1', 'nightlife': '1', 'lgbt': '1'}))
+    print(agent.calculate({'water': 'True', 'isBig': 'False', 'climat': '3', 'transport': '1', 'english': '1', 'workplace': '1', 'nightlife': '1', 'lgbt': '1'}))
