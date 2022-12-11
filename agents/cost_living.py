@@ -195,9 +195,21 @@ class CostLiving:
 
         string_result = ""
         sorted_values = sorted(result.values())
-        for i in sorted_values:
-            for key, value in result.items():
-                if i == value:
-                    string_result += f'{key} -- {self.to_fixed(i)} $\n'
+
+        if country in self.get_countries():
+            for i in sorted_values:
+                for key, value in result.items():
+                    if i == value:
+                        string_result += f'{key} -- {self.to_fixed(i)} $\n'
+
+        elif country == "Рейтинг стран":
+            k = 1
+            for i in sorted_values:
+                for key, value in result.items():
+                    if i == value:
+                        string_result += f'{k}) {key} -- {self.to_fixed(i)} $\n'
+                        k += 1
+                    if k >= 10:
+                        break
 
         return string_result
