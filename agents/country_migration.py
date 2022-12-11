@@ -68,19 +68,19 @@ class CountryMigrationAgent:
             'juneAverageTemperature']) / 2
         if info['averageDurationOfWinter'] == 0: y = (info['decemberAverageTemperature'] + info[
             'juneAverageTemperature']) / 2
-        answer = f'Страна котомую мы для вас подобрали {info["name"]}\n' \
+        answer = f'Страна, котомую мы для вас подобрали - {info["name"]}\n' \
                  f'Немного параметров о стране:\n' \
-                 f'Население страны {info["count"]}\n' \
-                 f'Официальный язык {info["nameLan"]}\n' \
-                 f'Процент закрзясненности окружающей среды {z}%\n' \
-                 f'Процент комфортности проживания в стране {info["comfortableToSpendTimeInTheCity"]}\n' \
-                 f'Отношение к иностранцам (от 1 до 3) {info["friendlyToForeigners"]}\n' \
-                 f'Мество в глобальном рейтинге {info["globalRank"]}\n' \
-                 f'Комфорт жизни с семьей (от 1 до 3) {info["assessmentOfFamilyLife"]}\n' \
-                 f'Уровени свободы слова (от 1 до 3) {info["freeWifi"]}\n' \
-                 f'Доспуность беспталного WiFi (от 1 до 3) {info["speedOfInternetMbps"]}\n' \
-                 f'Национальная валюта {info["nameMoney"]}\n' \
-                 f'Курс к долару {info["oneDollarEquals"]}\n'
+                 f'Население страны:  {info["count"]}\n' \
+                 f'Официальный язык: {info["nameLan"]}\n' \
+                 f'Процент загрязненности окружающей среды: {z}%\n' \
+                 f'Процент комфортности проживания в стране: {info["comfortableToSpendTimeInTheCity"]}\n' \
+                 f'Отношение к иностранцам (от 1 до 3): {info["friendlyToForeigners"]}\n' \
+                 f'Место в глобальном рейтинге: {info["globalRank"]}\n' \
+                 f'Комфорт жизни с семьей (от 1 до 3): {info["assessmentOfFamilyLife"]}\n' \
+                 f'Уровень свободы слова (от 1 до 3): {info["freeWifi"]}\n' \
+                 f'Доступность беспталного WiFi (от 1 до 3): {info["speedOfInternetMbps"]}\n' \
+                 f'Национальная валюта: {info["nameMoney"]}\n' \
+                 f'Курс к долару: {info["oneDollarEquals"]}\n'
 
         return answer
 
@@ -131,10 +131,10 @@ class CountryMigrationAgent:
     def price_living(self, params):
         cost_living.cl.get_information()
         answe = dict()
-        if params['flat'] == "окраине":
-            answe['rent'] = f'{params["family"]}-к на {params["flat"]}'
+        if params['flat'] == "на окраине":
+            answe['rent'] = f'{params["family"]}-к {params["flat"]}'
         else:
-            answe['rent'] = f'{params["family"]}-к в {params["flat"]}'
+            answe['rent'] = f'{params["family"]}-к {params["flat"]}'
         answe['country'] = 'Рейтинг стран'
         answe['members'] = int(params["family"])
         answe['child_preschool'] = 0
@@ -285,20 +285,21 @@ class CountryMigrationAgent:
 
 
         if tttt:
-            rezult = f'На основе ваших ответом вы смошли вам подобрать {tttt} это прекрасная страна с ' \
-                     f'{self.climat[int(params["climat"]) - 1]} климатом с {self.speed_life[int(params["isBig"]) - 1]} темпом жизни.\n' \
-                     f'Расходы на все базовые потребновти в месяц составят {tem_price[tttt]} $, '
+            rezult = f'На основании ваших ответов мы смогли вам подобрать {tttt}. Это прекрасная страна с ' \
+                     f'{self.climat[int(params["climat"]) - 1]} климатом и ' \
+                     f'{self.speed_life[int(params["isBig"]) - 1]} темпом жизни.\n' \
+                     f'Расходы на все базовые потребности в месяц составят {tem_price[tttt]} $. '
             print(tttt)
             return rezult
 
         else:
-            return "Мы не смогли подобрать вам страну по заданым параметрам"
+            return "Мы не смогли подобрать вам страну по заданным параметрам ;("
 
 
 agent = CountryMigrationAgent()
 if __name__ == "__main__":
     agent.calculate({'water': 'False', 'isBig': '2', 'climat': "2", 'family': '1', 'transport': 'общественный транспорт',
-                     'flat': 'окраине', 'price': '1300', "lgbt": "True"})
-'окраине'
+                     'flat': 'на окраине', 'price': '1300', "lgbt": "True"})
+'на окраине'
 'своя машина'
 'общественный транспорт'
