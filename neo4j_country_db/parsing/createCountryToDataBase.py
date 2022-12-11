@@ -776,7 +776,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 17
+    rankingOfNationalEducationSystem = 7
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -1009,7 +1009,7 @@ if __name__ == "__main__":
     freeWifi = 3  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 46
+    rankingOfNationalEducationSystem = 51
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -1610,7 +1610,7 @@ if __name__ == "__main__":
     freeWifi = 1  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 14
+    rankingOfNationalEducationSystem = 30
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -1895,7 +1895,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 17
+    rankingOfNationalEducationSystem = 23
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -2448,7 +2448,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 34
+    rankingOfNationalEducationSystem = 40
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -2733,7 +2733,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 52.6
+    rankingOfNationalEducationSystem = 32
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -3035,7 +3035,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 54.8
+    rankingOfNationalEducationSystem = 29
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -3337,7 +3337,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 70.5
+    rankingOfNationalEducationSystem = 16
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -3624,7 +3624,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 70.5
+    rankingOfNationalEducationSystem = 38
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -3863,7 +3863,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 51.3
+    rankingOfNationalEducationSystem = 33
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -4130,7 +4130,7 @@ if __name__ == "__main__":
     freeWifi = 3  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 83.6
+    rankingOfNationalEducationSystem = 6
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -4394,7 +4394,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 82.8
+    rankingOfNationalEducationSystem = 8
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -4626,7 +4626,7 @@ if __name__ == "__main__":
     freeWifi = 1  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 80.5
+    rankingOfNationalEducationSystem = 11
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -4864,7 +4864,7 @@ if __name__ == "__main__":
     freeWifi = 2  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 84.3
+    rankingOfNationalEducationSystem = 5
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -5069,7 +5069,7 @@ if __name__ == "__main__":
     freeWifi = 3  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 68.6
+    rankingOfNationalEducationSystem = 17
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
                   currencyName, currencyEqualsToDollar,
@@ -5324,7 +5324,7 @@ if __name__ == "__main__":
     freeWifi = 3  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 17
+    rankingOfNationalEducationSystem = 41
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -5493,7 +5493,7 @@ if __name__ == "__main__":
     freeWifi = 3  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 60
+    rankingOfNationalEducationSystem = 51
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
@@ -5710,7 +5710,7 @@ if __name__ == "__main__":
     freeWifi = 1  # [1, 3]
 
     # education
-    rankingOfNationalEducationSystem = 39
+    rankingOfNationalEducationSystem = 51
 
     cc.createBase(countryName, cities, officialLanguage,
                   # currency
