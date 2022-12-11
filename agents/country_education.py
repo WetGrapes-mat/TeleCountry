@@ -1,3 +1,5 @@
+from math import sqrt
+
 from neo4j_country_db.country_education import country_education_db as db
 from agents.standard_of_living import st
 from keybords import cost_living
@@ -33,6 +35,11 @@ class CountryEducationAgent:
         return ranks
 
     @staticmethod
+    def check_uni_country():
+        res = db.find_uni_country()
+        return res
+
+    @staticmethod
     def check_uni(choice):
         uni = db.find_university(choice)
         return uni
@@ -47,10 +54,6 @@ class CountryEducationAgent:
             for info in result:
                 imgs.append(info['photos'])
         return imgs
-
-    def standart_living(self):
-        rez = st.get_country_rating()
-        return {z[0][:-1]: float(z[1]) for z in [i.split("--") for i in rez.split('\n')][:-1]}
 
     def price_living(self, params):
         cost_living.cl.get_information()
@@ -68,15 +71,50 @@ class CountryEducationAgent:
                                                answer['country'])
         return {z[0][:-1]: float(z[1][:-2]) for z in [i.split("--") for i in rez.split('\n')][:-1]}
 
+    @staticmethod
+    def change_value_to_score(d):
+        min_value, max_value = min(d.values()), max(d.values())
+        delta = (max_value - min_value) / 5
+        intervals = [min_value, min_value + delta, min_value + 2 * delta, min_value + 3 * delta,
+                     max_value - delta, max_value + 1]
+        for key in d.keys():
+            for i in range(len(intervals) - 1):
+                if intervals[i] <= d[key] < intervals[i + 1]:
+                    d[key] = len(intervals) - (i + 1)
+        return d
+
+    def multicriteria_choice(self, temp_rank, temp_price):
+        coofficients = {"rank": 0.7 / 5, "price": 0.3 / 5}
+        price = self.change_value_to_score(temp_price)
+        rank = self.change_value_to_score(temp_rank)
+        result = {}
+        for key in rank.keys():
+            a = coofficients['rank'] * pow((rank[key] - 5), 2)
+            b = coofficients['price'] * pow((price[key] - 5), 2)
+            c = sqrt(sum([a, b]))
+            result[key] = c
+        return result
+
+    def connect_rank_and_uni(self, ranks, unis):
+        result = {}
+        for key in unis.keys():
+            result[unis[key]] = ranks[key]
+        return result
+
     def find_result(self, answer):
         price = self.price_living(answer)
-        print(price)
+        rank = self.check_rank()
+        d = self.multicriteria_choice(rank, price)
         result = list(set(self.check_faculty(answer["faculties"])) & set(self.check_program(answer["programs"])) & \
                       set(self.check_hostel(answer["hostel"])) & set(self.check_cost(answer["cost"])))
         if len(result) == 0:
             return "Мы не смогли подобрать университет по вашим параметрам ;(\n"
         else:
-            uni_rank = self.check_rank()
+            uni_rank = self.check_uni_country()
+            print(uni_rank)
+            print(d)
+            uni_rank = self.connect_rank_and_uni(d, uni_rank)
+            print(uni_rank)
             sorted_values = dict(sorted(uni_rank.items(), key=lambda item: item[1]))
             sorted_result = []
             for key in sorted_values.keys():
@@ -84,6 +122,7 @@ class CountryEducationAgent:
                     sorted_result.append(key)
                     result.remove(key)
             result = sorted_result
+            print(result)
 
             result = result[:3]
             txt = "Мы подобрали следующие варианты:\n "
@@ -117,12 +156,21 @@ class CountryEducationAgent:
 agent = CountryEducationAgent()
 
 if __name__ == "__main__":
-    answer = {"faculties": "Faculty of Arts", "programs": "Magistracy", "hostel": "Yes", "cost": 50000, 'cigarettes': 1,
+    answer = {"faculties": "Faculty of Arts", "programs": "Magistracy", "hostel": "Yes", "cost": 50000, 'smoking': 1,
               'rent':"своё жильё", 'transportation':'такси'}
     res = agent.find_result(answer)
 
-    price = agent.price_living({"cigarettes1": 0, "transportation": "такси", 'rent': 'своё жильё'})
-    print(price)
+    print(res)
+
+    # d = agent.price_living({"smoking": 0, "transportation": "такси", 'rent': 'своё жильё'})
+    # print(d)
+    #a = agent.change_value_to_score(agent.check_rank())
+    '''b = agent.change_value_to_score(agent.price_living({"smoking": 0, "transportation": "такси",
+                                                          'rent': 'своё жильё'}))'''
+    '''print(a)
+    print(b)'''
+
+    #print(agent.multicriteria_choice(a, b))
 
 
 

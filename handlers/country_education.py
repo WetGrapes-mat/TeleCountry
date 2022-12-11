@@ -73,6 +73,5 @@ def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(hostel, keyboard.cb_hostel.filter())
     dp.register_callback_query_handler(cost, keyboard.cb_cost.filter())
     dp.register_callback_query_handler(smoking1, keyboard.cb_cigarettes1.filter())
-    dp.register_callback_query_handler(transportation1, keyboard.kb_transportation1.filter())
     dp.register_callback_query_handler(rent1, keyboard.kb_rent1.filter())
-
+    dp.register_callback_query_handler(transportation1, keyboard.kb_transportation1.filter())

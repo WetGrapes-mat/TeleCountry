@@ -45,6 +45,19 @@ class CountryEducation(Request):
             ranks = session.execute_write(self._education_rank)
             return ranks
 
+    def find_uni_country(self):
+        with self.driver.session() as session:
+            res = session.execute_write(self._uni_country)
+            return res
+
+    @staticmethod
+    def _uni_country(tx):
+        result = tx.run("match (country:Country) -[:university]-> (uni:University) "
+                        "return "
+                        "country.name as country, "
+                        "uni.name as university")
+        return {info["country"]: info["university"] for info in result}
+
     @staticmethod
     def _university(tx, uni):
         result = tx.run("match (country:Country) -[:university]-> (uni:University)"
@@ -121,15 +134,23 @@ class CountryEducation(Request):
 
     @staticmethod
     def _education_rank(tx):
+        result = tx.run("match (c:Country)-->(ed:Education) "
+                        "return "
+                        "c.name as country, "
+                        "ed.rankingOfNationalEducationSystem as rank")
+        return {info["country"]: info["rank"] for info in result}
+'''
+    @staticmethod
+    def _education_rank(tx):
         result = tx.run("match (uni:University)<--(:Country)-->(ed:Education) "
                         "return "
                         "uni.name as university, "
                         "ed.rankingOfNationalEducationSystem as rank")
-        return {info["university"]:info["rank"] for info in result}
-
+        return {info["university"]:info["rank"] for info in result}'''
 
 country_education_db = CountryEducation()
 
 if __name__ == "__main__":
     print(country_education_db.find_cost(12000))
     print(country_education_db.find_rank())
+    print(country_education_db.find_uni_country())
