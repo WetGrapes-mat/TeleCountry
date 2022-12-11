@@ -108,7 +108,8 @@ class CountryEducationAgent:
         result = list(set(self.check_faculty(answer["faculties"])) & set(self.check_program(answer["programs"])) & \
                       set(self.check_hostel(answer["hostel"])) & set(self.check_cost(answer["cost"])))
         if len(result) == 0:
-            return "Мы не смогли подобрать университет по вашим параметрам ;(\n"
+            txt = "Мы не смогли подобрать университет по вашим параметрам ;(\n"
+            return txt
         else:
             uni_rank = self.check_uni_country()
             print(uni_rank)
@@ -123,13 +124,14 @@ class CountryEducationAgent:
                     result.remove(key)
             result = sorted_result
             print(result)
-
+            photo = []
             result = result[:3]
             txt = "Мы подобрали следующие варианты:\n "
             for i in range(len(result)):
                 uni_info = self.check_uni(result[i])
                 faculties_ls = []
                 programs_ls = []
+
                 for info in uni_info:
                     if info['faculties'] not in faculties_ls:
                         faculties_ls.append(info['faculties'])
@@ -149,8 +151,13 @@ class CountryEducationAgent:
                        f"Grant: {uni_info[0]['grant']}\n" \
                        f"Admission requirements: {uni_info[0]['requirements']}\n" \
                        f"Link: {uni_info[0]['link']}\n"
-                txt += f"""<a href="{uni_info[0]['photo']}">&#8203;</a>\n"""
-            return txt
+                photo.append(uni_info[0]['photo'])
+            if len(photo) == 0:
+                return ["https://www.meme-arsenal.com/memes/eab8e51231e8f8de8fc9de70913056c4.jpg"], \
+                       "Мы не смогли подобрать университет по вашим параметрам ;(\n"
+            else:
+                return photo, txt
+
 
 
 agent = CountryEducationAgent()

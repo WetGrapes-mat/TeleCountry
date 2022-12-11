@@ -63,7 +63,15 @@ async def rent1(callback: types.CallbackQuery, callback_data: dict) -> None:
     answer_user['child_school'] = 0
     answer_user['members'] = 1
     answer_user['country'] = 'Рейтинг стран'
-    await callback.message.edit_text(text=cd.agent.find_result(answer_user))
+    links, txt = cd.agent.find_result(answer_user)
+    media = list()
+    for link in links:
+        media.append(InputMediaPhoto(link))
+
+    await callback.message.delete()
+    await bot.send_media_group(callback.message.chat.id, media)
+    await bot.send_message(callback.message.chat.id, txt)
+    #await callback.message.edit_text(text=cd.agent.find_result(answer_user))
 
 
 def register_handlers(dp: Dispatcher):
