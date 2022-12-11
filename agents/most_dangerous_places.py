@@ -8,11 +8,12 @@ class MostDangerousPlaces:
         self.hazard = []
         self.Sa = []
         self.CTa = []
+        self.all_countries = []
 
     def get_countries(self):
-        countries = most_dangerous_places_db.findCountryNames()
+        self.all_countries = most_dangerous_places_db.findCountryNames()
         most_dangerous_places_db.close()
-        return countries
+        return self.all_countries
 
     def count_HR(self):
         countries_list = []
@@ -28,19 +29,23 @@ class MostDangerousPlaces:
         hz = 0
         CTa = 0
         Sa = 0
-        country_name = self.hazard[i]["country"]
+        country_name = self.all_countries[i]
         for k in range(len(HR_list)):
             if country_name == HR_list[k]["country"]:
                 hz = HR_list[k]["HR"]
-        country_block = self.hazard[i]["countryBlock"]
-        country_army = self.hazard[i]["countryArmy"]
-        neighbor = self.hazard[i]["neighbor"]
 
-        for j in range(len(self.hazard)):
-            if self.hazard[j]["country"] == neighbor \
-                    and self.hazard[j]["countryBlock"] != country_block \
-                    and self.hazard[j]["countryArmy"] > country_army:
-                hz += 1
+        for a in range(len(self.hazard)):
+            if self.hazard[i]["country"] == country_name:
+                country_block = self.hazard[i]["countryBlock"]
+                country_army = self.hazard[i]["countryArmy"]
+                neighbor = self.hazard[i]["neighbor"]
+
+                for j in range(len(self.hazard)):
+                    if self.hazard[j]["country"] == neighbor \
+                            and self.hazard[j]["countryBlock"] != country_block \
+                            and self.hazard[j]["countryArmy"] > country_army\
+                            and country_block != "None":
+                        hz += 1
 
         for s in range(len(self.CTa)):
             if country_name == self.CTa[s]["country"]:
@@ -61,26 +66,32 @@ class MostDangerousPlaces:
         country_list = []
         HR_list = self.count_HR()
 
-        if answer == "Рейтинг":
-            for i in range(len(self.hazard)):
-                country = self.function_for_count(i, HR_list)
-                country_list.append(country)
-        else:
-            for i in range(len(self.hazard)):
-                if self.hazard[i]["country"] == answer:
-                    country = self.function_for_count(i, HR_list)
-                    country_list.append(country)
-                    break
+        for i in range(len(self.all_countries)):
+            country = self.function_for_count(i, HR_list)
+            country_list.append(country)
 
         country_list = [el for el, _ in groupby(country_list)]
 
         values = [country_list[i]["hz"] for i in range(len(country_list))]
         values.sort(reverse=True)
 
-        for i in values:
-            for c in country_list:
-                if i == c["hz"]:
-                    string_result += f'{c["country"]} ~ HR: {c["hz"]} ~ CTa: {c["CTa"]} ~ Sa: {c["Sa"]}\n'
+        if answer == "Рейтинг":
+            k = 1
+            for i in values:
+                for c in country_list:
+                    if i == c["hz"]:
+                        string_result += f'{k}. {c["country"]} ~ HR: {c["hz"]} ~ CTa: {c["CTa"]} ~ Sa: {c["Sa"]}\n'
+                        k += 1
+                    if k > 5:
+                        break
+        else:
+            k = 1
+            for i in values:
+                for c in country_list:
+                    if i == c["hz"]:
+                        if c["country"] == answer:
+                            string_result += f'{k}. {c["country"]} ~ HR: {c["hz"]} ~ CTa: {c["CTa"]} ~ Sa: {c["Sa"]}\n'
+                        k += 1
 
         string_result += "\n"
         string_result += "HR  - рейтинг опасности (hazard rating)\n" \
@@ -91,8 +102,16 @@ class MostDangerousPlaces:
         return string_result
 
     def get_all_information(self):
-        self.hazard = most_dangerous_places_db.findHazard()
         self.Sa = most_dangerous_places_db.findSa()
         self.CTa = most_dangerous_places_db.findCta()
+        self.hazard = most_dangerous_places_db.findHazard()
         most_dangerous_places_db.close()
+
+
+if __name__ == "__main__":
+    agent = MostDangerousPlaces()
+    agent.get_countries()
+    agent.get_all_information()
+
+    agent.count("Рейтинг")
 

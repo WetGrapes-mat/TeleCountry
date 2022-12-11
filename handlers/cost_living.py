@@ -73,7 +73,7 @@ async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
 def get_answer():
     cost_living.cl.get_information()
     user_answers = answer_user
-    print(user_answers)
+    # print(user_answers)
     message = cost_living.cl.count_cost_living(int(user_answers["child_preschool"]),
                                                int(user_answers["child_school"]),
                                                int(user_answers["members"]),
