@@ -35,7 +35,7 @@ ikb_transportation = InlineKeyboardMarkup(inline_keyboard=[[i_button_car, i_butt
 
 cb_rent = CallbackData('flat', 'action')
 i_button_1_c = InlineKeyboardButton('В центре', callback_data=cb_rent.new("центре"))
-i_button_3_nc = InlineKeyboardButton('Наокраине', callback_data=cb_rent.new("окраине"))
+i_button_3_nc = InlineKeyboardButton('На окраине', callback_data=cb_rent.new("окраине"))
 ikb_rent = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_c], [i_button_3_nc]])
 
 cb_family_price = CallbackData('family_price', 'action')
