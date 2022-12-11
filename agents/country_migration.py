@@ -1,5 +1,4 @@
 import math
-import random
 
 from neo4j_country_db.country_migration import country_migration_db
 from keybords import cost_living
@@ -7,7 +6,7 @@ from agents.standard_of_living import st
 
 
 class CountryMigrationAgent:
-    climat = ["холодным"," умереным", "жарким"]
+    climat = ["холодным", " умереным", "жарким"]
     speed_life = ["быстрым", "медленым"]
     country_choose = dict()
     user = None
@@ -24,10 +23,10 @@ class CountryMigrationAgent:
                     'nightLifeEntertainment': 0.1}
 
     def expCalcStandart(self, value):
-        return value**math.e
+        return value ** math.e
 
     def climat_city(self):
-        climat_country = {"1":dict(), "2":dict(), "3":dict()}
+        climat_country = {"1": dict(), "2": dict(), "3": dict()}
         c = country_migration_db.findClimat()
         for i in c:
             if i['decemberAverageTemperature'] == 0: i['decemberAverageTemperature'] = -1
@@ -41,7 +40,7 @@ class CountryMigrationAgent:
             elif 10 < float(y) <= 20:
                 climat_country["2"][i['name']] = y
 
-            elif  20 < float(y):
+            elif 20 < float(y):
                 climat_country["3"][i['name']] = y
 
         for i, c in climat_country.items():
@@ -65,7 +64,7 @@ class CountryMigrationAgent:
 
         z = (info['airPollution'] + info['waterPollution'] + info['dirtyAndUntidy']) // 3
         if info['decemberAverageTemperature'] == 0: info['decemberAverageTemperature'] = -1
-        y = (((info['averageDurationOfWinter'] * info['decemberAverageTemperature']) / 2) +info[
+        y = (((info['averageDurationOfWinter'] * info['decemberAverageTemperature']) / 2) + info[
             'juneAverageTemperature']) / 2
         if info['averageDurationOfWinter'] == 0: y = (info['decemberAverageTemperature'] + info[
             'juneAverageTemperature']) / 2
@@ -127,7 +126,7 @@ class CountryMigrationAgent:
             except:
                 self.country_choose[i['nameCountry']] = i['attitudeTowardsLGBT']
 
-        self.country_choose = dict(sorted(self.country_choose.items(), key=lambda item: item[1], reverse = True))
+        self.country_choose = dict(sorted(self.country_choose.items(), key=lambda item: item[1], reverse=True))
 
     def price_living(self, params):
         cost_living.cl.get_information()
@@ -139,20 +138,20 @@ class CountryMigrationAgent:
         answe['country'] = 'Рейтинг стран'
         answe['members'] = int(params["family"])
         answe['child_preschool'] = 0
-        if int(params["family"]) == 1: answe['child_school'] = 0
-        else: answe['child_school'] = 1
+        if int(params["family"]) == 1:
+            answe['child_school'] = 0
+        else:
+            answe['child_school'] = 1
         answe['smoking'] = 0
         answe['transportation'] = params['transport']
-        rez = cost_living.cl.count_cost_living(answe['child_preschool'], answe['child_school'],answe['members'], answe['smoking'],
-                            answe['transportation'], answe['rent'], answe['country'])
+        rez = cost_living.cl.count_cost_living(answe['child_preschool'], answe['child_school'], answe['members'],
+                                               answe['smoking'],
+                                               answe['transportation'], answe['rent'], answe['country'])
         return {z[0][:-1]: float(z[1][:-2]) for z in [i.split("--") for i in rez.split('\n')][:-1]}
 
     def standart_living(self):
         rez = st.get_country_rating()
         return {z[0][:-1]: float(z[1]) for z in [i.split("--") for i in rez.split('\n')][:-1]}
-
-
-
 
     def calculate(self, params):
         price = self.price_living(params)
@@ -178,9 +177,13 @@ class CountryMigrationAgent:
         temp3 = list(temp3)
 
         for i in rez_data:
-            if params['isBig'] == "1" and min(100, self.expCalcStandart(i['speedOfLife']*self.coefficients['speedOfLife'])*self.expCalcStandart(i['count']*1e-7)) < 10:
+            if params['isBig'] == "1" and min(100, self.expCalcStandart(
+                    i['speedOfLife'] * self.coefficients['speedOfLife']) * self.expCalcStandart(
+                    i['count'] * 1e-7)) < 10:
                 temp3.remove(i['name'])
-            elif params['isBig'] == "2" and min(100, self.expCalcStandart(i['speedOfLife']*self.coefficients['speedOfLife'])*self.expCalcStandart(i['count']*1e-7)) > 10:
+            elif params['isBig'] == "2" and min(100, self.expCalcStandart(
+                    i['speedOfLife'] * self.coefficients['speedOfLife']) * self.expCalcStandart(
+                    i['count'] * 1e-7)) > 10:
                 temp3.remove(i['name'])
 
         rez_data.clear()
@@ -190,17 +193,21 @@ class CountryMigrationAgent:
             temp_rez[i] = 0
         for i in rez_data:
             if params['family'] == "3":
-                temp_rez[i['name']] += (self.expCalcStandart(self.coefficients['assessmentOfFamilyLife']*i['assessmentOfFamilyLife']))
+                temp_rez[i['name']] += (
+                    self.expCalcStandart(self.coefficients['assessmentOfFamilyLife'] * i['assessmentOfFamilyLife']))
             elif params['family'] == "1":
-                temp_rez[i['name']] += self.expCalcStandart((self.coefficients['nightLifeEntertainment']*i['nightLifeEntertainment']))
+                temp_rez[i['name']] += self.expCalcStandart(
+                    (self.coefficients['nightLifeEntertainment'] * i['nightLifeEntertainment']))
 
-            temp_rez[i['name']] += (self.expCalcStandart(self.coefficients['communicationOnEnglish'] *i['communicationOnEnglish']))
+            temp_rez[i['name']] += (
+                self.expCalcStandart(self.coefficients['communicationOnEnglish'] * i['communicationOnEnglish']))
 
             temp_rez[i['name']] += (self.expCalcStandart(self.coefficients['freeWifi'] * i['freeWifi']))
-            temp_rez[i['name']] += ((1/standart[i['name']]))
-            temp_rez[i['name']] += (self.expCalcStandart(0.1*(1/i['globalRank'])))
+            temp_rez[i['name']] += ((1 / standart[i['name']]))
+            temp_rez[i['name']] += (self.expCalcStandart(0.1 * (1 / i['globalRank'])))
             if params['lgbt'] == "True":
-                temp_rez[i['name']] += (self.expCalcStandart(self.coefficients['attitudeTowardsLGBT'] *i['attitudeTowardsLGBT']))
+                temp_rez[i['name']] += (
+                    self.expCalcStandart(self.coefficients['attitudeTowardsLGBT'] * i['attitudeTowardsLGBT']))
         tem_price = dict()
         if params['price'] == '3600':
             for i in temp_rez.keys():
@@ -229,7 +236,6 @@ class CountryMigrationAgent:
 
         temp_rez = dict(sorted(temp_rez.items(), key=lambda item: item[1], reverse=True))
 
-
         tttt = None
         if tem_price == dict():
             for i in temp_rez.keys():
@@ -239,7 +245,7 @@ class CountryMigrationAgent:
                 a = 99999
                 b = -99999
                 for i, r in tem_price.items():
-                    if abs(3600-r) < a and temp_rez[i] > b:
+                    if abs(3600 - r) < a and temp_rez[i] > b:
                         a = abs(1300 - r)
                         b = temp_rez[i]
                         tttt = i
@@ -278,45 +284,15 @@ class CountryMigrationAgent:
 
         if tttt:
             rezult = f'На основе ваших ответом вы смошли вам подобрать {tttt} это прекрасная страна с ' \
-                     f'{self.climat[int(params["climat"])-1]} климатом с {self.speed_life[int(params["isBig"])-1]} темпом жизни.\n' \
+                     f'{self.climat[int(params["climat"]) - 1]} климатом с {self.speed_life[int(params["isBig"]) - 1]} темпом жизни.\n' \
                      f'Расходы на все базовые потребновти в месяц составят {tem_price[tttt]} $, '
             return rezult
 
         else:
             return "Мы не смогли подобрать вам страну по заданым параметрам"
 
-        # print(tem_price)
-        # print(temp_rez)
-        # print(rez_data)
 
-
-
-        # if rezult:
-        #     self.country_choose = dict()
-        #     return f"{self.answer_preparation(rezult)} "
-        # else:
-        #     self.country_choose = dict()
-        #     return f"К сожелению страны с задаными вами параметрами не нашлось."
-
-
-
-
-
-
-#
-# {'water': 'True', 'isBig': 'True', 'climat': '1', 'transport': '5', 'english': '5', 'workplace': '4', 'nightlife': '4', 'lgbt': '1'}
-# {'Germany': 3, 'United Kingdom': 3, 'Finland': 3, 'Norway': 3, 'Sweden': 3, 'Canada': 3, 'Czech': 2, 'Slovakia': 2, 'Hungary': 2, 'Poland': 1}
-
-
-
-
-
-
-# центре
 agent = CountryMigrationAgent()
 if __name__ == "__main__":
-    # print(agent.water_city())
-    # print(agent.climat_city())
-    # print({'water': 'True', 'isBig': 'True', 'climat': '1', 'transport': '5', 'english': '5', 'workplace': '4', 'nightlife': '4', 'lgbt': '1'})
-
-    agent.calculate({'water': 'True', 'isBig': '2', 'climat': "3", 'family': '1', 'transport': 'общественный транспорт', 'flat': 'окраине', 'price':'1300_1800', "lgbt": "False"})
+    agent.calculate({'water': 'True', 'isBig': '2', 'climat': "3", 'family': '1', 'transport': 'общественный транспорт',
+                     'flat': 'окраине', 'price': '1300_1800', "lgbt": "False"})
