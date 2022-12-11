@@ -58,7 +58,7 @@ class CountryEducationAgent:
         answer['child_preschool'] = 0
         answer['child_school'] = 0
         answer['members'] = 1
-        answer['smoking'] = params['cigarettes']
+        answer['smoking'] = int(params['smoking'])
         answer['transportation'] = params['transportation']
         answer["rent"] = params['rent']
         answer['country'] = 'Рейтинг стран'
@@ -121,7 +121,7 @@ if __name__ == "__main__":
               'rent':"своё жильё", 'transportation':'такси'}
     res = agent.find_result(answer)
 
-    price = agent.price_living({"cigarettes": 0, "transportation": "такси", 'rent': 'своё жильё'})
+    price = agent.price_living({"cigarettes1": 0, "transportation": "такси", 'rent': 'своё жильё'})
     print(price)
 
 
