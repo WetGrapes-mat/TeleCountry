@@ -82,7 +82,7 @@ class StandartLiving:
         overall += self.expCalcStandart(
             self.info[i]["comfortable_to_spend_time"] * self.coefficients["comfortable_to_spend_time_index"])
 
-        print("Ecology: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.68307 * math.e))))
+        # print("Ecology: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.68307 * math.e))))
         return max(0.0, ((overall * 25) ** (1 / (0.68307 * math.e))))
 
     def calculateSafetyIndex(self, i: int):
@@ -114,7 +114,7 @@ class StandartLiving:
             self.info[i]["problem_corruption_bribery"] * self.coefficients["problem_corruption_bribery_index"])
         overall = max(0.0, overall)
 
-        print("Safety: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.538365 * math.e))))
+        # print("Safety: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.538365 * math.e))))
         return min(100.0, (overall * 25) ** (1 / (0.538365 * math.e)))
 
     def calculateClimateIndex(self, i: int):
@@ -122,7 +122,7 @@ class StandartLiving:
         if (self.info[i]["averageHumidity"]) < 40 or (self.info[i]["averageHumidity"]) > 60:
             index = math.exp(self.expCalcStandart(((abs(self.info[i]["averageHumidity"] - 50)) - 10))
                                * self.coefficients["hum_index"])
-        print("Climat: " + self.info[i]["Country"] + str(index*100))
+        # print("Climat: " + self.info[i]["Country"] + str(index*100))
         return index*100
 
     def calculateHealthIndex(self, i: int):
@@ -142,7 +142,7 @@ class StandartLiving:
         overall += self.expCalcStandart(
             self.info[i]["cost"] * self.coefficients["cost_index"])
 
-        print("Health: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.465526 * math.e))))
+        # print("Health: " + self.info[i]["Country"] + str((overall * 25) ** (1 / (0.465526 * math.e))))
         return min(100.0, (overall * 25) ** (1 / (0.465526 * math.e)))
 
     def calculateCostOfLivingIndex(self, i: int):
@@ -158,7 +158,7 @@ class StandartLiving:
         cost = {}
         cost = self.cl.count_function(0, 0, 1, 0, "своя машина", "1-к в центре", cost, i)
         index = (list(cost.values())[0] / self.info[i]["salary"]) / ((1424 + 3844) / 5982)
-        print("Purchasing index: " + self.info[i]["Country"] + str(index * 100))
+        # print("Purchasing index: " + self.info[i]["Country"] + str(index * 100))
         return index * 100
 
     def finalCalculation(self, i):
