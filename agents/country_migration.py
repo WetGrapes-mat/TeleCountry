@@ -235,6 +235,7 @@ class CountryMigrationAgent:
                     tem_price[i] = price[i]
 
         temp_rez = dict(sorted(temp_rez.items(), key=lambda item: item[1], reverse=True))
+        print(temp_rez)
 
         tttt = None
         if tem_price == dict():
@@ -281,11 +282,14 @@ class CountryMigrationAgent:
                 if temp_rez[i] > a:
                     a = temp_rez[i]
                     tttt = i
+        print(tem_price)
+
 
         if tttt:
             rezult = f'На основе ваших ответом вы смошли вам подобрать {tttt} это прекрасная страна с ' \
                      f'{self.climat[int(params["climat"]) - 1]} климатом с {self.speed_life[int(params["isBig"]) - 1]} темпом жизни.\n' \
                      f'Расходы на все базовые потребновти в месяц составят {tem_price[tttt]} $, '
+            print(tttt)
             return rezult
 
         else:
@@ -294,5 +298,8 @@ class CountryMigrationAgent:
 
 agent = CountryMigrationAgent()
 if __name__ == "__main__":
-    agent.calculate({'water': 'True', 'isBig': '2', 'climat': "3", 'family': '1', 'transport': 'общественный транспорт',
-                     'flat': 'окраине', 'price': '1300_1800', "lgbt": "False"})
+    agent.calculate({'water': 'False', 'isBig': '2', 'climat': "2", 'family': '1', 'transport': 'общественный транспорт',
+                     'flat': 'окраине', 'price': '1300', "lgbt": "True"})
+'окраине'
+'своя машина'
+'общественный транспорт'
