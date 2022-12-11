@@ -304,13 +304,8 @@ class CountryCreator:
         str(currencyName), currencyEqualsToDollar)
         resultStr += '\ncreate (country)-[:currency]->(currency)'
         # military political block
-        index = 1
-        if milPolBlock:
-            for block in milPolBlock:
-                resultStr += '\nmerge (militaryPoliticalBlock%d:MilitaryPoliticalBlock {name:"%s"})' % (
-                index, str(block))
-                resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock%d)' % index
-                index += 1
+        resultStr += '\nmerge (militaryPoliticalBlock:MilitaryPoliticalBlock {name:"%s"})' % (str(milPolBlock))
+        resultStr += '\ncreate (country)-[:belongs_to_military_political_block]->(militaryPoliticalBlock)'
         # military Power
         resultStr += '\ncreate (militaryPower:MilitaryPower {amountOfPeople:%d})' % amountOfPeopleInArmy
         resultStr += '\ncreate (country)-[:military_power]->(militaryPower)'
@@ -399,6 +394,7 @@ class CountryCreator:
         match (italy:Country {name:"Italy"})
         match (portugal:Country {name:"Portugal"})
         match (argentina:Country {name:"Argentina"})
+        match (brazil:Country {name:"Brazil"})
         match (poland:Country {name:"Poland"})
         match (germany:Country {name:"Germany"})
         match (czech:Country {name:"Czech"})
@@ -410,7 +406,10 @@ class CountryCreator:
         match (norway:Country {name:"Norway"})
         match (france:Country {name:"France"})
 
-
+        
+        create (brazil)-[:borders_with]->(argentina)
+        create (argentina)-[:borders_with]->(brazil)
+        
         create (poland)-[:borders_with]->(czech)
         create (poland)-[:borders_with]->(germany)
         create (poland)-[:borders_with]->(slovakia)
@@ -719,7 +718,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1.33
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 92000
 
     # healthcare
@@ -961,7 +960,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 3.67
 
     # military
-    milPolBlock = []
+    milPolBlock = 'None'
     amountOfPeopleInArmy = 63000
 
     # healthcare
@@ -1291,7 +1290,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1
 
     # military
-    milPolBlock = ['NATO', 'TIAR']
+    milPolBlock = 'NATO'
     amountOfPeopleInArmy = 1395350
 
     # healthcare
@@ -1562,7 +1561,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 1835.88
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 161550
 
     # healthcare
@@ -1847,7 +1846,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 0.95
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 122850
 
     # healthcare
@@ -2111,7 +2110,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 0.95
 
     # military
-    milPolBlock = ["NATO"]
+    milPolBlock = "NATO"
     amountOfPeopleInArmy = 27250
 
     # healthcare
@@ -2400,7 +2399,7 @@ if __name__ == "__main__":
     currencyEqualsToDollar = 169.93
 
     # military
-    milPolBlock = ['TIAR']
+    milPolBlock = 'TIAR'
     amountOfPeopleInArmy = 214000
 
     # healthcare
@@ -2702,16 +2701,6 @@ if __name__ == "__main__":
     averageNumberOfFoggyDaysPerYear = 156  # days
     averageNumberOfRainyDaysPerYear = 136  # days
     averageNumberOfClearDays = 73  # days
-
-    # Man-made disasters
-    nameMMD = 'Warsaw gas explosion'
-    typeOfMMD = 'gas explosion'
-    yearOfMMD = 1979
-    aomuntOfDeadPeople = 49
-    aomuntOfInjuredPeople = 135
-    territoryOfPollution = 0
-    # manMadeDisaster = {'name': 'Авария на ЧАЭС', 'typeOfMMD': 'Авария на АЭС', 'aomuntOfDeadPeople': 37500,
-    #                    'aomuntOfInjuredPeople': 5000000, 'territoryOfPollution': 145000}
 
     # security
     situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
@@ -5117,6 +5106,644 @@ if __name__ == "__main__":
     #                           aomuntOfInjuredPeople, territoryOfPollution)
     # cc.createOceans()
     #############################   FRANCE   #############################
+    #############################   Brazil   #############################
+
+    # Country
+    countryName = "Brazil"
+    officialLanguage = "Portuguese"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Brasilia': [True, False, None],
+        'Sao Paulo': [True, False, None],
+        'Rio de Janeiro': [True, True, 'Atlantic ocean'],
+        'Salvador': [True, True, 'Atlantic ocean'],
+        'Fortaleza': [True, True, 'Atlantic ocean'],
+        'Florianopolis': [False, True, 'Atlantic ocean'],
+        'Porto Seguro': [False, True, 'Atlantic ocean']}
+
+    # education
+    universities = {'Brasili': ['University of Brasília'],
+                    'Sao Paulo': ['University of Sao Paulo'],
+                    'Rio de Janeiro': ['Universidade do Estado do Rio de Janeiro'],
+                    'Fortaleza': ['Universidade Federal do Ceará']}
+    faculties = {
+        'University of Brasília': ['Faculty of Architecture', 'Faculty of Science', 'Faculty of Social Sciences',
+                                   'Faculty of Medicine', 'Faculty of Arts',
+                                   'Faculty of Computer Engineering and Software'],
+        'University of Sao Paulo': ['Faculty of Business', 'Faculty of Law', 'Faculty of Education'],
+        'Universidade do Estado do Rio de Janeiro': ['Faculty of Social Sciences', 'Faculty of Education', 'Faculty of Business'],
+        'Universidade Federal do Ceará': ['Faculty of Medicine', 'Faculty of Social Sciences', 'Faculty of Science',
+                              'Faculty of Law', 'Faculty of Arts']}
+    programs = {
+        'University of Brasília': ['Magistracy', 'Undergraduate'],
+        'University of Sao Paulo': ['Magistracy', 'Undergraduate'],
+        'Universidade do Estado do Rio de Janeiro': ['Magistracy', 'Undergraduate'],
+        'Universidade Federal do Ceará': ['Magistracy', 'Undergraduate']}
+    links = {'University of Brasília': 'https://international.unb.br',
+             'University of Sao Paulo': 'https://www.fearp.usp.br',
+             'Universidade do Estado do Rio de Janeiro': 'https://www.uerj.br',
+             'Universidade Federal do Ceará': 'https://www.ufc.br'}
+    images = {
+        'University of Brasília': 'https://smapse.ru/storage/2018/10/1200px-ib-unb.jpg',
+        'University of Sao Paulo': 'https://global.ncsu.edu/wp-content/uploads/sites/90/2019/03/USP.jpg',
+        'Universidade do Estado do Rio de Janeiro': 'https://cdn.osaogoncalo.com.br/img/normal/90000/uerj-divulgacao_00091014_0.jpg?xid=259075',
+        'Universidade Federal do Ceará': 'https://melhoresescolasmedicas.com/wp-content/uploads/2021/03/image_processing20200516-30496-1nwh9yc.jpeg'}
+    # общага
+    hostel = {'University of Brasília': 'Yes',
+              'University of Sao Paulo': 'Yes',
+              'Universidade do Estado do Rio de Janeiro': 'Yes',
+              'Universidade Federal do Ceará': 'Yes'}
+    # стипендия
+    scolarship = {'University of Brasília': 'Yes',
+                  'University of Sao Paulo': 'Yes',
+                  'Universidade do Estado do Rio de Janeiro': 'Yes',
+                  'Universidade Federal do Ceará': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'University of Brasília': "Enrollment of applicants is based on the results of entrance examinations. "
+                                  "To get a bachelor's degree in education, you need to pay about 1000 USD per year. "
+                                  "Although this amount is not large (compared to other higher prestigious institutions), "
+                                  "the quality of the knowledge and skills acquired at the University of Brasília is at the proper level, "
+                                  "it corresponds to the title of one of the best universities in the country. "
+                                  "At the university, an individual approach to each student and the possibility of distance learning are possible. "
+                                  "The University of Brasilia is also happy to open its doors to students from other countries who have come on a student "
+                                  "exchange program or a student program for students to jointly develop doctoral and master's degrees.",
+        'University of Sao Paulo': 'Passing the competition for admission to the University of Sao Paulo is not easy. '
+                                   'The applicant is enrolled only after passing serious exams. '
+                                   'Usually, out of ten young people who apply, only one remains to study. '
+                                   'Such a large competition is based not only on the demographic situation in the country, but also on low tuition fees. '
+                                   'It is approximately 1000 USD. for the annual rate. More detailed and final prices are based on the chosen specialty. '
+                                   'Information about them and the rules for admission can be found on the official USP website.',
+        'Universidade do Estado do Rio de Janeiro': 'To be enrolled in the chosen faculty, the student must successfully pass the entrance exams. '
+                                                    'The learning process of one academic year is divided into two approximately equal semesters. '
+                                                    "The cost of obtaining knowledge for applicants for a bachelor's degree is determined by the amount equivalent to $ 1,000 and paid in local currency. "
+                                                    "For a university with such ranking indicators, tuition fees are considered quite low. "
+                                                    "Those who study under the master's program pay the same amount for one year of stay within the walls of UERJ.",
+        'Universidade Federal do Ceará': 'For admission to the university, the student is required to provide information about the results of the exams passed.'}
+    costs = {'University of Brasília': 1000,
+             'University of Sao Paulo': 1000,
+             'Universidade do Estado do Rio de Janeiro': 1000,
+             'Universidade Federal do Ceará': 1000}
+
+    sights = {'Christ statue': ["The statue of Christ the Redeemer is the most recognizable in the country. "
+                                "It is located on Mount Corcovado. The outstretched arms of Christ symbolize the blessing of the city. "
+                                "Millions of tourists seek to get to Rio de Janeiro in order to see the statue of Christ the Redeemer. "
+                                "This famous landmark of Brazil was erected in honor of the 100th anniversary of independence. "
+                                "Work began in 1922. It is noteworthy that the fundraising for the construction was carried out by volunteers with the active participation of Bishop Sebastian Leme. "
+                                "It was originally planned that the statue of Christ would stand on the globe. "
+                                "But later the project was changed. "
+                                "The idea of the figure of Christ with outstretched arms belongs to the artist Carlos Osvaldo. "
+                                "The arm span reaches 28 meters. The pedestal is 8 meters, and the figure of Christ itself is 30 meters.",
+                                'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/03/Brazil-1-Christ-the-Redeemer-e1490429791222.jpg'],
+              'Waterfall Adam and Eve': ['The waterfall Adam and Eve can rightfully be considered the greatest natural attraction in Brazil. '
+                                           'The complex of waterfalls on the Iguazu River delights everyone who sees them. '
+                                           'They are on the border of Brazil and Argentina. '
+                                           'The complex of waterfalls became a UNESCO heritage site in the 80s of the last century. '
+                                           'Adam and Eve is located in Iguazu Park near the Bossetti Falls. '
+                                           'The waterfall Adam and Eve is especially beautiful on a sunny day, when millions of sprays reflect rays shimmering '
+                                           'with all the colors of the rainbow. At the same time, the spray cloud itself rises several meters - the force of the falling water flow is so great. '
+                                           'For tourists, solid viewing platforms are arranged here.',
+                                           'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/03/Brazil-2-Adam-and-Eve-waterfall-e1490430110461.jpg'],
+              "Devil's Throat": ["There is a unique set of waterfalls on the Iguazu River. "
+                                 "There are 275 of them here. The most impressive is the 700-meter ledge, which has a horseshoe shape. "
+                                 "Devil's Throat Falls consists of 14 streams of water that continuously fall from a height of 350 feet. "
+                                 "The waterfall is in a huge cloud of spray sparkling in the sun. "
+                                 "The Devil's Throat was opened to the Western world in 1541 by the famous traveler El Dorado Cabeza de Vaca. "
+                                 "The strength and power of the waterfall will be of interest to those who are thinking about what to see in Brazil. "
+                                 "The observation decks here are very strong, there is no danger for tourists. "
+                                 "Multi-stage platforms stretch for many kilometers, which makes it possible to admire this landmark of Brazil at any time.",
+                                 'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/03/Brazil-6-The-Devils-Throat-e1490431348162.jpg']}
+    beaches = {'Ipanema': ['Many people know about this beach not from geography lessons and not from their own tourist experience, '
+                           'but thanks to the popular bossa nova jazz song Girl from Ipanema. '
+                           'Its authors, Antonio Carlos Jobim and Vinicius de Moraes, made this beach no less famous than Copacabana. '
+                           'Interestingly, in translation from the Tupi language, this toponym is translated as bad, dangerous waters. '
+                           'In fact, the waves in this section are quite aggressive, so the beach is definitely worth a visit for surfers, '
+                           'but be careful for those who go here just to swim.',
+                           'https://1001beach.ru/img/posts/2346/750/ipanema-1.webp?t=1580388523'],
+               "Copacabana": ["Copacabana Beach is one of the visiting cards of Rio de Janeiro. "
+                              "It is famous for its white sand, developed infrastructure, huge size and picturesque landscapes. "
+                              "It is also loved for its cheerful and noisy atmosphere, a large number of entertainment and proximity to one "
+                              "of the most beautiful cities in the world.",
+                              'https://1001beach.ru/img/posts/2343/750/copacabana-1.webp?t=1580388500'],
+               'Campeche': ["Campeche Beach (Praia do Campeche) is one of the best holiday destinations in Brazil. "
+                            "On Santa Catarina, it occupies a leading position in the ratings of the tourism sector and is included "
+                            "in the top 5 famous resorts. Archaeological sites, gentle sun, kilometers of sand and clear water "
+                            "leave an indelible impression of the island. Therefore, having come here once, you want to come back again and again, "
+                            "which is what most tourists do, because the territory of the resort is only getting better every year.",
+                            'https://1001beach.ru/img/posts/2344/750/campeche-1.webp?t=1580388508']}
+    mountains = {'Neblin': ['Neblina is a mountain in South America, the highest point of the Guiana Highlands. '
+                            'Located on the border of Venezuela and Brazil. Lonely flat-topped mountain with steep slopes. '
+                            'Discovered in 1962 from a plane flying past. It rises above the sea of clouds in the form of an island. '
+                            'It is connected by a pass with the mountain on March 31.',
+                            'http://photos.wikimapia.org/p/00/00/58/66/85_big.jpg'],
+                 'March 31': ["March 31 - a mountain on the border of Brazil and Venezuela with an absolute height of 2974.18 m above sea level. "
+                              "It is part of the Neblina massif and the second highest mountain in Brazil after Mount Neblina.",
+                              'https://upload.wikimedia.org/wikipedia/commons/6/64/Pico_31_de_Mar%C3%A7o.JPG']}
+    skiResorts = {}
+    lakes = {'Lagoa Mirin': ["Lagoon lake, located on the coast in southern Brazil, on the border with Uruguay. "
+                             "It stretches for 220 km in length, and has a maximum width of 42 km. "
+                             "The total area is about 2000 km². Lagoa Mirin is separated from the Atlantic Ocean by an alluvial sandy marshy spit. "
+                             "The narrow channel of San Gonzalo Lake Lagoa Mirin is connected to Lake Patus. "
+                             "Shallow. Many rivers flow into it, the largest of which is the Jaguaran.",
+                             'https://upload.wikimedia.org/wikipedia/commons/7/72/Vista_da_Praia_da_Capilla%2C_Rio_Grande%2C_RS_%28cropped%29.jpg']}
+    rivers = {'Amazon': ["The most full-flowing river on the planet. The basin area is 7180 thousand km². "
+                         "In 2011, the river was recognized as one of the seven wonders of the world. "
+                         "The Amazon is a border river. "
+                         "The largest area is in Brazil, the western part flows to Bolivia, Peru, as well as Ecuador and Colombia. "
+                         "The Amazon flows into the Atlantic, flows near the equator. The river also has the largest delta on earth. "
+                         "The total length of the river is 6400 km",
+                         'https://must-see.top/wp-content/uploads/2019/09/amazonka-700x465.jpg'],
+              'San Francisco': ["The third longest river in South America. The basin area is 641 thousand km². "
+                                "Some areas of Sao Francisco are suitable for extreme tourism. "
+                                "In the 20th century, a cascade of hydroelectric power stations was built on the river. "
+                                "The beginning at San Francisco is in the heights of the Brazilian Plateau. "
+                                "The water area flows into the Atlantic Ocean. Waterfalls on the river reach 80 m. "
+                                "During the rainy season, the water level in this basin rises by 7 meters. "
+                                "Part of the river is navigable, the banks are considered inhabited. "
+                                "The length of the river is 2830 km",
+                                'https://must-see.top/wp-content/uploads/2019/09/san-fransisku-700x468.jpg'],
+              'Rio Negro': ["Left tributary of the famous Amazon River. "
+                            "The territory of the river basin is 600 thousand km². "
+                            "Rio Negro has the ability to spill over the nearby selva for 35 km in both directions. "
+                            "The navigable section of the river is 600 km. "
+                            "It differs from its tributaries by large seasonal fluctuations in water levels. "
+                            "The color of the waters of the Rio Negro is brown. "
+                            "The total length of the river is 2300 km",
+                            'https://must-see.top/wp-content/uploads/2019/09/riu-negru-700x462.jpg']}
+    # currency
+    currencyName = 'BRL'
+    currencyEqualsToDollar = 5.24
+
+    # military
+    milPolBlock = 'TIAR'
+    amountOfPeopleInArmy = 366500
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 317
+    menAverageLifeExpectancy = 72.4
+    womenAverageLifeExpectancy = 79.4
+
+    # climat
+    juneAverageTemperature = 24
+    decemberAverageTemperature = 26
+    averageHumidity = 78
+    averageDurationOfWinter = 3.5
+    averageRainfallPerMonth = 191
+    averageNumberOfFoggyDaysPerYear = 34
+    averageNumberOfRainyDaysPerYear = 128
+    averageNumberOfClearDays = 197
+
+    # security
+    situationInTheCountry = 3  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 2  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 3  # [1, 3]
+
+    # population
+    populationCount = 215681045
+    procentOfMales = 49.2
+    procentOfFemales = 50.8
+    populationDensityPerSquareKilometer = 25.3
+    speedOfLife = 3  # [1, 3]
+    workPlaces = 3  # [1, 3]
+    nightLifeEntertainment = 3  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 11
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 41
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 4  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 17
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    # cc.createManMadeDisaster(countryName, nameMMD, typeOfMMD, aomuntOfDeadPeople,
+    #                           aomuntOfInjuredPeople, territoryOfPollution)
+    # cc.createOceans()
+    #############################   Brazil   ##############################
+
+    #############################   Panama   #############################
+
+    # Country
+    countryName = "Panama"
+    officialLanguage = "Spanish"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Panama': [True, True, 'Pacific ocean'],
+        'David': [True, True, 'Pacific ocean'],
+        'Colon': [True, True, 'Caribbean sea'],
+        'Changinola': [True, True, 'Caribbean sea'],
+        'Achutupo': [True, True, 'Caribbean sea']}
+
+    # education
+    universities = {}
+    faculties = {}
+    programs = {}
+    links = {}
+    images = {}
+    # общага
+    hostel = {}
+    # стипендия
+    scolarship = {}
+    # требования к поступлению
+    requirements = {}
+    costs = {}
+
+    sights = {'Panama Canal': ["One of the most popular places in Panama is its canal. "
+                               "The amazing creation of human hands was officially opened in 1920, although the first ideas for such construction arose as early as the 16th century. "
+                               "There are many tourist excursions on the Panama Canal, the best place to watch the ships is at the walls of the Miraflores locks.",
+                               'https://top10.travel/wp-content/uploads/2016/05/panamskiy-kanal.jpg'],
+              'Coiba National Park': [
+                  "One of the largest islands in Panama gave its name to the unique national park of this country. "
+                  "About 760 species of fish live in the waters of the park, and from April to September, many turtles come to Coiba to lay their eggs. "
+                  "For its excellent diving conditions, Coiba is called the new Galapagos.",
+                  'https://top10.travel/wp-content/uploads/2016/05/park-koiba.jpg'],
+              'Islands of the San Blas Archipelago': [
+                  "The extraordinarily beautiful San Blas Archipelago is only half an hour by boat from Panama City. "
+                  "Kuna Indians live here, who managed to maintain an economy and culture independent of Panama. "
+                  "People come to San Blas to go diving, go fishing, see the daily life of the Indians, or just relax on the cleanest local beaches.",
+                  'https://top10.travel/wp-content/uploads/2016/05/ostrova-san-blas.jpg']}
+    beaches = {
+        'Isla Pelicano': ["Isla Pelicano is a tiny Robinson Crusoe-style island in the San Blas Archipelago, Panama. "
+                          "There are no hotels here, but there is a kiosk selling food and drinks. "
+                          "Sometimes there is a lot of garbage here, but this is the problem of many uninhabited islands - "
+                          "today the sea will bring all the dirt to the beach, and tomorrow it will wash it back.",
+                          'http://www.beach-on-map.com/img/11/panama-san-blas-cayos-limones-isla-pelicano-orig.jpg'],
+        "Kuanidup Island": ["Kuanidup is a small island near the port of Carti in the San Blas group, Panama. "
+                            "This is a creepy atmospheric place with a great beach. "
+                            "There are not many palm trees, but they look very picturesque, and the sand is perfectly white. "
+                            "Where there is no sand - excellent snorkeling.",
+                            'http://www.beach-on-map.com/img/11/panama-san-blas-kuanidup-island-beach-orig.jpg'],
+        'Red Frog': ["Red Frog is the best beach on the island of Bastimentos in the Bocas del Toro archipelago. "
+                     "There are always strong waves here, so this place is not suitable for children.",
+                     'http://www.beach-on-map.com/img/7/panama-bocas-del-toro-bastimentos-island-red-frog-beach-view-from-the-top-orig.jpg']}
+    mountains = {'Baru': [
+        "Baru, formerly Chiriqui, is a volcano in Panama, the highest point in the country, the highest volcano in southern Central America.",
+        'https://peakfinder.ru/image/original/40_baru.jpg'],
+                 'El Valle': [
+                     "El Valle is a dormant stratovolcano in Panama, in the province of Cocle, 80 km from the country's capital city of Panama. Height - 1185 m. "
+                     "The last eruption occurred about 13,000 years ago. In the center of the volcano is a caldera with a diameter of 6 kilometers. "
+                     "It was formed 56,000 years ago as a result of the collapse of the cone of Mount Paquita.",
+                     'https://upload.wikimedia.org/wikipedia/commons/c/cf/El_valle.jpg']}
+    skiResorts = {}
+    lakes = {'Gatun': ["From the shore, Lake Gatun looks endless. "
+                       "On its surface, here and there, one can see small islands, densely overgrown with trees. "
+                       "Traveling by boat, you can admire the steep red cliffs that have been washed away by waves and trees over the years, hanging right above the water. "
+                       "Snow-white herons and sluggish pelicans are found here. You can often see flocks of kites in the sky. "
+                       "Lake Gatun will please fans of fishing - here tuna jumps out of the water by itself. "
+                       "You can try to catch a sergeant fish, nicknamed so in memory of the American military. "
+                       "The lake attracts not only lovers of measured rest and ecotourists, but also divers. "
+                       "There are several possible dive sites in Panama at Lake Gatun and Alajuela. "
+                       "At the bottom of them you can see the remains of the railway that ran all the way to the Isthmus of Panama, "
+                       "and a lot of construction equipment that was used to lay tracks and build the Panama Canal.",
+                       'http://openarium.ru/foto/ozhyl6cNFRXHsE.jpg']}
+    rivers = {}
+    # currency
+    currencyName = 'USD'
+    currencyEqualsToDollar = 1
+
+    # military
+    milPolBlock = "TIAR"
+    amountOfPeopleInArmy = 30000
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 284
+    menAverageLifeExpectancy = 76.7
+    womenAverageLifeExpectancy = 82.1
+
+    # climat
+    juneAverageTemperature = 30
+    decemberAverageTemperature = 30
+    averageHumidity = 85
+    averageDurationOfWinter = 2.9
+    averageRainfallPerMonth = 68
+    averageNumberOfFoggyDaysPerYear = 13
+    averageNumberOfRainyDaysPerYear = 129
+    averageNumberOfClearDays = 217
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 2  # [1, 3]
+    assessmentOfFamilyLife = 2  # [1, 3]
+    attitudeTowardsLGBT = 2  # [1, 3]
+
+    # population
+    populationCount = 4382000
+    procentOfMales = 50.4
+    procentOfFemales = 49.6
+    populationDensityPerSquareKilometer = 81
+    speedOfLife = 2  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 30
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 35.14
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 14  # Мегабиты в секунду
+    freeWifi = 3  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 60
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+
+    #############################   Panama   #############################
+
+    #############################   Egypt   #############################
+
+    # Country
+    countryName = "Egypt"
+    officialLanguage = "Arabic"
+
+    # cities    name   isBig  washesBy
+    cities = {
+        'Cairo': [True, False, None],
+        'Alexandria': [True, True, 'Mediterranean sea'],
+        'Giza': [True, False, None],
+        'Shubra al-Kheima': [True, False, None],
+        'Port Said': [True, False, 'Mediterranean sea'],
+        'Hurghada': [False, True, 'Red sea'],
+        'Sahl Hasheesh': [False, True, 'Red sea'],
+        'Makadi Bay': [False, True, 'Red sea']}
+
+    # education
+    universities = {'Cairo': ['Ain Shams University', 'Al Azhar University', 'Sinai University'],
+                    'Alexandria': ['Alexandria University']}
+    faculties = {
+        'Ain Shams University': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Medicine',
+                                 'Faculty of Education'],
+        'Al Azhar University': ['Faculty of Medicine'],
+        'Sinai University': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software', 'Faculty of Business'],
+        'Alexandria University': ['Faculty of Business', 'Faculty of Education']}
+    programs = {
+        'Ain Shams University': ['Magistracy', 'Undergraduate'],
+        'Al Azhar University': ['Magistracy', 'Undergraduate'],
+        'Sinai University': ['Undergraduate'],
+        'Alexandria University': ['Magistracy', 'Undergraduate']}
+    links = {'Ain Shams University': 'https://www.asu.edu.eg',
+             'Al Azhar University': 'http://www.azhar.edu.eg/',
+             'Sinai University': 'https://www.su.edu.eg/',
+             'Alexandria University': 'https://alexu.edu.eg'}
+    images = {
+        'Ain Shams University': 'https://www.asu.edu.eg/storage//uploads/2022/slider/nUIegg3j.jpg',
+        'Al Azhar University': 'https://studioarabiya.com/images/easyblog_articles/blog_images/Al-Azhar__1757629c.jpg',
+        'Sinai University': 'https://www.dbse.co/uploads/5b62fa713a161.png',
+        'Alexandria University': 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Alexandria_University%2C_The_Main_Building.JPG'}
+    # общага
+    hostel = {'Ain Shams University': 'Yes',
+              'Al Azhar University': 'Yes',
+              'Sinai University': 'No',
+              'Alexandria University': 'Yes'}
+    # стипендия
+    scolarship = {'Ain Shams University': 'No',
+                  'Al Azhar University': 'Yes',
+                  'Sinai University': 'No',
+                  'Alexandria University': 'Yes'}
+    # требования к поступлению
+    requirements = {
+        'Ain Shams University': 'The entire admission process and details of admission to a particular faculty should be clarified on the ASU university website. '
+                                'The educational process is formed here from two semesters of one academic year.',
+        'Al Azhar University': 'When planning to enter Al-Azhar University, you must first visit the official website of the university. '
+                               'There you can find the rules of admission and selection criteria. '
+                               'The educational process in the institution consists of two semesters of one academic year.',
+        'Sinai University': 'In order to become a student of Sinai University, an applicant must fill out an application on the website and provide: '
+                            'Certificate of general secondary education with a certified translation; Motivation letter; '
+                            'Certificate of payment of the registration fee; A certificate confirming the language proficiency of the chosen program. '
+                            'Enrollment in some specialties requires passing entrance exams.',
+        'Alexandria University': "The admissions committee begins accepting documents with an assessment of the success of the applicant's studies at the previous place of study. "
+                                 "After that, there are entrance exams in the chosen direction. "
+                                 "In principle, Alexandria University is not distinguished by the rigor of selection, therefore 90% of all applicants become full students of this educational institution. "
+                                 "The educational process includes two semesters of one academic year."}
+    costs = {'Ain Shams University': 1000,
+             'Al Azhar University': 2500,
+             'Sinai University': 6000,
+             'Alexandria University': 1000}
+
+    sights = {'Pyramids of Giza': ["In the Libyan desert, on the Giza plateau, is the most important place of power on the continent and, perhaps, one of the most beautiful places on our planet. "
+                                   "These are the Great Pyramids of Giza, which are a whole city-cemetery with temples, tombs, roads. "
+                                   "The ancient necropolis includes the Pyramid of Khufu (also known as the Pyramid of Cheops, one of the 7 wonders of the world), "
+                                   "the slightly smaller Pyramid of Khafre and the much more modest Pyramid of Menkaure, as well as several smaller satellite pyramids. "
+                                   "In fact, this complex is a cemetery for real aristocrats, where the pharaohs were buried, "
+                                   "as well as all their close associates - wives, servants, close relatives and everyone who had a noble origin and wanted to go to the next world after their master. "
+                                   "In general, the entire complex, in addition to the pyramids, consists of: temples located at the beginning of the memorial road that leads to the pyramids; "
+                                   "cemeteries where close relatives and courtiers of the pharaohs were buried; "
+                                   "the most ancient monument in the world - the sculpture of the Sphinx.",
+                                   'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-1-Giza-Pyramid-e1491277079103.jpg'],
+              'Valley of the pharaohs': ["In the 16th century BC. in order to bury the rulers of Egypt, the Valley of the Kings was created - a place in a rocky gorge, where a number of tombs were organized. "
+                                         "At one time, this place was secret and was strictly guarded by caretakers who protected it from raids and robbery. "
+                                         "The tradition of the burial of the pharaohs was laid by one of them - Thutmose I, who, fearing for the looting of his own tomb, "
+                                         "ordered to organize it in an inaccessible, impassable place. And so the valley of Thebes appeared - the most important sight of Egypt, "
+                                         "which has preserved its appearance to this day. "
+                                         "The place for the Great Magic Necropolis was not chosen by chance: the material for the construction of tombs - limestone - in this rocky area is quite hard, "
+                                         "which makes it possible to protect the tombs from cracks and destruction; the path to the Valley allows the funeral procession to move quickly and unhindered; "
+                                         "at the same time, there is only one single entrance to the Valley, passing along a narrow path and protected by steep cliffs; the location of the Valley is at a great distance"
+                                         " from the mortuary temple, the tombs of which have been plundered more than once. To date, more than 60 pharaohs, as well as the wives and children of the rulers, rest in the Valley. "
+                                         "Inside the Valley, a whole system of complex tunnels and wells has been formed, and the walls are covered with frescoes that tell about the life of the buried persons.",
+                                         'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-2-The-Valley-of-the-Kings-e1491277275454.jpg'],
+              'Temple of Luxor': ["If during your travels you, by the will of fate, ended up in the ancient city of history and magic - Luxor, then the question of what to visit in Egypt can be considered resolved. "
+                                  "Of course, this is the majestic Luxor Temple - a monumental religious building built in the 14th century BC. "
+                                  "The temple strikes with the perfection and harmony of forms, especially when you realize the degree of antiquity of this historical monument. "
+                                  "One of the largest temples in Egypt has a total length of about 260 meters, and massive trapezoidal towers - pylons that adorn the entrance, "
+                                  "reach 20 meters in height and 70 meters in length. The temple was erected by order of the pharaoh Amenhotep III, "
+                                  "who ruled at that time, who dedicated it to the sun god Amon-Ra, his wife Mut and their son Khons. "
+                                  "In ancient times, 6 huge statues of Pharaoh Ramses II towered at the entrance to the temple, but only two of them have survived to this day. "
+                                  "Here you can also admire a huge 25-meter obelisk painted with frescoes. Initially there were two of them, "
+                                  "but one of them was presented to France by order of the ruler Mohamed Ali in 1819.",
+                                  'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-3-Luxor-Temple-e1491278052766.jpg']}
+    beaches = {'Agiba': ["Miracle - this is how the name of the small beach Agiba is translated from Arabic. The 40-meter sandy strip is hidden in the golden-yellow rocks: bays, caves, "
+                         "islets and walls hanging over the sea beckon to climb higher and take the most unusual photo. "
+                         "When you swim in plenty in the azure waters of the Mediterranean Sea and explore the unusual relief, you can relax in a cafe overlooking the sea.",
+                         'https://content.skyscnr.com/f1128d59413ede49d75d1adfd893a469/agiba.jpg'],
+               "Haram": ["Haram, or the Coast of Love, is the largest beach in the vicinity of Mersa Matruh, the main resort town of the Mediterranean coast of Egypt. On its white sand, there is enough space for everyone even in the hottest summer months. "
+                         "A smooth entry into the water will appeal to families with children and is suitable for those who feel insecure on the water.",
+                         'https://infomedicspb.ru/wp-content/uploads/4/2/9/429c045dd065c83ff6c70df6ec9b5d86.jpeg']}
+    mountains = {'Sinai': ["In Egypt, there is one interesting place that keeps a history of thousands of years. "
+                           "The significance of this place has recently faded somewhat against the backdrop of popular attractions in Egypt - such as the pyramids of Giza or the resort of Sharm el-Sheikh. "
+                           "Mount Sinai, located on the Sinai Peninsula, is perhaps the first thing to visit in Egypt for those who are interested in local shrines. "
+                           "Mount Sinai, also known as Mount Moses, is a place with which one biblical story is connected. "
+                           "It is believed that it was here that the prophet Moses received the ten commandments from the Lord and passed them on to his people. "
+                           "Since this story exists not only in Christianity, the Jewish and Islamic religions also adhere to these commandments. "
+                           "Therefore, here, on the top of the mountain, at an altitude of 2,285 m, each of these religions has its own temple dedicated to it. "
+                           "There is also a chapel dedicated to the Trinity, and a mosque of about the same size, and the Jews will show the way to the cave, which, "
+                           "according to legend, served as a refuge for Moses for 40 days while he communicated with God.",
+                           'https://www.tripzaza.com/ru/destinations/wp-content/uploads/2017/04/Egypt-7-Mount-Sinai-e1491279059652.jpg']}
+    skiResorts = {}
+    lakes = {'Karun': ["Karun is a salt lake in Egypt, on the territory of the Faiyum oasis. The area is about 233 km². "
+                       "It is located at a level of 45 m below sea level. The modern lake Karun is the remnant of a large lake located in the same place and having an area of 1270 to 1700 km². "
+                       "Initially, it was a vast expanse of water, which gradually dried up for reasons still unknown.",
+                       'https://rutraveller.ru/icache/place/2/343/2343_603x354.jpg']}
+    rivers = {'Nile': ["The Nile River is the country's main waterway. "
+                       "This is, first of all, a source of fresh water for the Egyptians (although the quality of this water, from the point of view of hygienists, leaves a very big question). "
+                       "The Nile carries its waters along a narrow valley, surrounded by rocks on both sides, from Sudan to the Mediterranean Sea. "
+                       "The total length of the river is about 1,545 kilometers. In the north, in the Cairo region, the width of the river delta reaches 250 kilometers.",
+                       'https://switki.ru/assets/i/ai/4/7/6/i/3275005.jpg']}
+    # currency
+    currencyName = 'EGP'
+    currencyEqualsToDollar = 24.57
+
+    # military
+    milPolBlock = "None"
+    amountOfPeopleInArmy = 438500
+
+    # healthcare
+    numberOfDoctorsPer100kPopulation = 309
+    menAverageLifeExpectancy = 69.8
+    womenAverageLifeExpectancy = 75.1
+
+    # climat
+    juneAverageTemperature = 34
+    decemberAverageTemperature = 19
+    averageHumidity = 52
+    averageDurationOfWinter = 3
+    averageRainfallPerMonth = 27
+    averageNumberOfFoggyDaysPerYear = 12
+    averageNumberOfRainyDaysPerYear = 14
+    averageNumberOfClearDays = 317
+
+    # security
+    situationInTheCountry = 2  # [1, 3] 1-bad, 3-good
+    freedomOfSpeech = 1  # [1, 3]
+    assessmentOfFamilyLife = 1  # [1, 3]
+    attitudeTowardsLGBT = 1  # [1, 3]
+
+    # population
+    populationCount = 104300000
+    procentOfMales = 50.2
+    procentOfFemales = 49.8
+    populationDensityPerSquareKilometer = 105.7
+    speedOfLife = 1  # [1, 3]
+    workPlaces = 2  # [1, 3]
+    nightLifeEntertainment = 2  # [1, 3]
+
+    # citizenship
+    citizenshipGlobalRank = 76
+    friendlyToForeigners = 3
+
+    # communication
+    communicationOnEnglish = 1  # [1, 3]
+
+    # transport
+    averageTravelTimeToWork = 48
+    developmentLevelOfPublicTransport = 2  # [1, 3]
+
+    # internet
+    speedOfInternetMbps = 2  # Мегабиты в секунду
+    freeWifi = 1  # [1, 3]
+
+    # education
+    rankingOfNationalEducationSystem = 39
+
+    cc.createBase(countryName, cities, officialLanguage,
+                  # currency
+                  currencyName, currencyEqualsToDollar,
+                  # military
+                  milPolBlock, amountOfPeopleInArmy,
+                  # healthcare
+                  numberOfDoctorsPer100kPopulation, menAverageLifeExpectancy, womenAverageLifeExpectancy,
+                  # climat
+                  juneAverageTemperature, decemberAverageTemperature, averageHumidity,
+                  averageDurationOfWinter, averageRainfallPerMonth, averageNumberOfFoggyDaysPerYear,
+                  averageNumberOfRainyDaysPerYear, averageNumberOfClearDays,
+                  # security
+                  situationInTheCountry, freedomOfSpeech,
+                  assessmentOfFamilyLife, attitudeTowardsLGBT,
+                  # population
+                  populationCount, procentOfMales, procentOfFemales, populationDensityPerSquareKilometer,
+                  speedOfLife, workPlaces, nightLifeEntertainment,
+                  # citizenship
+                  citizenshipGlobalRank,
+                  # communication
+                  communicationOnEnglish,
+                  # transport
+                  averageTravelTimeToWork, developmentLevelOfPublicTransport,
+                  # internet
+                  speedOfInternetMbps, freeWifi,
+                  # education
+                  rankingOfNationalEducationSystem, universities, faculties, programs, costs, links, images,
+                  requirements,
+                  hostel, scolarship, sights, beaches, mountains, skiResorts, lakes, rivers, friendlyToForeigners
+                  )
+    #############################   Egypt   #############################
 
     cc.createBorders()
     cc.close()
