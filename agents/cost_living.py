@@ -228,3 +228,4 @@ class CostLiving:
 
         return string_result
 
+cl = CostLiving()

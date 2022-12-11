@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from create_bot import bot
 from keybords import cost_living
-
+from agents.cost_living import cl
 
 answer_user = dict()
 
@@ -71,10 +71,10 @@ async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
 
 
 def get_answer():
-    cost_living.cl.get_information()
+    cl.get_information()
     user_answers = answer_user
     # print(user_answers)
-    message = cost_living.cl.out(int(user_answers["child_preschool"]),
+    message = cl.out(int(user_answers["child_preschool"]),
                                                int(user_answers["child_school"]),
                                                int(user_answers["members"]),
                                                int(user_answers["smoking"]),
