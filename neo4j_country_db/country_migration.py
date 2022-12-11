@@ -50,6 +50,11 @@ class CountryMigration(Request):
             city = session.execute_write(self._country, country)
             return city
 
+    def findinfocountry(self, country):
+        with self.driver.session() as session:
+            city = session.execute_write(self._final, country)
+            return city
+
     def findallcountry(self):
         with self.driver.session() as session:
             city = session.execute_write(self._allcountry)
@@ -76,7 +81,7 @@ class CountryMigration(Request):
 
     @staticmethod
     def _ocean(tx):
-        result = tx.run("match (h:Country)-[]->(n:City)<-[:washes]-() return  "
+        result = tx.run("match (h:Country)-[:washes]-() return  "
                         "h.name as nameCountry")
         return set([info["nameCountry"] for info in result])
 
@@ -98,6 +103,58 @@ class CountryMigration(Request):
                         "h.name as nameCountry,"
                         "n.name as nameCity", name=name)
         return [{'nameCountry': info["nameCountry"], 'nameCity': info['nameCity']} for info in result]
+
+
+    @staticmethod
+    def _final(tx, name):
+        result = tx.run("match (h:Country {name: $name}) - [:climat] - (c:Climat), "
+                        "(h)-[:citizenship]-(ci:Citizenship), "
+                        "(h)-[:security]-(s:Security),"
+                        "(h)-[:communication]- (com:Communication),"
+                        "(h)-[:internet]-(i:Internet),"
+                        "(h)-[:currency]-(cur:Currency),"
+                        "(h)-[:population]-(po:Population),"
+                        "(h)-[:official_language]-(l:Language)return "
+                        "h.name as nameCountry,"
+                        "c.averageDurationOfWinter as averageDurationOfWinter,"
+                        "c.juneAverageTemperature as juneAverageTemperature,"
+                        "c.decemberAverageTemperature as decemberAverageTemperature,"
+                        "c.airPollution as airPollution,"
+                        "c.waterPollution as waterPollution,"
+                        "c.dirtyAndUntidy as dirtyAndUntidy, "
+                        "c.comfortableToSpendTimeInTheCity as comfortableToSpendTimeInTheCity,"
+                        "ci.friendlyToForeigners as friendlyToForeigners ,"
+                        "ci.globalRank as globalRank,"
+                        "s.assessmentOfFamilyLife as assessmentOfFamilyLife,"
+                        "s.attitudeTowardsLGBT as attitudeTowardsLGBT,"
+                        "s.freedomOfSpeech as freedomOfSpeech,"
+                        "com.communicationOnEnglish as communicationOnEnglish,"
+                        "i.freeWifi as freeWifi,"
+                        "i.speedOfInternetMbps as speedOfInternetMbps,"
+                        "cur.name as nameMoney,"
+                        "cur.oneDollarEquals as oneDollarEquals, "
+                        "po.count as count, "
+                        "l.name as nameLan", name=name)
+        return [{'name': info["nameCountry"],
+                 'averageDurationOfWinter': info['averageDurationOfWinter'],
+                 'juneAverageTemperature': info['juneAverageTemperature'],
+                 'decemberAverageTemperature': info['decemberAverageTemperature'],
+                 'airPollution': info['airPollution'],
+                 'waterPollution': info['waterPollution'],
+                 'dirtyAndUntidy': info['dirtyAndUntidy'],
+                 'comfortableToSpendTimeInTheCity': info['comfortableToSpendTimeInTheCity'],
+                 'friendlyToForeigners': info['friendlyToForeigners'],
+                 'globalRank': info['globalRank'],
+                 'assessmentOfFamilyLife': info['assessmentOfFamilyLife'],
+                 'attitudeTowardsLGBT': info['attitudeTowardsLGBT'],
+                 'freedomOfSpeech': info['freedomOfSpeech'],
+                 'communicationOnEnglish': info['communicationOnEnglish'],
+                 'freeWifi': info['freeWifi'],
+                 'speedOfInternetMbps': info['speedOfInternetMbps'],
+                 'nameMoney': info['nameMoney'],
+                 'oneDollarEquals': info['oneDollarEquals'],
+                 'count': info['count'],
+                 'nameLan': info['nameLan']} for info in result]
 
     @staticmethod
     def _english(tx):
@@ -168,11 +225,14 @@ if __name__ == "__main__":
     # c = country_migration_db.findcity("Canada")
     c = country_migration_db.findisb('True')
     w = country_migration_db.findOcean()
+    print(w)
 
 
 
     print(c)
-    print(country_migration_db.findallcountry())
+    print(country_migration_db.findinfocountry("Canada"))
+    print(country_migration_db.findinfocountry("United Arab Emirates"))
+
 
 
 

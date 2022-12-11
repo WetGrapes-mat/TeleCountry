@@ -26,23 +26,23 @@ async def isBig(callback: types.CallbackQuery, callback_data: dict):
 
 
 async def climat_in_country(callback: types.CallbackQuery, callback_data: dict):
-    await callback.message.edit_text(text='Оцените насколько важен для вас общественый транспорт от 1 до 5\n (1 - без разницы, 5 - жизнено необходим)', reply_markup=country_migration.ikb_transport)
+    await callback.message.edit_text(text='Оцените насколько важен для вас общественый транспорт от 1 до 3\n (1 - без разницы, 3 - жизнено необходим)', reply_markup=country_migration.ikb_transport)
     answer_user['climat'] = callback_data['action']
 
 async def transport(callback: types.CallbackQuery, callback_data: dict):
-    await callback.message.edit_text(text='Оцените насколько важен для вас английский язык у населения от 1 до 5\n (1 - без разницы, 5 - жизнено необходимо)', reply_markup=country_migration.ikb_english)
+    await callback.message.edit_text(text='Оцените насколько важен для вас английский язык у населения от 1 до 3\n (1 - без разницы, 3 - жизнено необходимо)', reply_markup=country_migration.ikb_english)
     answer_user['transport'] = callback_data['action']
 
 async def english(callback: types.CallbackQuery, callback_data: dict):
-    await callback.message.edit_text(text='Оцените насколько важено разнообразие рабочих мест от 1 до 5\n (1 - без разницы, 5 - жизнено необходимо)', reply_markup=country_migration.ikb_workplace)
+    await callback.message.edit_text(text='Оцените насколько важено разнообразие рабочих мест от 1 до 3\n (1 - без разницы, 3 - жизнено необходимо)', reply_markup=country_migration.ikb_workplace)
     answer_user['english'] = callback_data['action']
 
 async def workplace(callback: types.CallbackQuery, callback_data: dict):
-    await callback.message.edit_text(text='Оцените насколько важено разбнообразие мест для развелечения от 1 до 5\n (1 - без разницы, 5 - жизнено необходимо)', reply_markup=country_migration.ikb_nightLife)
+    await callback.message.edit_text(text='Оцените насколько важено разбнообразие мест для развелечения от 1 до 3\n (1 - без разницы, 3 - жизнено необходимо)', reply_markup=country_migration.ikb_nightLife)
     answer_user['workplace'] = callback_data['action']
 
 async def nightlife(callback: types.CallbackQuery, callback_data: dict):
-    await callback.message.edit_text(text='Оцените насколько важно толерантное отношение к лгбт от 1 до 5\n (1 - без разницы, 5 - жизнено необходимо)', reply_markup=country_migration.ikb_lgbt)
+    await callback.message.edit_text(text='Оцените насколько важно толерантное отношение к лгбт от 1 до 3\n (1 - без разницы, 3 - жизнено необходимо)', reply_markup=country_migration.ikb_lgbt)
     answer_user['nightlife'] = callback_data['action']
 
 async def lgbt(callback: types.CallbackQuery, callback_data: dict):
