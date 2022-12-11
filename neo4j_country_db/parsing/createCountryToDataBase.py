@@ -619,7 +619,7 @@ if __name__ == "__main__":
                  'Laval University': ['Faculty of Arts', 'Faculty of Law', 'Faculty of Education',
                                       'Faculty of Forestry', 'Faculty of Medicine'],
                  'TELUQ University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Medicine'],
-                 'University of British Columbia': ['Faculty of Business', 'Faculty of Forestry',
+                 'University of British Columbia': ['Faculty of Economics', 'Faculty of Forestry',
                                                     'Faculty of Education',
                                                     'Faculty of Science', 'Faculty of Medicine', 'Faculty of Law'],
                  'University Canada West': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
@@ -825,10 +825,10 @@ if __name__ == "__main__":
     universities = {'Dubai': ['Murdoch University Dubai'],
                     'Abu Dhabi': ['Abu Dhabi University', 'Khalifa University'],
                     'Sharjah': ['American University of Sharjah']}
-    faculties = {'Abu Dhabi University': ['Faculty of Arts', 'Faculty of Business', 'Faculty of Engineering',
+    faculties = {'Abu Dhabi University': ['Faculty of Arts', 'Faculty of Economics', 'Faculty of Engineering',
                                           'Faculty of Medicine', 'Faculty of Law'],
                  'Khalifa University': ['Faculty of Arts', 'Faculty of Engineering', 'Faculty of Medicine'],
-                 'Murdoch University Dubai': ['Faculty of Computer Engineering and Software', 'Faculty of Business',
+                 'Murdoch University Dubai': ['Faculty of Computer Engineering and Software', 'Faculty of Economics',
                                               'Faculty of Social Sciences'],
                  'American University of Sharjah': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
                                                     'Faculty of Engineering',
@@ -1067,14 +1067,14 @@ if __name__ == "__main__":
                     'Chicago': ['University of Chicago'],
                     'New York': ['New York University']}
     faculties = {
-        'Harvard University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Engineering', 'Faculty of Business',
+        'Harvard University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Engineering', 'Faculty of Economics',
                                'Faculty of Social Sciences'],
-        'Stanford University': ['Faculty of Business', 'Faculty of Engineering',
+        'Stanford University': ['Faculty of Economics', 'Faculty of Engineering',
                                 'Faculty of Computer Engineering and Software',
                                 'Faculty of Science', 'Faculty of Social Sciences', 'Faculty of Medicine',
                                 'Faculty of Law'],
         'University of Chicago': ['Faculty of Law', 'Faculty of Social Sciences', 'Faculty of Medicine',
-                                  'Faculty of Business'],
+                                  'Faculty of Economics'],
         'New York University': ['Faculty of Arts', 'Faculty of Social Sciences', 'Faculty of Medicine',
                                 'Faculty of Law']}
     programs = {'Stanford University': ['Magistracy', 'Undergraduate'],
@@ -1401,7 +1401,7 @@ if __name__ == "__main__":
         'University of Milan': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Science',
                                 'Faculty of Social Sciences',
                                 'Faculty of Computer Engineering and Software'],
-        'Sapienza University': ['Faculty of Business', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Engineering',
+        'Sapienza University': ['Faculty of Economics', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Engineering',
                                 'Faculty of Medicine',
                                 'Faculty of Social Sciences', 'Faculty of Architecture', 'Faculty of Science'],
         'Politecnico di Torino': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software',
@@ -1667,12 +1667,12 @@ if __name__ == "__main__":
                     'Seville': ['University of Seville']}
     faculties = {
         'University of Barcelona': ['Faculty of Medicine', 'Faculty of Law', 'Faculty of Science',
-                                    'Faculty of Business', 'Faculty of Social Sciences'],
-        'EU Business School': ['Faculty of Business', 'Faculty of Arts', 'Faculty of Social Sciences',
+                                    'Faculty of Economics', 'Faculty of Social Sciences'],
+        'EU Business School': ['Faculty of Economics', 'Faculty of Arts', 'Faculty of Social Sciences',
                                'Faculty of Education'],
         'Saint Louis University': ['Faculty of Arts', 'Faculty of Social Sciences', 'Faculty of Medicine',
                                    'Faculty of Education'],
-        'University of Seville': ['Faculty of Business', 'Faculty of Social Sciences', 'Faculty of Law',
+        'University of Seville': ['Faculty of Economics', 'Faculty of Social Sciences', 'Faculty of Law',
                                   'Faculty of Computer Engineering and Software']}
     programs = {
         'University of Barcelona': ['Magistracy', 'Undergraduate', 'Doctoral'],
@@ -1954,12 +1954,12 @@ if __name__ == "__main__":
                     'Faro': ['Universidade do Algarve']}
     faculties = {
         'Polytechnic Institute': ['Faculty of Education', 'Faculty of Engineering', 'Faculty of Medicine',
-                                  'Faculty of Business'],
+                                  'Faculty of Economics'],
         'University of Lisbon': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Science',
                                  'Faculty of Education', 'Faculty of Medicine'],
-        'Universidade do Porto': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Business',
+        'Universidade do Porto': ['Faculty of Architecture', 'Faculty of Arts', 'Faculty of Law', 'Faculty of Economics',
                                   'Faculty of Engineering', 'Faculty of Medicine'],
-        'Universidade do Algarve': ['Faculty of Business', 'Faculty of Medicine', 'Faculty of Law',
+        'Universidade do Algarve': ['Faculty of Economics', 'Faculty of Medicine', 'Faculty of Law',
                                     'Faculty of Engineering']}
     programs = {
         'Polytechnic Institute': ['Magistracy', 'Undergraduate'],
@@ -2218,21 +2218,21 @@ if __name__ == "__main__":
                     'La Plata': ['National University of La Plata'],
                     'Rosario': ['Universidad Nacional de Rosario']}
     faculties = {
-        'University of Buenos Aires': ['Faculty of Business', 'Faculty of Architecture', 'Faculty of Arts',
+        'University of Buenos Aires': ['Faculty of Economics', 'Faculty of Architecture', 'Faculty of Arts',
                                        'Faculty of Social Sciences',
                                        'Faculty of Law', 'Faculty of Engineering', 'Faculty of Medicine',
                                        'Faculty of Science'],
-        'Universidad de Palermo Argentina': ['Faculty of Business', 'Faculty of Architecture', 'Faculty of Education',
+        'Universidad de Palermo Argentina': ['Faculty of Economics', 'Faculty of Architecture', 'Faculty of Education',
                                              'Faculty of Social Sciences'],
         'National University of La Plata': ['Faculty of Arts', 'Faculty of Computer Engineering and Software',
                                             'Faculty of Education',
                                             'Faculty of Science', 'Faculty of Social Sciences',
                                             'Faculty of Engineering',
                                             'Faculty of Medicine', 'Faculty of Law', 'Faculty of Forestry',
-                                            'Faculty of Business',
+                                            'Faculty of Economics',
                                             'Faculty of Architecture', 'Faculty of Forestry'],
         'Universidad Nacional de Rosario': ['Faculty of Law', 'Faculty of Medicine', 'Faculty of Science',
-                                            'Faculty of Business',
+                                            'Faculty of Economics',
                                             'Faculty of Architecture']}
     programs = {
         'University of Buenos Aires': ['Magistracy', 'Undergraduate'],
@@ -2514,7 +2514,7 @@ if __name__ == "__main__":
                                                           'Faculty of Architecture',
                                                           'Faculty of Engineering', 'Faculty of Science'],
                  'Jagiellonian University': ['Faculty of Law', 'Faculty of Medicine',
-                                             'Faculty of Social Sciences', 'Faculty Science'],
+                                             'Faculty of Social Sciences', 'Faculty of Science'],
                  'Krakow Academy named after A.F. Modzhevsky': ['Faculty of Arts',
                                                                 'Faculty of Engineering',
                                                                 'Faculty of Computer Engineering and Software'],
@@ -2843,7 +2843,7 @@ if __name__ == "__main__":
         'Charles University': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Praha%2C_Star%C3%A9_M%C4%9Bsto%2C_N%C3%A1m%C4%9Bst%C3%AD_Jana_Palacha%2C_FF_UK_01.jpg/1200px-Praha%2C_Star%C3%A9_M%C4%9Bsto%2C_N%C3%A1m%C4%9Bst%C3%AD_Jana_Palacha%2C_FF_UK_01.jpg',
         'University of Ostrava': 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Ostrava_dekanat_PrF_OU_20080426.jpg',
         'Ostrava University of Technology': 'https://www.timeshighereducation.com/sites/default/files/styles/article785xauto/public/image_2_2.jpg?itok=oVZR1sIr',
-        'Palacky University Olomouc': 'https://msmstudy.eu/wp-content/uploads/2021/06/Sloj-15-5.jpg',
+        'Palacký University Olomouc': 'https://msmstudy.eu/wp-content/uploads/2021/06/Sloj-15-5.jpg',
         'Moravian University Olomouc': 'https://image.free-apply.com/gallery/l/uni/gallery/lg/1020300050/e6c40d2985f1dbe6bd3b18ad42db6eac34b2cf5c.jpg?s=640'}
     # общага
     hostel = {'Czech Technical University in Prague': 'Yes',
@@ -2854,7 +2854,7 @@ if __name__ == "__main__":
               'Charles University': 'No',
               'University of Ostrava': 'No',
               'Ostrava University of Technology': 'No',
-              'Palacky University Olomouc': 'Yes',
+              'Palacký University Olomouc': 'Yes',
               'Moravian University Olomouc': 'No'}
     # стипендия
     scolarship = {'Czech Technical University in Prague': 'Yes',
@@ -2865,7 +2865,7 @@ if __name__ == "__main__":
                   'Charles University': 'Yes',
                   'University of Ostrava': 'Yes',
                   'Ostrava University of Technology': 'Yes',
-                  'Palacky University Olomouc': 'Yes',
+                  'Palacký University Olomouc': 'Yes',
                   'Moravian University Olomouc': 'Yes'
                   }
     # требования к поступлению
@@ -2905,7 +2905,7 @@ if __name__ == "__main__":
                                             'A duly completed and submitted application for a study programme.'
                                             'Documentary evidence that fees and charges have been paid.'
                                             'Compliance with the requirements for the entrance procedures.',
-        'Palacky University Olomouc': 'diploma or statement of expected graduation. '
+        'Palacký University Olomouc': 'diploma or statement of expected graduation. '
                                       'diploma supplement/Transcript of records. '
                                       'CV. '
                                       'proof of English language level. '
@@ -2930,7 +2930,7 @@ if __name__ == "__main__":
              'Charles University': 3750,
              'University of Ostrava': 4100,
              'Ostrava University of Technology': 4500,
-             'Palacky University Olomouc': 3400,
+             'Palacký University Olomouc': 3400,
              'Moravian University Olomouc': 3550}
 
     # resort
@@ -3934,11 +3934,11 @@ if __name__ == "__main__":
                                               'Faculty of Engineering'],
                  'Aston University': ['Faculty of Economics', 'Faculty of Social Sciences', 'Faculty of Engineering',
                                       'Faculty of Science', 'Faculty of Education'],
-                 'University of Manchester': ['Faculty of Medicine', 'Faculty of Health',
-                                              'Faculty of Science', 'Faculty of Engineering', 'Faculty of Humanities'],
+                 'University of Manchester': ['Faculty of Medicine',
+                                              'Faculty of Science', 'Faculty of Engineering', 'Faculty of Education'],
                  'University of Salford': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Arts',
-                                           'Faculty of Health', 'Faculty of Economics'],
-                 "Queen's University Belfast": ['Faculty of Arts', 'Faculty of Humanities', 'Faculty of Social Science',
+                                           'Faculty of Medicine', 'Faculty of Economics'],
+                 "Queen's University Belfast": ['Faculty of Arts', 'Faculty of Education', 'Faculty of Social Science',
                                                 'Faculty of Engineering', 'Faculty of Science', 'Faculty of Medicine']}
 
     programs = {'University College London': ['Magistracy', 'Undergraduate'],
@@ -4189,7 +4189,7 @@ if __name__ == "__main__":
                                             'Faculty of Education', 'Faculty of Law', 'Faculty of Medicine',
                                             'Faculty of Science', 'Faculty of Social Sciences'],
                  'Hanken School of Economics': ['Faculty of Economics'],
-                 'University of Turku': ['Faculty of Education', 'Faculty of Humanities', 'Faculty of Law',
+                 'University of Turku': ['Faculty of Education', 'Faculty of Law',
                                          'Faculty of Medicine', 'Faculty of Science', 'Faculty of Engineering'],
                  'Abo Akademi University': ['Faculty of Arts',
                                             'Faculty of Education', 'Faculty of Science', 'Faculty of Engineering',
@@ -4197,8 +4197,8 @@ if __name__ == "__main__":
                  'University of Tampere': ['Faculty of Architecture', 'Faculty of Education', 'Faculty of Engineering',
                                            'Faculty of Science', 'Faculty of Computer Engineering and Software',
                                            'Faculty of Economics', 'Faculty of Medicine'],
-                 'University of Oulu': ['Faculty of Science', ' Faculty of Medicine',
-                                        'Faculty of Humanities', 'Faculty of Engineering'],
+                 'University of Oulu': ['Faculty of Science', 'Faculty of Medicine',
+                                        'Faculty of Education', 'Faculty of Engineering'],
                  'Oulu University of Applied Sciences': ['Faculty of Education',
                                                          'Faculty of Medicine',
                                                          'Faculty of Science', 'Faculty of Engineering',
@@ -4447,23 +4447,23 @@ if __name__ == "__main__":
                     'Bergen': ['University of Bergen', 'Norwegian School of Economics'],
                     'Trondheim': ['Norwegian University of Science and Technology'],
                     'Stavanger': ['University of Stavanger']}
-    faculties = {'University of Oslo': ['Faculty of Health', 'Faculty of Education', 'Faculty of Social Sciences',
+    faculties = {'University of Oslo': ['Faculty of Medicine', 'Faculty of Education', 'Faculty of Social Sciences',
                                         'Faculty of Engineering', 'Faculty of Arts'],
-                 'Oslo Metropolitan University': ['Faculty of Health', 'Faculty of Education',
+                 'Oslo Metropolitan University': ['Faculty of Medicine', 'Faculty of Education',
                                                   'Faculty of Social Sciences',
                                                   'Faculty of Engineering', 'Faculty of Arts'],
                  'University of Bergen': ['Faculty of Arts',
-                                          'Faculty of Humanities', 'Faculty of Law', 'Faculty of Science',
+                                          'Faculty of Education', 'Faculty of Law', 'Faculty of Science',
                                           'Faculty of Medicine', 'Faculty of Social Sciences'],
                  'Norwegian School of Economics': ['Faculty of Economics',
                                                    'Faculty of Social Science'],
                  'Norwegian University of Science and Technology': ['Faculty of Architecture', 'Faculty of Arts',
-                                                                    'Faculty of Humanities',
+                                                                    'Faculty of Education',
                                                                     'Faculty of Computer Engineering and Software',
                                                                     'Faculty of Engineering',
                                                                     'Faculty of Medicine'],
                  'University of Stavanger': ['Faculty of Arts', 'Faculty of Education', 'Faculty of Science',
-                                             'Faculty of Engineering', 'Faculty of Health']}
+                                             'Faculty of Engineering', 'Faculty of Medicine']}
 
     programs = {'University of Oslo': ['Magistracy', 'Undergraduate', 'MBA'],
                 'Oslo Metropolitan University': ['Magistracy', 'Undergraduate'],
@@ -4682,17 +4682,16 @@ if __name__ == "__main__":
                     'Goteborg': ['University of Gothenburg', 'Chalmers University of Technology']}
     faculties = {'Karolinska Institute': ['Faculty of Medicine',
                                           'Faculty of Science', 'Faculty of Social Sciences'],
-                 'Stockholm University': ['Faculty of Humanities', 'Faculty of Law', 'Faculty of Social Sciences',
+                 'Stockholm University': ['Faculty of Education', 'Faculty of Law', 'Faculty of Social Sciences',
                                           'Faculty of Science'],
                  'Orebro University': ['Faculty of Economics', 'Faculty of Science', 'Faculty of Engineering',
-                                       'Faculty of Humanities', 'Faculty of Social Sciences', 'Faculty of Medicine',
-                                       'Faculty of Health'],
+                                       'Faculty of Education', 'Faculty of Social Sciences', 'Faculty of Medicine'],
                  'Linkoping University': ['Faculty of Arts', 'Faculty of Science', 'Faculty of Education',
-                                          'Faculty of Medicine', 'Faculty of Health', 'Faculty of Science',
+                                          'Faculty of Medicine', 'Faculty of Science',
                                           'Faculty of Engineering'],
                  'Jonkoping University': ['Faculty of Computer Engineering and Software', 'Faculty of Engineering',
                                           'Faculty of Science'],
-                 'University of Gothenburg': ['Faculty of Computer Engineering and Software', 'Faculty of Humanities',
+                 'University of Gothenburg': ['Faculty of Computer Engineering and Software',
                                               'Faculty of Education',
                                               'Faculty of Arts', 'Faculty of Science', 'Faculty of Social Sciences'],
                  'Chalmers University of Technology': ['Faculty of Architecture',
@@ -5131,8 +5130,8 @@ if __name__ == "__main__":
         'University of Brasília': ['Faculty of Architecture', 'Faculty of Science', 'Faculty of Social Sciences',
                                    'Faculty of Medicine', 'Faculty of Arts',
                                    'Faculty of Computer Engineering and Software'],
-        'University of Sao Paulo': ['Faculty of Business', 'Faculty of Law', 'Faculty of Education'],
-        'Universidade do Estado do Rio de Janeiro': ['Faculty of Social Sciences', 'Faculty of Education', 'Faculty of Business'],
+        'University of Sao Paulo': ['Faculty of Economics', 'Faculty of Law', 'Faculty of Education'],
+        'Universidade do Estado do Rio de Janeiro': ['Faculty of Social Sciences', 'Faculty of Education', 'Faculty of Economics'],
         'Universidade Federal do Ceará': ['Faculty of Medicine', 'Faculty of Social Sciences', 'Faculty of Science',
                               'Faculty of Law', 'Faculty of Arts']}
     programs = {
@@ -5553,8 +5552,8 @@ if __name__ == "__main__":
         'Ain Shams University': ['Faculty of Science', 'Faculty of Engineering', 'Faculty of Medicine',
                                  'Faculty of Education'],
         'Al Azhar University': ['Faculty of Medicine'],
-        'Sinai University': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software', 'Faculty of Business'],
-        'Alexandria University': ['Faculty of Business', 'Faculty of Education']}
+        'Sinai University': ['Faculty of Engineering', 'Faculty of Computer Engineering and Software', 'Faculty of Economics'],
+        'Alexandria University': ['Faculty of Economics', 'Faculty of Education']}
     programs = {
         'Ain Shams University': ['Magistracy', 'Undergraduate'],
         'Al Azhar University': ['Magistracy', 'Undergraduate'],
