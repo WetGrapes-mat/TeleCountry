@@ -116,12 +116,6 @@ class CountryMigration(Request):
                         "(h)-[:population]-(po:Population),"
                         "(h)-[:official_language]-(l:Language)return "
                         "h.name as nameCountry,"
-                        "c.averageDurationOfWinter as averageDurationOfWinter,"
-                        "c.juneAverageTemperature as juneAverageTemperature,"
-                        "c.decemberAverageTemperature as decemberAverageTemperature,"
-                        "c.airPollution as airPollution,"
-                        "c.waterPollution as waterPollution,"
-                        "c.dirtyAndUntidy as dirtyAndUntidy, "
                         "c.comfortableToSpendTimeInTheCity as comfortableToSpendTimeInTheCity,"
                         "ci.friendlyToForeigners as friendlyToForeigners ,"
                         "ci.globalRank as globalRank,"
@@ -133,15 +127,12 @@ class CountryMigration(Request):
                         "i.speedOfInternetMbps as speedOfInternetMbps,"
                         "cur.name as nameMoney,"
                         "cur.oneDollarEquals as oneDollarEquals, "
-                        "po.count as count, "
+                        "po.count as count,"
+                        "po.speedOfLife as speedOfLife,"
+                        "po.nightLifeEntertainment as nightLifeEntertainment,"
+                        "po.workPlaces as workPlaces,"
                         "l.name as nameLan", name=name)
         return [{'name': info["nameCountry"],
-                 'averageDurationOfWinter': info['averageDurationOfWinter'],
-                 'juneAverageTemperature': info['juneAverageTemperature'],
-                 'decemberAverageTemperature': info['decemberAverageTemperature'],
-                 'airPollution': info['airPollution'],
-                 'waterPollution': info['waterPollution'],
-                 'dirtyAndUntidy': info['dirtyAndUntidy'],
                  'comfortableToSpendTimeInTheCity': info['comfortableToSpendTimeInTheCity'],
                  'friendlyToForeigners': info['friendlyToForeigners'],
                  'globalRank': info['globalRank'],
@@ -154,6 +145,9 @@ class CountryMigration(Request):
                  'nameMoney': info['nameMoney'],
                  'oneDollarEquals': info['oneDollarEquals'],
                  'count': info['count'],
+                 'speedOfLife': info['speedOfLife'],
+                 'workPlaces': info['workPlaces'],
+                 'nightLifeEntertainment': info['nightLifeEntertainment'],
                  'nameLan': info['nameLan']} for info in result]
 
     @staticmethod
