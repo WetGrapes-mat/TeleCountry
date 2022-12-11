@@ -71,7 +71,7 @@ class CountryMigration(Request):
                         "c.waterPollution as waterPollution,"
                         "c.dirtyAndUntidy as dirtyAndUntidy, "
                         "c.comfortableToSpendTimeInTheCity as comfortableToSpendTimeInTheCity")
-        return [{'name':info["name"], 'averageDurationOfWinter': info['averageDurationOfWinter'],
+        return [{'name': info["name"], 'averageDurationOfWinter': info['averageDurationOfWinter'],
                  'juneAverageTemperature': info['juneAverageTemperature'],
                  'decemberAverageTemperature': info['decemberAverageTemperature'],
                  'airPollution': info['airPollution'],
@@ -103,7 +103,6 @@ class CountryMigration(Request):
                         "h.name as nameCountry,"
                         "n.name as nameCity", name=name)
         return [{'nameCountry': info["nameCountry"], 'nameCity': info['nameCity']} for info in result]
-
 
     @staticmethod
     def _final(tx, name):
@@ -155,11 +154,12 @@ class CountryMigration(Request):
         result = tx.run("match (h:Country)-[:communication]->(n:Communication) return "
                         "h.name as nameCountry,"
                         "n.communicationOnEnglish as communicationOnEnglish")
-        return [{'nameCountry': info["nameCountry"], 'communicationOnEnglish': info['communicationOnEnglish']} for info in result]
+        return [{'nameCountry': info["nameCountry"], 'communicationOnEnglish': info['communicationOnEnglish']} for info
+                in result]
 
     @staticmethod
     def _globalrank(tx):
-        #чем больше тем хуже
+        # чем больше тем хуже
         result = tx.run("match (h:Country)-[:citizenship]->(n:Citizenship) return "
                         "h.name as nameCountry,"
                         "n.globalRank as globalRank")
@@ -171,10 +171,9 @@ class CountryMigration(Request):
         result = tx.run("match (h:Country)-[:transport]->(n:Transport) return "
                         "h.name as nameCountry,"
                         "n.developmentLevelOfPublicTransport as developmentLevelOfPublicTransport")
-        return [{'nameCountry': info["nameCountry"], 'developmentLevelOfPublicTransport': info['developmentLevelOfPublicTransport']} for info
+        return [{'nameCountry': info["nameCountry"],
+                 'developmentLevelOfPublicTransport': info['developmentLevelOfPublicTransport']} for info
                 in result]
-
-
 
     @staticmethod
     def _lgbt(tx):
@@ -199,34 +198,24 @@ class CountryMigration(Request):
                 in result]
 
 
-
-
-
-
 country_migration_db = CountryMigration()
 
 if __name__ == "__main__":
     c = country_migration_db.findClimat()
     for i in c:
-        z = (i['airPollution'] + i['waterPollution'] + i['dirtyAndUntidy'])//3
+        z = (i['airPollution'] + i['waterPollution'] + i['dirtyAndUntidy']) // 3
         x = i['comfortableToSpendTimeInTheCity']
         if i['decemberAverageTemperature'] == 0: i['decemberAverageTemperature'] = -1
-        y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature'])/2) + i['juneAverageTemperature'])/2
-        if i['averageDurationOfWinter'] == 0: y = (i['decemberAverageTemperature'] +i ['juneAverageTemperature'])/2
+        y = (((i['averageDurationOfWinter'] * i['decemberAverageTemperature']) / 2) + i['juneAverageTemperature']) / 2
+        if i['averageDurationOfWinter'] == 0: y = (i['decemberAverageTemperature'] + i['juneAverageTemperature']) / 2
 
-        print(i['name'], z, "грязь\n", x,"комфорт\n", y , "температура" )
+        print(i['name'], z, "грязь\n", x, "комфорт\n", y, "температура")
     print('+++++++++++++')
     # c = country_migration_db.findcity("Canada")
     c = country_migration_db.findisb('True')
     w = country_migration_db.findOcean()
     print(w)
 
-
-
     print(c)
     print(country_migration_db.findinfocountry("Canada"))
     print(country_migration_db.findinfocountry("United Arab Emirates"))
-
-
-
-
