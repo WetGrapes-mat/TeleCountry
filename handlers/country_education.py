@@ -40,7 +40,29 @@ async def hostel(callback: types.CallbackQuery, callback_data: dict):
 
 
 async def cost(callback: types.CallbackQuery, callback_data: dict):
+    await callback.message.edit_text(text="Сколько пачек сигарет в день вы курите?",
+                                     reply_markup=keyboard.ikb_smoking_pack)
     answer_user["cost"] = int(callback_data['action'])
+
+
+async def smoking(callback: types.CallbackQuery, callback_data: dict):
+    await callback.message.edit_text(text='Выберите средство передвижения',
+                                     reply_markup=keyboard.ikb_transportation)
+    answer_user['smoking'] = callback_data['action']
+
+
+async def transportation(callback: types.CallbackQuery, callback_data: dict):
+    await callback.message.edit_text(text='Выберите недвижимость',
+                                     reply_markup=keyboard.ikb_rent)
+    answer_user['transportation'] = callback_data['action']
+
+
+async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
+    answer_user['rent'] = callback_data['action']
+    answer_user['child_preschool'] = 0
+    answer_user['child_school'] = 0
+    answer_user['members'] = 1
+    answer_user['country'] = 'Рейтинг стран'
     await callback.message.edit_text(text=cd.agent.find_result(answer_user))
 
 
@@ -50,3 +72,6 @@ def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(program, keyboard.cb_program.filter())
     dp.register_callback_query_handler(hostel, keyboard.cb_hostel.filter())
     dp.register_callback_query_handler(cost, keyboard.cb_cost.filter())
+    dp.register_callback_query_handler(smoking, keyboard.cb_cigarettes.filter())
+    dp.register_callback_query_handler(rent, keyboard.kb_rent.filter())
+    dp.register_callback_query_handler(transportation, keyboard.kb_transportation.filter())

@@ -1,4 +1,7 @@
 from neo4j_country_db.country_education import country_education_db as db
+from agents.standard_of_living import st
+from keybords import cost_living
+
 
 
 class CountryEducationAgent:
@@ -45,23 +48,42 @@ class CountryEducationAgent:
                 imgs.append(info['photos'])
         return imgs
 
+    def standart_living(self):
+        rez = st.get_country_rating()
+        return {z[0][:-1]: float(z[1]) for z in [i.split("--") for i in rez.split('\n')][:-1]}
+
+    def price_living(self, params):
+        cost_living.cl.get_information()
+        answer = dict()
+        answer['child_preschool'] = 0
+        answer['child_school'] = 0
+        answer['members'] = 1
+        answer['smoking'] = params['cigarettes']
+        answer['transportation'] = params['transportation']
+        answer["rent"] = params['rent']
+        answer['country'] = 'Рейтинг стран'
+
+        rez = cost_living.cl.count_cost_living(0, 0, 1,
+                                               answer['smoking'], answer['transportation'], answer['rent'],
+                                               answer['country'])
+        return {z[0][:-1]: float(z[1][:-2]) for z in [i.split("--") for i in rez.split('\n')][:-1]}
+
     def find_result(self, answer):
+        price = self.price_living(answer)
+        print(price)
         result = list(set(self.check_faculty(answer["faculties"])) & set(self.check_program(answer["programs"])) & \
                       set(self.check_hostel(answer["hostel"])) & set(self.check_cost(answer["cost"])))
-        print(result)
         if len(result) == 0:
             return "Мы не смогли подобрать университет по вашим параметрам ;(\n"
         else:
             uni_rank = self.check_rank()
             sorted_values = dict(sorted(uni_rank.items(), key=lambda item: item[1]))
-            print(sorted_values)
             sorted_result = []
             for key in sorted_values.keys():
                 if key in result:
                     sorted_result.append(key)
                     result.remove(key)
             result = sorted_result
-            print(sorted_result)
 
             result = result[:3]
             txt = "Мы подобрали следующие варианты:\n "
@@ -95,11 +117,12 @@ class CountryEducationAgent:
 agent = CountryEducationAgent()
 
 if __name__ == "__main__":
-    answer = {"faculties": "Faculty of Arts", "programs": "Magistracy", "hostel": "Yes", "cost": 50000}
+    answer = {"faculties": "Faculty of Arts", "programs": "Magistracy", "hostel": "Yes", "cost": 50000, 'cigarettes': 1,
+              'rent':"своё жильё", 'transportation':'такси'}
     res = agent.find_result(answer)
-    print(res)
 
-    text = agent.check_rank()
-    print(text)
+    price = agent.price_living({"cigarettes": 0, "transportation": "такси", 'rent': 'своё жильё'})
+    print(price)
+
 
 

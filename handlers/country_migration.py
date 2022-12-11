@@ -38,9 +38,13 @@ async def transport_answer(callback: types.CallbackQuery, callback_data: dict):
 
 async def flat_answer(callback: types.CallbackQuery, callback_data: dict):
     if answer_user['family'] == "1":
-        await callback.message.edit_text(text='Выберете заработок на который вы расчитаваете (если мы не сможем найти в нужном диапазоне мы найдет ближайший подходящий)', reply_markup=country_migration.ikb_solo_price)
+        await callback.message.edit_text(text='Выберите заработок, на который вы расчитаваете (если мы не сможем найти'
+                                              ' в нужном диапазоне мы найдет ближайший подходящий)',
+                                         reply_markup=country_migration.ikb_solo_price)
     elif answer_user['family'] == "3":
-        await callback.message.edit_text(text='Выберете заработок на который вы расчитаваете (если мы не сможем найти в нужном диапазоне мы найдет ближайший подходящий)', reply_markup=country_migration.ikb_family_price)
+        await callback.message.edit_text(text='Выберите заработок, на который вы расчитаваете (если мы не сможем найти '
+                                              'в нужном диапазоне мы найдет ближайший подходящий)',
+                                         reply_markup=country_migration.ikb_family_price)
     answer_user['flat'] = callback_data['action']
 
 async def money_answer(callback: types.CallbackQuery, callback_data: dict):

@@ -39,3 +39,29 @@ i_btn_1 = InlineKeyboardButton("1", callback_data=cb_cost.new(db.find_min_cost()
 i_btn_2 = InlineKeyboardButton("2", callback_data=cb_cost.new(db.find_min_cost() + 2 * delta))
 i_btn_3 = InlineKeyboardButton("3", callback_data=cb_cost.new(db.find_max_cost()))
 ikb_cost = InlineKeyboardMarkup(inline_keyboard=[[i_btn_1, i_btn_2, i_btn_3]])
+
+cb_cigarettes = CallbackData("cigarettes", "action")
+i_button_0_sm = InlineKeyboardButton('0', callback_data=cb_cigarettes.new(0))
+i_button_1_sm = InlineKeyboardButton('1', callback_data=cb_cigarettes.new(1))
+i_button_2_sm = InlineKeyboardButton('2', callback_data=cb_cigarettes.new(2))
+i_button_3_sm = InlineKeyboardButton('3', callback_data=cb_cigarettes.new(3))
+i_button_4_sm = InlineKeyboardButton('4', callback_data=cb_cigarettes.new(4))
+ikb_smoking_pack = InlineKeyboardMarkup(inline_keyboard=[[i_button_0_sm, i_button_1_sm, i_button_2_sm, i_button_3_sm,
+                                                          i_button_4_sm]])
+
+kb_rent = CallbackData('rent', 'action')
+i_button_1_c = InlineKeyboardButton('1-к в центре', callback_data=kb_rent.new("1-к в центре"))
+i_button_3_c = InlineKeyboardButton('3-к в центре', callback_data=kb_rent.new("3-к в центре"))
+i_button_1_nc = InlineKeyboardButton('1-к на окраине', callback_data=kb_rent.new("1-к на окраине"))
+i_button_3_nc = InlineKeyboardButton('3-к на окраине', callback_data=kb_rent.new("3-к на окраине"))
+i_button_own = InlineKeyboardButton('своё жильё', callback_data=kb_rent.new("своё жильё"))
+ikb_rent = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_c], [i_button_3_c], [i_button_1_nc],
+                                                 [i_button_3_nc], [i_button_own]])
+
+kb_transportation = CallbackData('transportation', 'action')
+i_button_taxi = InlineKeyboardButton('такси', callback_data=kb_transportation.new("такси"))
+i_button_car = InlineKeyboardButton('своя машина', callback_data=kb_transportation.new("своя машина"))
+i_button_public = InlineKeyboardButton('общественный транспорт',
+                                       callback_data=kb_transportation.new("общественный транспорт"))
+ikb_transportation = InlineKeyboardMarkup(inline_keyboard=[[i_button_taxi, i_button_car, i_button_public]])
+

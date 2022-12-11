@@ -90,6 +90,12 @@ class CountryEducation(Request):
                         "uni.name as university", program=program)
         return [info["university"] for info in result]
 
+    @staticmethod
+    def _min_cost(tx):
+        result = tx.run("match (uni:University) "
+                        "return "
+                        "MIN(uni.cost) as cost")
+        return [{"cost": info["cost"]} for info in result][0]["cost"]
 
     @staticmethod
     def _cost(tx, cost):
@@ -100,20 +106,11 @@ class CountryEducation(Request):
         return [info["university"] for info in result]
 
     @staticmethod
-    def _min_cost(tx):
-        result = tx.run("match (uni:University) "
-                        "return "
-                        "MIN(uni.cost) as cost")
-        return [{"cost": info["cost"]} for info in result][0]["cost"]
-
-
-    @staticmethod
     def _max_cost(tx):
         result = tx.run("match (uni:University) "
                         "return "
                         "MAX(uni.cost) as cost")
         return [{"cost": info["cost"]} for info in result][0]["cost"]
-
 
     @staticmethod
     def _hostel(tx, host):
