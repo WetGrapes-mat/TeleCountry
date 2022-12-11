@@ -74,7 +74,7 @@ def get_answer():
     cost_living.cl.get_information()
     user_answers = answer_user
     # print(user_answers)
-    message = cost_living.cl.count_cost_living(int(user_answers["child_preschool"]),
+    message = cost_living.cl.out(int(user_answers["child_preschool"]),
                                                int(user_answers["child_school"]),
                                                int(user_answers["members"]),
                                                int(user_answers["smoking"]),
