@@ -16,6 +16,8 @@ def costOfLivingForCountry(countryName):
         countryName = 'Czech+Republic'
     if countryName == 'United Kingdom':
         countryName = 'United+Kingdom'
+    if countryName == 'United States of America':
+        countryName = 'United+States'
     dictionary = {'mealInexpensiveRestaurant': 0,
                   'mealFor2PeopleMidRestaurant': 0, 'mcMealAtMcDonalds': 0, 'domesticBeerRestaurant': 0,
                   'importedBeerRestaurant': 0, 'cappuccino': 0, 'pepsi': 0, 'water': 0,
@@ -81,6 +83,8 @@ def crimeThingForCountry(countryName):
         countryName = 'Czech+Republic'
     if countryName == 'United Kingdom':
         countryName = 'United+Kingdom'
+    if countryName == 'United States of America':
+        countryName = 'United+States'
     dictionary = {}
     url = 'https://www.numbeo.com/crime/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
@@ -104,6 +108,8 @@ def climatForCountry(countryName):
         countryName = 'Czech+Republic'
     if countryName == 'United Kingdom':
         countryName = 'United+Kingdom'
+    if countryName == 'United States of America':
+        countryName = 'United+States'
     dictionary = {}
     url = 'https://www.numbeo.com/pollution/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
@@ -115,7 +121,6 @@ def climatForCountry(countryName):
         key = str(key.title())
         element = (letter.lower() + key[1:]).replace(' ', '')
         lst.append(element)
-    lst[8] = 'worriesBeingSubjectToAPhysicalAttack'
     values = tree.xpath('//tr/td[@class = "indexValueTd"]/text()')
     for index in range(len(keys)):
         dictionary[lst[index]] = int(float(values[index]))
@@ -127,6 +132,8 @@ def healthForCountry(countryName):
         countryName = 'Czech+Republic'
     if countryName == 'United Kingdom':
         countryName = 'United+Kingdom'
+    if countryName == 'United States of America':
+        countryName = 'United+States'
     dictionary = {}
     url = 'https://www.numbeo.com/health-care/country_result.jsp?country={}'.format(countryName)
     r = requests.get(url)
