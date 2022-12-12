@@ -201,3 +201,31 @@ class CostLiving:
                     string_result += f'{key} -- {self.to_fixed(i)} $\n'
 
         return string_result
+
+    def out(self,
+            children_preschool: int,
+            children_school: int,
+            family_member_amount: int,
+            smoking_packs: float,
+            transportation: str,
+            rent: str,
+            country: str):
+        count = self.count_cost_living(children_preschool,
+                                       children_school,
+                                       family_member_amount,
+                                       smoking_packs,
+                                       transportation,
+                                       rent,
+                                       country)
+
+        rez_list = count.split("\n")
+        string_result = ""
+
+        for i in range(len(rez_list)):
+            if i >= 10:
+                break
+            string_result += f"{i+1}) {rez_list[i]}\n"
+
+        return string_result
+
+cl = CostLiving()

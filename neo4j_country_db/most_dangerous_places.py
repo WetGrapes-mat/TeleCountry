@@ -82,8 +82,7 @@ class MostDangerousPlacesRequest(Request):
     @staticmethod
     def _findCounryNames(tx):
         result = tx.run("""
-            match (country:Country)-[:borders_with]->(n) 
-            return country.name as Country
+            match (country:Country) return country.name as Country            
             """)
         return [info["Country"] for info in result]
 
