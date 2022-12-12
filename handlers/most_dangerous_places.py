@@ -38,13 +38,6 @@ async def country(callback: types.CallbackQuery, callback_data: dict):
         await callback.message.edit_text(text="Хз")
 
 
-# def count():
-#     mdp.get_all_information()
-#     user_answer = answer_user
-#     message =  mdp.count(user_answer["country"])
-#     return message
-
-
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(command, commands=['Самые_опасные_места'])
     dp.register_callback_query_handler(menu, most_dangerous_places.cb_menu.filter())

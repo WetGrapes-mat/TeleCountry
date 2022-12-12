@@ -71,13 +71,6 @@ async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
         await callback.message.edit_text(text="Хз")
 
 
-def get_answer():
-    user_answers = answer_user
-    # print(user_answers)
-    message = contrl.control_cost_living(user_answers)
-    return message
-
-
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(command, commands=['Цена_жизни'])
     dp.register_callback_query_handler(country_choice, cost_living.kb_country_choice.filter())
