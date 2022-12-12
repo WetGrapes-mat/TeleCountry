@@ -1,6 +1,6 @@
 from aiogram import types, Dispatcher
 from create_bot import bot
-from agents import country_migration as cm
+from controller.controller import contrl
 from keybords import country_migration
 
 answer_user = dict()
@@ -70,7 +70,7 @@ async def money_answer(callback: types.CallbackQuery, callback_data: dict):
 async def lgbt(callback: types.CallbackQuery, callback_data: dict):
     answer_user['lgbt'] = callback_data['action']
     print(answer_user)
-    await callback.message.edit_text(text=cm.agent.calculate(answer_user))
+    await callback.message.edit_text(text=contrl.control_migration(answer_user))
 
 
 def register_handlers(dp: Dispatcher):

@@ -64,7 +64,7 @@ class StandartLiving:
         return f"{numObj:.{digits}f}"
 
     def expCalcStandart(self, value):
-        return value**math.e
+        return value ** math.e
 
     def calculatePollutionIndex(self, i: int):
         overall = 0.0
@@ -121,9 +121,9 @@ class StandartLiving:
         index = 1
         if (self.info[i]["averageHumidity"]) < 40 or (self.info[i]["averageHumidity"]) > 60:
             index = math.exp(self.expCalcStandart(((abs(self.info[i]["averageHumidity"] - 50)) - 10))
-                               * self.coefficients["hum_index"])
+                             * self.coefficients["hum_index"])
         # print("Climat: " + self.info[i]["Country"] + str(index*100))
-        return index*100
+        return index * 100
 
     def calculateHealthIndex(self, i: int):
         overall = 0
@@ -168,12 +168,13 @@ class StandartLiving:
         #                           + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
         #                           + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
         #                           + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"])))
-        return max(0.0, min(100, ((self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
-                                  + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
-                                  + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
-                                  + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
-                                  + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
-                                  + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"]))))
+        return max(0.0, min(100, (
+                    (self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
+                    + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
+                    + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
+                    + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
+                    + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
+                    + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"]))))
 
     def get_country_rating(self):
         self.get_information()
@@ -189,4 +190,8 @@ class StandartLiving:
                     string_result += f'{key} -- {self.to_fixed(i)}\n'
         return string_result
 
+
 st = StandartLiving()
+
+if __name__ == "__main__":
+    pass

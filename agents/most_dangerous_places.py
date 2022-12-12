@@ -20,7 +20,7 @@ class MostDangerousPlaces:
         for i in range(len(self.CTa)):
             country = {}
             country["country"] = self.CTa[i]["country"]
-            country["HR"] = (self.CTa[i]["CTa"] + self.Sa[i]["Sa"])/2
+            country["HR"] = (self.CTa[i]["CTa"] + self.Sa[i]["Sa"]) / 2
             countries_list.append(country)
         return countries_list
 
@@ -43,7 +43,7 @@ class MostDangerousPlaces:
                 for j in range(len(self.hazard)):
                     if self.hazard[j]["country"] == neighbor \
                             and self.hazard[j]["countryBlock"] != country_block \
-                            and self.hazard[j]["countryArmy"] > country_army\
+                            and self.hazard[j]["countryArmy"] > country_army \
                             and country_block != "None":
                         hz += 1
 
@@ -108,10 +108,10 @@ class MostDangerousPlaces:
         most_dangerous_places_db.close()
 
 
+mdp = MostDangerousPlaces()
 if __name__ == "__main__":
     agent = MostDangerousPlaces()
     agent.get_countries()
     agent.get_all_information()
 
     agent.count("Рейтинг")
-

@@ -66,8 +66,8 @@ class MostDangerousPlacesRequest(Request):
     @staticmethod
     def _hazard(tx):
         result = tx.run("match (country:Country)-[:borders_with]->(neighbor:Country), "
-                        "(country)-[:belongs_to_military_political_block]->(block:MilitaryPoliticalBlock),"                        
-                        "(country)-[:military_power]->(army:MilitaryPower) "                        
+                        "(country)-[:belongs_to_military_political_block]->(block:MilitaryPoliticalBlock),"
+                        "(country)-[:military_power]->(army:MilitaryPower) "
                         "return "
                         "country.name as country,"
                         "block.name as countryBlock,"
@@ -76,7 +76,7 @@ class MostDangerousPlacesRequest(Request):
         return [{"country": info["country"],
                  "countryBlock": info["countryBlock"],
                  "countryArmy": info["countryArmy"],
-                 "neighbor":info["neighbor"]} for info in result]
+                 "neighbor": info["neighbor"]} for info in result]
 
     # поиск всех стран для вывода в бот
     @staticmethod

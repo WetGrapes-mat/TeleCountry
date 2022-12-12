@@ -94,7 +94,6 @@ class CountryEducation(Request):
                         "return "
                         "uni.name as university", faculty=faculty)
         return [info["university"] for info in result]
-    # [info["university"] for info in res if info["faculties"] == "Faculty of Psychology"]
 
     @staticmethod
     def _program(tx, program):
@@ -139,6 +138,8 @@ class CountryEducation(Request):
                         "c.name as country, "
                         "ed.rankingOfNationalEducationSystem as rank")
         return {info["country"]: info["rank"] for info in result}
+
+
 '''
     @staticmethod
     def _education_rank(tx):

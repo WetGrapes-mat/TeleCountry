@@ -1,6 +1,5 @@
 from neo4j_country_db.cost_living import cost_living_db
 
-
 coefficients = {"dress": 0.1,
                 "jeans": 0.1,
                 "pairOfMenLeatherBusinessShoes": 0.1,
@@ -225,10 +224,14 @@ class CostLiving:
             for i in range(len(rez_list)):
                 if i >= 10:
                     break
-                string_result += f"{i+1}) {rez_list[i]}\n"
+                string_result += f"{i + 1}) {rez_list[i]}\n"
         else:
             string_result += f"{rez_list[0]}\n"
 
         return string_result
 
+
 cl = CostLiving()
+
+if __name__ == "__main__":
+    pass

@@ -102,7 +102,8 @@ class CostLivingRequest(Request):
                  "internationalPrimarySchool": info["internationalPrimarySchool"],
                  "preschool": info["preschool"],
                  "pricePerSquareMeterToBuyApartmentInCityCentre": info["pricePerSquareMeterToBuyApartmentInCityCentre"],
-                 "pricePerSquareMeterToBuyApartmentOutsideOfCentre": info["pricePerSquareMeterToBuyApartmentOutsideOfCentre"],
+                 "pricePerSquareMeterToBuyApartmentOutsideOfCentre": info[
+                     "pricePerSquareMeterToBuyApartmentOutsideOfCentre"],
                  "mobileTariffLocal": info["mobileTariffLocal"],
                  "internet": info["internet"],
                  "basic": info["basic"],
@@ -146,4 +147,3 @@ cost_living_db = CostLivingRequest()
 
 if __name__ == "__main__":
     pass
-

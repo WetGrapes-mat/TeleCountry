@@ -15,9 +15,10 @@ i_btn_forestry = InlineKeyboardButton("Агробиология", callback_data=
 i_btn_economics = InlineKeyboardButton("Экономика и бизнес", callback_data=cb_faculty.new("Faculty of Business"))
 i_btn_architecture = InlineKeyboardButton("Архитектура", callback_data=cb_faculty.new("Faculty of Architecture"))
 ikb_faculty = InlineKeyboardMarkup(inline_keyboard=[[i_btn_arts, i_btn_it, i_btn_education], [i_btn_science,
-                                                     i_btn_social, i_btn_engineering], [i_btn_medicine, i_btn_law,
+                                                                                              i_btn_social,
+                                                                                              i_btn_engineering],
+                                                    [i_btn_medicine, i_btn_law,
                                                      i_btn_forestry], [i_btn_economics, i_btn_architecture]])
-
 
 cb_program = CallbackData("program", "action")
 i_btn_foundation = InlineKeyboardButton("Довузовские курсы", callback_data=cb_program.new("Foundation"))
@@ -25,8 +26,9 @@ i_btn_underdegree = InlineKeyboardButton("Бакалавриат", callback_data
 i_btn_magistracy = InlineKeyboardButton("Магистратура", callback_data=cb_program.new("Magistracy"))
 i_btn_mba = InlineKeyboardButton("MBA", callback_data=cb_program.new("MBA"))
 i_btn_doctoral = InlineKeyboardButton("Докторантура", callback_data=cb_program.new("Doctoral"))
-ikb_program = InlineKeyboardMarkup(inline_keyboard=[[i_btn_foundation, i_btn_underdegree], [i_btn_magistracy, i_btn_mba],
-                                                     [i_btn_doctoral]])
+ikb_program = InlineKeyboardMarkup(
+    inline_keyboard=[[i_btn_foundation, i_btn_underdegree], [i_btn_magistracy, i_btn_mba],
+                     [i_btn_doctoral]])
 
 cb_hostel = CallbackData("hostel", "action")
 i_btn_yes_hostel = InlineKeyboardButton("Нужно", callback_data=cb_hostel.new("Yes"))
@@ -64,4 +66,3 @@ i_button_car = InlineKeyboardButton('своя машина', callback_data=kb_tr
 i_button_public = InlineKeyboardButton('общественный транспорт',
                                        callback_data=kb_transportation1.new("общественный транспорт"))
 ikb_transportation = InlineKeyboardMarkup(inline_keyboard=[[i_button_taxi, i_button_car, i_button_public]])
-

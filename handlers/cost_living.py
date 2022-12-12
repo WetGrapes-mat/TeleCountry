@@ -1,6 +1,7 @@
 from aiogram import types, Dispatcher
 from create_bot import bot
 from keybords import cost_living
+from controller.controller import contrl
 from agents.cost_living import cl
 
 answer_user = dict()
@@ -63,7 +64,7 @@ async def transportation(callback: types.CallbackQuery, callback_data: dict):
 
 async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
     answer_user['rent'] = callback_data['action']
-    final_message = get_answer()
+    final_message = contrl.control_cost_living(answer_user)
     if final_message:
         await callback.message.edit_text(text=final_message)
     else:
@@ -71,17 +72,9 @@ async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
 
 
 def get_answer():
-    cl.get_information()
     user_answers = answer_user
     # print(user_answers)
-    message = cl.out(int(user_answers["child_preschool"]),
-                                               int(user_answers["child_school"]),
-                                               int(user_answers["members"]),
-                                               int(user_answers["smoking"]),
-                                               user_answers["transportation"],
-                                               user_answers["rent"],
-                                               user_answers["country"])
-
+    message = contrl.control_cost_living(user_answers)
     return message
 
 
@@ -95,6 +88,3 @@ def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(smoking, cost_living.kb_smoking_pack.filter())
     dp.register_callback_query_handler(transportation, cost_living.kb_transportation.filter())
     dp.register_callback_query_handler(rent, cost_living.kb_rent.filter())
-
-
-

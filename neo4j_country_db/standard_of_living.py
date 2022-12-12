@@ -60,7 +60,7 @@ class StandartLivingRequest(Request):
         s.averageMonthlyNetSalary as salary
         """)
         return [{"Country": info["Country"],
-                 "accuracy_and_completeness": info[ "accuracy_and_completeness"],
+                 "accuracy_and_completeness": info["accuracy_and_completeness"],
                  "location": info["location"],
                  "modern_equipment": info["modern_equipment"],
                  "friendliness_and_courtesy": info["friendliness_and_courtesy"],
@@ -99,4 +99,3 @@ standart_living_db = StandartLivingRequest()
 
 if __name__ == "__main__":
     pass
-

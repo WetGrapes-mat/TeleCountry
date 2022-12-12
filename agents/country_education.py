@@ -1,9 +1,7 @@
 from math import sqrt
-
 from neo4j_country_db.country_education import country_education_db as db
 from agents.standard_of_living import st
 from keybords import cost_living
-
 
 
 class CountryEducationAgent:
@@ -113,16 +111,16 @@ class CountryEducationAgent:
         else:
             uni_rank = self.check_uni_country()
             uni_rank = self.connect_rank_and_uni(d, uni_rank)
-            print(uni_rank)
+            # print(uni_rank)
             sorted_values = dict(sorted(uni_rank.items(), key=lambda item: item[1]))
-            print(sorted_values)
+            # print(sorted_values)
             sorted_result = []
             for key in sorted_values.keys():
                 if key in result:
                     sorted_result.append(key)
                     result.remove(key)
             result = sorted_result
-            print(result)
+            # print(result)
             photo = []
             result = result[:3]
             txt = "Мы подобрали следующие варианты:\n "
@@ -158,13 +156,12 @@ class CountryEducationAgent:
                 return photo, txt
 
 
-
-agent = CountryEducationAgent()
+ce = CountryEducationAgent()
 
 if __name__ == "__main__":
     answer = {"faculties": "Faculty of Arts", "programs": "Magistracy", "hostel": "Yes", "cost": 50000, 'smoking': 1,
               'rent':"своё жильё", 'transportation':'такси'}
-    res = agent.find_result(answer)
+    res = ce.find_result(answer)
 
     #print(res)
 
@@ -177,6 +174,3 @@ if __name__ == "__main__":
     print(b)'''
 
     #print(agent.multicriteria_choice(a, b))
-
-
-

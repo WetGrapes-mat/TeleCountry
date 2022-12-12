@@ -1,10 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.callback_data import CallbackData
-# from agents.cost_living import CostLiving
-from agents.cost_living import cl
-
-
-# cl = CostLiving()
+from controller.controller import cl
 
 kb_transportation = CallbackData('transportation', 'action')
 i_button_taxi = InlineKeyboardButton('такси', callback_data=kb_transportation.new("такси"))
@@ -19,7 +15,8 @@ i_button_3_c = InlineKeyboardButton('3-к в центре', callback_data=kb_ren
 i_button_1_nc = InlineKeyboardButton('1-к на окраине', callback_data=kb_rent.new("1-к на окраине"))
 i_button_3_nc = InlineKeyboardButton('3-к на окраине', callback_data=kb_rent.new("3-к на окраине"))
 i_button_own = InlineKeyboardButton('своё жильё', callback_data=kb_rent.new("своё жильё"))
-ikb_rent = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_c], [i_button_3_c], [i_button_1_nc], [i_button_3_nc], [i_button_own]])
+ikb_rent = InlineKeyboardMarkup(
+    inline_keyboard=[[i_button_1_c], [i_button_3_c], [i_button_1_nc], [i_button_3_nc], [i_button_own]])
 
 kb_members_amount = CallbackData('members_amount', 'action')
 i_button_1_member = InlineKeyboardButton('1', callback_data=kb_members_amount.new(1))
@@ -41,7 +38,6 @@ i_button_5_cps = InlineKeyboardButton('5', callback_data=kb_child_preschool.new(
 ikb_child_preschool = InlineKeyboardMarkup(inline_keyboard=[[i_button_0_cps, i_button_1_cps, i_button_2_cps,
                                                              i_button_3_cps, i_button_4_cps, i_button_5_cps]])
 
-
 kb_child_school = CallbackData('child_school', 'action')
 i_button_0_cs = InlineKeyboardButton('0', callback_data=kb_child_school.new(0))
 i_button_1_cs = InlineKeyboardButton('1', callback_data=kb_child_school.new(1))
@@ -51,7 +47,6 @@ i_button_4_cs = InlineKeyboardButton('4', callback_data=kb_child_school.new(4))
 i_button_5_cs = InlineKeyboardButton('5', callback_data=kb_child_school.new(5))
 ikb_child_school = InlineKeyboardMarkup(inline_keyboard=[[i_button_0_cs, i_button_1_cs, i_button_2_cs, i_button_3_cs,
                                                           i_button_4_cs, i_button_5_cs]])
-
 
 kb_smoking_pack = CallbackData('smoking_pack', 'action')
 i_button_0_sm = InlineKeyboardButton('0', callback_data=kb_smoking_pack.new(0))
@@ -68,7 +63,6 @@ i_button_1_country = InlineKeyboardButton("Подсчитать для 1 стр�
 i_button_rating = InlineKeyboardButton("Рейтинг стран", callback_data=kb_country_choice.new("Рейтинг стран"))
 ikb_country_choice = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_country, i_button_rating]])
 
-
 kb_country_name = CallbackData('county_name', 'action')
 country_list = []
 for country in cl.get_countries():
@@ -76,5 +70,3 @@ for country in cl.get_countries():
     country_list.append([i_button])
 
 ikb_country_name = InlineKeyboardMarkup(inline_keyboard=country_list)
-
-
