@@ -256,7 +256,6 @@ class CountryMigrationAgent:
                 b = -99999
                 for i, r in tem_price.items():
                     if abs(5200 - r) < a and temp_rez[i] > b:
-                        print(abs(5200 - r))
                         a = abs(5200 - r)
                         b = temp_rez[i]
                         tttt = i

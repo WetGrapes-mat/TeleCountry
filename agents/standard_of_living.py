@@ -150,7 +150,7 @@ class StandartLiving:
         cost = {}
         cost = self.cl.count_function(0, 0, 1, 0, "своя машина", "1-к в центре", cost, i)
         index = list(cost.values())[0] / 1424
-        print("Cost of living: " + self.info[i]["Country"] + str(index * 100))
+        # print("Cost of living: " + self.info[i]["Country"] + str(index * 100))
         return index * 100
 
     def calculatePurchaisingPowerIndex(self, i: int):
@@ -162,12 +162,12 @@ class StandartLiving:
         return index * 100
 
     def finalCalculation(self, i):
-        print("Result " + str((self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
-                                  + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
-                                  + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
-                                  + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
-                                  + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
-                                  + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"])))
+        # print("Result " + str((self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
+        #                           + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
+        #                           + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
+        #                           + (self.calculateHealthIndex(i) * self.coefficients["healthIndex"])
+        #                           + (self.calculatePollutionIndex(i) * self.coefficients["pollutionIndex"])
+        #                           + (self.calculateClimateIndex(i) * self.coefficients["climateIndex"])))
         return max(0.0, min(100, ((self.calculatePurchaisingPowerIndex(i) * self.coefficients["purchasingPowerInclRentIndex"])
                                   + (self.calculateCostOfLivingIndex(i) * self.coefficients["costOfLivingIndex"])
                                   + (self.calculateSafetyIndex(i) * self.coefficients["safetyIndex"])
