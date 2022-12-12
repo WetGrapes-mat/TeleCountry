@@ -8,12 +8,12 @@ ikb_water = InlineKeyboardMarkup(inline_keyboard=[[i_button_yes_water, i_button_
 
 cb_isBig = CallbackData('isBig', 'action')
 i_button_yes_city = InlineKeyboardButton('Быстрый', callback_data=cb_isBig.new(1))
-i_button_no_city = InlineKeyboardButton('Медленый', callback_data=cb_isBig.new(2))
+i_button_no_city = InlineKeyboardButton('Медленный', callback_data=cb_isBig.new(2))
 ikb_city = InlineKeyboardMarkup(inline_keyboard=[[i_button_yes_city, i_button_no_city]])
 
 cb_climat = CallbackData('climat', 'action')
 i_button_1_climat = InlineKeyboardButton('Холодный ', callback_data=cb_climat.new(1))
-i_button_2_climat = InlineKeyboardButton('Умереный', callback_data=cb_climat.new(2))
+i_button_2_climat = InlineKeyboardButton('Умеренный', callback_data=cb_climat.new(2))
 i_button_3_climat = InlineKeyboardButton('Жаркий', callback_data=cb_climat.new(3))
 ikb_climat = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_climat, i_button_2_climat, i_button_3_climat]])
 
@@ -24,7 +24,7 @@ ikb_lgbt = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_lgbt, i_button_2_lg
 
 cb_family = CallbackData('family', 'action')
 i_button_1_member = InlineKeyboardButton('Один', callback_data=cb_family.new(1))
-i_button_2_member = InlineKeyboardButton('Семьей', callback_data=cb_family.new(3))
+i_button_2_member = InlineKeyboardButton('С семьей', callback_data=cb_family.new(3))
 ikb_family = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_member, i_button_2_member]])
 
 cb_transportation = CallbackData('transport', 'action')
@@ -34,8 +34,8 @@ i_button_public = InlineKeyboardButton('Общественный транспо�
 ikb_transportation = InlineKeyboardMarkup(inline_keyboard=[[i_button_car, i_button_public]])
 
 cb_rent = CallbackData('flat', 'action')
-i_button_1_c = InlineKeyboardButton('В центре', callback_data=cb_rent.new("центре"))
-i_button_3_nc = InlineKeyboardButton('На окраине', callback_data=cb_rent.new("окраине"))
+i_button_1_c = InlineKeyboardButton('В центре', callback_data=cb_rent.new("в центре"))
+i_button_3_nc = InlineKeyboardButton('На окраине', callback_data=cb_rent.new("на окраине"))
 ikb_rent = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_c], [i_button_3_nc]])
 
 cb_family_price = CallbackData('family_price', 'action')

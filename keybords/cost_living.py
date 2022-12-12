@@ -1,8 +1,10 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.callback_data import CallbackData
-from agents.cost_living import CostLiving
+# from agents.cost_living import CostLiving
+from agents.cost_living import cl
 
-cl = CostLiving()
+
+# cl = CostLiving()
 
 kb_transportation = CallbackData('transportation', 'action')
 i_button_taxi = InlineKeyboardButton('такси', callback_data=kb_transportation.new("такси"))
