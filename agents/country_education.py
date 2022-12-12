@@ -112,11 +112,10 @@ class CountryEducationAgent:
             return txt
         else:
             uni_rank = self.check_uni_country()
-            print(uni_rank)
-            print(d)
             uni_rank = self.connect_rank_and_uni(d, uni_rank)
             print(uni_rank)
             sorted_values = dict(sorted(uni_rank.items(), key=lambda item: item[1]))
+            print(sorted_values)
             sorted_result = []
             for key in sorted_values.keys():
                 if key in result:
@@ -167,7 +166,7 @@ if __name__ == "__main__":
               'rent':"своё жильё", 'transportation':'такси'}
     res = agent.find_result(answer)
 
-    print(res)
+    #print(res)
 
     # d = agent.price_living({"smoking": 0, "transportation": "такси", 'rent': 'своё жильё'})
     # print(d)

@@ -54,7 +54,7 @@ i_button_1_c = InlineKeyboardButton('1-к в центре', callback_data=kb_ren
 i_button_3_c = InlineKeyboardButton('3-к в центре', callback_data=kb_rent1.new("3-к в центре"))
 i_button_1_nc = InlineKeyboardButton('1-к на окраине', callback_data=kb_rent1.new("1-к на окраине"))
 i_button_3_nc = InlineKeyboardButton('3-к на окраине', callback_data=kb_rent1.new("3-к на окраине"))
-i_button_own = InlineKeyboardButton('своё жильё', callback_data=kb_rent1.new("своё жильё"))
+i_button_own = InlineKeyboardButton('своё жильё / общежитие', callback_data=kb_rent1.new("своё жильё"))
 ikb_rent = InlineKeyboardMarkup(inline_keyboard=[[i_button_1_c], [i_button_3_c], [i_button_1_nc],
                                                  [i_button_3_nc], [i_button_own]])
 
