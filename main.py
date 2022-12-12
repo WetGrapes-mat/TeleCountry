@@ -16,7 +16,7 @@ country_migration.register_handlers(dp)
 country_travel.register_handlers(dp)
 most_dangerous_places.register_handlers(dp)
 standard_of_living.register_handlers(dp)
-#other.register_handlers_other(dp)
+other.register_handlers_other(dp)
 
 
 if __name__ == "__main__":
