@@ -4,7 +4,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 b1 = KeyboardButton('/Цена_жизни')
 b2 = KeyboardButton('/Страна_для_образования')
 b3 = KeyboardButton('/Страна_для_миграции')
-b4 = KeyboardButton('/Страна_для_путеществия')
+b4 = KeyboardButton('/Страна_для_путешествия')
 b5 = KeyboardButton('/Самые_опасные_места')
 b6 = KeyboardButton('/Уровень_жизни')
 
