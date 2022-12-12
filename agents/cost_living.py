@@ -221,10 +221,13 @@ class CostLiving:
         rez_list = count.split("\n")
         string_result = ""
 
-        for i in range(len(rez_list)):
-            if i >= 10:
-                break
-            string_result += f"{i+1}) {rez_list[i]}\n"
+        if country == "Рейтинг стран":
+            for i in range(len(rez_list)):
+                if i >= 10:
+                    break
+                string_result += f"{i+1}) {rez_list[i]}\n"
+        else:
+            string_result += f"{rez_list[0]}\n"
 
         return string_result
 
