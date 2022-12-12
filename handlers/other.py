@@ -37,7 +37,6 @@ async def echo(message: types.Message) -> None:
 def register_handlers_other(dp: Dispatcher):
     dp.register_message_handler(command_start, commands=['start'])
     dp.register_message_handler(command_test, commands=['test'])
-
     dp.register_message_handler(echo)
     # dp.register_callback_query_handler(water_cb, other.cb_water.filter())
     # dp.register_callback_query_handler(capital_cb, other.cb_capital.filter())

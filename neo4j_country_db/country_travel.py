@@ -7,11 +7,11 @@ class CountryResorts(Request):
 
     def find_resort(self, country):
         with self.driver.session() as session:
-            res = session.execute_write(self._resort, country)
+            res = session.execute_write(self._resort1, country)
             return res
 
     @staticmethod
-    def _resort(tx, name):
+    def _resort1(tx, name):
         result = tx.run("match (country:Country {name: $name}) -[:beach]-> (beach:Beach)"
                         "return "
                         "country.name as country, "
@@ -24,17 +24,14 @@ class CountryResorts(Request):
                  "photo": info["photo"]} for info in result]
 
 
-class CountrySkiResorts(Request):
-    def __init__(self):
-        super().__init__()
 
     def find_ski_resort(self, country):
         with self.driver.session() as session:
-            res = session.execute_write(self._resort, country)
+            res = session.execute_write(self._resort2, country)
             return res
 
     @staticmethod
-    def _resort(tx, name):
+    def _resort2(tx, name):
         result = tx.run("match (country:Country {name: $name}) -[:skiResort]-> (resort:SkiResort)"
                         "return "
                         "country.name as country, "
@@ -47,17 +44,13 @@ class CountrySkiResorts(Request):
                  "photo": info["photo"]} for info in result]
 
 
-class CountryTourism(Request):
-    def __init__(self):
-        super().__init__()
-
     def find_sight(self, country):
         with self.driver.session() as session:
-            res = session.execute_write(self._resort, country)
+            res = session.execute_write(self._resort3, country)
             return res
 
     @staticmethod
-    def _resort(tx, name):
+    def _resort3(tx, name):
         result = tx.run("match (country:Country {name: $name}) -[:sight]-> (sight:Sight)"
                         "return "
                         "country.name as country, "
@@ -70,15 +63,8 @@ class CountryTourism(Request):
                  "photo": info["photo"]} for info in result]
 
 
-country_resorts_db = CountryResorts()
-country_ski_resorts_db = CountrySkiResorts()
-country_tourism_db = CountryTourism()
+country_travel_db = CountryResorts()
 
 
 if __name__ == "__main__":
-    print(country_ski_resorts_db.find_ski_resort('Canada'))
-
-    print(country_resorts_db.find_resort('Canada'))
-
-    print(country_tourism_db.find_sight('Canada'))
-
+    print(country_travel_db.find_resort("Canada"))
