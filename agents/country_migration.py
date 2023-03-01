@@ -173,9 +173,7 @@ class CountryMigrationAgent:
         for i in temp3:
             rez_data.append(country_migration_db.findinfocountry(i)[0])
             temp_rez[i] = 0
-
         temp3 = list(temp3)
-
         for i in rez_data:
             if params['isBig'] == "1" and min(100, self.expCalcStandart(
                     i['speedOfLife'] * self.coefficients['speedOfLife']) * self.expCalcStandart(
@@ -185,7 +183,6 @@ class CountryMigrationAgent:
                     i['speedOfLife'] * self.coefficients['speedOfLife']) * self.expCalcStandart(
                     i['count'] * 1e-7)) > 10:
                 temp3.remove(i['name'])
-
         rez_data.clear()
         temp_rez.clear()
         for i in temp3:
@@ -291,7 +288,6 @@ class CountryMigrationAgent:
                      f'Расходы на все базовые потребности в месяц составят {tem_price[tttt]} $. '
             print(tttt)
             return rezult
-
         else:
             return "Мы не смогли подобрать вам страну по заданным параметрам ;("
 

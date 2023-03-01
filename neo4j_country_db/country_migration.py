@@ -86,15 +86,15 @@ class CountryMigration(Request):
         return set([info["nameCountry"] for info in result])
 
     @staticmethod
-    def _allcountry(tx):
-        result = tx.run("match (h:Country) return "
-                        "h.name as nameCountry")
-        return set([info["nameCountry"] for info in result])
-
-    @staticmethod
     def _isbig(tx, isb):
         result = tx.run("match (h:Country)-[:has_city]->(n:City {isBig: $isb}) return "
                         "h.name as nameCountry", isb=isb)
+        return set([info["nameCountry"] for info in result])
+
+    @staticmethod
+    def _allcountry(tx):
+        result = tx.run("match (h:Country) return "
+                        "h.name as nameCountry")
         return set([info["nameCountry"] for info in result])
 
     @staticmethod
