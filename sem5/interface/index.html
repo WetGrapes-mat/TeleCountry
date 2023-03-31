@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помощник для переезда</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <section class="header">
+        <div class="header__block">
+            <button class="header__btn">Home</button>
+        </div>
+        <div class="header__block">
+            <a href="#" class="header__logo">
+                <img src="img/promo/logo.png" alt="logo">
+                <span>NomadNavigator</span>
+            </a>
+        </div>
+        <div class="header__block">
+            <button class="header__btn">Country Rating</button>
+            <button class="header__btn">Price of life</button>
+        </div>
+    </section>
+
+    <section class="main hide">
+        <div class="container">
+            <button class="main__button">
+                Help me to choose the country!
+            </button>
+        </div>
+    </section>
+    <section class="counting hide">
+        <div class="counting__menu">
+            <h1 class="counting__title">
+                Counting the price of life
+            </h1>
+            <h2 class="counting__subtitle">
+                    Choose options that fit your case
+            </h2>
+            <div class="counting__element">
+                <div class="counting__name">Number of family members</div>
+                <div class="counting__picker">
+                    <ul id="family" class="counting__picks">
+                        <li class="counting__pick active">1</li>
+                        <li class="counting__pick">2</li>
+                        <li class="counting__pick">3</li>
+                        <li class="counting__pick">4</li>
+                        <li class="counting__pick">5</li>
+                        <li class="counting__pick">6</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="counting__element">
+                <div class="counting__name">Number of children attending...</div>
+                <div class="counting__subnames">
+                    <div class="counting__subname">Kindergarten</div>
+                    <div class="counting__subname">School</div>
+                </div>
+                <div class="counting__wrapper">
+                    <div class="counting__picker">
+                        <ul id="kindergarten" class="counting__picks">
+                            <li class="counting__pick active">0</li>
+                            <li class="counting__pick">1</li>
+                            <li class="counting__pick">2</li>
+                            <li class="counting__pick">3</li>
+                            <li class="counting__pick">4</li>
+                            <li class="counting__pick">5</li>
+                        </ul>
+                    </div>
+                    <div class="counting__picker">
+                        <ul id="school" class="counting__picks">
+                            <li class="counting__pick active">0</li>
+                            <li class="counting__pick">1</li>
+                            <li class="counting__pick">2</li>
+                            <li class="counting__pick">3</li>
+                            <li class="counting__pick">4</li>
+                            <li class="counting__pick">5</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="counting__element">
+                <div class="counting__name">Packs of cigarettes a day</div>
+                <div class="counting__picker">
+                    <ul id="cigarettes" class="counting__picks">
+                        <li class="counting__pick active">1</li>
+                        <li class="counting__pick">2</li>
+                        <li class="counting__pick">3</li>
+                        <li class="counting__pick">4</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="counting__element">
+                <div class="counting__name">City moving method</div>
+                <div class="counting__picker">
+                    <ul id="moving" class="counting__picks">
+                        <li class="counting__pick active">Taxi</li>
+                        <li class="counting__pick">Own car</li>
+                        <li class="counting__pick">Public transport</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="counting__element">
+                <div class="counting__name">Living location</div>
+                <div class="counting__select">
+                    <div class="counting__select_header">
+                        <div class="counting__select_icon">
+                            <img src="img/price/down.png" alt="down">
+                        </div>
+                        <div class="counting__select_current">Expand</div>
+                    </div>
+                    <div class="counting__select_body">
+                        <div class="counting__select_item">1-bed in city center</div>
+                        <div class="counting__select_item">3-bed in city center</div>
+                        <div class="counting__select_item">1-bed on the outskirts</div>
+                        <div class="counting__select_item">3-bed on the outskirts</div>
+                        <div class="counting__select_item">own house/flat</div>
+                    </div>
+                </div>
+            </div>
+            <div class="counting__wrap">
+                <button class="counting__button">Confirm</button>
+            </div>
+        </div>
+    </section>
+    <section class="price hide">
+        <div class="price__main">
+            <h2 class="price__title">Price of life</h2>
+            <h3 class="price__subtitle">Top-10 countries</h3>
+        </div>
+        <div class="price__wrapper">
+            <div class="price__country">
+                <div class="price__number">1</div>
+                <img src="img/flags/canada.png" alt="canada" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Canada</div>
+                    <div class="price__cost">$12 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">6</div>
+                <img src="img/flags/canada.png" alt="canada" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Canada</div>
+                    <div class="price__cost">$12 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">2</div>
+                <img src="img/flags/sweden.png" alt="sweden" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Sweden</div>
+                    <div class="price__cost">$10 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">7</div>
+                <img src="img/flags/sweden.png" alt="sweden" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Sweden</div>
+                    <div class="price__cost">$10 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">3</div>
+                <img src="img/flags/finland.png" alt="finland" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Finland</div>
+                    <div class="price__cost">$8 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">8</div>
+                <img src="img/flags/finland.png" alt="finland" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Finland</div>
+                    <div class="price__cost">$8 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">4</div>
+                <img src="img/flags/japan.png" alt="japan" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Japan</div>
+                    <div class="price__cost">$6 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">9</div>
+                <img src="img/flags/japan.png" alt="japan" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Japan</div>
+                    <div class="price__cost">$6 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">5</div>
+                <img src="img/flags/spain.png" alt="spain" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Spain</div>
+                    <div class="price__cost">$5 000</div>
+                </div>
+            </div>
+            <div class="price__country">
+                <div class="price__number">10</div>
+                <img src="img/flags/spain.png" alt="spain" class="price__flag">
+                <div class="price__titles">
+                    <div class="price__name">Spain</div>
+                    <div class="price__cost">$5 000</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="stats">
+        <div class="stats__wrapper">
+            <h1 class="stats__title">
+                Countries by level of danger
+            </h1>
+            <div class="stats__danger">
+                <div class="stats__danger_header">
+                    <div class="stats__danger_country">Country</div>
+                    <div class="stats__danger_hr">HR</div>
+                    <div class="stats__danger_cta">CTa</div>
+                    <div class="stats__danger_sa">Sa</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+                <div class="stats__danger_element">
+                    <div class="stats__danger_wrap">
+                        <img src="img/flags/canada.png" alt="canada" class="stats__danger_img">
+                        <div class="stats__danger_name">Canada</div>
+                    </div>
+                    <div class="stats__danger_hr">83.333</div>
+                    <div class="stats__danger_cta">83.333</div>
+                    <div class="stats__danger_sa">83.333</div>
+                </div>
+            </div>
+            <div class="stats__pages">
+                <button class="stats__pages_btn">
+                    <img src="img/stats/arrow-left.png" alt="left-arrow">Previous
+                </button>
+                <div class="stats__pages_number">
+                    <div class="stats__pages_current">16</div>
+                    <div class="stats__pages_total">122</div>
+                </div>
+                <button class="stats__pages_btn">Next
+                    <img src="img/stats/arrow-right.png" alt="right-arrow">
+                </button>
+            </div>
+        </div>
+        
+        <div class="stats__wrapper">
+            <h1 class="stats__title">
+                Countries by level of life
+            </h1>
+            <svg class="stats__diagram"></svg>
+            <div class="stats__countries">
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+                <div class="stats__country">
+                    <div class="stats__country_block">
+                        <div class="stats__country_color"></div>
+                        <div class="stats__country_name">Canada</div>
+                    </div>
+                    <div class="stats__country_level">75</div>
+                </div>
+            </div>
+            <div class="stats__pages">
+                <button class="stats__pages_btn">
+                    <img src="img/stats/arrow-left.png" alt="left-arrow">Previous
+                </button>
+                <div class="stats__pages_number">
+                    <div class="stats__pages_current">10</div>
+                    <div class="stats__pages_total">122</div>
+                </div>
+                <button class="stats__pages_btn">Next
+                    <img src="img/stats/arrow-right.png" alt="right-arrow">
+                </button>
+            </div>
+        </div>
+    </section>
+    <script src="js/width_fix.js"></script>
+    <script src="js/dropdown.js"></script>
+    <script src="js/counting.js"></script>
+    <script src="js/picker.js"></script>
+    <script src="js/circles.js"></script>
+</body>
+</html>
