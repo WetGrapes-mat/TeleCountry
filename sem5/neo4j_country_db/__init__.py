@@ -1,0 +1,7 @@
+from neo4j_country_db.requests import rq
+from neo4j_country_db.cost_living import cost_living_db
+from neo4j_country_db.country_education import country_education_db
+from neo4j_country_db.country_migration import country_migration_db
+from neo4j_country_db.country_travel import country_travel_db
+from neo4j_country_db.most_dangerous_places import most_dangerous_places_db
+from neo4j_country_db.standard_of_living import standart_living_db
