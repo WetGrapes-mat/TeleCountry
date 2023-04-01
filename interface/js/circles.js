@@ -74,8 +74,8 @@ for (let i = 1; i < 11; i++)
     let radius = 25 + 20 * (i - 1);
     let length = Math.floor(2 * 3.14 * radius);
     let procent = Math.floor(length / 4 * 3);
-    diagram_content += `<circle class="stats__diagram_back" cx="${x_center}" cy="${y_center}" r="${radius}" stroke="rgb(25, 25, 25)" id="circle-${i}-back"/>\n`;
-    diagram_content += `<circle class="stats__diagram_front" cx="${x_center}" cy="${y_center}" r="${radius}" stroke-dasharray="${procent} ${length - procent}" stroke-dashoffset="${-(length - procent)}" stroke="url(#gradient-${i})" id="circle-${i+1}-front"/>\n`;
+    diagram_content += `<circle class="stats__diagram_back animate__animated animate__fadeIn wow" cx="${x_center}" cy="${y_center}" r="${radius}" stroke="rgb(25, 25, 25)" id="circle-${i}-back"/>\n`;
+    diagram_content += `<circle class="stats__diagram_front animate__animated animate__fadeIn wow" cx="${x_center}" cy="${y_center}" r="${radius}" stroke-dasharray="${procent} ${length - procent}" stroke-dashoffset="${-(length - procent)}" stroke="url(#gradient-${i})" id="circle-${i+1}-front"/>\n`;
 }
 diagram.innerHTML= diagram_content;
 

@@ -1,4 +1,5 @@
 .main
+    animation-duration: 0.5s
     position: relative
     z-index: 0
     height: 100vh
@@ -22,7 +23,7 @@
         
 
 .header
-    position: absolute
+    position: fixed
     z-index: 1
     min-height: 10%
     width: 100%
@@ -47,6 +48,7 @@
         +btn_default
         +btn_hover
     &__logo
+        cursor: pointer
         display: flex
         align-items: center
         img
@@ -59,26 +61,35 @@
             font-size: 24px
 
 .counting
+    animation-duration: 0.5s
+    overflow: hidden
     height: 100vh
     display: flex
     justify-content: right
     background: url(../img/price/background.png) center (center / cover) no-repeat
+    padding-top: 100px
+    padding-right: 200px
     &__menu
+        overflow: hidden
         background: linear-gradient(rgba(18, 33, 43, 0.9), rgba(33, 50, 52, 0.9))
         padding: 40px 40px 20px 40px
         width: 655px
         height: 800px
-        margin-top: 100px
-        margin-right: 200px
         border-radius: 14px
     &__title
+        animation-delay: 0.4s
+        animation-duration: 1.4s
         font-size: 40px
         +title700
     &__subtitle
+        animation-delay: 0.6s
+        animation-duration: 1.4s
         margin-bottom: 32px
         font-size: 16px
         +title400
     &__subname
+        animation-delay: 1.4s
+        animation-duration: 1.6s
         display: inline-block
         font-size: 14px
         +title400
@@ -87,6 +98,16 @@
             margin-right: 192px
     &__element
         margin-bottom: 20px
+        &:nth-child(3)
+            animation-delay: 1.2s
+        &:nth-child(4)
+            animation-delay: 1.4s
+        &:nth-child(5)
+            animation-delay: 1.8s
+        &:nth-child(6)
+            animation-delay: 2s
+        &:nth-child(7)
+            animation-delay: 2.2s
     &__name
         +title700
         font-size: 20px
@@ -95,6 +116,8 @@
         display: flex
         justify-content: space-between
     &__picker
+        animation-delay: 1.4s
+        animation-duration: 1.6s
         background-color: #7e8689
         border-radius: 12px
         padding-left: 6px
@@ -130,6 +153,9 @@
         align-items: center
         justify-content: center
     &__button
+        text-decoration: none
+        animation-delay: 2.4s
+        animation-duration: 1.6s
         transition: 0.5s all
         display: flex
         justify-content: center
@@ -204,6 +230,7 @@
                 border-radius: 8px
 
 .price
+    overflow: hidden
     z-index: 0
     height: 100vh
     background: url(../img/price/background.png) center (center / cover) no-repeat
@@ -229,6 +256,7 @@
         width: 960px
         height: 510px
     &__country
+        animation-duration: 1.6s 
         transition: 0.7s all
         display: flex
         align-items: center
@@ -238,22 +266,34 @@
         border-radius: 8px
         &:hover
             transform: scale(1.1) translate(-10px, -10px)
+        &:nth-child(1)
+            animation-delay: 0.6s
+        &:nth-child(2)
+            animation-delay: 0.6s
         &:nth-child(3)
             margin-left: 72px
+            animation-delay: 0.8s
         &:nth-child(4)
             margin-left: 72px
+            animation-delay: 0.8s
         &:nth-child(5)
             margin-left: 144px
+            animation-delay: 1s
         &:nth-child(6)
             margin-left: 144px
+            animation-delay: 1s
         &:nth-child(7)
             margin-left: 216px
+            animation-delay: 1.2s
         &:nth-child(8)
             margin-left: 216px
+            animation-delay: 1.2s
         &:nth-child(9)
             margin-left: 288px
+            animation-delay: 1.4s
         &:nth-child(10)
             margin-left: 288px
+            animation-delay: 1.4s
             
     &__number
         margin: 0 20px
@@ -283,12 +323,14 @@
         color: rgb(223, 151, 143)
 
 .stats
+    overflow: hidden 
     height: 100vh
     display: flex
     justify-content: space-between
     padding: 120px 170px 40px 170px
     background: url(../img/stats/background.png) center (center / cover) no-repeat
     &__wrapper
+        animation-duration: 1.8s
         background: linear-gradient(rgba(28, 14, 33, 0.9), rgba(14, 45, 58, 0.9))
         display: flex
         flex-direction: column
@@ -298,15 +340,19 @@
         border-radius: 14px
         padding: 25px 30px 30px 30px
     &__title
+        animation-delay: 1s
         margin: 0
         display: flex
         justify-content: center
         +title700
         font-size: 40px
     &__danger
+        overflow: hidden 
         display: grid
         grid-template: repeat(17, 35px) / 1fr
         &_header
+            animation-delay: 1.2s
+            animation-duration: 1.6s
             display: flex
             justify-content: space-between
             border-bottom: 1px solid rgba(255, 255, 255, 0.1)
@@ -328,8 +374,43 @@
             font-size: 16px
             color: rgba(223, 151, 143, 1)
         &_element
+            animation-duration: 1.6s
             display: flex
             justify-content: space-between
+            &:nth-child(1)
+                animation-delay: 1.4s
+            &:nth-child(2)
+                animation-delay: 1.5s
+            &:nth-child(3)
+                animation-delay: 1.6s
+            &:nth-child(4)
+                animation-delay: 1.7s
+            &:nth-child(5)
+                animation-delay: 1.8s
+            &:nth-child(6)
+                animation-delay: 1.9s
+            &:nth-child(7)
+                animation-delay: 2s
+            &:nth-child(8)
+                animation-delay: 2.1s
+            &:nth-child(9)
+                animation-delay: 2.2s
+            &:nth-child(10)
+                animation-delay: 2.3s
+            &:nth-child(11)
+                animation-delay: 2.4s
+            &:nth-child(12)
+                animation-delay: 2.5s
+            &:nth-child(13)
+                animation-delay: 2.6s
+            &:nth-child(14)
+                animation-delay: 2.7s
+            &:nth-child(15)
+                animation-delay: 2.8s
+            &:nth-child(16)
+                animation-delay: 2.9s
+            &:nth-child(17)
+                animation-delay: 3s
         &_wrap
             display: flex
             align-items: center
@@ -349,12 +430,15 @@
         justify-content: center
         height: 418px
         circle
+            animation-delay: 1.4s
+            animation-duration: 1.6s
             z-index: 1
             fill: none
             stroke-width: 8
             stroke-linecap: round      
             
     &__countries
+        overflow: hidden
         padding-left: 20px 
         padding-right: 20px
         height: 150px
@@ -365,6 +449,8 @@
         align-content: space-between           
             
     &__country
+        animation-duration: 2s
+        animation-delay: 1.6s
         height: 30px
         width: 150px
         display: flex
@@ -387,6 +473,8 @@
             font-size: 16px
                 
     &__pages
+        animation-delay: 1.8s
+        animation-duration: 1.6s
         display: flex
         justify-content: space-between
         &_btn
@@ -424,9 +512,5 @@
             font-size: 20px
         &_total
             &::before
-                content: '/'     
-                
-                
-    
-.hide
-    display: none
+                content: '/'   
+      
