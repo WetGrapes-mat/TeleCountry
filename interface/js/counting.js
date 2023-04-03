@@ -1,3 +1,10 @@
+const button = document.querySelector('.counting__button');
+setTimeout(function() {
+    button.style.opacity = '1';
+ }, 3200);
+ button.style.transition = 'transition: 0.5s all';
+
+
 const postData = async (url, data) => {
     let res = await fetch(url, {
         method: "POST",
@@ -10,7 +17,6 @@ const postData = async (url, data) => {
     return await res.json();
 };
 
-const button = document.querySelector('.counting__button');
 let resultObject = {};
 button.addEventListener('click', () => {
     const active = document.querySelectorAll('.counting__pick.active');

@@ -1,4 +1,19 @@
-let diagram = document.querySelector('.stats__diagram');
+let diagram = document.querySelector('.stats__diagram'),
+    countries = document.querySelectorAll('.price__country');
+
+setTimeout(function() {
+    countries.forEach((country) => {
+        if (country.classList.contains('animate__fadeInLeft')){
+            country.classList.remove('animate__animated');
+            country.classList.remove('animate__fadeInLeft');
+            country.classList.remove('wow');
+        } else {
+            country.classList.remove('animate__animated');
+            country.classList.remove('animate__fadeInRight');
+            country.classList.remove('wow');
+        }
+    });
+}, 3500);
 
 const gradients = {
     "css": {
