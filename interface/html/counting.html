@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price of life counting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="../css/animate.css"/>
+    <link rel="stylesheet" href="../css/style.min.css">
+</head>
+<body>
+    <section class="header animate__animated animate__fadeInDown wow">
+        <div class="header__block">
+            <a href="../index.html" class="header__btn">Home</a>
+        </div>
+        <div class="header__block">
+            <a href="../index.html" class="header__logo">
+                <img src="../img/promo/logo.png" alt="logo">
+                <span>NomadNavigator</span>
+            </a>
+        </div>
+        <div class="header__block">
+            <a href="rating.html" class="header__btn">Country Rating</a>
+            <a href="counting.html" class="header__btn">Price of life</a>
+        </div>
+    </section>
+    <section class="counting animate__animated animate__fadeIn wow">
+        <div class="counting__menu animate__animated animate__bounceInRight wow">
+            <h1 class="counting__title animate__animated animate__fadeInDownBig wow">
+                Counting the price of life
+            </h1>
+            <h2 class="counting__subtitle animate__animated animate__fadeInDownBig wow">
+                    Choose options that fit your case
+            </h2>
+            <div class="counting__element animate__animated animate__fadeInLeft wow">
+                <div class="counting__name">Number of family members</div>
+                <div class="counting__picker">
+                    <ul id="family" class="counting__picks">
+                        <li class="counting__pick active">1</li>
+                        <li class="counting__pick">2</li>
+                        <li class="counting__pick">3</li>
+                        <li class="counting__pick">4</li>
+                        <li class="counting__pick">5</li>
+                        <li class="counting__pick">6</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="counting__element animate__animated animate__fadeInLeft wow">
+                <div class="counting__name">Number of children attending...</div>
+                <div class="counting__subnames">
+                    <div class="counting__subname animate__animated animate__fadeInLeft wow">Kindergarten</div>
+                    <div class="counting__subname animate__animated animate__fadeInRight wow">School</div>
+                </div>
+                <div class="counting__wrapper">
+                    <div class="counting__picker animate__animated animate__fadeInLeft wow">
+                        <ul id="kindergarten" class="counting__picks">
+                            <li class="counting__pick active">0</li>
+                            <li class="counting__pick">1</li>
+                            <li class="counting__pick">2</li>
+                            <li class="counting__pick">3</li>
+                            <li class="counting__pick">4</li>
+                            <li class="counting__pick">5</li>
+                        </ul>
+                    </div>
+                    <div class="counting__picker animate__animated animate__fadeInRight wow">
+                        <ul id="school" class="counting__picks">
+                            <li class="counting__pick active">0</li>
+                            <li class="counting__pick">1</li>
+                            <li class="counting__pick">2</li>
+                            <li class="counting__pick">3</li>
+                            <li class="counting__pick">4</li>
+                            <li class="counting__pick">5</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="counting__element animate__animated animate__fadeInLeft wow">
+                <div class="counting__name">Packs of cigarettes a day</div>
+                <div class="counting__picker">
+                    <ul id="cigarettes" class="counting__picks">
+                        <li class="counting__pick active">1</li>
+                        <li class="counting__pick">2</li>
+                        <li class="counting__pick">3</li>
+                        <li class="counting__pick">4</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="counting__element animate__animated animate__fadeInLeft wow">
+                <div class="counting__name">City moving method</div>
+                <div class="counting__picker">
+                    <ul id="moving" class="counting__picks">
+                        <li class="counting__pick active">Taxi</li>
+                        <li class="counting__pick">Own car</li>
+                        <li class="counting__pick">Public transport</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="counting__element animate__animated animate__fadeInLeft wow">
+                <div class="counting__name">Living location</div>
+                <div class="counting__select">
+                    <div class="counting__select_header">
+                        <div class="counting__select_icon">
+                            <img src="../img/price/down.png" alt="down">
+                        </div>
+                        <div class="counting__select_current">Expand</div>
+                    </div>
+                    <div class="counting__select_body">
+                        <div class="counting__select_item">1-bed in city center</div>
+                        <div class="counting__select_item">3-bed in city center</div>
+                        <div class="counting__select_item">1-bed on the outskirts</div>
+                        <div class="counting__select_item">3-bed on the outskirts</div>
+                        <div class="counting__select_item">own house/flat</div>
+                    </div>
+                </div>
+            </div>
+            <div class="counting__wrap">
+                <a href="prices.html" class="counting__button">Confirm</a>
+            </div>
+        </div>
+    </section>
+    <script src="../js/counting.js"></script>
+    <script src="../js/dropdown.js"></script>
+    <script src="../js/picker.js"></script>
+    <script src="../js/wow.min.js"></script>
+</body>

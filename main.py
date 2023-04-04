@@ -18,7 +18,6 @@ most_dangerous_places.register_handlers(dp)
 standard_of_living.register_handlers(dp)
 other.register_handlers_other(dp)
 
-
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
     cost_living_db.close()
@@ -29,5 +28,3 @@ if __name__ == "__main__":
     country_tourism_db.close()
     most_dangerous_places_db.close()
     standart_living_db.close()
-
-
