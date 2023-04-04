@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price of life counting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="../css/animate.css"/>
+    <link rel="stylesheet" href="../css/style.min.css">
+</head>
+<body>
+    <section class="header animate__animated animate__fadeInDown wow">
+        <div class="header__block">
+            <a href="../index.html" class="header__btn">Home</a>
+        </div>
+        <div class="header__block">
+            <a href="../index.html" class="header__logo">
+                <img src="../img/promo/logo.png" alt="logo">
+                <span>NomadNavigator</span>
+            </a>
+        </div>
+        <div class="header__block">
+            <a href="rating.html" class="header__btn">Country Rating</a>
+            <a href="counting.html" class="header__btn">Price of life</a>
+        </div>
+    </section>
+    <section class="chat animate__animated animate__fadeIn wow">
+        <div class="chat__window">
+            <div class="chat__header">
+                <div class="chat__header_title">NomadNavigatorBot</div>
+            </div>
+            <div class="chat__messages-area">
+                <!-- <div class="chat__message message-bot">
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/bot.png" alt="bot">
+                    </div>
+                    <div class="chat__message_content">
+                        <img src="https://i.imgur.com/mtYkrPW.png" alt="first" class="image-message_country image-1">
+                        <img src="https://i.imgur.com/1OvasM7.png" alt="second" class="image-message_country image-2">
+                        <img src="https://i.imgur.com/eXtD2rE.png" alt="third" class="image-message_country image-3">
+                        <img src="https://i.imgur.com/ht4hJQo.png" alt="fourth" class="image-message_country image-4">
+                        <img src="https://i.imgur.com/1R64DL1.png" alt="fifth" class="image-message_country image-5">
+                    </div>
+                </div> -->
+                <div class="chat__message message-bot">
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/bot.png" alt="bot">
+                    </div>
+                    <div class="chat__message_content">
+                        <div class="chat__message_title">Canada</div>
+                            <div class="chat__message_img">
+                                <img src="https://i.imgur.com/DFOoODH.png" alt="photo">
+                            </div>
+                        <div class="chat__message_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                        <div class="chat__message_price">The cost for all basic needs per month: <span>1857$</span></div>
+                    </div>
+                </div>
+                <div class="chat__message message-bot">
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/bot.png" alt="bot">
+                    </div>
+                    <div class="chat__message_content">
+                        <div class="chat__message_text">What direction do you want to study?</div>
+                        <div class="chat__message_wrapper">
+                            <input type="checkbox" id="art_c" name="study_c" class="chat__message_checkbox">
+                            <label for="art_c" class="chat__message_label-check">ART</label>
+                        </div>
+                        <div class="chat__message_wrapper">
+                            <input type="checkbox" id="it_c" name="study_c" class="chat__message_checkbox">
+                            <label for="it_c" class="chat__message_label-check">IT</label>
+                        </div>
+                        <div class="chat__message_wrapper">
+                            <input type="checkbox" id="science_c" name="study_c" class="chat__message_checkbox">
+                            <label for="science_c" class="chat__message_label-check">Science</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat__message message-bot">
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/bot.png" alt="bot">
+                    </div>
+                    <div class="chat__message_content">
+                        <div class="chat__message_text">What direction do you want to study?</div>
+                        <div class="chat__message_wrapper">
+                            <input type="radio" id="art" name="study" class="chat__message_radio">
+                            <label for="art" class="chat__message_label-radio">ART</label>
+                        </div>
+                        <div class="chat__message_wrapper">
+                            <input type="radio" id="it" name="study" class="chat__message_radio">
+                            <label for="it" class="chat__message_label-radio">IT</label>
+                        </div>
+                        <div class="chat__message_wrapper">
+                            <input type="radio" id="science" name="study" class="chat__message_radio">
+                            <label for="science" class="chat__message_label-radio">Science</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat__message message-bot">
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/bot.png" alt="bot">
+                    </div>
+                    <div class="chat__message_content">
+                        <div class="chat__message_text">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit sunt corporis illo ipsum quod sint, dolorem consequuntur eaque ipsam quia culpa earum repellat magnam veniam tempore architecto ducimus cum pariatur.
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus laudantium, maxime vel velit dignissimos officia vitae placeat soluta laborum doloremque laboriosam nemo, libero tenetur, explicabo officiis. Ducimus eaque cumque debitis!
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, natus doloribus? Earum esse, quo pariatur ab nobis culpa dolorum, a odit corporis est doloribus, harum qui tenetur porro minus ex?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat__message message-user">
+                    <div class="chat__message_content">
+                        <div class="chat__message_text">
+                            Да, это я.
+                        </div>
+                    </div>
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/user.png" alt="user">
+                    </div>
+                </div>
+                <div class="chat__message message-bot">
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/bot.png" alt="bot">
+                    </div>
+                    <div class="chat__message_content">
+                        <div class="chat__message_text">
+                            Это ты Никита Созвонов?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat__message message-user">
+                    <div class="chat__message_content">
+                        <div class="chat__message_text">
+                            Всем привет, меня зовут Никита Степанов.
+                        </div>
+                    </div>
+                    <div class="chat__message_avatar">
+                        <img src="../img/chat/user.png" alt="user">
+                    </div>
+                </div>
+            </div>
+            <div class="chat__input_wrapper">
+                <input type="text" placeholder="Write a message..." spellcheck="false" class="chat__input">
+                <img class="chat__input_glass" src="../img/chat/glass.svg" alt="lupa">
+                <img class="chat__input_micro" src="../img/chat/micro.svg" alt="micro">
+        </div>
+    </section>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/message_width.js"></script>
+</body>
