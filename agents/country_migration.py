@@ -1,5 +1,4 @@
 import math
-
 from neo4j_country_db.country_migration import country_migration_db
 from keybords import cost_living
 from agents.standard_of_living import st
@@ -298,8 +297,8 @@ class CountryMigrationAgent:
 
 cm = CountryMigrationAgent()
 if __name__ == "__main__":
-    cm.calculate({'water': 'False', 'isBig': '2', 'climat': "2", 'family': '1', 'transport': 'общественный транспорт',
-                     'flat': 'на окраине', 'price': '1800', "lgbt": "True"})
+    print(cm.calculate({'water': 'False', 'isBig': '2', 'climat': "2", 'family': '1', 'transport': 'общественный транспорт',
+                     'flat': 'на окраине', 'price': '1800', "lgbt": "True"}))
 'на окраине'
 'своя машина'
 'общественный транспорт'
