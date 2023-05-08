@@ -40,7 +40,7 @@ def most_dangerous_places():
 @app.route('/standard_of_living', methods=['POST'])
 def standard_of_living():
     sentence = request.json['sentence']
-    result = contrl.control_standard_of_living(sentence)
+    result = contrl.control_standard_of_living()
     return jsonify({'result': result})
 
 
