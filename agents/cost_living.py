@@ -1,5 +1,5 @@
-# from neo4j_country_db.cost_living import cost_living_db
-from TeleCountry.neo4j_country_db.cost_living import cost_living_db
+from neo4j_country_db.cost_living import cost_living_db
+# from TeleCountry.neo4j_country_db.cost_living import cost_living_db
 
 coefficients = {"dress": 0.1,
                 "jeans": 0.1,
@@ -251,7 +251,6 @@ class CostLiving:
 
 
 cl = CostLiving()
-
 
 if __name__ == "__main__":
     pass
