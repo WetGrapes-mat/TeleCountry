@@ -20,8 +20,6 @@ def chat():
             result = contrl.control_migration()
             return jsonify({'result': result})
 
-
-
 @app.route('/cost_living', methods=['POST'])
 def cost_living():
     input_data = request.json
