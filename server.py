@@ -9,11 +9,6 @@ app = Flask(__name__)
 CORS(app)
 FLAG_MIGRATION = False
 
-@app.route('/migration', methods=['POST'])
-def migration():
-    sentence = request.json['sentence']
-    result = contrl.control_migration(sentence)
-    return jsonify({'result': result})
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -36,23 +31,14 @@ def cost_living():
     return jsonify({'result': result})
 
 
-@app.route('/education', methods=['POST'])
-def education():
-    sentence = request.json['sentence']
-    result = contrl.control_education(sentence)
-    return jsonify({'result': result})
-
-
-@app.route('/most_dangerous_places', methods=['POST'])
+@app.route('/most_dangerous_places', methods=['GET'])
 def most_dangerous_places():
-    sentence = request.json['sentence']
-    result = contrl.control_most_dangerous_places(sentence)
+    result = contrl.control_most_dangerous_places()
     return jsonify({'result': result})
 
 
 @app.route('/standard_of_living', methods=['POST'])
 def standard_of_living():
-    sentence = request.json['sentence']
     result = contrl.control_standard_of_living()
     return jsonify({'result': result})
 
@@ -71,13 +57,13 @@ if __name__ == '__main__':
     # print(contrl.control_migration())
 
 
-    # app.run()
-    # cost_living_db.close()
-    # country_education_db.close()
-    # country_migration_db.close()
-    # country_resorts_db.close()
-    # country_ski_resorts_db.close()
-    # country_tourism_db.close()
-    # most_dangerous_places_db.close()
-    # standart_living_db.close()
+    app.run()
+    cost_living_db.close()
+    country_education_db.close()
+    country_migration_db.close()
+    country_resorts_db.close()
+    country_ski_resorts_db.close()
+    country_tourism_db.close()
+    most_dangerous_places_db.close()
+    standart_living_db.close()
     pass
