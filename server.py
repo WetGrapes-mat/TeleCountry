@@ -39,26 +39,12 @@ def standard_of_living():
 
 
 if __name__ == '__main__':
-    pass
-    # contrl.preparation_data('Важно ли для вас наличие моря/океана?', 'Нет')
-    # contrl.preparation_data('Вы предпочитаете быстрый темп жизни или размеренный темп?', 'Быстрый')
-    # contrl.preparation_data('Какой климат вы бы предпочли:\n' \
-    #                          '- холодный - средняя годовая температура меньше 10 градусов;\n' \
-    #                          '- умеренный - средняя годовая температура от 10 до 20 градусов\n;' \
-    #                          '- жаркий - средняя годовая температура более 20 градусов?', '20 градусов')
-    # contrl.preparation_data('Вы планируете переехать один или семьей?', 'один')
-    # contrl.preparation_data('Вы планируете передвигаться на общественном транспорте или на своей машине?', 'на автобусе')
-    # contrl.preparation_data('Где вы планируете снимать жилье: в центре или на окраине?', 'в центре')
-    # contrl.preparation_data('Введите заработок, на который вы рассчитываете?', '2454$')
-    # print(contrl.control_migration())
-
-
-    # app.run()
-    # cost_living_db.close()
-    # country_education_db.close()
-    # country_migration_db.close()
-    # country_resorts_db.close()
-    # country_ski_resorts_db.close()
-    # country_tourism_db.close()
-    # most_dangerous_places_db.close()
-    # standart_living_db.close()
+    app.run()
+    cost_living_db.close()
+    country_education_db.close()
+    country_migration_db.close()
+    country_resorts_db.close()
+    country_ski_resorts_db.close()
+    country_tourism_db.close()
+    most_dangerous_places_db.close()
+    standart_living_db.close()
