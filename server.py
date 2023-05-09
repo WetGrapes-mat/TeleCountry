@@ -13,7 +13,7 @@ CORS(app)
 def chat():
     message = request.json
     if contrl.analize(message['answer']):
-        return jsonify({'result': question})
+        return jsonify(question)
     contrl.preparation_data(message['question'], message['answer'])
     if len(contrl.ALL_ANSWER) == 8:
         result = contrl.control_migration()
