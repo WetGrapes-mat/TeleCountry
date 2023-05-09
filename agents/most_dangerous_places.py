@@ -107,11 +107,24 @@ class MostDangerousPlaces:
         self.hazard = most_dangerous_places_db.findHazard()
         most_dangerous_places_db.close()
 
+    def get_info_for_interface(self):
+        countries = sorted(self.get_countries())
+        self.get_all_information()
+        cta = sorted(self.CTa, key=lambda x: x['country'])
+        sa = sorted(self.Sa, key=lambda x: x['country'])
+        hr = sorted(self.count_HR(), key=lambda x: x['country'])
+        result = []
+        for i in range(len(countries)):
+            country_res = {"country": countries[i],
+                           "hr": hr[i]['HR'],
+                           'cta': cta[i]['CTa'],
+                           'sa': sa[i]['Sa']}
+            result.append(country_res)
+        return result
+
 
 mdp = MostDangerousPlaces()
 if __name__ == "__main__":
     agent = MostDangerousPlaces()
-    agent.get_countries()
-    agent.get_all_information()
-
-    agent.count("Рейтинг")
+    print(agent.get_info_for_interface())
+    # agent.count("Рейтинг")
