@@ -67,7 +67,7 @@ class Controller:
         return mdp.get_info_for_interface()
 
     def control_standard_of_living(self):
-        return st.get_country_rating()
+        return st.get_info_for_interface()
 
     def __get_sentence_embedding(self, sentence):
         inputs = tokenizer(sentence, return_tensors='pt', truncation=True, padding=True)

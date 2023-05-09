@@ -184,14 +184,25 @@ class StandartLiving:
             result[self.info[i]["Country"]] = curr_country
         string_result = ""
         sorted_values = sorted(result.values())
+        print(sorted_values)
         for i in sorted_values:
             for key, value in result.items():
                 if i == value:
                     string_result += f'{key} -- {self.to_fixed(i)}\n'
         return string_result
 
+    def get_info_for_interface(self):
+        self.get_information()
+        result = []
+        for i in range(len(self.info)):
+            curr_res = self.finalCalculation(i)
+            country_res = {"country": self.info[i]["Country"], "level": float(self.to_fixed(curr_res))}
+            result.append(country_res)
+
+        return sorted(result, key=lambda x: x['level'], reverse=True)
+
 
 st = StandartLiving()
 
 if __name__ == "__main__":
-    pass
+    print(st.get_info_for_interface())
