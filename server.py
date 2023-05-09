@@ -1,24 +1,23 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from controller.controller import contrl
+from controller.controller import contrl, question
 from neo4j_country_db import cost_living_db, country_education_db, country_migration_db, country_resorts_db, \
     country_tourism_db, \
     country_ski_resorts_db, most_dangerous_places_db, standart_living_db
 
 app = Flask(__name__)
 CORS(app)
-FLAG_MIGRATION = False
 
 
 @app.route('/chat', methods=['POST'])
 def chat():
     message = request.json
-    #TODO какая то логика фильтрации миграции
-    if FLAG_MIGRATION:
-        contrl.preparation_data(message['question'], message['answer'])
-        if len(contrl.ALL_ANSWER) == 8:
-            result = contrl.control_migration()
-            return jsonify({'result': result})
+    if contrl.analize(message['answer']):
+        return jsonify({'result': question})
+    contrl.preparation_data(message['question'], message['answer'])
+    if len(contrl.ALL_ANSWER) == 8:
+        result = contrl.control_migration()
+        return jsonify({'result': result})
 
 @app.route('/cost_living', methods=['POST'])
 def cost_living():
@@ -40,6 +39,7 @@ def standard_of_living():
 
 
 if __name__ == '__main__':
+    pass
     # contrl.preparation_data('Важно ли для вас наличие моря/океана?', 'Нет')
     # contrl.preparation_data('Вы предпочитаете быстрый темп жизни или размеренный темп?', 'Быстрый')
     # contrl.preparation_data('Какой климат вы бы предпочли:\n' \
@@ -53,12 +53,12 @@ if __name__ == '__main__':
     # print(contrl.control_migration())
 
 
-    app.run()
-    cost_living_db.close()
-    country_education_db.close()
-    country_migration_db.close()
-    country_resorts_db.close()
-    country_ski_resorts_db.close()
-    country_tourism_db.close()
-    most_dangerous_places_db.close()
-    standart_living_db.close()
+    # app.run()
+    # cost_living_db.close()
+    # country_education_db.close()
+    # country_migration_db.close()
+    # country_resorts_db.close()
+    # country_ski_resorts_db.close()
+    # country_tourism_db.close()
+    # most_dangerous_places_db.close()
+    # standart_living_db.close()
