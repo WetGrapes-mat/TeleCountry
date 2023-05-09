@@ -35,7 +35,6 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-.DS_Store
 
 
 # Unit test / coverage reports
@@ -162,3 +161,5 @@ cython_debug/
 .idea/
 config.py
 db/
+.DS_Store
+test.py

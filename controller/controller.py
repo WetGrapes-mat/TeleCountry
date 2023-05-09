@@ -1,9 +1,11 @@
 from agents.cost_living import cl
 from agents.country_migration import cm
-from agents.country_education import ce
 from agents.most_dangerous_places import mdp
 from agents.standard_of_living import st
 import re
+
+import nltk
+import pymorphy2
 
 from transformers import BertTokenizer, BertModel
 import torch
@@ -11,6 +13,18 @@ import torch
 model_name = 'DeepPavlov/rubert-base-cased'
 tokenizer = BertTokenizer.from_pretrained(model_name)
 model = BertModel.from_pretrained(model_name)
+
+question = {1:'Важно ли для вас наличие моря/океана?',
+            2:'Вы предпочитаете быстрый темп жизни или размеренный темп?',
+            3:'Какой климат вы бы предпочли:\n' 
+              '- холодный - средняя годовая температура меньше 10 градусов;\n' 
+              '- умеренный - средняя годовая температура от 10 до 20 градусов\n;' 
+              '- жаркий - средняя годовая температура более 20 градусов?',
+            4:'Вы планируете переехать один или семьей?',
+            5:'Вы планируете передвигаться на общественном транспорте или на своей машине?',
+            6:'Где вы планируете снимать жилье: в центре или на окраине?',
+            7:'Введите заработок, на который вы рассчитываете?'}
+sin_list = ['уехать', 'мигрировать', 'переехать', 'эмигрировать', 'переезд', 'миграция', 'эмиграция', 'иммиграция']
 
 
 class Controller:
@@ -27,17 +41,27 @@ class Controller:
 
 
     def control_cost_living(self, user_answers):
-        cl.get_information()
-        return cl.out(int(user_answers["child_preschool"]),
-                      int(user_answers["child_school"]),
-                      int(user_answers["members"]),
-                      int(user_answers["smoking"]),
-                      user_answers["transportation"],
-                      user_answers["rent"],
-                      user_answers["country"])
+        self.__preparation_data_ccl(user_answers)
+        return cl.get_info_for_interface(user_answers)
 
-    def control_education(self, answer_user):
-        return ce.find_result(answer_user)
+    def __preparation_data_ccl(self, answer):
+        if answer["transportation"] == "Taxi":
+            answer["transportation"] = "такси"
+        elif answer["transportation"] == "Own car":
+            answer["transportation"] = "своя машина"
+        elif answer["transportation"] == "Public transport":
+            answer["transportation"] = "общественный транспорт"
+        elif answer["rent"] == "1-bed in city center":
+            answer["rent"] = "1-к в центре"
+        elif answer["rent"] == "3-bed in city center":
+            answer["rent"] = "3-к в центре"
+        elif answer["rent"] == "1-bed on the outskirts":
+            answer["rent"] = "1-к на окраине"
+        elif answer["rent"] == "3-bed on the outskirts":
+            answer["rent"] = "3-к на окраине"
+        elif answer["rent"] == "own house/flat":
+            answer["rent"] = "своё жильё"
+
 
     def control_most_dangerous_places(self):
         return mdp.get_info_for_interface()
@@ -52,24 +76,41 @@ class Controller:
         embeddings = torch.mean(outputs.last_hidden_state, dim=1)
         return embeddings
 
+    def analize(self, text):
+        tokens_word = nltk.word_tokenize(text)
+        for t in tokens_word:
+            morph = pymorphy2.MorphAnalyzer()
+            word = morph.parse(t)[0].normal_form
+            if word in sin_list:
+                return True
+        return False
+
     def preparation_data(self, question, answer):
         if question == 'Важно ли для вас наличие моря/океана?':
             self.ALL_ANSWER['water'] = self.__water_data(answer)
+            return True
         elif question == 'Вы предпочитаете быстрый темп жизни или размеренный темп?':
             self.ALL_ANSWER['isBig'] = self.__is_big_data(answer)
+            return True
         elif question == 'Какой климат вы бы предпочли:\n' \
                          '- холодный - средняя годовая температура меньше 10 градусов;\n' \
                          '- умеренный - средняя годовая температура от 10 до 20 градусов\n;' \
                          '- жаркий - средняя годовая температура более 20 градусов?':
             self.ALL_ANSWER['climat'] = self.__climate_data(answer)
+            return True
         elif question == 'Вы планируете переехать один или семьей?':
             self.ALL_ANSWER['family'] = self.__family_data(answer)
+            return True
         elif question == 'Вы планируете передвигаться на общественном транспорте или на своей машине?':
             self.ALL_ANSWER['transport'] = self.__transport_data(answer)
+            return True
         elif question == 'Где вы планируете снимать жилье: в центре или на окраине?':
             self.ALL_ANSWER['flat'] = self.__flat_data(answer)
+            return True
         elif question == 'Введите заработок, на который вы рассчитываете?':
             self.ALL_ANSWER['price'] = self.__price_data(answer, self.ALL_ANSWER['family'])
+            return True
+        return False
 
     def __water_data(self, text: str):
         sentence1 = 'Да мне важно наличие моря'
@@ -84,6 +125,7 @@ class Controller:
             return 'True'
         else:
             return 'False'
+
 
     def __is_big_data(self, text: str):
         sentence1 = 'Я бы хотел жить в городе с быстрым темпом жизни'
@@ -201,27 +243,23 @@ class Controller:
             else:
                 return '3600_5200'
 
+    def choice(self, text: str):
+        sentence1 = 'миграция'
+        sentence2 = 'раскажи про '
+        embedding1 = self.__get_sentence_embedding(sentence1)
+        embedding2 = self.__get_sentence_embedding(sentence2)
+        embedding_text = self.__get_sentence_embedding(text)
+
+        cosine_similarity_yes = torch.nn.functional.cosine_similarity(embedding1, embedding_text)
+        cosine_similarity_no = torch.nn.functional.cosine_similarity(embedding2, embedding_text)
+
+        if cosine_similarity_yes > cosine_similarity_no:
+            return True
+        else:
+            return False
+
 
 
 
 contrl = Controller()
 
-#
-
-if __name__ == '__main__':
-    print(contrl.control_most_dangerous_places())
-    # contrl.preparation_data('Важно ли для вас наличие моря/океана?', 'Нет')
-    # contrl.preparation_data('Вы предпочитаете быстрый темп жизни или размеренный темп и отсутствие суеты?', 'Быстрый')
-    # contrl.preparation_data('Какой климат вы бы предпочли: \n1. холодный - средняя годовая температура меньше 10 градусов;\n' \
-    #                      '2. умеренный - средняя годовая температура от 10 до 20 градусов;\n' \
-    #                      '3. жаркий - средняя годовая температура более 20 градусов?', '20 градусов')
-    # contrl.preparation_data('Вы планируете переехать один или семьей?', 'один')
-    # contrl.preparation_data('Вы планируете передвигаться на общественном транспорте или на своей машине?', 'на автобусе')
-    # contrl.preparation_data('Где вы планируете снимать жилье: в центре или на окраине?', 'в центре')
-    # contrl.preparation_data('Введите заработок, на который вы рассчитываете?', '2454$')
-    # contrl.control_migration(contrl.ALL_ANSWER)
-
-
-
-
-    # contrl._Controller__water_data('Да для меня важно ')
