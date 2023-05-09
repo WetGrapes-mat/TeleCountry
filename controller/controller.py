@@ -39,9 +39,8 @@ class Controller:
     def control_education(self, answer_user):
         return ce.find_result(answer_user)
 
-    def control_most_dangerous_places(self, answer_user):
-        mdp.get_all_information()
-        return mdp.count(answer_user)
+    def control_most_dangerous_places(self):
+        return mdp.get_info_for_interface()
 
     def control_standard_of_living(self):
         return st.get_country_rating()
@@ -210,7 +209,7 @@ contrl = Controller()
 #
 
 if __name__ == '__main__':
-    pass
+    print(contrl.control_most_dangerous_places())
     # contrl.preparation_data('Важно ли для вас наличие моря/океана?', 'Нет')
     # contrl.preparation_data('Вы предпочитаете быстрый темп жизни или размеренный темп и отсутствие суеты?', 'Быстрый')
     # contrl.preparation_data('Какой климат вы бы предпочли: \n1. холодный - средняя годовая температура меньше 10 градусов;\n' \
