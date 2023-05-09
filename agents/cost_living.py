@@ -1,4 +1,5 @@
 from neo4j_country_db.cost_living import cost_living_db
+# from TeleCountry.neo4j_country_db.cost_living import cost_living_db
 
 coefficients = {"dress": 0.1,
                 "jeans": 0.1,
@@ -230,8 +231,27 @@ class CostLiving:
 
         return string_result
 
+    def get_info_for_interface(self, answer: dict):
+        cl.get_information()
+        result = {}
+        for i in range(len(self.prices)):
+            result = cl.count_function(answer["children_preschool"],
+                                       answer["children_school"],
+                                       answer["family_member_amount"],
+                                       answer["smoking_packs"],
+                                       answer["transportation"],
+                                       answer["rent"],
+                                       result,
+                                       i
+                                       )
+
+        sorted_dict = sorted(result.items(), key=lambda x: x[1])
+        list_of_dicts = [{x[0]: float(self.to_fixed(x[1]))} for x in sorted_dict]
+        return list_of_dicts
+
 
 cl = CostLiving()
+
 
 if __name__ == "__main__":
     pass
