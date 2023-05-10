@@ -42,6 +42,7 @@ class Controller:
 
     def control_cost_living(self, user_answers):
         self.__preparation_data_ccl(user_answers)
+        print(user_answers)
         return cl.get_info_for_interface(user_answers)
 
     def __preparation_data_ccl(self, answer):
@@ -51,7 +52,7 @@ class Controller:
             answer["transportation"] = "своя машина"
         elif answer["transportation"] == "Public transport":
             answer["transportation"] = "общественный транспорт"
-        elif answer["rent"] == "1-bed in city center":
+        if answer["rent"] == "1-bed in city center":
             answer["rent"] = "1-к в центре"
         elif answer["rent"] == "3-bed in city center":
             answer["rent"] = "3-к в центре"

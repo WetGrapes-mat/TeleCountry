@@ -13,29 +13,35 @@ CORS(app)
 def chat():
     message = request.json
     if contrl.analize(message['answer']):
-        return jsonify(question)
-    contrl.preparation_data(message['question'], message['answer'])
+        return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
+    state = contrl.preparation_data(message['question'], message['answer'])
+    if state and len(contrl.ALL_ANSWER) != 8:
+        return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
     if len(contrl.ALL_ANSWER) == 8:
         result = contrl.control_migration()
         return jsonify({'result': result})
+    if not state:
+        return jsonify({'result': 'Я не могу помочь с этим вопросом'})
+
+
 
 @app.route('/cost_living', methods=['POST'])
 def cost_living():
     input_data = request.json
     result = contrl.control_cost_living(input_data)
-    return jsonify({'result': result})
+    return jsonify(result)
 
 
 @app.route('/most_dangerous_places', methods=['GET'])
 def most_dangerous_places():
     result = contrl.control_most_dangerous_places()
-    return jsonify({'result': result})
+    return jsonify(result)
 
 
 @app.route('/standard_of_living', methods=['GET'])
 def standard_of_living():
     result = contrl.control_standard_of_living()
-    return jsonify({'result': result})
+    return jsonify(result)
 
 
 if __name__ == '__main__':
