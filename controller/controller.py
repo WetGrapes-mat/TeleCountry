@@ -15,17 +15,16 @@ model_name = 'DeepPavlov/rubert-base-cased'
 tokenizer = BertTokenizer.from_pretrained(model_name)
 model = BertModel.from_pretrained(model_name)
 
-question = {1:'Важно ли для вас наличие моря/океана?',
-            2:'Вы предпочитаете быстрый темп жизни или размеренный темп?',
-            3:'Какой климат вы бы предпочли:\n' 
-              '- холодный - средняя годовая температура меньше 10 градусов;\n' 
-              '- умеренный - средняя годовая температура от 10 до 20 градусов\n;' 
-              '- жаркий - средняя годовая температура более 20 градусов?',
-            4:'Вы планируете переехать один или семьей?',
-            5:'Вы планируете передвигаться на общественном транспорте или на своей машине?',
-            6:'Где вы планируете снимать жилье: в центре или на окраине?',
-            7:'Введите заработок, на который вы рассчитываете?'}
-sin_list = ['уехать', 'мигрировать', 'переехать', 'эмигрировать', 'переезд', 'миграция', 'эмиграция', 'иммиграция']
+question = {1:"Важно ли для вас наличие моря/океана?",
+            2:"Вы предпочитаете быстрый темп жизни или размеренный темп?",
+            3:"Какой климат вы бы предпочли:\n"
+              "- холодный - средняя годовая температура меньше 10 градусов;\n"
+              "- умеренный - средняя годовая температура от 10 до 20 градусов\n;"
+              "- жаркий - средняя годовая температура более 20 градусов?",
+            4:"Вы планируете переехать один или семьей?",
+            5:"Вы планируете передвигаться на общественном транспорте или на своей машине?",
+            6:"Где вы планируете снимать жилье: в центре или на окраине?",
+            7:"Введите заработок, на который вы рассчитываете?"}
 
 
 class Controller:
@@ -81,12 +80,12 @@ class Controller:
         embeddings = torch.mean(outputs.last_hidden_state, dim=1)
         return embeddings
 
-    def analize(self, text):
+    def analize(self, text, context):
         tokens_word = nltk.word_tokenize(text)
         for t in tokens_word:
             morph = pymorphy2.MorphAnalyzer()
             word = morph.parse(t)[0].normal_form
-            if word in sin_list:
+            if word in context:
                 return True
         return False
 
@@ -247,22 +246,6 @@ class Controller:
                 return '1300_1800'
             else:
                 return '3600_5200'
-
-    def choice(self, text: str):
-        sentence1 = 'миграция'
-        sentence2 = 'раскажи про '
-        embedding1 = self.__get_sentence_embedding(sentence1)
-        embedding2 = self.__get_sentence_embedding(sentence2)
-        embedding_text = self.__get_sentence_embedding(text)
-
-        cosine_similarity_migration = torch.nn.functional.cosine_similarity(embedding1, embedding_text)
-        cosine_similarity_about = torch.nn.functional.cosine_similarity(embedding2, embedding_text)
-
-        if cosine_similarity_migration > cosine_similarity_about:
-            return True
-        else:
-            return False
-
 
 
 

@@ -184,7 +184,7 @@ class StandartLiving:
             result[self.info[i]["Country"]] = curr_country
         string_result = ""
         sorted_values = sorted(result.values())
-        print(sorted_values)
+        # print(sorted_values)
         for i in sorted_values:
             for key, value in result.items():
                 if i == value:

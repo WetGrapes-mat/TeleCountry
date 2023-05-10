@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from controller.controller import contrl, question
+from controller.context_data import migration_list, country_data
+
 from neo4j_country_db import cost_living_db, country_education_db, country_migration_db, country_resorts_db, \
     country_tourism_db, \
     country_ski_resorts_db, most_dangerous_places_db, standart_living_db
@@ -9,21 +11,23 @@ app = Flask(__name__)
 CORS(app)
 
 
+
 @app.route('/chat', methods=['POST'])
 def chat():
     message = request.json
-    if contrl.analize(message['answer']):
-        return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
+    if contrl.analize(message['answer'], migration_list):
+        return jsonify({"result":question[len(contrl.ALL_ANSWER)]})
     state = contrl.preparation_data(message['question'], message['answer'])
-    if not contrl.analize(message['answer']):
-        return contrl.control_country_data(message['answer'])
     if state and len(contrl.ALL_ANSWER) != 8:
         return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
     if len(contrl.ALL_ANSWER) == 8:
         result = contrl.control_migration()
         return jsonify({'result': result})
+    if contrl.analize(message['answer'], country_data.keys()):
+        result  = contrl.control_country_data(message['answer'])
+        return jsonify({"result":result})
     if not state:
-        return jsonify({'result': 'Я не могу помочь с этим вопросом'})
+        return jsonify({"result": "Я не могу помочь с этим вопросом"})
 
 
 
