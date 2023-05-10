@@ -246,7 +246,7 @@ class CostLiving:
                                        )
 
         sorted_dict = sorted(result.items(), key=lambda x: x[1])
-        list_of_dicts = [{x[0]: float(self.to_fixed(x[1]))} for x in sorted_dict]
+        list_of_dicts = [{"country":x[0], "price":float(self.to_fixed(x[1]))} for x in sorted_dict]
         return list_of_dicts
 
 
