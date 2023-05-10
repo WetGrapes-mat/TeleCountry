@@ -2,6 +2,7 @@ from agents.cost_living import cl
 from agents.country_migration import cm
 from agents.most_dangerous_places import mdp
 from agents.standard_of_living import st
+from agents.country_data import cd
 import re
 
 import nltk
@@ -69,6 +70,9 @@ class Controller:
 
     def control_standard_of_living(self):
         return st.get_info_for_interface()
+
+    def control_country_data(self, text):
+        return cd.analize_country_name(text)
 
     def __get_sentence_embedding(self, sentence):
         inputs = tokenizer(sentence, return_tensors='pt', truncation=True, padding=True)
@@ -251,10 +255,10 @@ class Controller:
         embedding2 = self.__get_sentence_embedding(sentence2)
         embedding_text = self.__get_sentence_embedding(text)
 
-        cosine_similarity_yes = torch.nn.functional.cosine_similarity(embedding1, embedding_text)
-        cosine_similarity_no = torch.nn.functional.cosine_similarity(embedding2, embedding_text)
+        cosine_similarity_migration = torch.nn.functional.cosine_similarity(embedding1, embedding_text)
+        cosine_similarity_about = torch.nn.functional.cosine_similarity(embedding2, embedding_text)
 
-        if cosine_similarity_yes > cosine_similarity_no:
+        if cosine_similarity_migration > cosine_similarity_about:
             return True
         else:
             return False

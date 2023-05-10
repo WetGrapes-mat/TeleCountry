@@ -15,6 +15,8 @@ def chat():
     if contrl.analize(message['answer']):
         return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
     state = contrl.preparation_data(message['question'], message['answer'])
+    if not contrl.analize(message['answer']):
+        return contrl.control_country_data(message['answer'])
     if state and len(contrl.ALL_ANSWER) != 8:
         return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
     if len(contrl.ALL_ANSWER) == 8:
