@@ -10,10 +10,14 @@ import pymorphy2
 
 from transformers import BertTokenizer, BertModel
 import torch
+import speech_recognition as sr
+
 
 model_name = 'DeepPavlov/rubert-base-cased'
 tokenizer = BertTokenizer.from_pretrained(model_name)
 model = BertModel.from_pretrained(model_name)
+
+r = sr.Recognizer()
 
 question = {1:"Важно ли для вас наличие моря/океана?",
             2:"Вы предпочитаете быстрый темп жизни или размеренный темп?",
@@ -221,6 +225,13 @@ class Controller:
             return 'в центре'
         else:
             return 'на окраине'
+
+
+    def voice_to_test(self, file):
+        with sr.AudioFile(file) as source:
+            audio_data = r.record(source)
+            text = r.recognize_google(audio_data, language='ru-RU')
+        return text
 
     def __price_data(self, text: str, family):
         string = re.sub(r'[a-zA-Zа-яА-Я$@#%^&*()+=_!~`/\\|]', '', text)

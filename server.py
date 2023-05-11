@@ -29,7 +29,24 @@ def chat():
     if not state:
         return jsonify({"result": "Я не могу помочь с этим вопросом"})
 
+@app.route('/voice', methods=['POST'])
+def voice():
+    file = request.files['file']
+    text = contrl.voice_to_test(file)
+    if contrl.analize(text, migration_list):
+        return jsonify({"result":question[len(contrl.ALL_ANSWER)]})
+    if contrl.analize(text, country_data.keys()):
+        result = contrl.control_country_data(text)
+        return jsonify({"result": result})
+    state = contrl.preparation_data(question[len(contrl.ALL_ANSWER)], text)
+    if state and len(contrl.ALL_ANSWER) != 8:
+        return jsonify({'result':question[len(contrl.ALL_ANSWER)]})
+    if len(contrl.ALL_ANSWER) == 8:
+        result = contrl.control_migration()
+        return jsonify({'result': result})
 
+    if not state:
+        return jsonify({"result": "Я не могу помочь с этим вопросом"})
 
 @app.route('/cost_living', methods=['POST'])
 def cost_living():
