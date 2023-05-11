@@ -7,8 +7,15 @@ from neo4j_country_db import cost_living_db, country_education_db, country_migra
     country_tourism_db, \
     country_ski_resorts_db, most_dangerous_places_db, standart_living_db
 
+import pyaudio
+import wave
+import time
+
+
 app = Flask(__name__)
 CORS(app)
+
+FLAG_VOICE = True
 
 
 
@@ -48,6 +55,46 @@ def voice_chat():
 
     if not state:
         return jsonify({"result": "Я не могу помочь с этим вопросом"})
+
+@app.route('/start_voice', methods=['GET'])
+def start_voice():
+    global FLAG_VOICE
+    CHUNK = 1024
+    FORMAT = pyaudio.paInt16
+    CHANNELS = 1
+    RATE = 44100
+    WAVE_OUTPUT_FILENAME = "server/output.wav"
+
+    audio = pyaudio.PyAudio()
+    stream = audio.open(format=FORMAT, channels=CHANNELS,
+                        rate=RATE, input=True,
+                        frames_per_buffer=CHUNK)
+    frames = []
+    print("Recording...")
+    while FLAG_VOICE:
+        data = stream.read(CHUNK)
+        frames.append(data)
+    print("Finished recording.")
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+    wave_file = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+    wave_file.setnchannels(CHANNELS)
+    wave_file.setsampwidth(audio.get_sample_size(FORMAT))
+    wave_file.setframerate(RATE)
+    wave_file.writeframes(b''.join(frames))
+    wave_file.close()
+    text = contrl.voice_to_test(WAVE_OUTPUT_FILENAME )
+    print(text)
+    return jsonify({"voice":text})
+
+@app.route('/stop_voice', methods=['GET'])
+def stop_voice():
+    global FLAG_VOICE
+    FLAG_VOICE = False
+    time.sleep(1)
+    FLAG_VOICE = True
+    return jsonify({"voice":"Finished recording"})
 
 @app.route('/cost_living', methods=['POST'])
 def cost_living():
