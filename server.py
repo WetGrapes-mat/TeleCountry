@@ -30,9 +30,10 @@ def chat():
         return jsonify({"result": "Я не могу помочь с этим вопросом"})
 
 @app.route('/voice', methods=['POST'])
-def voice():
+def voice_chat():
     file = request.files['file']
-    text = contrl.voice_to_test(file)
+    file.save('server/temp.wav')
+    text = contrl.voice_to_test('server/temp.wav')
     if contrl.analize(text, migration_list):
         return jsonify({"result":question[len(contrl.ALL_ANSWER)]})
     if contrl.analize(text, country_data.keys()):

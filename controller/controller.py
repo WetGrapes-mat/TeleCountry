@@ -4,6 +4,7 @@ from agents.most_dangerous_places import mdp
 from agents.standard_of_living import st
 from agents.country_data import cd
 import re
+import os
 
 import nltk
 import pymorphy2
@@ -231,6 +232,7 @@ class Controller:
         with sr.AudioFile(file) as source:
             audio_data = r.record(source)
             text = r.recognize_google(audio_data, language='ru-RU')
+        os.remove(file)
         return text
 
     def __price_data(self, text: str, family):
