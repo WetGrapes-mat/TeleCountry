@@ -64,7 +64,7 @@ async def rent1(callback: types.CallbackQuery, callback_data: dict) -> None:
     answer_user['child_school'] = 0
     answer_user['members'] = 1
     answer_user['country'] = 'Рейтинг стран'
-    links, txt = contrl.control_education(answer_user)
+    links, txt = contrl.control_education_bot(answer_user)
     media = list()
     for link in links:
         media.append(InputMediaPhoto(link))

@@ -64,7 +64,7 @@ async def transportation(callback: types.CallbackQuery, callback_data: dict):
 
 async def rent(callback: types.CallbackQuery, callback_data: dict) -> None:
     answer_user['rent'] = callback_data['action']
-    final_message = contrl.control_cost_living(answer_user)
+    final_message = contrl.control_cost_living_bot(answer_user)
     if final_message:
         await callback.message.edit_text(text=final_message)
     else:

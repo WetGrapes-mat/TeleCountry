@@ -70,7 +70,7 @@ async def money_answer(callback: types.CallbackQuery, callback_data: dict):
 async def lgbt(callback: types.CallbackQuery, callback_data: dict):
     answer_user['lgbt'] = callback_data['action']
     print(answer_user)
-    await callback.message.edit_text(text=contrl.control_migration(answer_user))
+    await callback.message.edit_text(text=contrl.control_migration_bot(answer_user))
 
 
 def register_handlers(dp: Dispatcher):

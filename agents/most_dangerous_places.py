@@ -12,7 +12,7 @@ class MostDangerousPlaces:
 
     def get_countries(self):
         self.all_countries = most_dangerous_places_db.findCountryNames()
-        most_dangerous_places_db.close()
+        # most_dangerous_places_db.close()
         return self.all_countries
 
     def count_HR(self):
@@ -105,7 +105,7 @@ class MostDangerousPlaces:
         self.Sa = most_dangerous_places_db.findSa()
         self.CTa = most_dangerous_places_db.findCta()
         self.hazard = most_dangerous_places_db.findHazard()
-        most_dangerous_places_db.close()
+        # most_dangerous_places_db.close()
 
     def get_info_for_interface(self):
         countries = sorted(self.get_countries())

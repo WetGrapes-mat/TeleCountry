@@ -3,6 +3,7 @@ from agents.country_migration import cm
 from agents.most_dangerous_places import mdp
 from agents.standard_of_living import st
 from agents.country_data import cd
+from agents.country_education import ce
 import re
 import os
 
@@ -34,6 +35,31 @@ question = {1:"Важно ли для вас наличие моря/океан�
 
 class Controller:
     ALL_ANSWER = {'lgbt':'False'}
+###################TELEGRAM BOT##########################
+    def control_migration_bot(self, answer_user):
+        return cm.calculate(answer_user)
+
+    def control_cost_living_bot(self, user_answers):
+        cl.get_information()
+        return cl.out(int(user_answers["child_preschool"]),
+                      int(user_answers["child_school"]),
+                      int(user_answers["members"]),
+                      int(user_answers["smoking"]),
+                      user_answers["transportation"],
+                      user_answers["rent"],
+                      user_answers["country"])
+
+    def control_education_bot(self, answer_user):
+        return ce.find_result(answer_user)
+
+    def control_most_dangerous_places_bot(self, answer_user):
+        mdp.get_all_information()
+        return mdp.count(answer_user)
+
+    def control_standard_of_living_bot(self):
+        return st.get_country_rating()
+
+###################TELEGRAM BOT##########################
 
     def control_migration(self):
         if len(self.ALL_ANSWER) == 8:
@@ -78,12 +104,12 @@ class Controller:
     def control_country_data(self, text):
         return cd.analize_country_name(text)
 
-    def __get_sentence_embedding(self, sentence):
-        inputs = tokenizer(sentence, return_tensors='pt', truncation=True, padding=True)
-        with torch.no_grad():
-            outputs = model(**inputs)
-        embeddings = torch.mean(outputs.last_hidden_state, dim=1)
-        return embeddings
+    # def __get_sentence_embedding(self, sentence):
+    #     inputs = tokenizer(sentence, return_tensors='pt', truncation=True, padding=True)
+    #     with torch.no_grad():
+    #         outputs = model(**inputs)
+    #     embeddings = torch.mean(outputs.last_hidden_state, dim=1)
+    #     return embeddings
 
     def analize(self, text, context):
         tokens_word = nltk.word_tokenize(text)

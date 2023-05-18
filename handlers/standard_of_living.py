@@ -5,7 +5,7 @@ from controller.controller import contrl
 
 async def command(message: types.Message) -> None:
     try:
-        await bot.send_message(message.from_user.id, text=contrl.control_standard_of_living())
+        await bot.send_message(message.from_user.id, text=contrl.control_standard_of_living_bot())
     except:
         pass
 
