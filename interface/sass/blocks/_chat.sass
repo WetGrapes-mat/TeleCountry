@@ -67,6 +67,7 @@
             padding: 12px 
             border-radius: 16px
             width: 100%
+            word-wrap: break-word
         &_title
             +title700
             font-size: 16px
@@ -86,6 +87,8 @@
             color: $main-color
             font-weight: 400
             font-size: 16px
+            overflow-wrap: break-word
+            word-break: break-word
         &_wrapper
             display: flex
             flex-direction: column
@@ -248,6 +251,11 @@
             height: 24px
             &:hover
                 cursor: pointer
+                transform: scale(1.4)
+                transition: 1s all
+.micro_active
+    border-radius: 100%
+    background-color: #1F2F3B
 
 .w350
     width: 350px
@@ -264,8 +272,9 @@
 .message-bot
     justify-content: start
     .chat__message_avatar
-            margin-right: 5px
+        margin-right: 5px
     .chat__message_content
+        max-width: 280px
         &::before
             content: ''
             position: absolute
@@ -278,7 +287,7 @@
 .message-user
     justify-content: end
     .chat__message_avatar
-            margin-left: 15px
+        margin-left: 15px
     .chat__message_content
         &::after
             content: ''
